@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.bazinga.lantoon.home.chapter.ChapterFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_chapter" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.bazinga.lantoon.home.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.bazinga.lantoon.home.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_tools"
+        android:name="com.bazinga.lantoon.home.setting.SettingFragment"
+        android:label="@string/menu_tools"
+        tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="com.bazinga.lantoon.home.share.ShareFragment"
+        android:label="@string/menu_share"
+        tools:layout="@layout/fragment_share" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="com.bazinga.lantoon.home.send.SendFragment"
+        android:label="@string/menu_send"
+        tools:layout="@layout/fragment_send" />
+
+    <fragment
+        android:id="@+id/bottom_lesson"
+        android:name="com.bazinga.lantoon.home.chapter.ChapterFragment"
+        android:label="@string/title_lesson"
+        tools:layout="@layout/fragment_chapter" />
+
+    <fragment
+        android:id="@+id/bottom_leader"
+        android:name="com.bazinga.lantoon.home.leader.LeaderFragment"
+        android:label="@string/title_leader"
+        tools:layout="@layout/fragment_leader" />
+
+    <fragment
+        android:id="@+id/bottom_achievement"
+        android:name="com.bazinga.lantoon.home.achievement.AchievementFragment"
+        android:label="@string/title_achievement"
+        tools:layout="@layout/fragment_achievement" />
+    <fragment
+        android:id="@+id/bottom_setting"
+        android:name="com.bazinga.lantoon.home.achievement.AchievementFragment"
+        android:label="@string/title_setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>
