@@ -51,7 +51,7 @@ public class LanguageViewModel extends ViewModel {
         });
     }
 
-    public LiveData<List<Language>> getUserMutableLiveData() {
+    public LiveData<List<Language>> getLanguageMutableLiveData() {
         return languageLiveData;
     }
 

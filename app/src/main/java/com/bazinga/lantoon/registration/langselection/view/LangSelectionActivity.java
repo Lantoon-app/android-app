@@ -43,7 +43,7 @@ public class LangSelectionActivity extends AppCompatActivity {
         iKnowVp = findViewById(R.id.vpIknow);
         iWantLearnVp = findViewById(R.id.vpIwantLearn);
         languageViewModel = new ViewModelProvider(this).get(LanguageViewModel.class);
-        languageViewModel.getUserMutableLiveData().observe(this, new Observer<List<Language>>() {
+        languageViewModel.getLanguageMutableLiveData().observe(this, new Observer<List<Language>>() {
             @Override
             public void onChanged(List<Language> languages) {
 
