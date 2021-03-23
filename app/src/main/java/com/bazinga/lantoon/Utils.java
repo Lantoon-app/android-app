@@ -17,4 +17,7 @@ public class Utils {
     public static String TAG_CURRENT_LOCATION = "currentlocation";
     public static String TAG_MINS_PER_DAY = "minsperday";
     public static String TAG_REGISTRATION_TYPE = "registrationtype";
+    public static String TAG_QUESTION_TYPE= "qtype";
+    public static String TAG_QUESTION_NO="qno";
+    public static String TAG_QUESTIONS_TOTAL="total";
 }

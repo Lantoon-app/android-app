@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -16,7 +17,13 @@ import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.p1.P1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.p2.P2Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.p3.P3Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.q.QFragment;
 import com.bazinga.lantoon.home.chapter.lesson.ui.qp1.QP1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.qp2.QP2Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.qp3.QP3Fragment;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.langselection.viewmodel.LanguageViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -43,95 +50,75 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.questions_activity);
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
-        /*if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, L1Fragment.newInstance())
-                    .commitNow();
-        }*/
 
         QuestionsViewModel questionViewModel = new ViewModelProvider(this).get(QuestionsViewModel.class);
-        questionViewModel.getQuestionsMutableLiveData().observe(this, new Observer<JsonObject>() {
-            @Override
-            public void onChanged(JsonObject jsonObject) {
-/*
-                if (jsonObject != null) {
-                    for (int i = 1; i < jsonObject.size() + 1; i++) {
-                        if (jsonObject.get(String.valueOf(i)).getAsJsonArray().size() > 1) {
-                            Log.d("jsonObject L1", jsonObject.getAsJsonArray(String.valueOf(i)).toString());
-                            //return L1Fragment.newInstance();
-
-                        } else {
-                            //return QP1Fragment.newInstance();
-
-                        }
-                    }
-
-                }*/
-
-               /* ViewPagerAdapter viewPagerAdapter =
-                        new ViewPagerAdapter(QuestionsActivity.this, getSupportFragmentManager(), jsonObject);
-                ViewPager viewPager = findViewById(R.id.view_pager);
-                viewPager.setAdapter(viewPagerAdapter);*/
-
-              /*  List<View> views = new ArrayList<>();
-                views.add(0,);
-                //pagerAdapter.notifyDataSetChanged();
-                Pager pagerAdapter = new Pager(views, QuestionsActivity.this);
-                ViewPager viewPager = findViewById(R.id.view_pager);
-                viewPager.setAdapter(pagerAdapter);*/
-                //tabLayout.setupWithViewPager(viewPager);
+        questionViewModel.getQuestionsMutableLiveData().observe(this, jsonObject -> {
 
 
-                List<Fragment> fragments = buildFragments(jsonObject);
-                ArrayList<String> categories = new ArrayList<String>();
-                categories.add("1");
-                categories.add("2");
-                categories.add("3");
-                categories.add("4");
-                ViewPager mPager = (ViewPager) findViewById(R.id.view_pager);
-                MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, getSupportFragmentManager(), fragments, categories);
-                mPager.setAdapter(mPageAdapter);
+            List<Fragment> fragments = buildFragments(jsonObject);
+            ViewPager mPager = findViewById(R.id.view_pager);
+            MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, getSupportFragmentManager(), fragments);
+            mPager.setAdapter(mPageAdapter);
 
-//Add a new Fragment to the list with bundle
-               /* Bundle b = new Bundle();
-                //b.putInt("position", i);
-                String title = "asd";
+            //Add a new Fragment to the list with bundle
+           /* Bundle b = new Bundle();
+            //b.putInt("position", i);
+            String title = "asd";
 
-                mPageAdapter.add(L1Fragment.class,b);
-                mPageAdapter.notifyDataSetChanged();*/
-            }
+            mPageAdapter.add(L1Fragment.class,b);
+            mPageAdapter.notifyDataSetChanged();*/
         });
-
-
-        //TabLayout tabs = findViewById(R.id.tabs);
-        //tabs.setupWithViewPager(viewPager);
-
 
     }
 
     private List<Fragment> buildFragments(@NonNull JsonObject jsonObject) {
         List<Fragment> fragments = new ArrayList<Fragment>();
 
-        //Bundle b = new Bundle();
-        //b.putInt("position", i);
 
+        Log.d("jaonobj aize", String.valueOf(jsonObject.size()));
+        int f = 0;
+        int totalQuestions = jsonObject.size();
+        for (int i = 1; i < totalQuestions + 1; i++) {
 
-        for (int i = 1; i < jsonObject.size() + 1; i++) {
-            if (jsonObject.get(String.valueOf(i)).getAsJsonArray().size() > 1) {
-                Log.d("jsonObject L1", jsonObject.getAsJsonArray(String.valueOf(i)).toString());
-                fragments.add(0, L1Fragment.newInstance());
+            JsonObject j = jsonObject.getAsJsonArray(String.valueOf(i)).get(0).getAsJsonObject();
+            Gson gson = new Gson();
+            Question question = gson.fromJson(j, Question.class);
+            String qtype = j.get("q_type").toString();
+            String ss = "\"p1\"";
 
-            } else {
-                //if(jsonObject.getAsJsonArray(String.valueOf(i)).get(0))
-                //Question question = new Question();
-                JsonObject jsonArray = jsonObject.getAsJsonArray(String.valueOf(i)).get(0).getAsJsonObject();
+            if (jsonObject.get(String.valueOf(i)).getAsJsonArray().size() > 0 && qtype.contains("\"l1\"")) {
 
-                Log.d("test ", jsonArray.get("qid").toString());
-                String ss = "qp1";
-                if (ss.equals(jsonArray.get("q_type")))
-                    fragments.add(i, QP1Fragment.newInstance());
-
+                fragments.add(f, L1Fragment.newInstance(i, totalQuestions, jsonObject.getAsJsonArray(String.valueOf(i)).toString()));
             }
+            if (qtype.contains("\"p1\"")) {
+
+                fragments.add(f, P1Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"p2\"")) {
+
+                fragments.add(f, P2Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"p3\"")) {
+
+                fragments.add(f, P3Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"q\"")) {
+
+                fragments.add(f, QFragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"qp1\"")) {
+
+                fragments.add(f, QP1Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"qp2\"")) {
+
+                fragments.add(f, QP2Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"qp3\"")) {
+
+                fragments.add(f, QP3Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            f++;
         }
 
 

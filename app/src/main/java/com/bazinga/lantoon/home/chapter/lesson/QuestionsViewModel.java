@@ -39,16 +39,7 @@ public class QuestionsViewModel extends ViewModel {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
 
-                //System.out.println("language list success=  " + response.message().toString());
                 if (response.isSuccessful()) {
-
-                   /* Gson gson = new GsonBuilder()
-                            .setPrettyPrinting()
-                            .create();
-
-                    String jsonOutput = gson.toJson(someObject);*/
-                    //Log.e("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body().get(0)));
-
                     JsonObject jsonObject = new JsonObject();
 
                     jsonObject = response.body().get(0).getAsJsonObject();
@@ -56,14 +47,6 @@ public class QuestionsViewModel extends ViewModel {
                     questionsLiveData.setValue(jsonObject);
 
 
-                    /*if (response.body() != null) {
-                        for (int i = 0; i < jsonObject.size(); i++) {
-                            //listdata.add(jArray.getString(i));
-                            Log.d("jsonObject", String.valueOf(i));
-                        }
-
-                    }*/
-                    //Log.e("response len= ", response.body().get(0).getAsString());
                 } else {
                     //Log.e("response message= ", response.message() + response.code());
                 }

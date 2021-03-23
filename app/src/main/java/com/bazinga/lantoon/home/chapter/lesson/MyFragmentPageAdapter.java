@@ -15,13 +15,13 @@ public class MyFragmentPageAdapter extends FragmentPagerAdapter {
     public static int pos = 0;
 
     private List<Fragment> myFragments;
-    private ArrayList<String> categories;
+    //private ArrayList<String> categories;
     private Context context;
 
-    public MyFragmentPageAdapter(Context c, FragmentManager fragmentManager, List<Fragment> myFrags, ArrayList<String> cats) {
+    public MyFragmentPageAdapter(Context c, FragmentManager fragmentManager, List<Fragment> myFrags) {
         super(fragmentManager);
         myFragments = myFrags;
-        this.categories = cats;
+        //this.categories = cats;
         this.context = c;
     }
 
@@ -32,13 +32,13 @@ public class MyFragmentPageAdapter extends FragmentPagerAdapter {
 
     }
 
-    @Override
+   @Override
     public int getCount() {
 
         return myFragments.size();
     }
 
-    @Override
+    /* @Override
     public CharSequence getPageTitle(int position) {
 
         setPos(position);
@@ -56,5 +56,5 @@ public class MyFragmentPageAdapter extends FragmentPagerAdapter {
 
     public static void setPos(int pos) {
         MyFragmentPageAdapter.pos = pos;
-    }
+    }*/
 }

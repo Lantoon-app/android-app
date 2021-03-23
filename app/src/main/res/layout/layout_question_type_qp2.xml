@@ -51,7 +51,7 @@
             android:progress="70" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvQuestionNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -72,7 +72,7 @@
 
 
     <TextView
-        android:id="@+id/textView344"
+        android:id="@+id/tvQuestionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
