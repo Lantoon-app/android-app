@@ -14,12 +14,10 @@
         android:rotationY="0"
         android:scaleX="-10"
         android:scaleY="100"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -30,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/slantView">
 
         <ImageButton
-            android:id="@+id/button2"
+            android:id="@+id/imgBtnHome"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -56,7 +54,7 @@
             android:textSize="25dp" />
 
         <ImageButton
-            android:id="@+id/button3"
+            android:id="@+id/imgBtnHelp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -78,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -94,6 +92,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/llQustionsImgAud1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -101,7 +100,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
@@ -109,6 +108,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudio1"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -124,6 +124,7 @@
                     app:iconSize="40dp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudioSlow1"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -140,13 +141,14 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imbBtnQuestionImg1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
         </LinearLayout>
-
-        <LinearLayout
+<LinearLayout
+            android:id="@+id/llQustionsImgAud2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -154,7 +156,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
@@ -162,6 +164,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudio2"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -177,6 +180,7 @@
                     app:iconSize="40dp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudioSlow2"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -193,13 +197,14 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imbBtnQuestionImg2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
         </LinearLayout>
-
-        <LinearLayout
+<LinearLayout
+            android:id="@+id/llQustionsImgAud13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -207,7 +212,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
@@ -215,6 +220,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudio3"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -230,6 +236,7 @@
                     app:iconSize="40dp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudioSlow3"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -246,13 +253,14 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imbBtnQuestionImg3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
         </LinearLayout>
-
-        <LinearLayout
+<LinearLayout
+            android:id="@+id/llQustionsImgAud4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -260,7 +268,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
@@ -268,6 +276,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudio4"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -283,6 +292,7 @@
                     app:iconSize="40dp" />
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAudioSlow4"
                     style="@style/QuestionButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -299,12 +309,12 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imbBtnQuestionImg4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
         </LinearLayout>
-
 
     </LinearLayout>
 

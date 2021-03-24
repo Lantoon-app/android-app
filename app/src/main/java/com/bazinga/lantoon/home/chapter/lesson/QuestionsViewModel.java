@@ -1,15 +1,38 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
+import android.util.Pair;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
+import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.p1.P1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.p2.P2Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.p3.P3Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.q.QFragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.qp1.QP1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.qp2.QP2Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.qp3.QP3Fragment;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
+import com.bazinga.lantoon.test.MainActivity2;
+import com.bazinga.lantoon.test.UnzipUtility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -19,7 +42,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -28,10 +57,37 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class QuestionsViewModel extends ViewModel {
-    MutableLiveData<JsonObject> questionsLiveData;
-    // List<Question> languageList;
 
-    public QuestionsViewModel() {
+    MutableLiveData<List<Fragment>> questionsLiveData;
+    private static final String TAG = QuestionsViewModel.class.getSimpleName();
+
+    private MutableLiveData<TaskModel> progressTask;
+    private TaskModel mTask;
+    private QuestionsAsyncTask taskAsync;
+    DownloadZipFileTask downloadZipFileTask;
+
+    private void startTask() {
+        Log.d(TAG, "startTask: ");
+        if (mTask == null) mTask = new TaskModel(TaskState.STOP);
+        taskAsync = new QuestionsAsyncTask();
+        taskAsync.execute();
+    }
+
+    public void stopTask() {
+        taskAsync.cancel(true);
+    }
+
+    public MutableLiveData<TaskModel> getProgressTask() {
+
+        if (progressTask == null) {
+            progressTask = new MutableLiveData<>();
+            startTask();
+        }
+
+        return progressTask;
+    }
+
+    /*public QuestionsViewModel() {
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<JsonArray> call = apiInterface.getQuestions(1, 1, 1);
@@ -62,9 +118,310 @@ public class QuestionsViewModel extends ViewModel {
                 Log.e("response ERROR= ", "" + t.getMessage() + " " + t.getLocalizedMessage());
             }
         });
+    }*/
+
+
+
+    public class QuestionsAsyncTask extends AsyncTask<Void, Float, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "onPreExecute: ");
+            mTask.setStatus(TaskState.RUNNING);
+            progressTask.setValue(mTask);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Log.i(TAG, "doInBackground: ");
+            /*for (int i = 0; i <= 10; ++i) {
+
+                if (isCancelled()) {
+                    Log.e(TAG, "doInBackground: User canceled");
+                    break;
+                }
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                publishProgress(Float.valueOf(i));
+
+                *//*try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*//*
+
+
+            }*/
+            downloadZipFile(1, 7, 1, 1);
+            downloadZipFile(1, 7, 1, 2);
+            downloadZipFile(1, 7, 1, 3);
+            downloadZipFile(1, 7, 1, 4);
+            questionsFragmentData(1,7,1);
+            return true;
+        }
+
+        @Override
+        protected void onProgressUpdate(Float... values) {
+            Log.d(TAG, "onProgressUpdate() called with: values = [" + Arrays.toString(values) + "]");
+            mTask.setValue(values[0]);
+            progressTask.postValue(mTask);
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            Log.i(TAG, "onPostExecute: ");
+            //Finalized
+            mTask.setStatus(TaskState.COMPLETED);
+            progressTask.setValue(mTask);
+        }
+
     }
 
-    public LiveData<JsonObject> getQuestionsMutableLiveData() {
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d(TAG, "onCleared: ");
+        mTask.setStatus(TaskState.CANCELLED);
+        progressTask.setValue(mTask);
+        taskAsync.cancel(true);
+    }
+
+    private void downloadZipFile(int langid, int chaperno, int lessonno, int type) {
+
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> call = apiInterface.downloadFileByUrl(langid, chaperno, lessonno, type);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "Got the body for the file");
+
+                    //Toast.makeText(get, "Downloading...", Toast.LENGTH_SHORT).show();
+
+                    downloadZipFileTask = new DownloadZipFileTask(type);
+                    downloadZipFileTask.execute(response.body());
+
+                } else {
+                    Log.d(TAG, "Connection failed " + response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                Log.e(TAG, t.getMessage());
+            }
+        });
+    }
+
+    private class DownloadZipFileTask extends AsyncTask<ResponseBody, Pair<Integer, Long>, String> {
+        int type = 0;
+
+        public DownloadZipFileTask(int type) {
+            this.type = type;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected String doInBackground(ResponseBody... urls) {
+            //Copy you logic to calculate progress and call
+            saveToDisk(urls[0], String.valueOf((type)) + ".zip",String.valueOf(type));
+
+            return null;
+        }
+
+        protected void onProgressUpdate(Pair<Integer, Long>... progress) {
+
+            Log.d("API123", progress[0].second + " ");
+
+            if (progress[0].first == 100)
+                //Toast.makeText(getApplicationContext(), "File downloaded successfully", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "File downloaded successfully");
+
+
+            if (progress[0].second > 0) {
+                int currentProgress = (int) ((double) progress[0].first / (double) progress[0].second * 100);
+                //progressBar.setProgress(currentProgress);
+
+                //txtProgressPercent.setText("Progress " + currentProgress + "%");
+
+            }
+
+            if (progress[0].first == -1) {
+                //Toast.makeText(getApplicationContext(), "Download failed", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Download failed");
+            }
+
+        }
+
+        public void doProgress(Pair<Integer, Long> progressDetails) {
+            publishProgress(progressDetails);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void saveToDisk(ResponseBody body, String filename, String folderName) {
+        try {
+
+            File destinationFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
+
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+
+                inputStream = body.byteStream();
+                outputStream = new FileOutputStream(destinationFile);
+                byte data[] = new byte[4096];
+                int count;
+                int progress = 0;
+                long fileSize = body.contentLength();
+                Log.d(TAG, "File Size=" + fileSize);
+                while ((count = inputStream.read(data)) != -1) {
+                    outputStream.write(data, 0, count);
+                    progress += count;
+                    Pair<Integer, Long> pairs = new Pair<>(progress, fileSize);
+                    downloadZipFileTask.doProgress(pairs);
+                    Log.d(TAG, "Progress: " + progress + "/" + fileSize + " >>>> " + (float) progress / fileSize);
+                }
+
+                outputStream.flush();
+
+                Log.d(TAG, destinationFile.getParent());
+                Pair<Integer, Long> pairs = new Pair<>(100, 100L);
+                downloadZipFileTask.doProgress(pairs);
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+                Pair<Integer, Long> pairs = new Pair<>(-1, Long.valueOf(-1));
+                downloadZipFileTask.doProgress(pairs);
+                Log.d(TAG, "Failed to save the file!");
+                return;
+            } finally {
+
+                UnzipUtility unzipUtility = new UnzipUtility();
+                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + folderName);
+                dir.mkdir();
+
+                unzipUtility.unzip(destinationFile.getPath(), dir.getPath());
+
+                if (inputStream != null) inputStream.close();
+                if (outputStream != null) outputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d(TAG, "Failed to save the file!");
+            return;
+        }
+    }
+
+    private void questionsFragmentData(int langid, int chaperno, int lessonno){
+        questionsLiveData = new MutableLiveData<>();
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<JsonArray> call = apiInterface.getQuestions(langid, chaperno, lessonno);
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = new JsonObject();
+
+                    jsonObject = response.body().get(0).getAsJsonObject();
+                    Log.d("response ", new GsonBuilder().setPrettyPrinting().create().toJson(jsonObject));
+
+
+                    List<Fragment> fragments = buildFragments(jsonObject);
+                    questionsLiveData.setValue(fragments);
+
+                } else {
+                    Log.e("response message= ", response.message() + response.code());
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+
+                call.cancel();
+                t.printStackTrace();
+                Log.e("response ERROR= ", "" + t.getMessage() + " " + t.getLocalizedMessage());
+            }
+        });
+    }
+    public LiveData<List<Fragment>> getQuestionsMutableLiveData() {
         return questionsLiveData;
     }
+    private List<Fragment> buildFragments(@NonNull JsonObject jsonObject) {
+        List<Fragment> fragments = new ArrayList<Fragment>();
+
+
+        Log.d("jaonobj aize", String.valueOf(jsonObject.size()));
+        int f = 0;
+        int totalQuestions = jsonObject.size();
+        for (int i = 1; i < totalQuestions + 1; i++) {
+
+            JsonObject j = jsonObject.getAsJsonArray(String.valueOf(i)).get(0).getAsJsonObject();
+            Gson gson = new Gson();
+            Question question = gson.fromJson(j, Question.class);
+            String qtype = j.get("q_type").toString();
+            String ss = "\"p1\"";
+
+            if (jsonObject.get(String.valueOf(i)).getAsJsonArray().size() > 0 && qtype.contains("\"l1\"")) {
+
+                fragments.add(f, L1Fragment.newInstance(i, totalQuestions, jsonObject.getAsJsonArray(String.valueOf(i)).toString()));
+            }
+            if (qtype.contains("\"p1\"")) {
+
+                fragments.add(f, P1Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"p2\"")) {
+
+                fragments.add(f, P2Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"p3\"")) {
+
+                fragments.add(f, P3Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"q\"")) {
+
+                fragments.add(f, QFragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"qp1\"")) {
+
+                fragments.add(f, QP1Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"qp2\"")) {
+
+                fragments.add(f, QP2Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"qp3\"")) {
+
+                fragments.add(f, QP3Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            f++;
+        }
+
+
+        return fragments;
+    }
+
 }

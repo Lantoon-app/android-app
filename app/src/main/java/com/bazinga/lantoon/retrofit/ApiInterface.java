@@ -49,4 +49,8 @@ public interface ApiInterface {
     @Streaming
     @GET
     Call<ResponseBody> downloadFileByUrl(@Url String fileUrl);
+
+    @Streaming
+    @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
+    Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid,@Path("chapterno") int chapterno, @Path("lessonno") int lessonno,@Path("type") int type);
 }

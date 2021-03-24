@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,9 @@ public class L1Fragment extends Fragment {
     private L1ViewModel mViewModel;
     private ArrayList<Question> questions;
     TextView tvQuestionNo, tvQuestionName;
+    ImageButton imgBtnHome, imgBtnHelp;
+    ImageButton imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
+    Button btnAudio1, btnAudio2, btnAudio3, btnAudio4, btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
 
     public static L1Fragment newInstance(int questionNo, int totalQuestions, String data) {
         L1Fragment fragment = new L1Fragment();
@@ -55,10 +59,28 @@ public class L1Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_question_type_l1, container, false);
+        initializeView(view);
+        return view;
+    }
+
+    private void initializeView(View view) {
+        imgBtnHome = view.findViewById(R.id.imgBtnHome);
+        imgBtnHelp = view.findViewById(R.id.imgBtnHelp);
         tvQuestionNo = view.findViewById(R.id.tvQuestionNo);
         tvQuestionName = view.findViewById(R.id.tvQuestionName);
-        tvQuestionNo.setText(String.valueOf(getArguments().getInt(Utils.TAG_QUESTION_NO)) + "/" + String.valueOf(getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL)));
-        return view;
+        btnAudio1 = view.findViewById(R.id.btnAudio1);
+        btnAudio2 = view.findViewById(R.id.btnAudio2);
+        btnAudio3 = view.findViewById(R.id.btnAudio3);
+        btnAudio4 = view.findViewById(R.id.btnAudio4);
+        btnAudioSlow1 = view.findViewById(R.id.btnAudioSlow1);
+        btnAudioSlow2 = view.findViewById(R.id.btnAudioSlow2);
+        btnAudioSlow3 = view.findViewById(R.id.btnAudioSlow3);
+        btnAudioSlow4 = view.findViewById(R.id.btnAudioSlow4);
+        imbBtnQuestionImg1 = view.findViewById(R.id.imbBtnQuestionImg1);
+        imbBtnQuestionImg2 = view.findViewById(R.id.imbBtnQuestionImg2);
+        imbBtnQuestionImg3 = view.findViewById(R.id.imbBtnQuestionImg3);
+        imbBtnQuestionImg4 = view.findViewById(R.id.imbBtnQuestionImg4);
+
     }
 
     @Override
@@ -67,8 +89,9 @@ public class L1Fragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(L1ViewModel.class);
         // TODO: Use the ViewModel
         try {
+            tvQuestionNo.setText(String.valueOf(getArguments().getInt(Utils.TAG_QUESTION_NO)) + "/" + String.valueOf(getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL)));
             questions = jsonStringToArray(getArguments().getString(Utils.TAG_QUESTION_TYPE));
-            tvQuestionName.setText(questions.get(0).getWord());
+            tvQuestionName.setText(questions.get(1).getWord());
 
             Log.d("data l1 ", questions.get(3).getQid());
         } catch (JSONException e) {

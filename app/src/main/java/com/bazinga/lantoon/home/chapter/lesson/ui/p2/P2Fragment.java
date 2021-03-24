@@ -60,9 +60,9 @@ public class P2Fragment extends Fragment {
         // TODO: Use the ViewModel
         Gson g= new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE),Question.class);
-        tvQuestionName.setText(question.getWord());
+        //tvQuestionName.setText(question.getWord());
 
-        Log.d("data p2 " ,new GsonBuilder().setPrettyPrinting().create().toJson(question));
+        Log.d("data p1 " ,new GsonBuilder().setPrettyPrinting().create().toJson(question));
     }
 
     @Override

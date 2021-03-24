@@ -68,19 +68,16 @@ public class MainActivity2 extends AppCompatActivity {
 
         btnDownloadFile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                downloadZipFile();
-
-
-
+            public void onClick(View v) {
+                //downloadZipFile();
             }
         });
     }
 
-      private void downloadZipFile() {
+    private void downloadZipFile() {
 
-        ApiInterface downloadService = createService(ApiInterface.class, "https://lantoon.net/");
-        Call<ResponseBody> call = downloadService.downloadFileByUrl("Lantoon/content/images/1/1/1.zip");
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> call = apiInterface.downloadFileByUrl(1, 1, 1, 1);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -106,13 +103,6 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
 
-    public <T> T createService(Class<T> serviceClass, String baseUrl) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(new OkHttpClient.Builder().build())
-                .build();
-        return retrofit.create(serviceClass);
-    }
 
     private class DownloadZipFileTask extends AsyncTask<ResponseBody, Pair<Integer, Long>, String> {
 
@@ -203,7 +193,9 @@ public class MainActivity2 extends AppCompatActivity {
             } finally {
 
                 UnzipUtility unzipUtility = new UnzipUtility();
-                unzipUtility.unzip(destinationFile.getPath(),Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath());
+                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + "new");
+                dir.mkdir();
+                unzipUtility.unzip(destinationFile.getPath(), Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + "new");
 
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();

@@ -1,127 +1,101 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.SavedStateHandle;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager.widget.ViewPager;
-
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.chapter.lesson.model.Question;
-import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p1.P1Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p2.P2Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p3.P3Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.q.QFragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.qp1.QP1Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.qp2.QP2Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.qp3.QP3Fragment;
-import com.bazinga.lantoon.registration.langselection.model.Language;
-import com.bazinga.lantoon.registration.langselection.viewmodel.LanguageViewModel;
-import com.google.android.material.tabs.TabLayout;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 public class QuestionsActivity extends AppCompatActivity {
+    private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     CommonFunction cf;
+    ViewPager mPager;
+    ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        }, MY_PERMISSION_REQUEST_CODE);
         setContentView(R.layout.questions_activity);
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
+        mPager = findViewById(R.id.view_pager);
+        progress = new ProgressDialog(this);
 
-        QuestionsViewModel questionViewModel = new ViewModelProvider(this).get(QuestionsViewModel.class);
-        questionViewModel.getQuestionsMutableLiveData().observe(this, jsonObject -> {
-
-
-            List<Fragment> fragments = buildFragments(jsonObject);
-            ViewPager mPager = findViewById(R.id.view_pager);
-            MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, getSupportFragmentManager(), fragments);
-            mPager.setAdapter(mPageAdapter);
-
-            //Add a new Fragment to the list with bundle
-           /* Bundle b = new Bundle();
-            //b.putInt("position", i);
-            String title = "asd";
-
-            mPageAdapter.add(L1Fragment.class,b);
-            mPageAdapter.notifyDataSetChanged();*/
-        });
-
+        //init();
     }
 
-    private List<Fragment> buildFragments(@NonNull JsonObject jsonObject) {
-        List<Fragment> fragments = new ArrayList<Fragment>();
+    private void init() {
+        progress.setMessage("Please wait...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
 
 
-        Log.d("jaonobj aize", String.valueOf(jsonObject.size()));
-        int f = 0;
-        int totalQuestions = jsonObject.size();
-        for (int i = 1; i < totalQuestions + 1; i++) {
+        QuestionsViewModel questionViewModel = new ViewModelProvider(this).get(QuestionsViewModel.class);
+        questionViewModel.getProgressTask().observe(this, task -> {
 
-            JsonObject j = jsonObject.getAsJsonArray(String.valueOf(i)).get(0).getAsJsonObject();
-            Gson gson = new Gson();
-            Question question = gson.fromJson(j, Question.class);
-            String qtype = j.get("q_type").toString();
-            String ss = "\"p1\"";
+            Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
+            switch (task.getStatus()) {
+                case TaskState.CANCELLED:
+                    Toast.makeText(this, "Canceled by user", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+                    break;
+                case TaskState.RUNNING:
+                    progress.show();
+                    break;
+                case TaskState.STOP:
+                    progress.dismiss();
+                    break;
+                case TaskState.COMPLETED:
+                    //Toast.makeText(this, "Finished", Toast.LENGTH_SHORT).show();
+                    Log.d("TAG", "Finished");
 
-            if (jsonObject.get(String.valueOf(i)).getAsJsonArray().size() > 0 && qtype.contains("\"l1\"")) {
+                    questionViewModel.getQuestionsMutableLiveData().observe(this, fragments -> {
 
-                fragments.add(f, L1Fragment.newInstance(i, totalQuestions, jsonObject.getAsJsonArray(String.valueOf(i)).toString()));
+                        MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, getSupportFragmentManager(), fragments);
+                        mPager.setAdapter(mPageAdapter);
+                        progress.dismiss();
+                        /*  //Add a new Fragment to the list with bundle
+                        Bundle b = new Bundle();
+                        //b.putInt("position", i);
+                        String title = "asd";
+
+                        mPager.add(L1Fragment.class,b);
+                        mPager.notifyDataSetChanged();*/
+                    });
+                    break;
+
             }
-            if (qtype.contains("\"p1\"")) {
+        });
+    }
 
-                fragments.add(f, P1Fragment.newInstance(i, totalQuestions, j.toString()));
-            }
-            if (qtype.contains("\"p2\"")) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
 
-                fragments.add(f, P2Fragment.newInstance(i, totalQuestions, j.toString()));
-            }
-            if (qtype.contains("\"p3\"")) {
-
-                fragments.add(f, P3Fragment.newInstance(i, totalQuestions, j.toString()));
-            }
-            if (qtype.contains("\"q\"")) {
-
-                fragments.add(f, QFragment.newInstance(i, totalQuestions, j.toString()));
-            }
-            if (qtype.contains("\"qp1\"")) {
-
-                fragments.add(f, QP1Fragment.newInstance(i, totalQuestions, j.toString()));
-            }
-            if (qtype.contains("\"qp2\"")) {
-
-                fragments.add(f, QP2Fragment.newInstance(i, totalQuestions, j.toString()));
-            }
-            if (qtype.contains("\"qp3\"")) {
-
-                fragments.add(f, QP3Fragment.newInstance(i, totalQuestions, j.toString()));
-            }
-            f++;
+            if (requestCode == MY_PERMISSION_REQUEST_CODE)
+                init();
+            //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
-
-
-        return fragments;
     }
 }
