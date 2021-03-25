@@ -37,11 +37,11 @@
             android:gravity="center" />
 
         <ProgressBar
-            android:id="@+id/progressBar3"
+            android:id="@+id/pbTop"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="414dp"
             android:layout_height="40dp"
-            android:progress="70" />
+            />
 
         <TextView
             android:id="@+id/tvQuestionNo"
@@ -145,9 +145,11 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/c5" />
+                android:background="@drawable/c5"
+                android:backgroundTint="@null" />
         </LinearLayout>
-<LinearLayout
+
+        <LinearLayout
             android:id="@+id/llQustionsImgAud2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -203,7 +205,8 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
         </LinearLayout>
-<LinearLayout
+
+        <LinearLayout
             android:id="@+id/llQustionsImgAud13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -259,7 +262,8 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
         </LinearLayout>
-<LinearLayout
+
+        <LinearLayout
             android:id="@+id/llQustionsImgAud4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

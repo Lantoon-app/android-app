@@ -1,24 +1,18 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Environment;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bazinga.lantoon.Utils;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
 import com.bazinga.lantoon.home.chapter.lesson.ui.p1.P1Fragment;
@@ -28,19 +22,12 @@ import com.bazinga.lantoon.home.chapter.lesson.ui.q.QFragment;
 import com.bazinga.lantoon.home.chapter.lesson.ui.qp1.QP1Fragment;
 import com.bazinga.lantoon.home.chapter.lesson.ui.qp2.QP2Fragment;
 import com.bazinga.lantoon.home.chapter.lesson.ui.qp3.QP3Fragment;
-import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
-import com.bazinga.lantoon.test.MainActivity2;
-import com.bazinga.lantoon.test.UnzipUtility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -87,41 +74,6 @@ public class QuestionsViewModel extends ViewModel {
         return progressTask;
     }
 
-    /*public QuestionsViewModel() {
-        questionsLiveData = new MutableLiveData<>();
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<JsonArray> call = apiInterface.getQuestions(1, 1, 1);
-        call.enqueue(new Callback<JsonArray>() {
-            @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-
-                if (response.isSuccessful()) {
-                    JsonObject jsonObject = new JsonObject();
-
-                    jsonObject = response.body().get(0).getAsJsonObject();
-
-                    questionsLiveData.setValue(jsonObject);
-
-
-                } else {
-                    //Log.e("response message= ", response.message() + response.code());
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<JsonArray> call, Throwable t) {
-
-                call.cancel();
-                t.printStackTrace();
-                Log.e("response ERROR= ", "" + t.getMessage() + " " + t.getLocalizedMessage());
-            }
-        });
-    }*/
-
-
-
     public class QuestionsAsyncTask extends AsyncTask<Void, Float, Boolean> {
 
         @Override
@@ -134,34 +86,12 @@ public class QuestionsViewModel extends ViewModel {
         @Override
         protected Boolean doInBackground(Void... params) {
             Log.i(TAG, "doInBackground: ");
-            /*for (int i = 0; i <= 10; ++i) {
 
-                if (isCancelled()) {
-                    Log.e(TAG, "doInBackground: User canceled");
-                    break;
-                }
-
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                publishProgress(Float.valueOf(i));
-
-                *//*try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*//*
-
-
-            }*/
-            downloadZipFile(1, 7, 1, 1);
-            downloadZipFile(1, 7, 1, 2);
-            downloadZipFile(1, 7, 1, 3);
-            downloadZipFile(1, 7, 1, 4);
-            questionsFragmentData(1,7,1);
+            downloadZipFile(1, 1, 1, 1);
+            downloadZipFile(1, 1, 1, 2);
+            downloadZipFile(1, 1, 1, 3);
+            downloadZipFile(1, 1, 1, 4);
+            questionsFragmentData(1, 1, 1);
             return true;
         }
 
@@ -193,7 +123,7 @@ public class QuestionsViewModel extends ViewModel {
     }
 
     private void downloadZipFile(int langid, int chaperno, int lessonno, int type) {
-
+        String folderStruc = String.valueOf(langid+"/"+chaperno+"/"+lessonno+"/");
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> call = apiInterface.downloadFileByUrl(langid, chaperno, lessonno, type);
 
@@ -205,7 +135,7 @@ public class QuestionsViewModel extends ViewModel {
 
                     //Toast.makeText(get, "Downloading...", Toast.LENGTH_SHORT).show();
 
-                    downloadZipFileTask = new DownloadZipFileTask(type);
+                    downloadZipFileTask = new DownloadZipFileTask(type,folderStruc);
                     downloadZipFileTask.execute(response.body());
 
                 } else {
@@ -223,9 +153,11 @@ public class QuestionsViewModel extends ViewModel {
 
     private class DownloadZipFileTask extends AsyncTask<ResponseBody, Pair<Integer, Long>, String> {
         int type = 0;
+        String folerStruc = "";
 
-        public DownloadZipFileTask(int type) {
+        public DownloadZipFileTask(int type, String folerStruc) {
             this.type = type;
+            this.folerStruc = folerStruc;
         }
 
         @Override
@@ -238,7 +170,11 @@ public class QuestionsViewModel extends ViewModel {
         @Override
         protected String doInBackground(ResponseBody... urls) {
             //Copy you logic to calculate progress and call
-            saveToDisk(urls[0], String.valueOf((type)) + ".zip",String.valueOf(type));
+            try {
+                saveToDisk(urls[0], String.valueOf((type)) + ".zip", type,folerStruc);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             return null;
         }
@@ -278,10 +214,10 @@ public class QuestionsViewModel extends ViewModel {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void saveToDisk(ResponseBody body, String filename, String folderName) {
+    private void saveToDisk(ResponseBody body, String filename, int type, String folerStruc) throws Exception {
         try {
-
-            File destinationFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
+            String folderName = "";
+            File destinationFile = new File(Utils.ZIP_FILE_DESTINATION_PATH, filename);
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -318,10 +254,16 @@ public class QuestionsViewModel extends ViewModel {
             } finally {
 
                 UnzipUtility unzipUtility = new UnzipUtility();
-                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + File.separator + folderName);
-                dir.mkdir();
+                if (type == 1)
+                    folderName = Utils.IMAGE_FILE_DESTINATION_FOLDER;
+                if (type == 2)
+                    folderName = Utils.AUDIO_FILE_DESTINATION_FOLDER;
+                if (type == 3)
+                    folderName = Utils.IMAGEQUES_FILE_DESTINATION_FOLDER;
+                if (type == 4)
+                    folderName = Utils.AUDIOANS_FILE_DESTINATION_FOLDER;
 
-                unzipUtility.unzip(destinationFile.getPath(), dir.getPath());
+                unzipUtility.unzip(destinationFile.getPath(), Utils.ZIP_FILE_DESTINATION_PATH + File.separator + folderName+folerStruc);
 
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();
@@ -333,7 +275,7 @@ public class QuestionsViewModel extends ViewModel {
         }
     }
 
-    private void questionsFragmentData(int langid, int chaperno, int lessonno){
+    private void questionsFragmentData(int langid, int chaperno, int lessonno) {
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<JsonArray> call = apiInterface.getQuestions(langid, chaperno, lessonno);
@@ -367,9 +309,11 @@ public class QuestionsViewModel extends ViewModel {
             }
         });
     }
+
     public LiveData<List<Fragment>> getQuestionsMutableLiveData() {
         return questionsLiveData;
     }
+
     private List<Fragment> buildFragments(@NonNull JsonObject jsonObject) {
         List<Fragment> fragments = new ArrayList<Fragment>();
 

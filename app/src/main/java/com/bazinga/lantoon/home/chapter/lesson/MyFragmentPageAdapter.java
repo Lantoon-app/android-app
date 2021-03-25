@@ -6,11 +6,17 @@ import java.util.List;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class MyFragmentPageAdapter extends FragmentPagerAdapter {
+import org.jetbrains.annotations.NotNull;
+
+public class MyFragmentPageAdapter extends FragmentStateAdapter {
 
     public static int pos = 0;
 
@@ -18,14 +24,14 @@ public class MyFragmentPageAdapter extends FragmentPagerAdapter {
     //private ArrayList<String> categories;
     private Context context;
 
-    public MyFragmentPageAdapter(Context c, FragmentManager fragmentManager, List<Fragment> myFrags) {
-        super(fragmentManager);
+    public MyFragmentPageAdapter(FragmentActivity fragmentActivity, List<Fragment> myFrags) {
+        super(fragmentActivity);
         myFragments = myFrags;
         //this.categories = cats;
-        this.context = c;
+        //this.context = c;
     }
 
-    @Override
+   /* @Override
     public Fragment getItem(int position) {
 
         return myFragments.get(position);
@@ -35,6 +41,18 @@ public class MyFragmentPageAdapter extends FragmentPagerAdapter {
    @Override
     public int getCount() {
 
+        return myFragments.size();
+    }*/
+
+    @NonNull
+    @NotNull
+    @Override
+    public Fragment createFragment(int position) {
+        return myFragments.get(position);
+    }
+
+    @Override
+    public int getItemCount() {
         return myFragments.size();
     }
 

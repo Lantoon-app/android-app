@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".home.chapter.lesson.QuestionsActivity">
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:visibility="visible"
         android:layout_width="match_parent"

@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
@@ -22,9 +23,8 @@ import com.bazinga.lantoon.R;
 public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     CommonFunction cf;
-    ViewPager mPager;
+    ViewPager2 mPager;
     ProgressDialog progress;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +38,12 @@ public class QuestionsActivity extends AppCompatActivity {
         cf.fullScreen(getWindow());
         mPager = findViewById(R.id.view_pager);
         progress = new ProgressDialog(this);
-
-        //init();
     }
 
     private void init() {
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
-
 
         QuestionsViewModel questionViewModel = new ViewModelProvider(this).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
@@ -64,12 +61,11 @@ public class QuestionsActivity extends AppCompatActivity {
                     progress.dismiss();
                     break;
                 case TaskState.COMPLETED:
-                    //Toast.makeText(this, "Finished", Toast.LENGTH_SHORT).show();
                     Log.d("TAG", "Finished");
 
                     questionViewModel.getQuestionsMutableLiveData().observe(this, fragments -> {
 
-                        MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, getSupportFragmentManager(), fragments);
+                        MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
                         mPager.setAdapter(mPageAdapter);
                         progress.dismiss();
                         /*  //Add a new Fragment to the list with bundle

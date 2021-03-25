@@ -20,29 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.registration.langselection.model.Language;
+import com.bazinga.lantoon.home.chapter.lesson.UnzipUtility;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
-import com.google.android.gms.common.internal.Constants;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
-import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -116,7 +107,11 @@ public class MainActivity2 extends AppCompatActivity {
         @Override
         protected String doInBackground(ResponseBody... urls) {
             //Copy you logic to calculate progress and call
-            saveToDisk(urls[0], "1.zip");
+            try {
+                saveToDisk(urls[0], "1.zip");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
@@ -153,7 +148,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void saveToDisk(ResponseBody body, String filename) {
+    private void saveToDisk(ResponseBody body, String filename) throws Exception {
         try {
 
             File destinationFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
