@@ -21,19 +21,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/slantView">
 
         <ImageButton
-            android:id="@+id/button2"
+            android:id="@+id/imgBtnHome"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -42,11 +41,11 @@
             android:gravity="center" />
 
         <ProgressBar
-            android:id="@+id/progressBar3"
+            android:id="@+id/pbTop"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="414dp"
             android:layout_height="40dp"
-            android:progress="70" />
+            />
 
         <TextView
             android:id="@+id/tvQuestionNo"
@@ -59,7 +58,7 @@
             android:textSize="25dp" />
 
         <ImageButton
-            android:id="@+id/button3"
+            android:id="@+id/imgBtnHelp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -76,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/slantView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,14 +86,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvQuestionName"
+                android:id="@+id/tvQuestionName1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
-                android:text="The Boy is Eating"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -115,6 +113,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         style="@style/QuestionButtonStyle"
+                        android:id="@+id/btnAudio1"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginBottom="10dp"
@@ -130,6 +129,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         style="@style/QuestionButtonStyle"
+                        android:id="@+id/btnAudioSlow1"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginTop="10dp"
@@ -145,8 +145,9 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
+                    android:id="@+id/imbBtnQuestionImg1"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
                     android:background="@drawable/c5" />
@@ -162,14 +163,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvQuestionAnswer"
+                android:id="@+id/tvQuestionName2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
-                android:text="The Boy is Eating"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -190,6 +190,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         style="@style/QuestionButtonStyle"
+                        android:id="@+id/btnAudio2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginBottom="10dp"
@@ -205,6 +206,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         style="@style/QuestionButtonStyle"
+                        android:id="@+id/btnAudioSlow2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginTop="10dp"
@@ -220,16 +222,28 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageButton
-                    android:layout_width="180dp"
-                    android:layout_height="180dp"
+                    android:id="@+id/imbBtnQuestionImg2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
                     android:background="@drawable/c5" />
             </LinearLayout>
         </LinearLayout>
-
 
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imgBtnNext"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/question_next"
+        android:gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -28,10 +28,10 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/slantView">
 
         <ImageButton
-            android:id="@+id/button2"
+            android:id="@+id/imgBtnHome"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -40,11 +40,11 @@
             android:gravity="center" />
 
         <ProgressBar
-            android:id="@+id/progressBar3"
+            android:id="@+id/pbTop"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="414dp"
             android:layout_height="40dp"
-            android:progress="70" />
+            />
 
         <TextView
             android:id="@+id/tvQuestionNo"
@@ -57,7 +57,7 @@
             android:textSize="25dp" />
 
         <ImageButton
-            android:id="@+id/button3"
+            android:id="@+id/imgBtnHelp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -73,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
 
 
         <LinearLayout
@@ -88,6 +88,7 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/QuestionButtonStyle"
+                android:id="@+id/btnMic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -99,7 +100,7 @@
                 app:iconSize="60dp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tvRecText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -133,6 +134,7 @@
                 android:textSize="20sp" />
 
             <ImageView
+                android:id="@+id/imbBtnQuestionImg"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
@@ -147,6 +149,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/QuestionButtonStyle"
+                    android:id="@+id/btnAudio"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginRight="20dp"
@@ -158,6 +161,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/QuestionButtonStyle"
+                    android:id="@+id/btnAudioSlow"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="20dp"
