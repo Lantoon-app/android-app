@@ -19,9 +19,16 @@ public class Question {
     @SerializedName("right_image_path")
     @Expose
     private String rightImagePath;
-    @SerializedName("wrong_image_path")
+    @SerializedName("wrong_image_path1")
     @Expose
-    private String wrongImagePath;
+    private String wrongImagePath1;
+    @SerializedName("wrong_image_path2")
+    @Expose
+    private String wrongImagePath2;
+    @SerializedName("wrong_image_path3")
+    @Expose
+    private String wrongImagePath3;
+
     @SerializedName("audio_path")
     @Expose
     private String audioPath;
@@ -81,12 +88,26 @@ public class Question {
         this.rightImagePath = rightImagePath;
     }
 
-    public String getWrongImagePath() {
-        return wrongImagePath;
+    public String getWrongImagePath1() {
+        return wrongImagePath1;
     }
 
-    public void setWrongImagePath(String wrongImagePath) {
-        this.wrongImagePath = wrongImagePath;
+    public void setWrongImagePath1(String wrongImagePath1) {
+        this.wrongImagePath1 = wrongImagePath1;
+    }
+public String getWrongImagePath2() {
+        return wrongImagePath2;
+    }
+
+    public void setWrongImagePath2(String wrongImagePath2) {
+        this.wrongImagePath2 = wrongImagePath2;
+    }
+public String getWrongImagePath3() {
+        return wrongImagePath3;
+    }
+
+    public void setWrongImagePath3(String wrongImagePath3) {
+        this.wrongImagePath3 = wrongImagePath3;
     }
 
     public String getAudioPath() {

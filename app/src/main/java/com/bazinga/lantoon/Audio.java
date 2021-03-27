@@ -31,7 +31,7 @@ public class Audio {
                 soundPool.play(sampleId, 1, 1, 1, 0, 1.0f);
             }
         });
-        File file = new File(path);
+        /*File file = new File(path);
         File[] files = file.listFiles(new FilenameFilter() {
 
             @Override
@@ -39,8 +39,8 @@ public class Audio {
 
                 return filename.contains(".mp3");
             }
-        });
-        soundPool.load(files[0].getPath(), 1);
+        });*/
+        soundPool.load(path, 1);
 
     }
 
@@ -63,7 +63,7 @@ public class Audio {
                 soundPool.play(sampleId, 1, 1, 1, 0, 0.8f);
             }
         });
-        File file = new File(path);
+        /*File file = new File(path);
         File[] files = file.listFiles(new FilenameFilter() {
 
             @Override
@@ -71,8 +71,8 @@ public class Audio {
 
                 return filename.contains(".mp3");
             }
-        });
-        soundPool.load(files[0].getPath(), 1);
+        });*/
+        soundPool.load(path, 1);
     }
 
     public void closeSound() {

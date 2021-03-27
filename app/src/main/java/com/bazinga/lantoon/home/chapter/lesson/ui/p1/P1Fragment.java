@@ -16,12 +16,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
+import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -78,7 +81,12 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
         imgBtnHelp.setOnClickListener(this::onClick);
         btnAudio.setOnClickListener(this::onClick);
         btnAudioSlow.setOnClickListener(this::onClick);
+        imgBtnAnsImage1.setOnClickListener(this::onClick);
+        imgBtnAnsImage2.setOnClickListener(this::onClick);
+        imgBtnAnsImage3.setOnClickListener(this::onClick);
+        imgBtnAnsImage4.setOnClickListener(this::onClick);
         setClickableButton(false);
+
     }
 
     private void setClickableButton(boolean clickable) {
@@ -103,7 +111,8 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
         tvQuestionName.setText(question.getWord());
         audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
         int[] imageViewIds = {R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
-        cf.setShuffleImages(getActivity(), imageViewIds, Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath(), getView());
+        String[] ImagePaths = {Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
+        cf.setShuffleImages(getActivity(), imageViewIds, ImagePaths, getView());
         setClickableButton(true);
 
         Log.d("data p1 ", new GsonBuilder().setPrettyPrinting().create().toJson(question));
@@ -134,6 +143,24 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
             case R.id.btnAudioSlow:
                 audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
                 break;
+            case R.id.imgBtnAnsImage1:
+
+                if (cf.CheckAnswerImage(imgBtnAnsImage1.getTag().toString()))
+                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                break;
+            case R.id.imgBtnAnsImage2:
+                if (cf.CheckAnswerImage(imgBtnAnsImage2.getTag().toString()))
+                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                break;
+            case R.id.imgBtnAnsImage3:
+                if (cf.CheckAnswerImage(imgBtnAnsImage3.getTag().toString()))
+                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                break;
+            case R.id.imgBtnAnsImage4:
+                if (cf.CheckAnswerImage(imgBtnAnsImage4.getTag().toString()))
+                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                break;
+
         }
     }
 

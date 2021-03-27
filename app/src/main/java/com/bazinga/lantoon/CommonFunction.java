@@ -3,27 +3,28 @@ package com.bazinga.lantoon;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class CommonFunction {
@@ -60,8 +61,8 @@ public class CommonFunction {
                 .start();
     }
 
-    public void setImagefromLocalFolder(Activity activity, String folderPath, ImageView imageView) {
-        File file = new File(folderPath);
+    public void setImage(Activity activity, String filePath, ImageView imageView) {
+        /*File file = new File(folderPath);
         File[] files = file.listFiles(new FilenameFilter() {
 
             @Override
@@ -69,15 +70,15 @@ public class CommonFunction {
 
                 return filename.contains(".jpg");
             }
-        });
+        });*/
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(activity).load(files[0]).apply(requestOptions).into(imageView);
+        Glide.with(activity).load(filePath).apply(requestOptions).into(imageView);
 
     }
 
-    public void setShuffleImages(Activity activity, int[] imageViewIds, String rightImgPaths, String wrongImgFolderPath, View view) {
-        File file = new File(wrongImgFolderPath);
+    public void setShuffleImages(Activity activity, int[] imageViewIds, String[] imagePaths, View view) {
+        /*File file = new File(wrongImgFolderPath);
         File[] wrongImageFile = file.listFiles(new FilenameFilter() {
 
             @Override
@@ -97,7 +98,7 @@ public class CommonFunction {
                 return name.contains(".jpg");
             }
         });
-        arrayList.add(rightImageFile[0]);
+        arrayList.add(rightImageFile[0]);*/
 
 
         Random rng = new Random();
@@ -110,11 +111,105 @@ public class CommonFunction {
                     ImageButton iv = (ImageButton) view.findViewById(imageViewIds[i]);
                     RequestOptions requestOptions = new RequestOptions();
                     requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-                    Glide.with(activity).load(arrayList.get(next)).apply(requestOptions).into(iv);
+                    iv.setTag(imagePaths[next]);
+                    Glide.with(activity).load(imagePaths[next]).apply(requestOptions).into(iv);
                     break;
                 }
             }
         }
+
+    }
+
+    public boolean CheckAnswerImage(String imagePath) {
+        if (imagePath.contains("right"))
+            return true;
+        else return false;
+    }
+
+    public void speechToText(Context context, TextView textView, String answerWord){
+
+        SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
+
+        //String languagePref = Locale.ENGLISH;
+        final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ENGLISH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, Locale.ENGLISH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, Locale.ENGLISH);
+
+        /*final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.);
+*/
+        speechRecognizer.startListening(speechRecognizerIntent);
+        speechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle bundle) {
+
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+                textView.setText("");
+                textView.setHint("Listening...");
+            }
+
+            @Override
+            public void onRmsChanged(float v) {
+
+            }
+
+            @Override
+            public void onBufferReceived(byte[] bytes) {
+
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+
+            }
+
+            @Override
+            public void onError(int i) {
+
+            }
+
+            @Override
+            public void onResults(Bundle bundle) {
+                //micButton.setImageResource(R.drawable.ic_mic_black_off);
+                ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+                textView.setText(data.get(0));
+                Log.d("check text", data.get(0));
+                Log.d("check text", answerWord);
+                /*if(data.get(0).equals(answerWord)) {
+                    Log.d("check ok", data.get(0) + " " + answerWord);
+
+                }*/
+            }
+
+            @Override
+            public void onPartialResults(Bundle bundle) {
+
+            }
+
+            @Override
+            public void onEvent(int i, Bundle bundle) {
+
+            }
+        });
+
+        /*micBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
+                    speechRecognizer.stopListening();
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    //micBtn.setImageResource(R.drawable.ic_mic_black_24dp);
+                    speechRecognizer.startListening(speechRecognizerIntent);
+                }
+                return false;
+            }
+        });*/
 
     }
 

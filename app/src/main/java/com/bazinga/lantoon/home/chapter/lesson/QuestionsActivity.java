@@ -23,7 +23,7 @@ import com.bazinga.lantoon.R;
 public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     CommonFunction cf;
-    ViewPager2 mPager;
+    public static ViewPager2 mPager;
     ProgressDialog progress;
 
     @Override
@@ -31,7 +31,8 @@ public class QuestionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.RECORD_AUDIO
         }, MY_PERMISSION_REQUEST_CODE);
         setContentView(R.layout.questions_activity);
         cf = new CommonFunction();

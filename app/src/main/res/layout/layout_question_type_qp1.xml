@@ -23,19 +23,18 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/slantView">
 
         <ImageButton
-            android:id="@+id/button2"
+            android:id="@+id/imgBtnHome"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -44,11 +43,11 @@
             android:gravity="center" />
 
         <ProgressBar
-            android:id="@+id/progressBar3"
+            android:id="@+id/pbTop"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="414dp"
             android:layout_height="40dp"
-            android:progress="70" />
+            />
 
         <TextView
             android:id="@+id/tvQuestionNo"
@@ -61,7 +60,7 @@
             android:textSize="25dp" />
 
         <ImageButton
-            android:id="@+id/button3"
+            android:id="@+id/imgBtnHelp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -86,7 +85,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
         app:layout_constraintVertical_bias="0.619" />
 
     <TextView
@@ -104,7 +103,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
         app:layout_constraintVertical_bias="0.578" />
 
     <LinearLayout
@@ -127,6 +126,7 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/QuestionButtonStyle"
+                android:id="@+id/btnAudio1"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="10dp"
@@ -142,6 +142,7 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/QuestionButtonStyle"
+                android:id="@+id/btnAudioSlow1"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
@@ -157,6 +158,7 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imbBtnQuestionImg"
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:layout_gravity="center"
@@ -182,6 +184,7 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/QuestionButtonStyle"
+                android:id="@+id/btnAudio2"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginBottom="10dp"
@@ -197,6 +200,7 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/QuestionButtonStyle"
+                android:id="@+id/btnAudioSlow2"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
@@ -220,12 +224,14 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imgBtnAnsImage1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imgBtnAnsImage2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
@@ -241,12 +247,14 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imgBtnAnsImage3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
 
             <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imgBtnAnsImage4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"

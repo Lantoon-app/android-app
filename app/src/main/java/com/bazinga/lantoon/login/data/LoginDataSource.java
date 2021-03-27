@@ -30,11 +30,12 @@ public class LoginDataSource {
             return new Result.Success<>(fakeUser);*/
             System.out.println("Login input" + username + password);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<User> call = apiInterface.userLogin(username.trim(),password.trim(),"asdfsdfsd");
+            //Call<User> call = apiInterface.userLogin(username.trim(),password.trim(),"asdfsdfsd");
+            Call<User> call = apiInterface.userLogin("test@test.com","12345678","asdfsdfsd");
             call.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
-                    Log.e("Login onResponse body= ", new Gson().toJson(response));
+                    Log.e("Login onResponse body= ", response.body().toString());
                     if (response.isSuccessful() && response.body() != null) {
 
 

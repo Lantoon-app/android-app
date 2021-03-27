@@ -23,6 +23,7 @@ import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -134,10 +135,10 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             String imgFile = Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getRightImagePath() + questions.get(0).getCellValue() + ".jpg";
             Log.d("Imagefile", imgFile);
 
-            cf.setImagefromLocalFolder(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getRightImagePath(),imbBtnQuestionImg1);
-            cf.setImagefromLocalFolder(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getRightImagePath(),imbBtnQuestionImg2);
-            cf.setImagefromLocalFolder(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getRightImagePath(),imbBtnQuestionImg3);
-            cf.setImagefromLocalFolder(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getRightImagePath(),imbBtnQuestionImg4);
+            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getRightImagePath(),imbBtnQuestionImg1);
+            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getRightImagePath(),imbBtnQuestionImg2);
+            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getRightImagePath(),imbBtnQuestionImg3);
+            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getRightImagePath(),imbBtnQuestionImg4);
 
 
 
@@ -181,7 +182,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             tvQuestionName.setText(questions.get(0).getWord());
             cf.shakeAnimation(imbBtnQuestionImg1, 1000);
             MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath() + questions.get(0).getCellValue() + ".mp3");
+            mediaPlayer.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(mp -> {
@@ -191,7 +192,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 try {
                     tvQuestionName.setText(questions.get(1).getWord());
                     cf.shakeAnimation(imbBtnQuestionImg2, 1000);
-                    mp.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath() + questions.get(1).getCellValue() + ".mp3");
+                    mp.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath());
                     mp.prepare();
                     mp.start();
                     mp.setOnCompletionListener(mp1 -> {
@@ -201,7 +202,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                         try {
                             tvQuestionName.setText(questions.get(2).getWord());
                             cf.shakeAnimation(imbBtnQuestionImg3, 1000);
-                            mp1.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath() + questions.get(2).getCellValue() + ".mp3");
+                            mp1.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath());
                             mp1.prepare();
                             mp1.start();
                             mp1.setOnCompletionListener(mp11 -> {
@@ -211,7 +212,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                                 try {
                                     tvQuestionName.setText(questions.get(3).getWord());
                                     cf.shakeAnimation(imbBtnQuestionImg4, 1000);
-                                    mp11.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getAudioPath() + questions.get(3).getCellValue() + ".mp3");
+                                    mp11.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getAudioPath());
                                     mp11.prepare();
                                     mp11.start();
                                     mp11.setOnCompletionListener(mp111 -> {
@@ -248,6 +249,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHelp:
                 break;
             case R.id.imgBtnNext:
+                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
                 break;
             case R.id.btnAudio1:
                 //cf.playAudio();Audio(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath() + questions.get(0).getCellValue() + ".mp3");

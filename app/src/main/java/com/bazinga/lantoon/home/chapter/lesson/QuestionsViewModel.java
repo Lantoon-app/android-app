@@ -131,7 +131,7 @@ public class QuestionsViewModel extends ViewModel {
             @Override
             public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "Got the body for the file");
+                    Log.d(TAG, "Got the body for the file " +response.message().toString());
 
                     //Toast.makeText(get, "Downloading...", Toast.LENGTH_SHORT).show();
 
