@@ -2,6 +2,7 @@ package com.bazinga.lantoon.retrofit;
 
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
+import com.bazinga.lantoon.login.data.model.LoggedInUser;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.model.User;
 import com.google.gson.JsonArray;
@@ -40,7 +41,7 @@ public interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/login")
-    Call<User> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid);
+    Call<LoggedInUser> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid);
     /*@Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/login")
     Call<User> userLogin(@Body User user);

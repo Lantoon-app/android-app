@@ -4,23 +4,26 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.util.Log;
 import android.util.Patterns;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.login.data.LoginRepository;
-import com.bazinga.lantoon.login.data.Result;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
+import com.bazinga.lantoon.retrofit.ApiClient;
+import com.bazinga.lantoon.retrofit.ApiInterface;
+import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
+    LoggedInUser loggedInUser;
 
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
-    }
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
@@ -30,15 +33,51 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+    public void login(String username, String password, String deviceId) {
 
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
+
+        try {
+
+            System.out.println("Login input" + username + password);
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<LoggedInUser> call = apiInterface.userLogin(username.trim(), password.trim(), deviceId);
+            //Call<LoggedInUser> call = apiInterface.userLogin("test@test.com", "12345678", "afsdfsdfsdfsd");
+            call.enqueue(new Callback<LoggedInUser>() {
+                @Override
+                public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
+                    Log.e("Login onResponse body= ", response.body().toString());
+                    if (response.isSuccessful() && response.body() != null) {
+
+                        loggedInUser = response.body();
+                        if (loggedInUser.getStatus().getCode() == 1008) {
+                            loginResult.setValue(new LoginResult(new LoggedInUserView(loggedInUser.getData().getUname())));
+                        } else {
+                            loginResult.setValue(new LoginResult(loggedInUser.getStatus().getMessage()));
+                            //loginResult.setValue(new LoginResult(R.string.login_failed));
+                        }
+
+                        Log.d("Login onResponse body= ", new Gson().toJson(response.body()));
+                        Log.d("Login onResponse body= ", String.valueOf(response.code()));
+                        //Log.d("Login onResponse msg= ", loggedInUser.getData().getEmail());
+                    } else {
+                        Log.e("Login onResponse msg= ", response.message() + response.code());
+                        loginResult.setValue(new LoginResult(response.message() + response.code()));
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<LoggedInUser> call, Throwable t) {
+                    call.cancel();
+                    t.printStackTrace();
+                    loginResult.setValue(new LoginResult(t.getMessage()));
+                    Log.e("Login onFailure msg= ", "" + t.getMessage() + " " + t.getLocalizedMessage());
+                    return;
+                }
+            });
+        } catch (Exception e) {
+            // return new Result.Error(new IOException("Error logging in", e));
+            loginResult.setValue(new LoginResult(e.getMessage()));
         }
     }
 
@@ -57,7 +96,7 @@ public class LoginViewModel extends ViewModel {
         if (username == null) {
             return false;
         }
-        if (username.contains("@")) {
+        if (username != null) {
             return Patterns.EMAIL_ADDRESS.matcher(username).matches();
         } else {
             return !username.trim().isEmpty();
@@ -66,6 +105,6 @@ public class LoginViewModel extends ViewModel {
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
+        return password != null && password.trim().length() > 7;
     }
 }

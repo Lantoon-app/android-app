@@ -128,7 +128,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         tvQuestionNo.setText(quesNo + "/" + totalQues);
         int percentage = cf.percent(quesNo, totalQues);
         Log.d("percentage", String.valueOf(percentage));
-        pbTop.setProgress(percentage);
+        pbTop.setProgress(cf.percent(quesNo, totalQues));
     }
 
     @Override

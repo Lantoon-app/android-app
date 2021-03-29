@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBtnHome"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/question_home"
+            android:gravity="center" />
+
+        <ProgressBar
+            android:id="@+id/pbTop"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="414dp"
+            android:layout_height="25dp"
+            android:progressDrawable="@drawable/custom_question_pb"
+            />
+
+        <TextView
+            android:id="@+id/tvQuestionNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="7/10"
+            android:textColor="@color/black"
+            android:textSize="25dp" />
+
+        <ImageButton
+            android:id="@+id/imgBtnHelp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/question_help"
+            android:gravity="center" />
+    </LinearLayout>
+</LinearLayout>

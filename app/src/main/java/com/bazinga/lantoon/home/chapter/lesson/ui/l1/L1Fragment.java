@@ -1,9 +1,11 @@
 package com.bazinga.lantoon.home.chapter.lesson.ui.l1;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,7 +50,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     TextView tvQuestionNo, tvQuestionName;
     ImageButton imgBtnHome, imgBtnHelp, imgBtnNext;
     ProgressBar pbTop;
-    ImageButton imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
+    ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
     Button btnAudio1, btnAudio2, btnAudio3, btnAudio4, btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
     CommonFunction cf;
 
@@ -118,6 +121,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         btnAudioSlow3.setClickable(clickable);
         btnAudioSlow4.setClickable(clickable);
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -153,7 +157,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         tvQuestionNo.setText(quesNo + "/" + totalQues);
         int percentage = cf.percent(quesNo, totalQues);
         Log.d("percentage", String.valueOf(percentage));
-        pbTop.setProgress(percentage);
+        pbTop.setProgress(cf.percent(quesNo, totalQues));
     }
 
 
@@ -306,7 +310,5 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(audio.soundPool!=null)
-        audio.closeSound();
     }
 }

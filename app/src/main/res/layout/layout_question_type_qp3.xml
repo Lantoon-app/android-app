@@ -36,52 +36,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/slantView">
-
-        <ImageButton
-            android:id="@+id/imgBtnHome"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="40dp"
-            android:background="@drawable/question_home"
-            android:gravity="center" />
-
-        <ProgressBar
-            android:id="@+id/pbTop"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="414dp"
-            android:layout_height="40dp"
-            />
-
-        <TextView
-            android:id="@+id/tvQuestionNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:text="7/10"
-            android:textColor="@color/black"
-            android:textSize="25dp" />
-
-        <ImageButton
-            android:id="@+id/imgBtnHelp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:background="@drawable/question_help"
-            android:gravity="center" />
-    </LinearLayout>
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_question_header"/>
 
     <TextView
         android:id="@+id/tvQuestionName"
@@ -94,9 +51,11 @@
         android:text="The Boy is Eating"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.738"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="146dp" />
+        tools:layout_editor_absoluteX="40dp" />
 
     <TextView
         android:id="@+id/tvQuestionAnswer"
@@ -109,20 +68,23 @@
         android:text="The Boy is Eating"
         android:textColor="@color/black"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.738"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="280dp"
-        tools:layout_editor_absoluteY="146dp" />
+        tools:layout_editor_absoluteX="280dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="88dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestionName"
-        tools:layout_editor_absoluteX="28dp"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -134,8 +96,8 @@
             android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
-                style="@style/QuestionButtonStyle"
                 android:id="@+id/btnAudio1"
+                style="@style/QuestionButtonStyle"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="5dp"
@@ -166,7 +128,7 @@
                 app:iconSize="40dp" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageView
             android:id="@+id/imbBtnQuestionImg"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -179,14 +141,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="84dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout10"
-        app:layout_constraintHorizontal_bias="0.745"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout8"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestionAnswer"
-        app:layout_constraintVertical_bias="0.503">
+        app:layout_constraintHorizontal_bias="0.714"
+
+        app:layout_constraintStart_toEndOf="@+id/linearLayout8">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -229,7 +191,7 @@
                 app:iconSize="40dp" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageView
             android:id="@+id/imgBtnAnsImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -268,14 +230,5 @@
             android:fontFamily="@font/open_sans_bold"
             android:textColor="@color/black"
             android:textSize="20sp" />
-        <ImageButton
-            android:id="@+id/imgBtnNext"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/question_next"
-            android:gravity="end"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

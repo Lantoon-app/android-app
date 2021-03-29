@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                loginIntent.putExtra(Utils.TAG_CURRENT_LOCATION, "");
+                loginIntent.putExtra(Utils.TAG_DEVICE_ID, strDeviceId);
+                loginIntent.putExtra(Utils.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(loginIntent);
             }
         });

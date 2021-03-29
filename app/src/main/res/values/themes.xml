@@ -41,6 +41,6 @@
         <item name="android:maxHeight">47dip</item>
     </style>
     <style name="QuestionButtonStyle" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:background">@drawable/question_button_round_shape</item>
+        <item name="android:background">@drawable/button_bg</item>
     </style>
 </resources>

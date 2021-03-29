@@ -1,11 +1,14 @@
 package com.bazinga.lantoon.login.data.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
 public class LoggedInUser {
 
-    private String userId;
+    /*private String userId;
     private String displayName;
 
     public LoggedInUser(String userId, String displayName) {
@@ -19,5 +22,27 @@ public class LoggedInUser {
 
     public String getDisplayName() {
         return displayName;
+    }*/
+    @SerializedName("status")
+    @Expose
+    private Status status;
+    @SerializedName("data")
+    @Expose
+    private Data data;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 }

@@ -19,52 +19,9 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/slantView">
-
-        <ImageButton
-            android:id="@+id/imgBtnHome"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="40dp"
-            android:background="@drawable/question_home"
-            android:gravity="center" />
-
-        <ProgressBar
-            android:id="@+id/pbTop"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="414dp"
-            android:layout_height="40dp"
-            />
-
-        <TextView
-            android:id="@+id/tvQuestionNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:text="7/10"
-            android:textColor="@color/black"
-            android:textSize="25dp" />
-
-        <ImageButton
-            android:id="@+id/imgBtnHelp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:background="@drawable/question_help"
-            android:gravity="center" />
-    </LinearLayout>
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_question_header"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
@@ -72,10 +29,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/slantView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
+        app:layout_constraintTop_toTopOf="@id/header"
+        app:layout_constraintVertical_bias="0.594">
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -158,14 +117,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatImageButton
+                <ImageView
                     android:id="@+id/imgBtnAnsImage1"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
                     android:background="@drawable/c5" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
+                <ImageView
                     android:id="@+id/imgBtnAnsImage2"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
@@ -181,14 +140,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatImageButton
+                <ImageView
                     android:id="@+id/imgBtnAnsImage3"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_margin="5dp"
                     android:background="@drawable/c5" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
+                <ImageView
                     android:id="@+id/imgBtnAnsImage4"
                     android:layout_width="100dp"
                     android:layout_height="100dp"

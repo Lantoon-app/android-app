@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -47,11 +48,13 @@ public class CommonFunction {
         }
     }
 
-    public int percent(int a, int b) {
-        float result = 0;
-        result = ((a / b) * 100);
+    public int percent(double quesNo, double totalQues) {
 
-        return (int) result;
+        // percent
+        double per = (quesNo / totalQues) * 100;;
+
+        Log.d("percentage", String.valueOf(Math.round(per)));
+        return (int) per;
     }
 
     public void shakeAnimation(View view, int duration) {
@@ -108,7 +111,7 @@ public class CommonFunction {
                 Integer next = rng.nextInt(imageViewIds.length);
                 if (!generated.contains(next)) {
                     generated.add(next);
-                    ImageButton iv = (ImageButton) view.findViewById(imageViewIds[i]);
+                    ImageView iv = view.findViewById(imageViewIds[i]);
                     RequestOptions requestOptions = new RequestOptions();
                     requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
                     iv.setTag(imagePaths[next]);
@@ -165,21 +168,28 @@ public class CommonFunction {
 
             @Override
             public void onEndOfSpeech() {
-
+                textView.setHint("Checking...");
             }
 
             @Override
             public void onError(int i) {
-
+                textView.setHint("Speak again");
             }
 
             @Override
             public void onResults(Bundle bundle) {
                 //micButton.setImageResource(R.drawable.ic_mic_black_off);
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                textView.setText(data.get(0));
-                Log.d("check text", data.get(0));
-                Log.d("check text", answerWord);
+
+                String output = data.get(0).substring(0, 1).toUpperCase() + data.get(0).substring(1).toLowerCase();
+                textView.setText(output);
+                if(answerWord.equals(data.get(0))) {
+                    System.out.println("check text "+data.get(0));
+                    System.out.println("check text "+answerWord);
+                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                }
+
+
                 /*if(data.get(0).equals(answerWord)) {
                     Log.d("check ok", data.get(0) + " " + answerWord);
 

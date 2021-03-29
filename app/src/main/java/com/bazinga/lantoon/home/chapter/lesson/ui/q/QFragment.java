@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -51,7 +52,7 @@ public class QFragment extends Fragment implements View.OnClickListener {
     TextView tvQuestionNo, tvQuestionName, tvQuestionAnswer;
     ImageButton imgBtnHome, imgBtnHelp, imgBtnNext;
     ProgressBar pbTop;
-    ImageButton imbBtnQuestionImg, imgBtnAnsImage;
+    ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2;
     CommonFunction cf;
 
@@ -132,7 +133,7 @@ public class QFragment extends Fragment implements View.OnClickListener {
         tvQuestionNo.setText(quesNo + "/" + totalQues);
         int percentage = cf.percent(quesNo, totalQues);
         Log.d("percentage", String.valueOf(percentage));
-        pbTop.setProgress(percentage);
+        pbTop.setProgress(cf.percent(quesNo, totalQues));
     }
 
 

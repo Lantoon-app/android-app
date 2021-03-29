@@ -22,52 +22,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/slantView">
-
-        <ImageButton
-            android:id="@+id/imgBtnHome"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginRight="40dp"
-            android:background="@drawable/question_home"
-            android:gravity="center" />
-
-        <ProgressBar
-            android:id="@+id/pbTop"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="414dp"
-            android:layout_height="40dp"
-            />
-
-        <TextView
-            android:id="@+id/tvQuestionNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/open_sans_bold"
-            android:text="7/10"
-            android:textColor="@color/black"
-            android:textSize="25dp" />
-
-        <ImageButton
-            android:id="@+id/imgBtnHelp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:background="@drawable/question_help"
-            android:gravity="center" />
-    </LinearLayout>
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_question_header"/>
 
 
     <TextView
@@ -76,17 +33,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="57dp"
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
         android:text="The Boy is Eating"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
-        app:layout_constraintVertical_bias="0.619" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.662"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -139,7 +97,7 @@
                 app:iconSize="50dp" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <ImageView
             android:id="@+id/imbBtnQuestionImg"
             android:layout_width="180dp"
             android:layout_height="180dp"
@@ -205,14 +163,14 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <ImageView
                 android:id="@+id/imgBtnAnsImage1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <ImageView
                 android:id="@+id/imgBtnAnsImage2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -228,14 +186,14 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <ImageView
                 android:id="@+id/imgBtnAnsImage3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/c5" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <ImageView
                 android:id="@+id/imgBtnAnsImage4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"

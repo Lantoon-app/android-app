@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +41,8 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
     Audio audio;
     Question question;
     TextView tvQuestionNo, tvQuestionName;
-    ImageButton imgBtnHome, imgBtnHelp, imgBtnAnsImage1, imgBtnAnsImage2, imgBtnAnsImage3, imgBtnAnsImage4;
+    ImageButton imgBtnHome, imgBtnHelp;
+    ImageView imgBtnAnsImage1, imgBtnAnsImage2, imgBtnAnsImage3, imgBtnAnsImage4;
     ProgressBar pbTop;
     Button btnAudio, btnAudioSlow;
 
@@ -127,7 +129,7 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
         tvQuestionNo.setText(quesNo + "/" + totalQues);
         int percentage = cf.percent(quesNo, totalQues);
         Log.d("percentage", String.valueOf(percentage));
-        pbTop.setProgress(percentage);
+        pbTop.setProgress(cf.percent(quesNo, totalQues));
     }
 
     @Override

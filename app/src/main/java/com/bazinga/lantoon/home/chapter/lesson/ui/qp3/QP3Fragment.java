@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,9 +38,9 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
     Audio audio;
     Question question;
     TextView tvQuestionNo, tvQuestionName, tvQuestionAnswer,tvRecText;
-    ImageButton imgBtnHome, imgBtnHelp, imgBtnNext;
+    ImageButton imgBtnHome, imgBtnHelp;
     ProgressBar pbTop;
-    ImageButton imbBtnQuestionImg, imgBtnAnsImage;
+    ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2,btnMic;
     CommonFunction cf;
 
@@ -67,7 +68,6 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
 
         imgBtnHome = view.findViewById(R.id.imgBtnHome);
         imgBtnHelp = view.findViewById(R.id.imgBtnHelp);
-        imgBtnNext = view.findViewById(R.id.imgBtnNext);
         pbTop = view.findViewById(R.id.pbTop);
         tvQuestionNo = view.findViewById(R.id.tvQuestionNo);
         tvQuestionName = view.findViewById(R.id.tvQuestionName);
@@ -82,13 +82,11 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         imgBtnAnsImage = view.findViewById(R.id.imgBtnAnsImage);
         imgBtnHome.setOnClickListener(this::onClick);
         imgBtnHelp.setOnClickListener(this::onClick);
-        imgBtnNext.setOnClickListener(this::onClick);
         btnAudio1.setOnClickListener(this::onClick);
         btnAudio2.setOnClickListener(this::onClick);
         btnAudioSlow1.setOnClickListener(this::onClick);
         btnAudioSlow2.setOnClickListener(this::onClick);
         btnMic.setOnClickListener(this::onClick);
-        imgBtnNext.setVisibility(View.GONE);
         setClickableButton(false);
     }
 
@@ -123,7 +121,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         tvQuestionNo.setText(quesNo + "/" + totalQues);
         int percentage = cf.percent(quesNo, totalQues);
         Log.d("percentage", String.valueOf(percentage));
-        pbTop.setProgress(percentage);
+        pbTop.setProgress(cf.percent(quesNo, totalQues));
     }
 
 
@@ -156,7 +154,6 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                         mp1.stop();
                         mp1.release();
                         setClickableButton(true);
-                        imgBtnNext.setVisibility(View.VISIBLE);
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -177,9 +174,6 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
-                break;
-            case R.id.imgBtnNext:
-                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
                 break;
             case R.id.btnAudio1:
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
@@ -202,7 +196,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;
             case R.id.btnMic:
-                cf.speechToText(getContext(),tvRecText, question.getWord());
+                cf.speechToText(getContext(),tvRecText, question.getAnsWord());
                 break;
         }
 
