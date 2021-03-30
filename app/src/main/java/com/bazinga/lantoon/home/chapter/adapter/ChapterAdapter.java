@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -126,11 +128,13 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         TextView tvChapter;
         ImageView ivLock;
         ProgressBar pbChapter;
+        RatingBar ratingBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tvChapter = itemView.findViewById(R.id.tvChapterNumber);
             pbChapter = itemView.findViewById(R.id.pbChapter);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
             ivLock = itemView.findViewById(R.id.ivLock);
         }
 
@@ -143,9 +147,12 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             Chapter mChapter = mChapterList.get(position);
             tvChapter.setText("CHAPTER " + mChapter.getChapterNo());
-            tvChapter.setOnClickListener(new View.OnClickListener() {
+            ratingBar.setMax(5);
+            ratingBar.setRating(3);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, QuestionsActivity.class);
                     activity.startActivity(intent);
                 }
@@ -155,6 +162,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 ivLock.setVisibility(View.INVISIBLE);
             } else {
                 pbChapter.setProgress(0);
+                tvChapter.setVisibility(View.INVISIBLE);
                 ivLock.setVisibility(View.VISIBLE);
             }
 

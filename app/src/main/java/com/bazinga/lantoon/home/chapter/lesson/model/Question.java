@@ -28,13 +28,18 @@ public class Question {
     @SerializedName("wrong_image_path3")
     @Expose
     private String wrongImagePath3;
-
     @SerializedName("audio_path")
     @Expose
     private String audioPath;
     @SerializedName("ans_word")
     @Expose
     private String ansWord;
+    @SerializedName("plus_mark")
+    @Expose
+    private Integer plusMark;
+    @SerializedName("minus_mark")
+    @Expose
+    private Integer minusMark;
     @SerializedName("qtype_image_path")
     @Expose
     private String qtypeImagePath;
@@ -46,7 +51,7 @@ public class Question {
     private String qType;
     @SerializedName("use_ref_lang")
     @Expose
-    private String useRefLang;
+    private Integer useRefLang;
 
     public String getQid() {
         return qid;
@@ -95,14 +100,16 @@ public class Question {
     public void setWrongImagePath1(String wrongImagePath1) {
         this.wrongImagePath1 = wrongImagePath1;
     }
-public String getWrongImagePath2() {
+
+    public String getWrongImagePath2() {
         return wrongImagePath2;
     }
 
     public void setWrongImagePath2(String wrongImagePath2) {
         this.wrongImagePath2 = wrongImagePath2;
     }
-public String getWrongImagePath3() {
+
+    public String getWrongImagePath3() {
         return wrongImagePath3;
     }
 
@@ -126,6 +133,22 @@ public String getWrongImagePath3() {
         this.ansWord = ansWord;
     }
 
+    public Integer getPlusMark() {
+        return plusMark;
+    }
+
+    public void setPlusMark(Integer plusMark) {
+        this.plusMark = plusMark;
+    }
+
+    public Integer getMinusMark() {
+        return minusMark;
+    }
+
+    public void setMinusMark(Integer minusMark) {
+        this.minusMark = minusMark;
+    }
+
     public String getQtypeImagePath() {
         return qtypeImagePath;
     }
@@ -142,19 +165,19 @@ public String getWrongImagePath3() {
         this.ansAudioPath = ansAudioPath;
     }
 
-    public String getQType() {
+    public String getqType() {
         return qType;
     }
 
-    public void setQType(String qType) {
+    public void setqType(String qType) {
         this.qType = qType;
     }
 
-    public String getUseRefLang() {
+    public Integer getUseRefLang() {
         return useRefLang;
     }
 
-    public void setUseRefLang(String useRefLang) {
+    public void setUseRefLang(Integer useRefLang) {
         this.useRefLang = useRefLang;
     }
 }

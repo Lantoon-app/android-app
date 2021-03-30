@@ -1,5 +1,6 @@
 package com.bazinga.lantoon.retrofit;
 
+import com.bazinga.lantoon.home.chapter.lesson.model.Help;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
@@ -35,6 +36,7 @@ public interface ApiInterface {
     @GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")
     Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);
 
+
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/adduser")
     Call<User> createUser(@Body User user);
@@ -54,4 +56,7 @@ public interface ApiInterface {
     @Streaming
     @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
     Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid,@Path("chapterno") int chapterno, @Path("lessonno") int lessonno,@Path("type") int type);
+
+    @GET("Lantoon/public/QuestionHandler.php/reference/{reflanguageid}/{chapterno}/{lessonno}/{cellval}")
+    Call<Help> getQuestionHelp(@Path("reflanguageid") int reflanguageid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("cellval") String cellval);
 }

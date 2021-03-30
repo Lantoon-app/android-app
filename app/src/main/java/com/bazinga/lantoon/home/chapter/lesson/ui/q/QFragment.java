@@ -123,6 +123,8 @@ public class QFragment extends Fragment implements View.OnClickListener {
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         PlayAudios(question);
+        if(question.getUseRefLang() == 0)
+            imgBtnHelp.setVisibility(View.INVISIBLE);
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(),imgBtnAnsImage);
 

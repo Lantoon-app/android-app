@@ -23,6 +23,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
@@ -45,6 +46,7 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
     ImageView imgBtnAnsImage1, imgBtnAnsImage2, imgBtnAnsImage3, imgBtnAnsImage4;
     ProgressBar pbTop;
     Button btnAudio, btnAudioSlow;
+    HelpPopup helpPopup;
 
 
     public static P1Fragment newInstance(int questionNo, int totalQuestions, String data) {
@@ -92,6 +94,7 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
     }
 
     private void setClickableButton(boolean clickable) {
+        imgBtnHelp.setClickable(clickable);
         btnAudio.setClickable(clickable);
         btnAudioSlow.setClickable(clickable);
         imgBtnAnsImage1.setClickable(clickable);
@@ -110,6 +113,10 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
         setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
+        if(question.getUseRefLang() == 0)
+            imgBtnHelp.setVisibility(View.INVISIBLE);
+        else
+            helpPopup = new HelpPopup("l1",2,1,1,question.getCellValue());
         tvQuestionName.setText(question.getWord());
         audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
         int[] imageViewIds = {R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
@@ -138,6 +145,9 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
+                if(question.getUseRefLang() == 1){
+                    helpPopup.showPopupWindow(getView());
+                }
                 break;
             case R.id.btnAudio:
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());

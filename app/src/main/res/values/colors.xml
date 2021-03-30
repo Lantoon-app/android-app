@@ -19,5 +19,8 @@
     <color name="windows_blue">#3495af</color>
     <color name="qus_slant">#334272B9</color>
     <color name="qustion_button_background">#296BB5</color>
+    <color name="chapter_ratingbar_bg">#1D60AA</color>
+    <color name="chapter_completed_border">#3b3b3b</color>
+    <color name="home_bottom_nav_bg">#F7D049</color>
 
 </resources>

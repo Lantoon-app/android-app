@@ -26,6 +26,7 @@ import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bumptech.glide.Glide;
@@ -135,6 +136,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
             questions = jsonStringToArray(getArguments().getString(Utils.TAG_QUESTION_TYPE));
             PlayAudios(questions);
+                imgBtnHelp.setVisibility(View.INVISIBLE);
+
 
             String imgFile = Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getRightImagePath() + questions.get(0).getCellValue() + ".jpg";
             Log.d("Imagefile", imgFile);
@@ -152,6 +155,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         }
 
     }
+
 
     private void setTopBarState(int quesNo, int totalQues) {
         tvQuestionNo.setText(quesNo + "/" + totalQues);

@@ -87,11 +87,11 @@ public class QuestionsViewModel extends ViewModel {
         protected Boolean doInBackground(Void... params) {
             Log.i(TAG, "doInBackground: ");
 
-            downloadZipFile(1, 7, 1, 1);
-            downloadZipFile(1, 7, 1, 2);
-            downloadZipFile(1, 7, 1, 3);
-            downloadZipFile(1, 7, 1, 4);
-            questionsFragmentData(1, 7, 1);
+            downloadZipFile(1, 1, 1, 1);
+            downloadZipFile(1, 1, 1, 2);
+            downloadZipFile(1, 1, 1, 3);
+            downloadZipFile(1, 1, 1, 4);
+            questionsFragmentData(1, 1, 1);
             return true;
         }
 

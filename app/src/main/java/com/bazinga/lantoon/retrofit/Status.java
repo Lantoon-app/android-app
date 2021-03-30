@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.login.data.model;
+package com.bazinga.lantoon.retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

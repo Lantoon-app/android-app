@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -27,17 +27,23 @@
         tools:text="CHAPTER 1" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/ratingBar"
+        style="@style/CustomRatingBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/chapter_rating_bg"
+        android:isIndicator="true"
         android:numStars="5"
         android:rating="2"
-        android:isIndicator="true"
-        style="@style/CustomRatingBarStyle"
-        android:layout_marginTop="10dp"
+        android:max="4"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:stepSize="0.1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbChapter"
-        app:layout_constraintVertical_bias="0.117"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pbChapter" />
 
     <ImageView
         android:id="@+id/ivLock"

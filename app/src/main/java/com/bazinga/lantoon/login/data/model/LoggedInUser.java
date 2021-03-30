@@ -1,5 +1,6 @@
 package com.bazinga.lantoon.login.data.model;
 
+import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -28,7 +29,7 @@ public class LoggedInUser {
     private Status status;
     @SerializedName("data")
     @Expose
-    private Data data;
+    private LoginData data;
 
     public Status getStatus() {
         return status;
@@ -38,11 +39,11 @@ public class LoggedInUser {
         this.status = status;
     }
 
-    public Data getData() {
+    public LoginData getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(LoginData data) {
         this.data = data;
     }
 }

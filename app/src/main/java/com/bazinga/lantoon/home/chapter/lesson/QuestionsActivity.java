@@ -22,10 +22,10 @@ import com.bazinga.lantoon.R;
 
 public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
-    CommonFunction cf;
+    //CommonFunction cf;
     public static ViewPager2 mPager;
     ProgressDialog progress;
-
+    public long startTime, endTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +35,12 @@ public class QuestionsActivity extends AppCompatActivity {
                 Manifest.permission.RECORD_AUDIO
         }, MY_PERMISSION_REQUEST_CODE);
         setContentView(R.layout.questions_activity);
-        cf = new CommonFunction();
-        cf.fullScreen(getWindow());
         mPager = findViewById(R.id.view_pager);
         progress = new ProgressDialog(this);
     }
 
     private void init() {
+
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
@@ -57,6 +56,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     break;
                 case TaskState.RUNNING:
                     progress.show();
+                    startTime = System.currentTimeMillis();
                     break;
                 case TaskState.STOP:
                     progress.dismiss();
@@ -69,6 +69,10 @@ public class QuestionsActivity extends AppCompatActivity {
                         MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
                         mPager.setAdapter(mPageAdapter);
                         progress.dismiss();
+
+                        endTime = System.currentTimeMillis();
+                        long seconds = (endTime - startTime) / 1000;
+                        System.out.println("stop time "+String.valueOf(seconds));
                         /*  //Add a new Fragment to the list with bundle
                         Bundle b = new Bundle();
                         //b.putInt("position", i);
@@ -94,5 +98,40 @@ public class QuestionsActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
+        }
+    }
+
+    private void hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    // Shows the system bars by removing all the flags
+// except for the ones that make the content appear under the system bars.
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 }
