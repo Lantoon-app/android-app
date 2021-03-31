@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.Utils;
 import com.bazinga.lantoon.home.chapter.BaseViewHolder;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
@@ -144,7 +145,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         public void onBind(int position) {
             super.onBind(position);
-
+            int langid, chaperno, lessonno;
             Chapter mChapter = mChapterList.get(position);
             tvChapter.setText("CHAPTER " + mChapter.getChapterNo());
             ratingBar.setMax(5);
@@ -154,6 +155,9 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 public void onClick(View v) {
                     //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, QuestionsActivity.class);
+                    intent.putExtra(Utils.TAG_LANGUAGE_ID,1);
+                    intent.putExtra(Utils.TAG_CHAPTER_NO,Integer.valueOf(mChapter.getChapterNo()));
+                    intent.putExtra(Utils.TAG_LESSON_NO,1);
                     activity.startActivity(intent);
                 }
             });

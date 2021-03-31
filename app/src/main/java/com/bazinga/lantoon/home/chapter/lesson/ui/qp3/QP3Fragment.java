@@ -37,12 +37,13 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
     private QP3ViewModel mViewModel;
     Audio audio;
     Question question;
-    TextView tvQuestionNo, tvQuestionName, tvQuestionAnswer,tvRecText;
+    TextView tvQuestionNo, tvQuestionName, tvQuestionAnswer, tvRecText;
     ImageButton imgBtnHome, imgBtnHelp;
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg, imgBtnAnsImage;
-    Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2,btnMic;
+    Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2, btnMic;
     CommonFunction cf;
+    int quesNo, totalQues;
 
     public static QP3Fragment newInstance(int questionNo, int totalQuestions, String data) {
         QP3Fragment fragment = new QP3Fragment();
@@ -107,14 +108,16 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         //cf.fullScreen(getActivity().getWindow());
         audio = new Audio();
 
-        setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
+        quesNo = getArguments().getInt(Utils.TAG_QUESTION_NO);
+        totalQues = getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL);
+        setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         PlayAudios(question);
-        if(question.getUseRefLang() == 0)
+        if (question.getUseRefLang() == 0)
             imgBtnHelp.setVisibility(View.INVISIBLE);
-        cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
-        cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(),imgBtnAnsImage);
+        cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(), imbBtnQuestionImg);
+        cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), imgBtnAnsImage);
 
 
     }
@@ -159,7 +162,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                     });
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e("qfragment error",e.getMessage());
+                    Log.e("qfragment error", e.getMessage());
                 }
 
             });
@@ -198,7 +201,10 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;
             case R.id.btnMic:
-                cf.speechToText(getContext(),tvRecText, question.getAnsWord());
+                if (quesNo == totalQues)
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity());
+                else
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity());
                 break;
         }
 

@@ -12,27 +12,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
 import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
-import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class P1Fragment extends Fragment implements View.OnClickListener {
@@ -46,8 +47,10 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
     ImageView imgBtnAnsImage1, imgBtnAnsImage2, imgBtnAnsImage3, imgBtnAnsImage4;
     ProgressBar pbTop;
     Button btnAudio, btnAudioSlow;
+    int[] imageViewIds;
+    String[] imagePaths;
     HelpPopup helpPopup;
-
+    int quesNo, totalQues;
 
     public static P1Fragment newInstance(int questionNo, int totalQuestions, String data) {
         P1Fragment fragment = new P1Fragment();
@@ -109,19 +112,20 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
         mViewModel = new ViewModelProvider(this).get(P1ViewModel.class);
         cf = new CommonFunction();
         audio = new Audio();
-        // TODO: Use the ViewModel
-        setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
+        quesNo = getArguments().getInt(Utils.TAG_QUESTION_NO);
+        totalQues = getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL);
+        setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
-        if(question.getUseRefLang() == 0)
+        if (question.getUseRefLang() == 0)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
-            helpPopup = new HelpPopup("l1",2,1,1,question.getCellValue());
+            helpPopup = new HelpPopup("l1", 2, 1, 1, question.getCellValue());
         tvQuestionName.setText(question.getWord());
         audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
-        int[] imageViewIds = {R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
-        String[] ImagePaths = {Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
-        cf.setShuffleImages(getActivity(), imageViewIds, ImagePaths, getView());
+        imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
+        imagePaths = new String[]{Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
+        cf.setShuffleImages(getActivity(), imageViewIds, imagePaths, getView());
         setClickableButton(true);
 
         Log.d("data p1 ", new GsonBuilder().setPrettyPrinting().create().toJson(question));
@@ -145,7 +149,7 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
-                if(question.getUseRefLang() == 1){
+                if (question.getUseRefLang() == 1) {
                     helpPopup.showPopupWindow(getView());
                 }
                 break;
@@ -156,25 +160,22 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
-
-                if (cf.CheckAnswerImage(imgBtnAnsImage1.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
                 break;
             case R.id.imgBtnAnsImage2:
-                if (cf.CheckAnswerImage(imgBtnAnsImage2.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                cf.checkQuestion(imgBtnAnsImage2.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
                 break;
             case R.id.imgBtnAnsImage3:
-                if (cf.CheckAnswerImage(imgBtnAnsImage3.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                cf.checkQuestion(imgBtnAnsImage3.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
                 break;
             case R.id.imgBtnAnsImage4:
-                if (cf.CheckAnswerImage(imgBtnAnsImage4.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                cf.checkQuestion(imgBtnAnsImage4.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
                 break;
 
         }
     }
+
+
 
     @Override
     public void onDestroyView() {

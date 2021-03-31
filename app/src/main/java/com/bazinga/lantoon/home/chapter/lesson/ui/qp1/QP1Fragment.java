@@ -45,8 +45,10 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg, imgBtnAnsImage1,imgBtnAnsImage2,imgBtnAnsImage3,imgBtnAnsImage4;
     Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2;
+    int[] imageViewIds;
+    String[] imagePaths;
     CommonFunction cf;
-
+    int quesNo, totalQues;
     public static QP1Fragment newInstance(int questionNo,int totalQuestions, String data) {
         QP1Fragment fragment = new QP1Fragment();
         Bundle bundle = new Bundle();
@@ -115,16 +117,18 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
         //cf.fullScreen(getActivity().getWindow());
         audio = new Audio();
 
-        setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
+        quesNo = getArguments().getInt(Utils.TAG_QUESTION_NO);
+        totalQues = getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL);
+        setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         PlayAudios(question);
         if(question.getUseRefLang() == 0)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
-        int[] imageViewIds = {R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
-        String[] ImagePaths = {Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
-        cf.setShuffleImages(getActivity(), imageViewIds, ImagePaths, getView());
+        imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
+        imagePaths = new String[]{Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
+        cf.setShuffleImages(getActivity(), imageViewIds, imagePaths, getView());
         Log.d("data qp1 " ,new GsonBuilder().setPrettyPrinting().create().toJson(question));
     }
     private void setTopBarState(int quesNo, int totalQues) {
@@ -199,21 +203,17 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
                 tvQuestionAnswer.setText(question.getAnsWord());
                 break;
             case R.id.imgBtnAnsImage1:
+                cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
 
-                if (cf.CheckAnswerImage(imgBtnAnsImage1.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
                 break;
             case R.id.imgBtnAnsImage2:
-                if (cf.CheckAnswerImage(imgBtnAnsImage2.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                cf.checkQuestion(imgBtnAnsImage2.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
                 break;
             case R.id.imgBtnAnsImage3:
-                if (cf.CheckAnswerImage(imgBtnAnsImage3.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                cf.checkQuestion(imgBtnAnsImage3.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
                 break;
             case R.id.imgBtnAnsImage4:
-                if (cf.CheckAnswerImage(imgBtnAnsImage4.getTag().toString()))
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                cf.checkQuestion(imgBtnAnsImage4.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
                 break;
         }
     }

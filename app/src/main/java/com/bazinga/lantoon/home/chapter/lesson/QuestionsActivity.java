@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -19,13 +20,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.Utils;
 
 public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     //CommonFunction cf;
     public static ViewPager2 mPager;
     ProgressDialog progress;
-    public long startTime, endTime;
+    public static long startTime;
+    public static int totalQues = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +47,10 @@ public class QuestionsActivity extends AppCompatActivity {
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
-
-        QuestionsViewModel questionViewModel = new ViewModelProvider(this).get(QuestionsViewModel.class);
+        QuestionsViewModel questionViewModel = new ViewModelProvider(this,
+                new QuestionsViewModelFactory(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID, 0),
+                        getIntent().getIntExtra(Utils.TAG_CHAPTER_NO, 0),
+                        getIntent().getIntExtra(Utils.TAG_LESSON_NO, 0))).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
@@ -68,11 +73,10 @@ public class QuestionsActivity extends AppCompatActivity {
 
                         MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
                         mPager.setAdapter(mPageAdapter);
+                        mPager.clearFocus();
                         progress.dismiss();
-
-                        endTime = System.currentTimeMillis();
-                        long seconds = (endTime - startTime) / 1000;
-                        System.out.println("stop time "+String.valueOf(seconds));
+                        totalQues = mPageAdapter.getItemCount();
+                        startTime = System.currentTimeMillis();
                         /*  //Add a new Fragment to the list with bundle
                         Bundle b = new Bundle();
                         //b.putInt("position", i);
@@ -107,6 +111,7 @@ public class QuestionsActivity extends AppCompatActivity {
             hideSystemUI();
         }
     }
+
 
     private void hideSystemUI() {
         // Enables regular immersive mode.

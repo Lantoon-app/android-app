@@ -10,17 +10,13 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.widget.PopupMenu;
-
+import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -126,14 +122,26 @@ public class CommonFunction {
         }
 
     }
-
+    public void checkQuestion(String tag,int quesNo, int
+                                totalQues, View view,Activity activity,int[] imageViewIds, String[] imagePaths) {
+        if (CheckAnswerImage(tag)) {
+            if (quesNo == totalQues) {
+                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                lessonCompletedPopup.showPopupWindow(view, activity);
+            } else {
+                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
+            }
+        }else{
+            setShuffleImages(activity, imageViewIds, imagePaths, view);
+        }
+    }
     public boolean CheckAnswerImage(String imagePath) {
         if (imagePath.contains("right"))
             return true;
         else return false;
     }
 
-    public void speechToText(Context context, TextView textView, String answerWord){
+    public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion,View view,Activity activity){
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
 
@@ -188,9 +196,13 @@ public class CommonFunction {
                 String output = data.get(0).substring(0, 1).toUpperCase() + data.get(0).substring(1).toLowerCase();
                 textView.setText(output);
                 if(answerWord.equals(data.get(0))) {
-                    System.out.println("check text "+data.get(0));
-                    System.out.println("check text "+answerWord);
-                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                    if(isLastQuestion) {
+                        //QuestionsActivity.mPager.setCurrentItem(0);
+                        LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                        lessonCompletedPopup.showPopupWindow(view,activity);
+                    }else {
+                        QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
+                    }
                 }
 
 

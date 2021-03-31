@@ -1,5 +1,7 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,6 +34,7 @@ import retrofit2.Response;
 public class HelpPopup {
     //PopupWindow display method
 HelpData helpData;
+MediaPlayer mediaPlayer;
     public HelpPopup(String type,int reflanguageid,int chapterno, int lessonno, String cellval){
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<Help> call = apiInterface.getQuestionHelp(reflanguageid, chapterno, lessonno,cellval);
@@ -91,8 +95,7 @@ HelpData helpData;
             @Override
             public void onClick(View v) {
 
-                //As an example, display the message
-                Toast.makeText(view.getContext(), helpData.getAudioPath(), Toast.LENGTH_SHORT).show();
+                playAudio(helpData.getAudioPath());
 
             }
         });
@@ -100,7 +103,7 @@ HelpData helpData;
         btnAudioSlowHelpPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                playAudio(helpData.getAudioPath());
             }
         });
 
@@ -117,5 +120,29 @@ HelpData helpData;
                 return true;
             }
         });
+    }
+    private void playAudio(String audioUrl) {
+
+
+        // initializing media player
+        mediaPlayer = new MediaPlayer();
+
+        // below line is use to set the audio
+        // stream type for our media player.
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        // below line is use to set our
+        // url to our media player.
+        try {
+            mediaPlayer.setDataSource(audioUrl);
+            // below line is use to prepare
+            // and start our media player.
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

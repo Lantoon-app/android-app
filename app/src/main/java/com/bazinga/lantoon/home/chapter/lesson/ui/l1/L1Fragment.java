@@ -260,43 +260,36 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
                 break;
             case R.id.btnAudio1:
-                //cf.playAudio();Audio(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath() + questions.get(0).getCellValue() + ".mp3");
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath());
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudio2:
-                //cf.playAudio();Audio(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath() + questions.get(1).getCellValue() + ".mp3");
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath());
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudio3:
-                //cf.playAudio();Audio(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath() + questions.get(2).getCellValue() + ".mp3");
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath());
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);
                 break;
             case R.id.btnAudio4:
-                //cf.playAudio();Audio(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getAudioPath() + questions.get(3).getCellValue() + ".mp3");
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getAudioPath());
                 tvQuestionName.setText(questions.get(3).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
                 break;
             case R.id.btnAudioSlow1:
-                //cf.playAudio();AudioSlow(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath() + questions.get(0).getCellValue() + ".mp3");
                 audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath());
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudioSlow2:
-                //cf.playAudio();AudioSlow(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath() + questions.get(1).getCellValue() + ".mp3");
                 audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath());
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudioSlow3:
-                //cf.playAudio();AudioSlow(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath() + questions.get(2).getCellValue() + ".mp3");
                 audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath());
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);

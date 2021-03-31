@@ -52,6 +52,12 @@ public class QuestionsViewModel extends ViewModel {
     private TaskModel mTask;
     private QuestionsAsyncTask taskAsync;
     DownloadZipFileTask downloadZipFileTask;
+    int langid, chaperno, lessonno;
+    public QuestionsViewModel(int langid, int chaperno, int lessonno) {
+        this.langid = langid;
+        this.chaperno = chaperno;
+        this.lessonno = lessonno;
+    }
 
     private void startTask() {
         Log.d(TAG, "startTask: ");
@@ -87,11 +93,11 @@ public class QuestionsViewModel extends ViewModel {
         protected Boolean doInBackground(Void... params) {
             Log.i(TAG, "doInBackground: ");
 
-            downloadZipFile(1, 1, 1, 1);
-            downloadZipFile(1, 1, 1, 2);
-            downloadZipFile(1, 1, 1, 3);
-            downloadZipFile(1, 1, 1, 4);
-            questionsFragmentData(1, 1, 1);
+            downloadZipFile(langid, chaperno, lessonno, 1);
+            downloadZipFile(langid, chaperno, lessonno, 2);
+            downloadZipFile(langid, chaperno, lessonno, 3);
+            downloadZipFile(langid, chaperno, lessonno, 4);
+            questionsFragmentData(langid, chaperno, lessonno);
             return true;
         }
 

@@ -17,6 +17,7 @@
     <string name="hint_mobile_number">Mobile Number</string>
     <string name="login">Login</string>
     <string name="title_create_account">CREATE ACCOUNT</string>
+    <string name="title_profile">PROFILE</string>
     <string name="welcome_user">WELCOME USER</string>
     <string name="title_forget_password">FORGET PASSWORD</string>
     <string name="user_login">USER LOGIN</string>
@@ -75,5 +76,13 @@
     <string name="send_otp">SEND OTP</string>
     <string name="enter_new_password">Enter New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
+    <string name="hint_date_of_birth">Date of Birth</string>
+    <string name="btn_update_profile">UPDATE</string>
+
+    <string-array name="duration_array">
+        <item>CASUAL (5 MIN /DAY)</item>
+        <item>REGULAR (10 MIN /DAY)</item>
+        <item>INTENSE (15 MIN /DAY)</item>
+    </string-array>
 
 </resources>

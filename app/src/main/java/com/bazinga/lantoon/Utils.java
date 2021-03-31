@@ -25,6 +25,10 @@ public class Utils {
     public static String TAG_QUESTION_NO="qno";
     public static String TAG_QUESTIONS_TOTAL="total";
 
+    public static String TAG_LANGUAGE_ID="langid";
+    public static String TAG_CHAPTER_NO="chaperno";
+    public static String TAG_LESSON_NO="lessonno";
+
     public static String ZIP_FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
     public static String FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
     public static String IMAGE_FILE_DESTINATION_FOLDER=File.separator +"content"+ File.separator +"images"+File.separator;

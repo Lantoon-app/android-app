@@ -55,7 +55,7 @@ public class QFragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2;
     CommonFunction cf;
-
+    int quesNo, totalQues;
     public static QFragment newInstance(int questionNo, int totalQuestions, String data) {
         QFragment fragment = new QFragment();
         Bundle bundle = new Bundle();
@@ -119,7 +119,9 @@ public class QFragment extends Fragment implements View.OnClickListener {
         //cf.fullScreen(getActivity().getWindow());
         audio = new Audio();
 
-        setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
+        quesNo = getArguments().getInt(Utils.TAG_QUESTION_NO);
+        totalQues = getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL);
+        setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         PlayAudios(question);

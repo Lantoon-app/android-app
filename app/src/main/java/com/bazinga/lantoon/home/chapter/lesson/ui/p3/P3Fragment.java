@@ -23,15 +23,7 @@ import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
 import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p1.P1ViewModel;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p2.P2Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p2.P2ViewModel;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -46,12 +38,12 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     Audio audio;
     Question question;
     TextView tvQuestionNo, tvQuestionName, tvRecText;
-    ImageButton imgBtnHome, imgBtnHelp,imgBtnNext;
+    ImageButton imgBtnHome, imgBtnHelp;
     ImageView imbBtnQuestionImg;
     ProgressBar pbTop;
     Button btnAudio, btnAudioSlow, btnMic;
     HelpPopup helpPopup;
-
+    int quesNo, totalQues;
 
     public static P3Fragment newInstance(int questionNo, int totalQuestions, String data) {
         P3Fragment fragment = new P3Fragment();
@@ -76,7 +68,6 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     private void initializeView(View view) {
         imgBtnHome = view.findViewById(R.id.imgBtnHome);
         imgBtnHelp = view.findViewById(R.id.imgBtnHelp);
-        imgBtnNext = view.findViewById(R.id.imgBtnNext);
         pbTop = view.findViewById(R.id.pbTop);
         tvQuestionNo = view.findViewById(R.id.tvQuestionNo);
         tvQuestionName = view.findViewById(R.id.tvQuestionName);
@@ -88,7 +79,6 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         tvRecText.setText("");
         imgBtnHome.setOnClickListener(this::onClick);
         imgBtnHelp.setOnClickListener(this::onClick);
-        imgBtnNext.setOnClickListener(this::onClick);
         btnAudio.setOnClickListener(this::onClick);
         btnAudioSlow.setOnClickListener(this::onClick);
         btnMic.setOnClickListener(this::onClick);
@@ -109,7 +99,9 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         cf = new CommonFunction();
         audio = new Audio();
         // TODO: Use the ViewModel
-        setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
+        quesNo = getArguments().getInt(Utils.TAG_QUESTION_NO);
+        totalQues = getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL);
+        setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         if(question.getUseRefLang() == 0)
@@ -148,9 +140,6 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                     helpPopup.showPopupWindow(getView());
                 }
                 break;
-            case R.id.imgBtnNext:
-                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
-                break;
             case R.id.btnAudio:
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
                 break;
@@ -158,7 +147,10 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
                 break;
             case R.id.btnMic:
-                cf.speechToText(getContext(),tvRecText,question.getWord());
+                if (quesNo == totalQues)
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity());
+                else
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity());
 
                 break;
         }
