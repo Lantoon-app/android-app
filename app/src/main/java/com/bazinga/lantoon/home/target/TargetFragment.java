@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.setting;
+package com.bazinga.lantoon.home.target;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,14 +14,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.R;
 
-public class SettingFragment extends Fragment {
 
-    private SettingViewModel settingViewModel;
+public class TargetFragment extends Fragment {
+
+    private TargetViewModel targetViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        settingViewModel = new ViewModelProvider(this).get(SettingViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_setting, container, false);
+        targetViewModel = new ViewModelProvider(this).get(TargetViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_target, container, false);
 
         return root;
     }

@@ -107,7 +107,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         if(question.getUseRefLang() == 0)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
-            helpPopup = new HelpPopup("l1",2,1,1,question.getCellValue());
+            helpPopup = new HelpPopup(2,question.getChapterNo(), question.getLessonNo(), question.getCellValue());
         tvQuestionName.setText(question.getWord());
         cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
         audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());

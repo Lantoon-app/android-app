@@ -16,10 +16,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.login.ui.login.LoginActivity;
 import com.bazinga.lantoon.registration.langselection.view.LangSelectionActivity;
-import com.bazinga.lantoon.test.MainActivity2;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;

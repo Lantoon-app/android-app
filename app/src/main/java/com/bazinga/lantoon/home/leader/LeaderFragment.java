@@ -23,7 +23,7 @@ public class LeaderFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         leaderViewModel = new ViewModelProvider(this).get(LeaderViewModel.class);
         View root = inflater.inflate(R.layout.fragment_leader, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
+        final TextView textView = root.findViewById(R.id.text_notifications);
         leaderViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

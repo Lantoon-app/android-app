@@ -23,6 +23,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.lesson.ui.qp1.QP1Fragment;
@@ -48,6 +49,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
     int[] imageViewIds;
     String[] imagePaths;
     CommonFunction cf;
+    HelpPopup helpPopup;
     int quesNo, totalQues;
 
     public static QP2Fragment newInstance(int questionNo, int totalQuestions, String data) {
@@ -125,6 +127,8 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
         PlayAudios(question);
         if(question.getUseRefLang() == 0)
             imgBtnHelp.setVisibility(View.INVISIBLE);
+        else
+            helpPopup = new HelpPopup(2,question.getChapterNo(), question.getLessonNo(), question.getCellValue());
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
         imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
         imagePaths = new String[]{Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
@@ -181,6 +185,9 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
+                if(question.getUseRefLang() == 1){
+                    helpPopup.showPopupWindow(getView());
+                }
                 break;
             case R.id.imgBtnNext:
                 break;

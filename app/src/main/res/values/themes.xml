@@ -45,4 +45,5 @@
     <style name="QuestionButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/button_bg</item>
     </style>
+
 </resources>

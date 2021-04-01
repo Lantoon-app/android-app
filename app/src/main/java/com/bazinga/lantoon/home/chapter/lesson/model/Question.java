@@ -52,6 +52,12 @@ public class Question {
     @SerializedName("use_ref_lang")
     @Expose
     private Integer useRefLang;
+    @SerializedName("chapter_no")
+    @Expose
+    private Integer chapterNo;
+    @SerializedName("lesson_no")
+    @Expose
+    private Integer lessonNo;
 
     public String getQid() {
         return qid;
@@ -180,4 +186,21 @@ public class Question {
     public void setUseRefLang(Integer useRefLang) {
         this.useRefLang = useRefLang;
     }
+
+    public Integer getChapterNo() {
+        return chapterNo;
+    }
+
+    public void setChapterNo(Integer chapterNo) {
+        this.chapterNo = chapterNo;
+    }
+
+    public Integer getLessonNo() {
+        return lessonNo;
+    }
+
+    public void setLessonNo(Integer lessonNo) {
+        this.lessonNo = lessonNo;
+    }
+
 }

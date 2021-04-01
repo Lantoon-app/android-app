@@ -23,6 +23,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.google.gson.Gson;
@@ -43,6 +44,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2, btnMic;
     CommonFunction cf;
+    HelpPopup helpPopup;
     int quesNo, totalQues;
 
     public static QP3Fragment newInstance(int questionNo, int totalQuestions, String data) {
@@ -114,8 +116,10 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         PlayAudios(question);
-        if (question.getUseRefLang() == 0)
+        if(question.getUseRefLang() == 0)
             imgBtnHelp.setVisibility(View.INVISIBLE);
+        else
+            helpPopup = new HelpPopup(2,question.getChapterNo(), question.getLessonNo(), question.getCellValue());
         cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(), imbBtnQuestionImg);
         cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), imgBtnAnsImage);
 
@@ -179,6 +183,9 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
+                if(question.getUseRefLang() == 1){
+                    helpPopup.showPopupWindow(getView());
+                }
                 break;
             case R.id.btnAudio1:
                 audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());

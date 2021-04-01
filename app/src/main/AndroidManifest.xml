@@ -19,7 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".login.forget.ForgetPasswordActivity"></activity>
-        <activity android:name=".test.MainActivity2" />
         <activity
             android:name=".home.chapter.lesson.QuestionsActivity"
             android:screenOrientation="landscape" />

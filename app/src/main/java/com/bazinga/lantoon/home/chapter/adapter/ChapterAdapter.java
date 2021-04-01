@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +45,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
-                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chapter_item, parent, false));
+                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chapter, parent, false));
             case VIEW_TYPE_LOADING:
                 return new EmptyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false));
             default:
@@ -127,7 +126,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public class ViewHolder extends BaseViewHolder {
 
         TextView tvChapter;
-        ImageView ivLock;
+        ImageView ivDisabled,ivLock;
         ProgressBar pbChapter;
         RatingBar ratingBar;
 
@@ -136,6 +135,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             tvChapter = itemView.findViewById(R.id.tvChapterNumber);
             pbChapter = itemView.findViewById(R.id.pbChapter);
             ratingBar = itemView.findViewById(R.id.ratingBar);
+            ivDisabled = itemView.findViewById(R.id.ivDisabled);
             ivLock = itemView.findViewById(R.id.ivLock);
         }
 
@@ -162,12 +162,13 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 }
             });
             if (mChapterList.get(position).getVisibilityStatus() == 1) {
-                pbChapter.setProgress(80);
+                pbChapter.setProgress(50);
                 ivLock.setVisibility(View.INVISIBLE);
             } else {
                 pbChapter.setProgress(0);
                 tvChapter.setVisibility(View.INVISIBLE);
                 ivLock.setVisibility(View.VISIBLE);
+                ivDisabled.setVisibility(View.VISIBLE);
             }
 
         }

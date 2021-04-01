@@ -5,15 +5,13 @@
         android:id="@+id/bottom_lesson"
         android:icon="@drawable/ic_bottom_nav_lesson"
         android:title=""/>
-
+    <item
+        android:id="@+id/bottom_target"
+        android:icon="@drawable/ic_bottom_nav_target"
+        android:title="" />
     <item
         android:id="@+id/bottom_leader"
         android:icon="@drawable/ic_bottom_nav_leader"
-        android:title="" />
-
-    <item
-        android:id="@+id/bottom_achievement"
-        android:icon="@drawable/ic_bottom_nav_archv"
         android:title="" />
 
     <item

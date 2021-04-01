@@ -23,6 +23,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
@@ -55,6 +56,7 @@ public class QFragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2;
     CommonFunction cf;
+    HelpPopup helpPopup;
     int quesNo, totalQues;
     public static QFragment newInstance(int questionNo, int totalQuestions, String data) {
         QFragment fragment = new QFragment();
@@ -127,6 +129,8 @@ public class QFragment extends Fragment implements View.OnClickListener {
         PlayAudios(question);
         if(question.getUseRefLang() == 0)
             imgBtnHelp.setVisibility(View.INVISIBLE);
+        else
+            helpPopup = new HelpPopup(2,question.getChapterNo(), question.getLessonNo(), question.getCellValue());
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(),imgBtnAnsImage);
 
@@ -191,6 +195,9 @@ public class QFragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
+                if(question.getUseRefLang() == 1){
+                    helpPopup.showPopupWindow(getView());
+                }
                 break;
             case R.id.imgBtnNext:
                 QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);

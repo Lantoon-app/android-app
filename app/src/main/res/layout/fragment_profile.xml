@@ -17,7 +17,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
+<ImageView
+    android:id="@+id/ivUploadPhoto"
+    android:layout_width="130dp"
+    android:layout_height="130dp"
+    android:background="@drawable/circle"
+    android:src="@drawable/photo_upload_icon"
+    android:paddingBottom="10dp"/>
         <EditText
             android:id="@+id/etFullName"
             android:layout_width="match_parent"

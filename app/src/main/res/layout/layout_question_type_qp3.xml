@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_landscape">
 
+
     <com.bazinga.lantoon.SlantView
         android:id="@+id/slantView"
         android:layout_width="500dp"
@@ -20,8 +21,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.bazinga.lantoon.SlantView
         android:id="@+id/slantView1"
@@ -38,7 +38,10 @@
 
     <include
         android:id="@+id/header"
-        layout="@layout/layout_question_header"/>
+        layout="@layout/layout_question_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvQuestionName"

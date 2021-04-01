@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send,
-                R.id.bottom_lesson, R.id.bottom_leader, R.id.bottom_achievement,R.id.bottom_setting)
+                R.id.bottom_lesson, R.id.bottom_target, R.id.bottom_leader,R.id.bottom_setting)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
