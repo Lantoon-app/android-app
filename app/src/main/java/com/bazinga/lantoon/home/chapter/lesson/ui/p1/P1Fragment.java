@@ -12,8 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,7 +22,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
-import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
+import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,8 +30,6 @@ import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class P1Fragment extends Fragment implements View.OnClickListener {
@@ -49,7 +45,7 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
     Button btnAudio, btnAudioSlow;
     int[] imageViewIds;
     String[] imagePaths;
-    HelpPopup helpPopup;
+    ReferencePopup referencePopup;
     int quesNo, totalQues;
 
     public static P1Fragment newInstance(int questionNo, int totalQuestions, String data) {
@@ -117,10 +113,10 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
         setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
-        if (question.getUseRefLang() == 0)
+        if (question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
-            helpPopup = new HelpPopup( 2, question.getChapterNo(), question.getLessonNo(), question.getCellValue());
+            referencePopup = new ReferencePopup( question.getReference());
         tvQuestionName.setText(question.getWord());
         audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
         imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
@@ -149,8 +145,8 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
-                if (question.getUseRefLang() == 1) {
-                    helpPopup.showPopupWindow(getView());
+                if (question.getReference() != null) {
+                    referencePopup.showPopupWindow(getView());
                 }
                 break;
             case R.id.btnAudio:

@@ -24,10 +24,13 @@ import com.bazinga.lantoon.home.chapter.lesson.ui.qp2.QP2Fragment;
 import com.bazinga.lantoon.home.chapter.lesson.ui.qp3.QP3Fragment;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
+import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -97,7 +100,7 @@ public class QuestionsViewModel extends ViewModel {
             downloadZipFile(langid, chaperno, lessonno, 2);
             downloadZipFile(langid, chaperno, lessonno, 3);
             downloadZipFile(langid, chaperno, lessonno, 4);
-            questionsFragmentData(langid, chaperno, lessonno);
+            questionsFragmentData(langid, chaperno, lessonno,2);
             return true;
         }
 
@@ -281,25 +284,30 @@ public class QuestionsViewModel extends ViewModel {
         }
     }
 
-    private void questionsFragmentData(int langid, int chaperno, int lessonno) {
+    private void questionsFragmentData(int langid, int chaperno, int lessonno,int reflanguageid) {
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<JsonArray> call = apiInterface.getQuestions(langid, chaperno, lessonno);
-        call.enqueue(new Callback<JsonArray>() {
+        Call<JsonObject> call = apiInterface.getQuestions(langid, chaperno, lessonno,reflanguageid);
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                 if (response.isSuccessful()) {
-                    JsonObject jsonObject = new JsonObject();
+                    Gson gson = new Gson();
+                    Status status = gson.fromJson(response.body().get("status").getAsJsonObject(),Status.class);
 
-                    jsonObject = response.body().get(0).getAsJsonObject();
-                    Log.d("response ", new GsonBuilder().setPrettyPrinting().create().toJson(jsonObject));
+                    //int statusCode = response.body().get("status").getAsJsonObject().get("code").getAsInt();
+                    if(status.getCode() == 1022) {
+                        //Log.d("response ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                        JsonObject jsonObject = response.body().get("data").getAsJsonObject();
+                        Log.d("response ", new GsonBuilder().setPrettyPrinting().create().toJson(jsonObject));
 
 
-                    List<Fragment> fragments = buildFragments(jsonObject);
-                    questionsLiveData.setValue(fragments);
+                        List<Fragment> fragments = buildFragments(jsonObject);
+                        questionsLiveData.setValue(fragments);
+                    }
 
-                } else {
+               } else {
                     Log.e("response message= ", response.message() + response.code());
                 }
 
@@ -307,7 +315,7 @@ public class QuestionsViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<JsonArray> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
 
                 call.cancel();
                 t.printStackTrace();

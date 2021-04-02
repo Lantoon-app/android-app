@@ -1,21 +1,15 @@
 package com.bazinga.lantoon.retrofit;
 
-import com.bazinga.lantoon.home.chapter.lesson.model.Help;
-import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.model.User;
-import com.google.gson.JsonArray;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -33,8 +27,10 @@ public interface ApiInterface {
     @GET("Lantoon/public/ChapterHandler.php/chapterlist/slide/{languageid}/{slidenumber}")
     Call<List<Chapter>> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno);
 
-    @GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")
-    Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);
+    /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")
+    Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);*/
+@GET("Lantoon/public/QuestionHandler.php/onelessonquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}")
+    Call<JsonObject> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid);
 
 
     @Headers("Content-Type: application/json")
@@ -57,6 +53,6 @@ public interface ApiInterface {
     @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
     Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid,@Path("chapterno") int chapterno, @Path("lessonno") int lessonno,@Path("type") int type);
 
-    @GET("Lantoon/public/QuestionHandler.php/reference/{reflanguageid}/{chapterno}/{lessonno}/{cellval}")
-    Call<Help> getQuestionHelp(@Path("reflanguageid") int reflanguageid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("cellval") String cellval);
+    /*@GET("Lantoon/public/QuestionHandler.php/reference/{reflanguageid}/{chapterno}/{lessonno}/{cellval}")
+    Call<Help> getQuestionHelp(@Path("reflanguageid") int reflanguageid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("cellval") String cellval);*/
 }

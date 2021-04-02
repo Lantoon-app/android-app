@@ -23,11 +23,8 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
-import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
+import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
-import com.bazinga.lantoon.home.chapter.lesson.ui.q.QFragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.q.QViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -49,7 +46,7 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
     int[] imageViewIds;
     String[] imagePaths;
     CommonFunction cf;
-    HelpPopup helpPopup;
+    ReferencePopup referencePopup;
     int quesNo, totalQues;
     public static QP1Fragment newInstance(int questionNo,int totalQuestions, String data) {
         QP1Fragment fragment = new QP1Fragment();
@@ -125,10 +122,10 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         PlayAudios(question);
-        if(question.getUseRefLang() == 0)
+        if(question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
-            helpPopup = new HelpPopup(2,question.getChapterNo(), question.getLessonNo(), question.getCellValue());
+            referencePopup = new ReferencePopup( question.getReference());
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
         imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
         imagePaths = new String[]{Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
@@ -186,8 +183,8 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
-                if(question.getUseRefLang() == 1){
-                    helpPopup.showPopupWindow(getView());
+                if(question.getReference() != null) {
+                    referencePopup.showPopupWindow(getView());
                 }
                 break;
             case R.id.imgBtnNext:

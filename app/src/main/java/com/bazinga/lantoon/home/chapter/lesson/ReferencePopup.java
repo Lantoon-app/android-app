@@ -2,7 +2,6 @@ package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,59 +10,21 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.chapter.lesson.model.Help;
-import com.bazinga.lantoon.home.chapter.lesson.model.HelpData;
-import com.bazinga.lantoon.retrofit.ApiClient;
-import com.bazinga.lantoon.retrofit.ApiInterface;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.bazinga.lantoon.home.chapter.lesson.model.Reference;
 
 import java.io.IOException;
-import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class HelpPopup {
+public class ReferencePopup {
     //PopupWindow display method
-    HelpData helpData;
+    Reference helpData;
     MediaPlayer mediaPlayer;
 
-    public HelpPopup(int reflanguageid, int chapterno, int lessonno, String cellval) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<Help> call = apiInterface.getQuestionHelp(reflanguageid, chapterno, lessonno, cellval);
-        call.enqueue(new Callback<Help>() {
-            @Override
-            public void onResponse(Call<Help> call, Response<Help> response) {
-
-                if (response.isSuccessful()) {
-                    if (response.body().getStatus().getCode() == 1018)
-                        helpData = response.body().getData();
-                    Log.d("response ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body().getData()));
-
-
-                } else {
-                    Log.e("response message= ", response.message() + response.code());
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<Help> call, Throwable t) {
-
-                call.cancel();
-                t.printStackTrace();
-                Log.e("response ERROR= ", "" + t.getMessage() + " " + t.getLocalizedMessage());
-            }
-        });
+    public ReferencePopup(@NonNull Reference reference) {
+        this.helpData = reference;
     }
 
     public void showPopupWindow(final View view) {
@@ -71,7 +32,7 @@ public class HelpPopup {
 
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_help, null);
+        View popupView = inflater.inflate(R.layout.popup_reference, null);
 
         //Specify the length and width through constants
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;

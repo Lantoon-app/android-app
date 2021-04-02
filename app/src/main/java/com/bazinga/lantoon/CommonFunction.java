@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -51,7 +52,8 @@ public class CommonFunction {
     public int percent(double quesNo, double totalQues) {
 
         // percent
-        double per = (quesNo / totalQues) * 100;;
+        double per = (quesNo / totalQues) * 100;
+        ;
 
         Log.d("percentage", String.valueOf(Math.round(per)));
         return (int) per;
@@ -122,26 +124,32 @@ public class CommonFunction {
         }
 
     }
-    public void checkQuestion(String tag,int quesNo, int
-                                totalQues, View view,Activity activity,int[] imageViewIds, String[] imagePaths) {
+
+    public void checkQuestion(String tag, int quesNo, int
+            totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths) {
+        QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
         if (CheckAnswerImage(tag)) {
             if (quesNo == totalQues) {
-                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                lessonCompletedPopup.showPopupWindow(view, activity);
+
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), true);
+
             } else {
-                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false);
             }
-        }else{
+
+        } else {
+            qrwp.showPopup(activity, view, CheckAnswerImage(tag), false);
             setShuffleImages(activity, imageViewIds, imagePaths, view);
         }
     }
+
     public boolean CheckAnswerImage(String imagePath) {
         if (imagePath.contains("right"))
             return true;
         else return false;
     }
 
-    public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion,View view,Activity activity){
+    public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion, View view, Activity activity) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
 
@@ -155,6 +163,7 @@ public class CommonFunction {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.);
 */
+        QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
         speechRecognizer.startListening(speechRecognizerIntent);
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -195,14 +204,12 @@ public class CommonFunction {
 
                 String output = data.get(0).substring(0, 1).toUpperCase() + data.get(0).substring(1).toLowerCase();
                 textView.setText(output);
-                if(answerWord.equals(data.get(0))) {
-                    if(isLastQuestion) {
-                        //QuestionsActivity.mPager.setCurrentItem(0);
-                        LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                        lessonCompletedPopup.showPopupWindow(view,activity);
-                    }else {
-                        QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
-                    }
+                if (answerWord.equals(data.get(0))) {
+
+                    qrwp.showPopup(activity, view, true, isLastQuestion);
+
+                } else {
+                    qrwp.showPopup(activity, view, false, false);
                 }
 
 

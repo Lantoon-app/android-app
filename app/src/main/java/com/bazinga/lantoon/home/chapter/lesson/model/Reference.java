@@ -3,7 +3,7 @@ package com.bazinga.lantoon.home.chapter.lesson.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class HelpData {
+public class Reference {
     @SerializedName("word")
     @Expose
     private String word;

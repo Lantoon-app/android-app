@@ -22,7 +22,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
-import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
+import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,7 +42,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg;
     ProgressBar pbTop;
     Button btnAudio, btnAudioSlow, btnMic;
-    HelpPopup helpPopup;
+    ReferencePopup referencePopup;
     int quesNo, totalQues;
 
     public static P3Fragment newInstance(int questionNo, int totalQuestions, String data) {
@@ -104,10 +104,10 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
-        if(question.getUseRefLang() == 0)
+        if(question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
-            helpPopup = new HelpPopup(2,question.getChapterNo(), question.getLessonNo(), question.getCellValue());
+            referencePopup = new ReferencePopup( question.getReference());
         tvQuestionName.setText(question.getWord());
         cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
         audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
@@ -136,8 +136,8 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
-                if(question.getUseRefLang() == 1){
-                    helpPopup.showPopupWindow(getView());
+                if(question.getReference() != null) {
+                    referencePopup.showPopupWindow(getView());
                 }
                 break;
             case R.id.btnAudio:

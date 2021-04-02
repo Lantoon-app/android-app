@@ -23,27 +23,15 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
-import com.bazinga.lantoon.home.chapter.lesson.HelpPopup;
+import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
-import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1ViewModel;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p3.P3Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p3.P3ViewModel;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class QFragment extends Fragment implements View.OnClickListener {
 
@@ -56,7 +44,7 @@ public class QFragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2;
     CommonFunction cf;
-    HelpPopup helpPopup;
+    ReferencePopup referencePopup;
     int quesNo, totalQues;
     public static QFragment newInstance(int questionNo, int totalQuestions, String data) {
         QFragment fragment = new QFragment();
@@ -127,10 +115,10 @@ public class QFragment extends Fragment implements View.OnClickListener {
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
         PlayAudios(question);
-        if(question.getUseRefLang() == 0)
+        if(question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
-            helpPopup = new HelpPopup(2,question.getChapterNo(), question.getLessonNo(), question.getCellValue());
+            referencePopup = new ReferencePopup( question.getReference());
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
         cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(),imgBtnAnsImage);
 
@@ -195,8 +183,8 @@ public class QFragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHome:
                 break;
             case R.id.imgBtnHelp:
-                if(question.getUseRefLang() == 1){
-                    helpPopup.showPopupWindow(getView());
+                if(question.getReference() != null) {
+                    referencePopup.showPopupWindow(getView());
                 }
                 break;
             case R.id.imgBtnNext:
