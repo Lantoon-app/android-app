@@ -1,6 +1,8 @@
 package com.bazinga.lantoon.retrofit;
 
 import com.bazinga.lantoon.home.chapter.model.Chapter;
+import com.bazinga.lantoon.home.profile.Profile;
+import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.model.User;
@@ -21,37 +23,44 @@ import retrofit2.http.Url;
 
 public interface ApiInterface {
 
+    //Language List
     @GET("Lantoon/public/LanguageHandler.php/languageList")
     Call<List<Language>> getLanguages();
 
+    //Chapter List
     @GET("Lantoon/public/ChapterHandler.php/chapterlist/slide/{languageid}/{slidenumber}")
     Call<List<Chapter>> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno);
 
+    //Profile
+    @GET("Lantoon/public/UserHandler.php/getprofile/{uid}")
+    Call<Profile> getProfile(@Path("uid") String uid);
+
+    //Update Profile
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/updateprofile")
+    Call<Profile> updateProfile(@Body ProfileData profileData);
+
+    //Lesson Questions
     /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")
     Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);*/
-@GET("Lantoon/public/QuestionHandler.php/onelessonquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}")
+    @GET("Lantoon/public/QuestionHandler.php/onelessonquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}")
     Call<JsonObject> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid);
 
-
+    //Signup
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/adduser")
     Call<User> createUser(@Body User user);
 
+    //Login
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/login")
     Call<LoggedInUser> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid);
-    /*@Headers("Content-Type: application/json")
-    @POST("Lantoon/public/UserHandler.php/login")
-    Call<User> userLogin(@Body User user);
-*/
 
-    @Streaming
-    @GET
-    Call<ResponseBody> downloadFileByUrl(@Url String fileUrl);
 
+    //Questions Images and Audio files
     @Streaming
     @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
-    Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid,@Path("chapterno") int chapterno, @Path("lessonno") int lessonno,@Path("type") int type);
+    Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("type") int type);
 
     /*@GET("Lantoon/public/QuestionHandler.php/reference/{reflanguageid}/{chapterno}/{lessonno}/{cellval}")
     Call<Help> getQuestionHelp(@Path("reflanguageid") int reflanguageid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("cellval") String cellval);*/

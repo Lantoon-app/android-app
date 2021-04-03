@@ -4,8 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#00FFFFFF"
-    app:cardCornerRadius="5dp">
+    android:background="#00FFFFFF">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,13 +12,13 @@
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:background="@drawable/border_bg_reference"
         android:gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/border_bg_chapter_completed"
             android:orientation="vertical">
 
             <TextView
@@ -27,7 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:text="The Boy is Eating"
@@ -39,14 +40,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="40dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioHelpPopup"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
                     app:backgroundTint="@null"
@@ -58,8 +60,9 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlowHelpPopup"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_speaker_slow"
                     app:iconGravity="textStart"
@@ -75,7 +78,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/border_bg_chapter_completed"
             android:orientation="vertical">
 
             <TextView
@@ -83,7 +85,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:text="The Boy is Eating"
@@ -95,14 +99,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_margin="10dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="40dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioHelpPopup2"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
                     app:backgroundTint="@null"
@@ -114,8 +119,9 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlowHelpPopup2"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="10dp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_speaker_slow"
                     app:iconGravity="textStart"
@@ -125,5 +131,13 @@
 
 
         </LinearLayout>
+        <ImageButton
+            android:id="@+id/imgBtnHelp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top"
+            android:layout_margin="20dp"
+            android:background="@drawable/close_icon"
+            android:gravity="center" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

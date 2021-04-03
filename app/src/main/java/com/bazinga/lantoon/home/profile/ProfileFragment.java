@@ -1,51 +1,258 @@
 package com.bazinga.lantoon.home.profile;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.hbb20.CountryCodePicker;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Calendar;
+
+import static android.app.Activity.RESULT_OK;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ProfileViewModel profileViewModel;
+    private ProfileData profileData;
     EditText etFullName, etDOB, etPhoneNumber;
+    CountryCodePicker countryCodePicker;
+    DatePickerDialog.OnDateSetListener date;
+    Button btnUpdate;
+    ImageView ivProfilePhoto;
     Spinner spinnerDuration;
+    final Calendar myCalendar = Calendar.getInstance();
+
+    public static final String KEY_User_Document1 = "doc1";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        ivProfilePhoto = root.findViewById(R.id.ivProfilePhoto);
         etFullName = root.findViewById(R.id.etFullName);
         etDOB = root.findViewById(R.id.etDOB);
         etPhoneNumber = root.findViewById(R.id.etPhoneNumber);
+        countryCodePicker = (CountryCodePicker) root.findViewById(R.id.countryCodePicker);
         spinnerDuration = root.findViewById(R.id.spinnerDuration);
+        btnUpdate = root.findViewById(R.id.btnUpdate);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.duration_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDuration.setAdapter(adapter);
-        profileViewModel.getUser().observe(getActivity(), new Observer<LoggedInUser>() {
-            @Override
-            public void onChanged(@Nullable LoggedInUser loggedInUser) {
-                //textView.setText(s);
-                etFullName.setText(loggedInUser.getData().getUname());
-                etDOB.setText(loggedInUser.getData().getDob());
-                etPhoneNumber.setText(loggedInUser.getData().getPhone());
+        profileViewModel.getUser().observe(getActivity(), profile -> {
+            if (profile.getStatus().getCode() == 1023) {
+                profileData = profile.getProfileData();
+                if (!profileData.getPicture().equals("")) {
+                    byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    RoundedBitmapDrawable dr =
+                            RoundedBitmapDrawableFactory.create(getContext().getResources(), decodedByte);
+                    dr.setGravity(Gravity.CENTER);
+                    dr.setCircular(true);
+                    ivProfilePhoto.setBackground(null);
+                    ivProfilePhoto.setImageDrawable(dr);
+                }
+                etFullName.setText(profileData.getUname());
+                etDOB.setText(profileData.getDob());
+                if (!profileData.getCountrycode().equals("")) {
+                    countryCodePicker.setCountryForPhoneCode(Integer.valueOf(profileData.getCountrycode()));
+                    etPhoneNumber.setText(profileData.getPhone());
+                }
             }
         });
+        date = (view, year, monthOfYear, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            etDOB.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+        };
+        ivProfilePhoto.setOnClickListener(this::onClick);
+        etDOB.setOnClickListener(this::onClick);
+        btnUpdate.setOnClickListener(this::onClick);
+
+
         return root;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ivProfilePhoto:
+                selectImage();
+                break;
+            case R.id.etDOB:
+                new DatePickerDialog(getContext(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                break;
+            case R.id.btnUpdate:
+                profileData.setUname(etFullName.getText().toString());
+                profileData.setDob(etDOB.getText().toString());
+                profileData.setCountrycode(countryCodePicker.getSelectedCountryCode());
+                profileData.setPhone(etPhoneNumber.getText().toString());
+                profileViewModel.postProfileData(profileData);
+                break;
+        }
+    }
+
+    private void selectImage() {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, 1);
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @SuppressLint("LongLogTag")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                File f = new File(Environment.getExternalStorageDirectory().toString());
+                for (File temp : f.listFiles()) {
+                    if (temp.getName().equals("temp.jpg")) {
+                        f = temp;
+                        break;
+                    }
+                }
+                try {
+                    Bitmap bitmap;
+                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
+                    bitmap=getResizedBitmap(bitmap, 400);
+                    RoundedBitmapDrawable dr =
+                            RoundedBitmapDrawableFactory.create(getContext().getResources(), bitmap);
+                    ivProfilePhoto.setBackground(null);
+                    ivProfilePhoto.setImageDrawable(dr);
+                    BitMapToString(bitmap);
+                    String path = android.os.Environment
+                            .getExternalStorageDirectory()
+                            + File.separator
+                            + "Phoenix" + File.separator + "default";
+                    f.delete();
+                    OutputStream outFile = null;
+                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                    try {
+                        outFile = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
+                        outFile.flush();
+                        outFile.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (requestCode == 2) {
+                Uri selectedImage = data.getData();
+                String[] filePath = { MediaStore.Images.Media.DATA };
+                Cursor c = getContext().getContentResolver().query(selectedImage,filePath, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePath[0]);
+                String picturePath = c.getString(columnIndex);
+                c.close();
+                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                thumbnail=getResizedBitmap(thumbnail, 400);
+                Log.w("path of image from gallery......******************.........", picturePath+"");
+                RoundedBitmapDrawable dr =
+                        RoundedBitmapDrawableFactory.create(getContext().getResources(), thumbnail);
+                ivProfilePhoto.setBackground(null);
+                ivProfilePhoto.setImageDrawable(dr);
+                BitMapToString(thumbnail);
+            }
+        }
+    }
+    public String BitMapToString(Bitmap userImage1) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        userImage1.compress(Bitmap.CompressFormat.PNG, 60, baos);
+        byte[] b = baos.toByteArray();
+        String Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
+        return Document_img1;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    private void SendDetail() {
+        final ProgressDialog loading = new ProgressDialog(getContext());
+        loading.setMessage("Please Wait...");
+        loading.show();
+        loading.setCanceledOnTouchOutside(false);
+
     }
 }

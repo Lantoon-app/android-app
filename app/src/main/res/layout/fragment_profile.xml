@@ -3,27 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-<ImageView
-    android:id="@+id/ivUploadPhoto"
-    android:layout_width="130dp"
-    android:layout_height="130dp"
-    android:background="@drawable/circle"
-    android:src="@drawable/photo_upload_icon"
-    android:paddingBottom="10dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivProfilePhoto"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:background="@drawable/circle"
+            android:paddingBottom="10dp"
+            android:src="@drawable/photo_upload_icon" />
+
         <EditText
             android:id="@+id/etFullName"
             android:layout_width="match_parent"
@@ -41,28 +44,57 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:background="@drawable/edittext_bg"
+            android:clickable="false"
+            android:cursorVisible="false"
             android:ems="10"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:gravity="center"
             android:hint="@string/hint_date_of_birth"
             android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/etPhoneNumber"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_margin="15dp"
             android:background="@drawable/edittext_bg"
-            android:ems="10"
-            android:gravity="center"
-            android:hint="@string/hint_mobile_number"
-            android:inputType="phone" />
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/countryCodePicker"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center"
+                app:ccp_hintExampleNumber="true"
+                app:ccp_showFlag="false"
+                app:ccp_showNameCode="false"
+                app:ccp_textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/edittext_bg"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/hint_mobile_number"
+                android:inputType="phone" />
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/spinnerDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp" />
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:background="@drawable/edittext_bg"
+            android:gravity="center" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUpdate"
