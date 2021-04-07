@@ -110,7 +110,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
             referencePopup = new ReferencePopup( question.getReference());
         tvQuestionName.setText(question.getWord());
         cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
-        audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+        //audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
         cf.shakeAnimation(imbBtnQuestionImg, 1000);
         setClickableButton(true);
 
@@ -121,6 +121,12 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
     }
 
     private void setTopBarState(int quesNo, int totalQues) {

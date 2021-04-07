@@ -21,19 +21,19 @@ public class User {
     @SerializedName("groupcode")
     public String groupcode;
     @SerializedName("learnlang")
-    public String learnlang;
+    public int learnlang;
     @SerializedName("knownlang")
-    public String knownlang;
+    public int knownlang;
     @SerializedName("deviceid")
     public String deviceid;
     @SerializedName("userrole")
-    public String userrole;
+    public int userrole;
     @SerializedName("currentlocation")
     public String currentlocation;
     @SerializedName("minsperday")
-    public String minsperday;
+    public int minsperday;
     @SerializedName("registrationtype")
-    public String registrationtype;
+    public int registrationtype;
 
     public User(String email,
                 String uname,
@@ -43,13 +43,13 @@ public class User {
                 String region,
                 String institute,
                 String groupcode,
-                String learnlang,
-                String knownlang,
+                int learnlang,
+                int knownlang,
                 String deviceid,
-                String userrole,
+                int userrole,
                 String currentlocation,
-                String minsperday,
-                String registrationtype) {
+                int minsperday,
+                int registrationtype) {
         this.email = email;
         this.uname = uname;
         this.pass = pass;

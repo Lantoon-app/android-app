@@ -39,7 +39,8 @@ public class SignupActivity extends AppCompatActivity {
     int RC_FACEBOOK_SIGN_IN = 2;
     CallbackManager callbackManager;
     EditText etFullName, etEmail, etPhone, etPassword, etCnfPassword;
-    String strFullName, strEmail, strPass, strCnfPass, strCountryCode, strPhoneNumber,strKnownLanguage, strLearnLanguage,strRegisterType;
+    String strFullName, strEmail, strPass, strCnfPass, strCountryCode, strPhoneNumber;
+    int knownLangId, learnLangId,registrationTypeId;
     Button btnSignup;
     CountryCodePicker countryCodePicker;
     TextView tvBackToLogin;
@@ -77,8 +78,8 @@ public class SignupActivity extends AppCompatActivity {
     public void init() {
 
         Intent intent = getIntent();
-        strKnownLanguage = intent.getStringExtra(Utils.TAG_KNOWN_LANGUAGE);
-        strLearnLanguage = intent.getStringExtra(Utils.TAG_LEARN_LANGUAGE);
+        knownLangId = intent.getIntExtra(Utils.TAG_KNOWN_LANGUAGE,0);
+        learnLangId = intent.getIntExtra(Utils.TAG_LEARN_LANGUAGE,0);
 
         etFullName = (EditText) findViewById(R.id.etFullName);
         etEmail = (EditText) findViewById(R.id.etEmailAddress);
@@ -115,8 +116,8 @@ public class SignupActivity extends AppCompatActivity {
                 }else if (strPass.length()<8 && !vf.isValidPassword(strPass)){
                     etPassword.setError("Password not valid");
                 } else {
-                    strRegisterType = "email";
-                    nextLevelSelection(strFullName, strEmail, strPass, strCountryCode, strPhoneNumber,strRegisterType);
+                    registrationTypeId = 1;
+                    nextLevelSelection(strFullName, strEmail, strPass, strCountryCode, strPhoneNumber,registrationTypeId);
                 }
 
             }
@@ -133,7 +134,7 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    private void nextLevelSelection(String strFullName, String strEmail, String strPass, String strCountryCode, String strPhoneNumber, String strRegisterType) {
+    private void nextLevelSelection(String strFullName, String strEmail, String strPass, String strCountryCode, String strPhoneNumber, int registrationTypeId) {
         Toast.makeText(SignupActivity.this, "Success", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SignupActivity.this, LevelSlectionActivity.class);
         intent.putExtra(Utils.TAG_USERNAME,strFullName);
@@ -141,11 +142,11 @@ public class SignupActivity extends AppCompatActivity {
         intent.putExtra(Utils.TAG_PASSWORD,strPass);
         intent.putExtra(Utils.TAG_COUNTRY_CODE,strCountryCode);
         intent.putExtra(Utils.TAG_PHONE_NUMBER,strPhoneNumber);
-        intent.putExtra(Utils.TAG_KNOWN_LANGUAGE,strKnownLanguage);
-        intent.putExtra(Utils.TAG_LEARN_LANGUAGE,strLearnLanguage);
+        intent.putExtra(Utils.TAG_KNOWN_LANGUAGE,knownLangId);
+        intent.putExtra(Utils.TAG_LEARN_LANGUAGE,learnLangId);
         intent.putExtra(Utils.TAG_DEVICE_ID, getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
         intent.putExtra(Utils.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION));
-        intent.putExtra(Utils.TAG_REGISTRATION_TYPE,strRegisterType);
+        intent.putExtra(Utils.TAG_REGISTRATION_TYPE,registrationTypeId);
         startActivity(intent);
     }
 

@@ -43,39 +43,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvQuestionName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:gravity="center"
-        android:text="The Boy is Eating"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.738"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="40dp" />
 
-    <TextView
-        android:id="@+id/tvQuestionAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:gravity="center"
-        android:text="The Boy is Eating"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout9"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.738"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="280dp" />
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout8"
@@ -85,11 +55,27 @@
         android:layout_marginStart="40dp"
         android:layout_marginBottom="88dp"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints">
-
+        <TextView
+            android:id="@+id/tvQuestionName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:orientation="horizontal">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,20 +124,36 @@
             android:layout_margin="5dp"
             android:background="@drawable/c5" />
     </LinearLayout>
-
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="88dp"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout10"
         app:layout_constraintHorizontal_bias="0.714"
 
         app:layout_constraintStart_toEndOf="@+id/linearLayout8">
+        <TextView
+            android:id="@+id/tvQuestionAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -201,7 +203,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/c5" />
     </LinearLayout>
-
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout10"
         android:layout_width="253dp"

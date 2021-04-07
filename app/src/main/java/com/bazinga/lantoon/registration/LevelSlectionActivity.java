@@ -29,20 +29,20 @@ public class LevelSlectionActivity extends AppCompatActivity {
         llNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nextDurationSelection("new");
+                nextDurationSelection(1);
             }
         });
         llTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nextDurationSelection("level");
+                nextDurationSelection(2);
             }
         });
 
 
     }
 
-    private void nextDurationSelection (String strRoll){
+    private void nextDurationSelection (int rollId){
 
 
         Intent intentDuration = new Intent(LevelSlectionActivity.this, DurationSelectionActivity.class);
@@ -51,12 +51,12 @@ public class LevelSlectionActivity extends AppCompatActivity {
         intentDuration.putExtra(Utils.TAG_PASSWORD, getIntent().getStringExtra(Utils.TAG_PASSWORD));
         intentDuration.putExtra(Utils.TAG_COUNTRY_CODE, getIntent().getStringExtra(Utils.TAG_COUNTRY_CODE));
         intentDuration.putExtra(Utils.TAG_PHONE_NUMBER, getIntent().getStringExtra(Utils.TAG_PHONE_NUMBER));
-        intentDuration.putExtra(Utils.TAG_LEARN_LANGUAGE, getIntent().getStringExtra(Utils.TAG_LEARN_LANGUAGE));
-        intentDuration.putExtra(Utils.TAG_KNOWN_LANGUAGE, getIntent().getStringExtra(Utils.TAG_KNOWN_LANGUAGE));
+        intentDuration.putExtra(Utils.TAG_LEARN_LANGUAGE, getIntent().getIntExtra(Utils.TAG_LEARN_LANGUAGE,0));
+        intentDuration.putExtra(Utils.TAG_KNOWN_LANGUAGE, getIntent().getIntExtra(Utils.TAG_KNOWN_LANGUAGE,0));
         intentDuration.putExtra(Utils.TAG_DEVICE_ID, getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
-        intentDuration.putExtra(Utils.TAG_USER_ROLE, strRoll);
+        intentDuration.putExtra(Utils.TAG_USER_ROLE, rollId);
         intentDuration.putExtra(Utils.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION));
-        intentDuration.putExtra(Utils.TAG_REGISTRATION_TYPE,getIntent().getStringExtra(Utils.TAG_REGISTRATION_TYPE));
+        intentDuration.putExtra(Utils.TAG_REGISTRATION_TYPE,getIntent().getIntExtra(Utils.TAG_REGISTRATION_TYPE,0));
         startActivity(intentDuration);
 
     }

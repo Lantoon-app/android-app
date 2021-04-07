@@ -29,7 +29,7 @@ public class LangSelectionActivity extends AppCompatActivity {
     LangSelectionActivity context;
     LanguageViewModel languageViewModel;
     ViewPager2 iKnowVp, iWantLearnVp;
-    String strKnownLanguage, strLearnLanguage;
+    int knownLangId, learnLangId;
     List<Language> languageList;
 
     @Override
@@ -90,11 +90,11 @@ public class LangSelectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(iKnowVp.getCurrentItem() != iWantLearnVp.getCurrentItem()) {
 
-                    strKnownLanguage = languageList.get(iKnowVp.getCurrentItem()).getLanguageName();
-                    strLearnLanguage = languageList.get(iWantLearnVp.getCurrentItem()).getLanguageName();
+                    knownLangId = Integer.valueOf(languageList.get(iKnowVp.getCurrentItem()).getLanguageID());
+                    learnLangId = Integer.valueOf(languageList.get(iWantLearnVp.getCurrentItem()).getLanguageID());
                     Intent intent = new Intent(LangSelectionActivity.this, SignupActivity.class);
-                    intent.putExtra(Utils.TAG_KNOWN_LANGUAGE, strKnownLanguage);
-                    intent.putExtra(Utils.TAG_LEARN_LANGUAGE, strLearnLanguage);
+                    intent.putExtra(Utils.TAG_KNOWN_LANGUAGE, knownLangId);
+                    intent.putExtra(Utils.TAG_LEARN_LANGUAGE, learnLangId);
                     intent.putExtra(Utils.TAG_DEVICE_ID, getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
                     intent.putExtra(Utils.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION));
                     startActivity(intent);

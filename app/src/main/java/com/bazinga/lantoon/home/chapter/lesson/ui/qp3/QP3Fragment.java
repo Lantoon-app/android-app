@@ -114,7 +114,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
-        PlayAudios(question);
+        //PlayAudios(question);
         if(question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
@@ -139,6 +139,11 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        PlayAudios(question);
+    }
 
     private void PlayAudios(Question question) {
         try {

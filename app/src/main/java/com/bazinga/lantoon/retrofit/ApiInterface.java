@@ -12,6 +12,7 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -39,6 +40,11 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/updateprofile")
     Call<Profile> updateProfile(@Body ProfileData profileData);
+
+    //Update Profile Picture
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/updateprofilepic/{userid}/{profilepic}")
+    Call<ResponseBody> updateProfilePicture(@Path("userid") String userid, @Path("profilepic") String profilepic);
 
     //Lesson Questions
     /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")

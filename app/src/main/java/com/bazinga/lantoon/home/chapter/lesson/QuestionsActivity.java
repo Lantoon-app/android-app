@@ -66,6 +66,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     questionViewModel.getQuestionsMutableLiveData().observe(this, fragments -> {
 
                         MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
+                        //mPager.setUserInputEnabled(false);
                         mPager.setAdapter(mPageAdapter);
                         mPager.clearFocus();
                         progress.dismiss();

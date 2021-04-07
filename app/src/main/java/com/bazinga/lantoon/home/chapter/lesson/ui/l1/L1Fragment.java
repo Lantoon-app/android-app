@@ -128,7 +128,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
 
             questions = jsonStringToArray(getArguments().getString(Utils.TAG_QUESTION_TYPE));
-            PlayAudios(questions);
+            //PlayAudios(questions);
                 imgBtnHelp.setVisibility(View.INVISIBLE);
 
 
@@ -162,6 +162,12 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PlayAudios(questions);
     }
 
     private ArrayList<Question> jsonStringToArray(String jsonString) throws JSONException {

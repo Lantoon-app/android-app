@@ -118,7 +118,7 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
         else
             referencePopup = new ReferencePopup( question.getReference());
         tvQuestionName.setText(question.getWord());
-        audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+        //audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
         imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
         imagePaths = new String[]{Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
         cf.setShuffleImages(getActivity(), imageViewIds, imagePaths, getView());
@@ -130,6 +130,12 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
     }
 
     private void setTopBarState(int quesNo, int totalQues) {

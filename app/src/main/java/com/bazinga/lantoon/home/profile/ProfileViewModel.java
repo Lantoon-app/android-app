@@ -6,8 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.bazinga.lantoon.login.data.model.LoggedInUser;
-import com.bazinga.lantoon.registration.model.User;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.Gson;
@@ -25,13 +23,13 @@ public class ProfileViewModel extends ViewModel {
         mUser = new MutableLiveData<>();
         //mText.setValue("This is Profile fragment");
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<Profile> call = apiInterface.getProfile("RET2021927172");
+        Call<Profile> call = apiInterface.getProfile("RET2029283665");
         call.enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Call<Profile> call, Response<Profile> response) {
 
                 mUser.setValue(response.body());
-                Log.d("profile data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                //Log.d("profile data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
             }
 
             @Override

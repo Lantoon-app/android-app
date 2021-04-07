@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -35,8 +36,8 @@ public class ReferencePopup {
         View popupView = inflater.inflate(R.layout.popup_reference, null);
 
         //Specify the length and width through constants
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
         //Make Inactive Items Outside Of PopupWindow
         boolean focusable = true;
@@ -55,6 +56,7 @@ public class ReferencePopup {
         Button btnAudioSlowHelpPopup = popupView.findViewById(R.id.btnAudioSlowHelpPopup);
         Button btnAudioHelpPopup2 = popupView.findViewById(R.id.btnAudioHelpPopup2);
         Button btnAudioSlowHelpPopup2 = popupView.findViewById(R.id.btnAudioSlowHelpPopup2);
+        ImageButton imgBtnClose = popupView.findViewById(R.id.imgBtnClose);
         LinearLayout llQtypes = popupView.findViewById(R.id.llQtypes);
 
         tvQuestionNameHelpPopup.setText(helpData.getWord());
@@ -72,6 +74,13 @@ public class ReferencePopup {
             @Override
             public void onClick(View v) {
                 playAudio(helpData.getAudioPath());
+            }
+        });
+
+        imgBtnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
             }
         });
 

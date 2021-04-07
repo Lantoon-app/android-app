@@ -121,7 +121,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
         setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
-        PlayAudios(question);
+        //PlayAudios(question);
         if(question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
@@ -174,6 +174,12 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PlayAudios(question);
     }
 
     @Override

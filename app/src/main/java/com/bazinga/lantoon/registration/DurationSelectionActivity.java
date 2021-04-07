@@ -65,20 +65,20 @@ public class DurationSelectionActivity extends AppCompatActivity implements View
          Create new user
          **/
         /*User user = new User(
-                "test@nizam222.com",
+                "nizam@test3.com",
                 "nizam",
-                "ertyuio",
+                "12345678",
+                "31",
+                "111113232323",
                 "",
                 "",
                 "",
-                "",
-                "",
-                "hindi",
-                "english",
+                2,
+                3,
                 "asdfasdfsdfsdfsdfsdf",
-                "new",
+                2,
                 "",
-                "5",
+                5,
                 "google");*/
         progressBar(true);
         User user = new User(getIntent().getStringExtra(Utils.TAG_EMAILID),
@@ -89,13 +89,13 @@ public class DurationSelectionActivity extends AppCompatActivity implements View
                 Utils.TAG_REGION,
                 Utils.TAG_INSTITUTE,
                 Utils.TAG_GROUP_CODE,
-                getIntent().getStringExtra(Utils.TAG_LEARN_LANGUAGE),
-                getIntent().getStringExtra(Utils.TAG_KNOWN_LANGUAGE),
+                getIntent().getIntExtra(Utils.TAG_LEARN_LANGUAGE,0),
+                getIntent().getIntExtra(Utils.TAG_KNOWN_LANGUAGE,0),
                 getIntent().getStringExtra(Utils.TAG_DEVICE_ID),
-                getIntent().getStringExtra(Utils.TAG_USER_ROLE),
+                getIntent().getIntExtra(Utils.TAG_USER_ROLE,0),
                 getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION),
-                String.valueOf(intMinsPerDay),
-                getIntent().getStringExtra(Utils.TAG_REGISTRATION_TYPE));
+                intMinsPerDay,
+                getIntent().getIntExtra(Utils.TAG_REGISTRATION_TYPE,0));
         System.out.println("user data " + new Gson().toJson(user));
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<User> call = apiInterface.createUser(user);

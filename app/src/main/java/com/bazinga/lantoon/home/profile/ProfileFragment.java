@@ -18,13 +18,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,9 +40,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
+import com.bazinga.lantoon.registration.model.DurationData;
+import com.bazinga.lantoon.retrofit.ApiClient;
+import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.gson.GsonBuilder;
 import com.hbb20.CountryCodePicker;
 
 import java.io.ByteArrayOutputStream;
@@ -48,15 +55,23 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
 
-public class ProfileFragment extends Fragment implements View.OnClickListener {
+public class ProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private ProfileViewModel profileViewModel;
     private ProfileData profileData;
+    private List<DurationData> durationDataList;
     EditText etFullName, etDOB, etPhoneNumber;
     CountryCodePicker countryCodePicker;
     DatePickerDialog.OnDateSetListener date;
@@ -78,10 +93,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         countryCodePicker = (CountryCodePicker) root.findViewById(R.id.countryCodePicker);
         spinnerDuration = root.findViewById(R.id.spinnerDuration);
         btnUpdate = root.findViewById(R.id.btnUpdate);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.duration_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDuration.setAdapter(adapter);
+        spinnerDuration.setOnItemSelectedListener(this);
+
         profileViewModel.getUser().observe(getActivity(), profile -> {
             if (profile.getStatus().getCode() == 1023) {
                 profileData = profile.getProfileData();
@@ -94,7 +107,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     dr.setCircular(true);
                     ivProfilePhoto.setBackground(null);
                     ivProfilePhoto.setImageDrawable(dr);
+
                 }
+                durationDataList = profile.getDurationData();
+                System.out.println(profile.getDurationData().toString());
+                DurationSpinnerAdapter durationSpinnerAdapter = new DurationSpinnerAdapter(getContext(), durationDataList);
+                spinnerDuration.setAdapter(durationSpinnerAdapter);
                 etFullName.setText(profileData.getUname());
                 etDOB.setText(profileData.getDob());
                 if (!profileData.getCountrycode().equals("")) {
@@ -133,6 +151,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 profileData.setDob(etDOB.getText().toString());
                 profileData.setCountrycode(countryCodePicker.getSelectedCountryCode());
                 profileData.setPhone(etPhoneNumber.getText().toString());
+                profileData.setMindurationperday(Integer.valueOf(durationDataList.get(spinnerDuration.getSelectedItemPosition()).getDurationMin()));
                 profileViewModel.postProfileData(profileData);
                 break;
         }
@@ -178,12 +197,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
-                    bitmap=getResizedBitmap(bitmap, 400);
+                    bitmap = getResizedBitmap(bitmap, 400);
                     RoundedBitmapDrawable dr =
                             RoundedBitmapDrawableFactory.create(getContext().getResources(), bitmap);
                     ivProfilePhoto.setBackground(null);
                     ivProfilePhoto.setImageDrawable(dr);
-                    BitMapToString(bitmap);
+                    String strBase64 = BitMapToString(bitmap);
+                    SendDetail(strBase64);
                     String path = android.os.Environment
                             .getExternalStorageDirectory()
                             + File.separator
@@ -208,23 +228,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 }
             } else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
-                String[] filePath = { MediaStore.Images.Media.DATA };
-                Cursor c = getContext().getContentResolver().query(selectedImage,filePath, null, null, null);
+                String[] filePath = {MediaStore.Images.Media.DATA};
+                Cursor c = getContext().getContentResolver().query(selectedImage, filePath, null, null, null);
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                thumbnail=getResizedBitmap(thumbnail, 400);
-                Log.w("path of image from gallery......******************.........", picturePath+"");
+                thumbnail = getResizedBitmap(thumbnail, 400);
+                Log.w("path of image from gallery......******************.........", picturePath + "");
                 RoundedBitmapDrawable dr =
                         RoundedBitmapDrawableFactory.create(getContext().getResources(), thumbnail);
                 ivProfilePhoto.setBackground(null);
                 ivProfilePhoto.setImageDrawable(dr);
-                BitMapToString(thumbnail);
+                String strBase64 = BitMapToString(thumbnail);
+                SendDetail(strBase64);
             }
         }
     }
+
     public String BitMapToString(Bitmap userImage1) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         userImage1.compress(Bitmap.CompressFormat.PNG, 60, baos);
@@ -237,7 +259,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         int width = image.getWidth();
         int height = image.getHeight();
 
-        float bitmapRatio = (float)width / (float) height;
+        float bitmapRatio = (float) width / (float) height;
         if (bitmapRatio > 1) {
             width = maxSize;
             height = (int) (width / bitmapRatio);
@@ -248,11 +270,42 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
-    private void SendDetail() {
+    private void SendDetail(String strPicture) {
+        System.out.println(strPicture);
         final ProgressDialog loading = new ProgressDialog(getContext());
         loading.setMessage("Please Wait...");
         loading.show();
         loading.setCanceledOnTouchOutside(false);
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> call = apiInterface.updateProfilePicture("RET2021927172", strPicture);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body() != null)
+                    Log.d("update profile Picture", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                loading.dismiss();
+                loading.cancel();
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        /*for(int i=0; i<durationDataList.size(); i++){
+            if(profileData.getMindurationperday() == Integer.valueOf(durationDataList.get(i).getDurationMin()))
+                parent.setSelection(i);
+        }*/
+        //parent.setSelection(2);
     }
 }
