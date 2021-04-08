@@ -9,27 +9,13 @@ import com.google.gson.annotations.SerializedName;
  */
 public class LoggedInUser {
 
-    /*private String userId;
-    private String displayName;
 
-    public LoggedInUser(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }*/
     @SerializedName("status")
     @Expose
     private Status status;
     @SerializedName("data")
     @Expose
-    private LoginData data;
+    private LoginData loginData;
 
     public Status getStatus() {
         return status;
@@ -39,11 +25,11 @@ public class LoggedInUser {
         this.status = status;
     }
 
-    public LoginData getData() {
-        return data;
+    public LoginData getLoginData() {
+        return loginData;
     }
 
-    public void setData(LoginData data) {
-        this.data = data;
+    public void setData(LoginData loginData) {
+        this.loginData = loginData;
     }
 }

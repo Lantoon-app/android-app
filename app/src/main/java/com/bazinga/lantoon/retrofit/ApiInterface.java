@@ -3,6 +3,8 @@ package com.bazinga.lantoon.retrofit;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
+import com.bazinga.lantoon.home.profile.ProfilePicture;
+import com.bazinga.lantoon.home.profile.ProfilePictureData;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.model.User;
@@ -43,8 +45,8 @@ public interface ApiInterface {
 
     //Update Profile Picture
     @Headers("Content-Type: application/json")
-    @POST("Lantoon/public/UserHandler.php/updateprofilepic/{userid}/{profilepic}")
-    Call<ResponseBody> updateProfilePicture(@Path("userid") String userid, @Path("profilepic") String profilepic);
+    @POST("Lantoon/public/UserHandler.php/updateprofilepic")
+    Call<ProfilePicture> updateProfilePicture(@Body ProfilePictureData profilePictureData);
 
     //Lesson Questions
     /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")

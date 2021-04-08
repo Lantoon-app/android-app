@@ -9,7 +9,7 @@
     <string name="btn_login_with_google">Login with Google+</string>
     <string name="btn_login_with_apple">Login with Apple</string>
     <string name="btn_forgot_password">Forgot Password ?</string>
-    <string name="hint_username">Usenname</string>
+    <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="hint_fullname">Full Name</string>
     <string name="hint_email">E-Mail</string>
@@ -45,12 +45,13 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">LESSON</string>
-    <string name="menu_profile">Profile</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+
+    <string name="menu_profile">PROFILE</string>
+    <string name="menu_change_password">CHANGE PASSWORD</string>
+    <string name="menu_new_language">NEW LANGUAGE</string>
+    <string name="menu_payment">PAYMENT</string>
+    <string name="menu_share">SHARE</string>
+    <string name="menu_signout">SIGN OUT</string>
 
     <!-- Bottom Navigation -->
     <string name="title_lesson">LESSON</string>
@@ -80,6 +81,7 @@
     <string name="btn_update_profile">UPDATE</string>
     <string name="title_select_language">SELECT LANGUAGE</string>
     <string name="choose_your_language">CHOOSE YOUR LANGUAGE</string>
+    <string name="ad_signout_msg">Are you sure you want to sign out ?</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>

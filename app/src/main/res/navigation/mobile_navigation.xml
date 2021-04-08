@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.bazinga.lantoon.home.chapter.ChapterFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_chapter" />
+    app:startDestination="@+id/bottom_lesson">
 
     <fragment
         android:id="@+id/nav_profile"
@@ -18,16 +12,22 @@
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.bazinga.lantoon.home.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_change_password"
+        android:name="com.bazinga.lantoon.home.changepassword.ChangePasswordFragment"
+        android:label="@string/menu_change_password"
+        tools:layout="@layout/fragment_change_password" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.bazinga.lantoon.home.setting.SettingFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_setting" />
+        android:id="@+id/nav_new_language"
+        android:name="com.bazinga.lantoon.home.newlanguage.NewLanguageFragment"
+        android:label="@string/menu_new_language"
+        tools:layout="@layout/fragment_new_language" />
+
+    <fragment
+        android:id="@+id/nav_payment"
+        android:name="com.bazinga.lantoon.home.payment.PaymentFragment"
+        android:label="@string/menu_payment"
+        tools:layout="@layout/fragment_payment" />
 
     <fragment
         android:id="@+id/nav_share"
@@ -35,11 +35,11 @@
         android:label="@string/menu_share"
         tools:layout="@layout/fragment_share" />
 
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.bazinga.lantoon.home.send.SendFragment"
-        android:label="@string/menu_send"
-        tools:layout="@layout/fragment_send" />
+   <!-- <fragment
+        android:id="@+id/nav_signout"
+        android:name="com.bazinga.lantoon.home.changepassword.ChangePasswordFragment"
+        android:label="@string/menu_signout"
+        tools:layout="@layout/fragment_change_password" />-->
 
     <fragment
         android:id="@+id/bottom_lesson"

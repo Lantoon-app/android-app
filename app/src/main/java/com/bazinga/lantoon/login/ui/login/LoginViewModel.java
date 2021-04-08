@@ -8,10 +8,12 @@ import android.util.Log;
 import android.util.Patterns;
 
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,7 +52,7 @@ public class LoginViewModel extends ViewModel {
 
                         loggedInUser = response.body();
                         if (loggedInUser.getStatus().getCode() == 1008) {
-                            loginResult.setValue(new LoginResult(new LoggedInUserView(loggedInUser.getData().getUname())));
+                            loginResult.setValue(new LoginResult(new LoggedInUserView(loggedInUser.getLoginData())));
                         } else {
                             loginResult.setValue(new LoginResult(loggedInUser.getStatus().getMessage()));
                             //loginResult.setValue(new LoginResult(R.string.login_failed));

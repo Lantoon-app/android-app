@@ -22,9 +22,9 @@ public class ProfileData {
     @SerializedName("phone")
     @Expose
     private String phone;
-    @SerializedName("mindurationperday")
+    @SerializedName("minsperday")
     @Expose
-    private Integer mindurationperday;
+    private Integer minsperday;
     @SerializedName("picture")
     @Expose
     private String picture;
@@ -78,11 +78,11 @@ public class ProfileData {
     }
 
     public Integer getMindurationperday() {
-        return mindurationperday;
+        return minsperday;
     }
 
-    public void setMindurationperday(Integer mindurationperday) {
-        this.mindurationperday = mindurationperday;
+    public void setMindurationperday(Integer minsperday) {
+        this.minsperday = minsperday;
     }
 
     public String getPicture() {

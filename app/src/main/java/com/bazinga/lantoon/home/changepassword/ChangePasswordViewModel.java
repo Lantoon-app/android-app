@@ -1,16 +1,16 @@
-package com.bazinga.lantoon.home.slideshow;
+package com.bazinga.lantoon.home.changepassword;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class ChangePasswordViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public ChangePasswordViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is change password fragment");
     }
 
     public LiveData<String> getText() {

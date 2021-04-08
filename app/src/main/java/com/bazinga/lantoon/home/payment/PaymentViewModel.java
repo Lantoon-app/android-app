@@ -1,16 +1,16 @@
-package com.bazinga.lantoon.home.send;
+package com.bazinga.lantoon.home.payment;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SendViewModel extends ViewModel {
+public class PaymentViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SendViewModel() {
+    public PaymentViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is send fragment");
+        mText.setValue("This is payment fragment");
     }
 
     public LiveData<String> getText() {

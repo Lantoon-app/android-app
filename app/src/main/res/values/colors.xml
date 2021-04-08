@@ -5,6 +5,8 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="status_bar_color">#286bb5</color>
+    <color name="navigation_bar_color">#286bb5</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#311B92</color>
@@ -22,6 +24,7 @@
     <color name="target_slant">#FFBF00</color>
     <color name="qustion_button_background">#296BB5</color>
     <color name="chapter_ratingbar_bg">#1D60AA</color>
+    <color name="nav_bottom_bg">#286bb5</color>
     <color name="chapter_completed_border">#6d6d6d</color>
     <color name="home_bottom_nav_bg">#F7D049</color>
     <color name="chapter_disabled_bg">#3b3b3b</color>

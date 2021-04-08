@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.slideshow;
+package com.bazinga.lantoon.home.newlanguage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,16 +14,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.R;
 
-public class SlideshowFragment extends Fragment {
+public class NewLanguageFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private NewLanguageViewModel newLanguageViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel = new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(this, new Observer<String>() {
+        newLanguageViewModel = new ViewModelProvider(this).get(NewLanguageViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_new_language, container, false);
+        final TextView textView = root.findViewById(R.id.text_new_language);
+        newLanguageViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

@@ -37,8 +37,8 @@ public class QuestionRightWrongPopup {
         View popupView = inflater.inflate(R.layout.popup_question_answer_anim, null);
 
         //Specify the length and width through constants
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
         //Make Inactive Items Outside Of PopupWindow
         boolean focusable = true;

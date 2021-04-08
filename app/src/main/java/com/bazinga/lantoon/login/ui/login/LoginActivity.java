@@ -28,10 +28,13 @@ import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsViewModel;
+import com.bazinga.lantoon.login.SessionManager;
+import com.google.gson.GsonBuilder;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    SessionManager sessionManager;
      EditText usernameEditText, passwordEditText;
      Button loginButton;
      ProgressBar loadingProgressBar;
@@ -41,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        sessionManager = new SessionManager(this);
         lllogin= findViewById(R.id.lllogin);
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
@@ -135,9 +138,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         loadingProgressBar.setVisibility(View.GONE);
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String user = new GsonBuilder().create().toJson(model.getloginData());
+
+        sessionManager.createLoginSession(user);
+        /*String welcome = getString(R.string.welcome) + model.getloginData().getUname();
         // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, welcome, Toast.LENGTH_LONG).show();*/
+        System.out.println("Login username "+sessionManager.getUserDetails().getUname());
         startActivity(new Intent(this, HomeActivity.class));
     }
 

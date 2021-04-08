@@ -39,6 +39,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.login.data.model.LoggedInUser;
 import com.bazinga.lantoon.registration.model.DurationData;
 import com.bazinga.lantoon.retrofit.ApiClient;
@@ -71,6 +72,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     private ProfileViewModel profileViewModel;
     private ProfileData profileData;
+    ProfilePictureData profilePictureData;
     private List<DurationData> durationDataList;
     EditText etFullName, etDOB, etPhoneNumber;
     CountryCodePicker countryCodePicker;
@@ -79,8 +81,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     ImageView ivProfilePhoto;
     Spinner spinnerDuration;
     final Calendar myCalendar = Calendar.getInstance();
-
-    public static final String KEY_User_Document1 = "doc1";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -272,26 +272,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     private void SendDetail(String strPicture) {
         System.out.println(strPicture);
+        profilePictureData = new ProfilePictureData();
+        profilePictureData.setProfilepic(strPicture);
+        profilePictureData.setUserid(HomeActivity.sessionManager.getUserDetails().getUid());
         final ProgressDialog loading = new ProgressDialog(getContext());
         loading.setMessage("Please Wait...");
         loading.show();
         loading.setCanceledOnTouchOutside(false);
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> call = apiInterface.updateProfilePicture("RET2021927172", strPicture);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<ProfilePicture> call = apiInterface.updateProfilePicture(profilePictureData);
+        call.enqueue(new Callback<ProfilePicture>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.body() != null)
-                    Log.d("update profile Picture", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+            public void onResponse(Call<ProfilePicture> call, Response<ProfilePicture> response) {
+                if (response.body().getStatus().getCode() == 1028)
+                    Log.d("profile picture data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                 loading.dismiss();
-                loading.cancel();
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+            public void onFailure(Call<ProfilePicture> call, Throwable t) {
+                loading.dismiss();
             }
         });
+
 
     }
 

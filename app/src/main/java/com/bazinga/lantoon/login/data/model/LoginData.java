@@ -13,15 +13,6 @@ public class LoginData {
     @SerializedName("uname")
     @Expose
     private String uname;
-    @SerializedName("dob")
-    @Expose
-    private String dob;
-    @SerializedName("countrycode")
-    @Expose
-    private String countrycode;
-    @SerializedName("phone")
-    @Expose
-    private String phone;
     @SerializedName("learnlang")
     @Expose
     private Integer learnlang;
@@ -37,6 +28,9 @@ public class LoginData {
     @SerializedName("registrationtype")
     @Expose
     private Integer registrationtype;
+    @SerializedName("photo")
+    @Expose
+    private String photo;
 
     public String getUid() {
         return uid;
@@ -60,30 +54,6 @@ public class LoginData {
 
     public void setUname(String uname) {
         this.uname = uname;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getCountrycode() {
-        return countrycode;
-    }
-
-    public void setCountrycode(String countrycode) {
-        this.countrycode = countrycode;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public Integer getLearnlang() {
@@ -124,6 +94,14 @@ public class LoginData {
 
     public void setRegistrationtype(Integer registrationtype) {
         this.registrationtype = registrationtype;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
 
