@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -166,7 +165,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Take Photo")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    File f = new File(getContext().getCacheDir(), "temp.jpg");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 1);
                 } else if (options[item].equals("Choose from Gallery")) {
@@ -186,7 +185,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-                File f = new File(Environment.getExternalStorageDirectory().toString());
+                File f = new File(getContext().getCacheDir().getPath());
                 for (File temp : f.listFiles()) {
                     if (temp.getName().equals("temp.jpg")) {
                         f = temp;
@@ -204,8 +203,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     ivProfilePhoto.setImageDrawable(dr);
                     String strBase64 = BitMapToString(bitmap);
                     SendDetail(strBase64);
-                    String path = android.os.Environment
-                            .getExternalStorageDirectory()
+                    String path = getContext().getCacheDir().getPath()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
                     f.delete();
@@ -235,21 +233,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                thumbnail = getResizedBitmap(thumbnail, 400);
+                //thumbnail = getResizedBitmap(thumbnail, 500);
                 Log.w("path of image from gallery......******************.........", picturePath + "");
                 RoundedBitmapDrawable dr =
                         RoundedBitmapDrawableFactory.create(getContext().getResources(), thumbnail);
+                dr.setGravity(Gravity.CENTER);
+                dr.setCircular(true);
                 ivProfilePhoto.setBackground(null);
                 ivProfilePhoto.setImageDrawable(dr);
-                String strBase64 = BitMapToString(thumbnail);
-                SendDetail(strBase64);
+                SendDetail(BitMapToString(thumbnail));
             }
         }
     }
 
     public String BitMapToString(Bitmap userImage1) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        userImage1.compress(Bitmap.CompressFormat.PNG, 60, baos);
+        userImage1.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] b = baos.toByteArray();
         String Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
         return Document_img1;

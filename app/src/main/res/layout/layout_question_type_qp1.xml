@@ -125,7 +125,7 @@
             android:layout_height="180dp"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:background="@drawable/c5" />
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -190,14 +190,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/c5" />
+                 />
 
             <ImageView
                 android:id="@+id/imgBtnAnsImage2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/c5" />
+                 />
         </LinearLayout>
 
         <LinearLayout
@@ -213,14 +213,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/c5" />
+                 />
 
             <ImageView
                 android:id="@+id/imgBtnAnsImage4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/c5" />
+                 />
         </LinearLayout>
     </LinearLayout>
 

@@ -23,6 +23,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.google.gson.Gson;
@@ -126,9 +127,9 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
             referencePopup = new ReferencePopup( question.getReference());
-        cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
+        cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getQtypeImagePath(),imbBtnQuestionImg);
         imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
-        imagePaths = new String[]{Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath1(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath2(), Utils.FILE_DESTINATION_PATH + File.separator + question.getWrongImagePath3()};
+        imagePaths = new String[]{QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), QuestionsActivity.strFilePath + File.separator + question.getWrongImagePath1(), QuestionsActivity.strFilePath + File.separator + question.getWrongImagePath2(), QuestionsActivity.strFilePath + File.separator + question.getWrongImagePath3()};
         cf.setShuffleImages(getActivity(), imageViewIds, imagePaths, getView());
         Log.d("data qp1 " ,new GsonBuilder().setPrettyPrinting().create().toJson(question));
     }
@@ -143,7 +144,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
             MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(mp -> {
@@ -151,7 +152,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
                 mp.release();
                 mp = new MediaPlayer();
                 try {
-                    mp.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + question.getAnsAudioPath());
+                    mp.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                     mp.prepare();
                     mp.start();
                     mp.setOnCompletionListener(mp1 -> {
@@ -195,32 +196,32 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnNext:
                 break;
             case R.id.btnAudio1:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 tvQuestionName.setText(question.getWord());
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAnsAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 tvQuestionName.setText(question.getWord());
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAnsAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
-                cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
+                cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());
 
                 break;
             case R.id.imgBtnAnsImage2:
-                cf.checkQuestion(imgBtnAnsImage2.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
+                cf.checkQuestion(imgBtnAnsImage2.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());
                 break;
             case R.id.imgBtnAnsImage3:
-                cf.checkQuestion(imgBtnAnsImage3.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
+                cf.checkQuestion(imgBtnAnsImage3.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());
                 break;
             case R.id.imgBtnAnsImage4:
-                cf.checkQuestion(imgBtnAnsImage4.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths);
+                cf.checkQuestion(imgBtnAnsImage4.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());
                 break;
         }
     }

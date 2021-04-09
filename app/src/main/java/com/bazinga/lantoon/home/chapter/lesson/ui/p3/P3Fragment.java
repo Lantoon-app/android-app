@@ -22,6 +22,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.google.gson.Gson;
@@ -109,8 +110,8 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         else
             referencePopup = new ReferencePopup( question.getReference());
         tvQuestionName.setText(question.getWord());
-        cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
-        //audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+        cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
+        //audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
         cf.shakeAnimation(imbBtnQuestionImg, 1000);
         setClickableButton(true);
 
@@ -126,7 +127,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+        audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
     }
 
     private void setTopBarState(int quesNo, int totalQues) {
@@ -147,16 +148,16 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btnAudio:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.btnAudioSlow:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.btnMic:
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity());
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
                 else
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity());
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
 
                 break;
         }

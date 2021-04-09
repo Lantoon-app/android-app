@@ -109,7 +109,7 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
-                    android:background="@drawable/c5" />
+                     />
             </LinearLayout>
         </LinearLayout>
 
@@ -186,7 +186,7 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center"
                     android:layout_margin="20dp"
-                    android:background="@drawable/c5" />
+                     />
             </LinearLayout>
         </LinearLayout>
 

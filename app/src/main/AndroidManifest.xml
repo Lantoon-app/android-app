@@ -24,16 +24,19 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".login.ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".registration.SignupActivity" />
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".registration.SignupActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".registration.langselection.view.LangSelectionActivity" />
         <activity android:name=".registration.LevelSlectionActivity" />
         <activity android:name=".registration.DurationSelectionActivity" />
-        <activity android:name=".home.HomeActivity" />
+        <activity
+            android:name=".home.HomeActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -2,12 +2,14 @@ package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,22 +18,39 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.model.Score;
+import com.bazinga.lantoon.login.SessionManager;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     CommonFunction cf;
+    SessionManager sessionManager;
     public static ViewPager2 mPager;
     ProgressDialog progress;
     public static long startTime;
     public static int totalQues = 0;
+    public static String strFilePath = "";
+    public static Score score;
+    public static int Pmark = 0,Nmark = 0,OutOfTotal = 0;
+    public static Map<String, String> countMap = new HashMap<>();
+    public static String strUserId,strTotalQues, strCompletedQues;
+    //public static String strUserId,strLanguageId,strChapterNo,strLessonNo,strStartTime,strEndTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        strFilePath = getCacheDir().getPath();
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.RECORD_AUDIO
         }, MY_PERMISSION_REQUEST_CODE);
+        sessionManager = new SessionManager(this);
+        strUserId = sessionManager.getUserDetails().getUid();
         cf= new CommonFunction();
         cf.fullScreen(getWindow());
         setContentView(R.layout.activity_questions);
@@ -44,6 +63,12 @@ public class QuestionsActivity extends AppCompatActivity {
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
+
+        /*strUserId = sessionManager.getUserDetails().getUid();
+        strLanguageId = String.valueOf(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID,0));
+        strChapterNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_CHAPTER_NO,0));
+        strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
+
         QuestionsViewModel questionViewModel = new ViewModelProvider(this,
                 new QuestionsViewModelFactory(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID, 0),
                         getIntent().getIntExtra(Utils.TAG_CHAPTER_NO, 0),
@@ -75,6 +100,12 @@ public class QuestionsActivity extends AppCompatActivity {
                         progress.dismiss();
                         totalQues = mPageAdapter.getItemCount();
                         startTime = System.currentTimeMillis();
+                        score = new Score();
+                        score.setUid(sessionManager.getUserDetails().getUid());
+                        score.setLangid(String.valueOf(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID,0)));
+                        score.setChaptno(String.valueOf(getIntent().getIntExtra(Utils.TAG_CHAPTER_NO,0)));
+                        score.setLessonno(String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0)));
+                        score.setTotalques(String.valueOf(totalQues));
                         /*  //Add a new Fragment to the list with bundle
                         Bundle b = new Bundle();
                         //b.putInt("position", i);
@@ -137,4 +168,32 @@ public class QuestionsActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
+
+    public static void CalculateMarks(int pmark,int nmark,int defaultPMark){
+        Pmark = Pmark+pmark;
+        Nmark = Nmark+nmark;
+        OutOfTotal = OutOfTotal+defaultPMark;
+        score.setPmark(String.valueOf(Pmark));
+        score.setNmark(String.valueOf(Nmark));
+        score.setOutOfTotal(String.valueOf(OutOfTotal));
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+/*@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("asdfsdafsdafsdafsdafsdafsafsdafsdafsafsad");
+        if(requestCode == RESULT_OK) {
+            if (requestCode == 1) {
+            *//*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+            lessonCompletedPopup.showPopupWindow(mPager,this);*//*
+                System.out.println("asdfsdafsdafsdafsdafsdaf");
+
+            }
+        }
+    }*/
 }

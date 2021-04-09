@@ -132,13 +132,13 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 imgBtnHelp.setVisibility(View.INVISIBLE);
 
 
-            String imgFile = Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getRightImagePath() + questions.get(0).getCellValue() + ".jpg";
+            String imgFile = QuestionsActivity.strFilePath + File.separator + questions.get(0).getRightImagePath() + questions.get(0).getCellValue() + ".jpg";
             Log.d("Imagefile", imgFile);
 
-            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getRightImagePath(),imbBtnQuestionImg1);
-            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getRightImagePath(),imbBtnQuestionImg2);
-            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getRightImagePath(),imbBtnQuestionImg3);
-            cf.setImage(getActivity(),Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getRightImagePath(),imbBtnQuestionImg4);
+            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(0).getRightImagePath(),imbBtnQuestionImg1);
+            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(1).getRightImagePath(),imbBtnQuestionImg2);
+            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(2).getRightImagePath(),imbBtnQuestionImg3);
+            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(3).getRightImagePath(),imbBtnQuestionImg4);
 
 
 
@@ -189,7 +189,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             tvQuestionName.setText(questions.get(0).getWord());
             cf.shakeAnimation(imbBtnQuestionImg1, 1000);
             MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath());
+            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(mp -> {
@@ -199,7 +199,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 try {
                     tvQuestionName.setText(questions.get(1).getWord());
                     cf.shakeAnimation(imbBtnQuestionImg2, 1000);
-                    mp.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath());
+                    mp.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
                     mp.prepare();
                     mp.start();
                     mp.setOnCompletionListener(mp1 -> {
@@ -209,7 +209,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                         try {
                             tvQuestionName.setText(questions.get(2).getWord());
                             cf.shakeAnimation(imbBtnQuestionImg3, 1000);
-                            mp1.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath());
+                            mp1.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
                             mp1.prepare();
                             mp1.start();
                             mp1.setOnCompletionListener(mp11 -> {
@@ -219,7 +219,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                                 try {
                                     tvQuestionName.setText(questions.get(3).getWord());
                                     cf.shakeAnimation(imbBtnQuestionImg4, 1000);
-                                    mp11.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getAudioPath());
+                                    mp11.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
                                     mp11.prepare();
                                     mp11.start();
                                     mp11.setOnCompletionListener(mp111 -> {
@@ -256,45 +256,46 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnHelp:
                 break;
             case R.id.imgBtnNext:
+                QuestionsActivity.countMap.put(String.valueOf(getArguments().getInt(Utils.TAG_QUESTION_NO)),"0");
                 QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
                 break;
             case R.id.btnAudio1:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudio3:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);
                 break;
             case R.id.btnAudio4:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
                 tvQuestionName.setText(questions.get(3).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(0).getAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(1).getAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudioSlow3:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(2).getAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);
                 break;
             case R.id.btnAudioSlow4:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + questions.get(3).getAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
                 tvQuestionName.setText(questions.get(3).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
 

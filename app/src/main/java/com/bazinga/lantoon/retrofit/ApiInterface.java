@@ -1,5 +1,6 @@
 package com.bazinga.lantoon.retrofit;
 
+import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
@@ -51,13 +52,18 @@ public interface ApiInterface {
     //Lesson Questions
     /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")
     Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);*/
-    @GET("Lantoon/public/QuestionHandler.php/onelessonquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}")
-    Call<JsonObject> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid);
+    @GET("Lantoon/public/QuestionHandler.php/onelessonquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}/{uid}")
+    Call<JsonObject> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
 
     //Signup
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/adduser")
     Call<User> createUser(@Body User user);
+
+    //Score Update
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/ScoreHandler.php/scoreupdate")
+    Call<Score> scoreUpdate(@Body Score score);
 
     //Login
     @Headers("Content-Type: application/json")

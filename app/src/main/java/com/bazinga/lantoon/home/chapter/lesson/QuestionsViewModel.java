@@ -100,7 +100,7 @@ public class QuestionsViewModel extends ViewModel {
             downloadZipFile(langid, chaperno, lessonno, 2);
             downloadZipFile(langid, chaperno, lessonno, 3);
             downloadZipFile(langid, chaperno, lessonno, 4);
-            questionsFragmentData(langid, chaperno, lessonno,2);
+            questionsFragmentData(langid, chaperno, lessonno,2,QuestionsActivity.strUserId);
             return true;
         }
 
@@ -226,7 +226,7 @@ public class QuestionsViewModel extends ViewModel {
     private void saveToDisk(ResponseBody body, String filename, int type, String folerStruc) throws Exception {
         try {
             String folderName = "";
-            File destinationFile = new File(Utils.ZIP_FILE_DESTINATION_PATH, filename);
+            File destinationFile = new File(QuestionsActivity.strFilePath, filename);
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -272,7 +272,7 @@ public class QuestionsViewModel extends ViewModel {
                 if (type == 4)
                     folderName = Utils.AUDIOANS_FILE_DESTINATION_FOLDER;
 
-                unzipUtility.unzip(destinationFile.getPath(), Utils.ZIP_FILE_DESTINATION_PATH + File.separator + folderName+folerStruc);
+                unzipUtility.unzip(destinationFile.getPath(), QuestionsActivity.strFilePath + File.separator + folderName+folerStruc);
 
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();
@@ -284,10 +284,10 @@ public class QuestionsViewModel extends ViewModel {
         }
     }
 
-    private void questionsFragmentData(int langid, int chaperno, int lessonno,int reflanguageid) {
+    private void questionsFragmentData(int langid, int chaperno, int lessonno,int reflanguageid, String uid) {
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<JsonObject> call = apiInterface.getQuestions(langid, chaperno, lessonno,reflanguageid);
+        Call<JsonObject> call = apiInterface.getQuestions(langid, chaperno, lessonno,reflanguageid,uid);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

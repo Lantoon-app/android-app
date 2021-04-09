@@ -29,8 +29,8 @@ public class Utils {
     public static String TAG_CHAPTER_NO="chaperno";
     public static String TAG_LESSON_NO="lessonno";
 
-    public static String ZIP_FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-    public static String FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+    //public static String ZIP_FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+    //public static String FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
     public static String IMAGE_FILE_DESTINATION_FOLDER=File.separator +"content"+ File.separator +"images"+File.separator;
     public static String AUDIO_FILE_DESTINATION_FOLDER=File.separator +"content"+ File.separator +"audio"+File.separator;
     public static String IMAGEQUES_FILE_DESTINATION_FOLDER=File.separator +"content"+ File.separator +"imageques"+File.separator;

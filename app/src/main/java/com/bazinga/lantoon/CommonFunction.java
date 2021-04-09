@@ -16,7 +16,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bumptech.glide.Glide;
@@ -35,6 +34,7 @@ public class CommonFunction {
   /*  public void CommonFunction(Context context) {
         this.context = context;
     }*/
+    int attemptCount = 0;
 
     public void fullScreen(Window window) {
         if (Build.VERSION.SDK_INT < 16) {
@@ -126,21 +126,23 @@ public class CommonFunction {
     }
 
     public void checkQuestion(String tag, int quesNo, int
-            totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths) {
+            totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths,int pMark, int nMark) {
+        attemptCount++;
         QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
         if (CheckAnswerImage(tag)) {
             if (quesNo == totalQues) {
 
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), true);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), true,quesNo,attemptCount,false,pMark,nMark);
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount,false,pMark,nMark);
             }
 
         } else {
-            qrwp.showPopup(activity, view, CheckAnswerImage(tag), false);
+            qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount,false,pMark,nMark);
             setShuffleImages(activity, imageViewIds, imagePaths, view);
         }
+        System.out.println("attemptCount "+attemptCount);
     }
 
     public boolean CheckAnswerImage(String imagePath) {
@@ -149,7 +151,7 @@ public class CommonFunction {
         else return false;
     }
 
-    public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion, View view, Activity activity) {
+    public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion, View view, Activity activity,int quesNo,int pMark, int nMark) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
 
@@ -175,6 +177,7 @@ public class CommonFunction {
             public void onBeginningOfSpeech() {
                 textView.setText("");
                 textView.setHint("Listening...");
+
             }
 
             @Override
@@ -204,14 +207,15 @@ public class CommonFunction {
 
                 String output = data.get(0).substring(0, 1).toUpperCase() + data.get(0).substring(1).toLowerCase();
                 textView.setText(output);
+                attemptCount++;
                 if (answerWord.equals(data.get(0))) {
 
-                    qrwp.showPopup(activity, view, true, isLastQuestion);
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount,true,pMark,nMark);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, false);
+                    qrwp.showPopup(activity, view, false, false, quesNo, attemptCount,true,pMark,nMark);
                 }
-
+                Log.d("attemptCount",QuestionsActivity.countMap.toString());
 
                 /*if(data.get(0).equals(answerWord)) {
                     Log.d("check ok", data.get(0) + " " + answerWord);
@@ -243,7 +247,6 @@ public class CommonFunction {
                 return false;
             }
         });*/
-
     }
 
 }

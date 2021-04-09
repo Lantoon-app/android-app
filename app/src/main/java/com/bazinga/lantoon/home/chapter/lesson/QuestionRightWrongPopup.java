@@ -1,25 +1,25 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.app.Activity;
-import android.graphics.drawable.Animatable2;
+import android.content.Intent;
 import android.graphics.drawable.Animatable2.AnimationCallback;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bazinga.lantoon.R;
+import com.google.gson.GsonBuilder;
 
 public class QuestionRightWrongPopup {
     AnimatedVectorDrawableCompat animatedVectorDrawableCompat;
@@ -30,7 +30,7 @@ public class QuestionRightWrongPopup {
 
     }
 
-    public void showPopup(Activity activity, final View view, boolean right, boolean isLast) {
+    public void showPopup(Activity activity, final View view, boolean right, boolean isLast, int quesNo, int attemptCount, boolean isSpeech,int pMark, int nMark) {
 
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
@@ -64,12 +64,19 @@ public class QuestionRightWrongPopup {
                         super.onAnimationEnd(drawable);
                         mediaPlayer.release();
                         popupWindow.dismiss();
+                        QuestionsActivity.CalculateMarks(pMark,0,pMark);
                         if (isLast) {
-                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                            lessonCompletedPopup.showPopupWindow(view, activity);
+                            QuestionsActivity.countMap.put(String.valueOf(quesNo),String.valueOf(attemptCount));
+                            Log.d("attemptCount",QuestionsActivity.countMap.toString());
+                            /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                            lessonCompletedPopup.showPopupWindow(view, activity);*/
+                            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                         } else {
+                            QuestionsActivity.countMap.put(String.valueOf(quesNo),String.valueOf(attemptCount));
+                            Log.d("attemptCount",QuestionsActivity.countMap.toString());
                             QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                         }
+                        System.out.println("Pmark "+QuestionsActivity.Pmark+"Nmark "+QuestionsActivity.Nmark+ "OutOfTotal "+QuestionsActivity.OutOfTotal);
                     }
                 });
                 animatedVectorDrawableCompat.start();
@@ -82,12 +89,19 @@ public class QuestionRightWrongPopup {
                         super.onAnimationEnd(drawable);
                         mediaPlayer.release();
                         popupWindow.dismiss();
+                        QuestionsActivity.CalculateMarks(pMark,0,pMark);
                         if (isLast) {
-                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                            lessonCompletedPopup.showPopupWindow(view, activity);
+                            QuestionsActivity.countMap.put(String.valueOf(quesNo),String.valueOf(attemptCount));
+                            Log.d("attemptCount",QuestionsActivity.countMap.toString());
+                            /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                            lessonCompletedPopup.showPopupWindow(view, activity);*/
+                            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                         } else {
+                            QuestionsActivity.countMap.put(String.valueOf(quesNo),String.valueOf(attemptCount));
+                            Log.d("attemptCount",QuestionsActivity.countMap.toString());
                             QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                         }
+                        System.out.println("Pmark "+QuestionsActivity.Pmark+"Nmark "+QuestionsActivity.Nmark+ "OutOfTotal "+QuestionsActivity.OutOfTotal);
                     }
                 });
                 animatedVectorDrawable.start();
@@ -107,6 +121,28 @@ public class QuestionRightWrongPopup {
                         mediaPlayer.release();
                         popupWindow.dismiss();
 
+                        if(attemptCount == 2 && isSpeech) {
+                            QuestionsActivity.CalculateMarks(0,nMark,pMark);
+                            if (isLast) {
+
+                                QuestionsActivity.countMap.put(String.valueOf(quesNo), "n");
+                                Log.d("attemptCount", QuestionsActivity.countMap.toString());
+                            /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                            lessonCompletedPopup.showPopupWindow(view, activity);*/
+
+                                System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
+
+                            } else {
+
+                                QuestionsActivity.countMap.put(String.valueOf(quesNo), "n");
+                                Log.d("attemptCount", QuestionsActivity.countMap.toString());
+                                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
+
+                            }
+                        }else {
+                            QuestionsActivity.CalculateMarks(0,nMark,0);
+                        }
+                        System.out.println("Pmark "+QuestionsActivity.Pmark+"Nmark "+QuestionsActivity.Nmark+ "OutOfTotal "+QuestionsActivity.OutOfTotal);
                     }
                 });
                 animatedVectorDrawableCompat.start();
@@ -119,7 +155,28 @@ public class QuestionRightWrongPopup {
                         super.onAnimationEnd(drawable1);
                         mediaPlayer.release();
                         popupWindow.dismiss();
+                        QuestionsActivity.CalculateMarks(0,nMark,0);
+                        if(attemptCount == 2 && isSpeech) {
+                            QuestionsActivity.CalculateMarks(0,nMark,pMark);
+                            if (isLast) {
 
+                                QuestionsActivity.countMap.put(String.valueOf(quesNo), "n");
+                                Log.d("attemptCount", QuestionsActivity.countMap.toString());
+                            /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                            lessonCompletedPopup.showPopupWindow(view, activity);*/
+                                System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
+
+                            } else {
+
+                                QuestionsActivity.countMap.put(String.valueOf(quesNo), "n");
+                                Log.d("attemptCount", QuestionsActivity.countMap.toString());
+                                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
+
+                            }
+                        }else {
+                            QuestionsActivity.CalculateMarks(0,nMark,0);
+                        }
+                        System.out.println("Pmark "+QuestionsActivity.Pmark+"Nmark "+QuestionsActivity.Nmark+ "OutOfTotal "+QuestionsActivity.OutOfTotal);
                     }
                 });
                 animatedVectorDrawable.start();

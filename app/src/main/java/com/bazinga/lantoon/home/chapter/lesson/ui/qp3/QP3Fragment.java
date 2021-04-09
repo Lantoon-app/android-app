@@ -23,6 +23,7 @@ import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.google.gson.Gson;
@@ -119,8 +120,8 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
             referencePopup = new ReferencePopup( question.getReference());
-        cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getQtypeImagePath(), imbBtnQuestionImg);
-        cf.setImage(getActivity(), Utils.FILE_DESTINATION_PATH + File.separator + question.getRightImagePath(), imgBtnAnsImage);
+        cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getQtypeImagePath(), imbBtnQuestionImg);
+        cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), imgBtnAnsImage);
 
 
     }
@@ -150,7 +151,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
             MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(mp -> {
@@ -160,7 +161,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                 try {
                     tvQuestionAnswer.setText(question.getAnsWord());
                     cf.shakeAnimation(imgBtnAnsImage, 1000);
-                    mp.setDataSource(Utils.FILE_DESTINATION_PATH + File.separator + question.getAnsAudioPath());
+                    mp.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                     mp.prepare();
                     mp.start();
                     mp.setOnCompletionListener(mp1 -> {
@@ -192,30 +193,30 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btnAudio1:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 tvQuestionName.setText(question.getWord());
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFile(Utils.FILE_DESTINATION_PATH + File.separator + question.getAnsAudioPath());
+                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 tvQuestionAnswer.setText(question.getAnsWord());
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 tvQuestionName.setText(question.getWord());
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(Utils.FILE_DESTINATION_PATH + File.separator + question.getAnsAudioPath());
+                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 tvQuestionAnswer.setText(question.getAnsWord());
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;
             case R.id.btnMic:
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity());
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
                 else
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity());
+                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
                 break;
         }
 
