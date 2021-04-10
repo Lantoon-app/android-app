@@ -27,13 +27,15 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_NORMAL = 1;
     private boolean isLoaderVisible = false;
     Activity activity;
+    int learnlang;
 
     private List<Chapter> mChapterList;
     private Callback mCallback;
 
-    public ChapterAdapter(List<Chapter> chapter, Activity activity) {
+    public ChapterAdapter(List<Chapter> chapter, Activity activity, Integer learnlang) {
         this.mChapterList = chapter;
         this.activity = activity;
+        this.learnlang = learnlang;
     }
 
     public void setCallback(Callback callback) {
@@ -155,13 +157,13 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 public void onClick(View v) {
                     //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, QuestionsActivity.class);
-                    intent.putExtra(Utils.TAG_LANGUAGE_ID,1);
+                    intent.putExtra(Utils.TAG_LANGUAGE_ID,learnlang);
                     intent.putExtra(Utils.TAG_CHAPTER_NO,Integer.valueOf(mChapter.getChapterNo()));
                     intent.putExtra(Utils.TAG_LESSON_NO,1);
                     activity.startActivity(intent);
                 }
             });
-            if (mChapterList.get(position).getVisibilityStatus() == 1) {
+            if (Integer.valueOf(mChapterList.get(position).getVisibilityStatus()) == 1) {
                 pbChapter.setProgress(50);
                 ivLock.setVisibility(View.INVISIBLE);
             } else {

@@ -6,12 +6,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_profile"
             android:title="@string/menu_profile" />
         <item
             android:id="@+id/nav_change_password"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_change_password"
             android:title="@string/menu_change_password" />
+        <item
+            android:id="@+id/nav_new_language"
+            android:icon="@drawable/ic_my_language"
+            android:title="@string/menu_new_language"/>
         <!--<item
             android:id="@+id/nav_new_language"
             android:icon="@drawable/ic_menu_slideshow"
@@ -22,11 +26,11 @@
             android:title="@string/menu_payment" />-->
         <item
             android:id="@+id/nav_share"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_share"
             android:title="@string/menu_share" />
         <item
             android:id="@+id/nav_signout"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_signout"
             android:title="@string/menu_signout" />
     </group>
 

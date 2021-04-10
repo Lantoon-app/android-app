@@ -19,6 +19,7 @@
         android:layout_margin="20dp"
         android:background="@color/target_slant"
         android:gravity="center"
+        android:visibility="invisible"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

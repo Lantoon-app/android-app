@@ -21,10 +21,10 @@ public class Chapter {
     private String nameInRetail;
     @SerializedName("ActiveStatus")
     @Expose
-    private int activeStatus;
+    private String activeStatus;
     @SerializedName("VisibilityStatus")
     @Expose
-    private int visibilityStatus;
+    private String visibilityStatus;
     @SerializedName("CreatedBy")
     @Expose
     private String createdBy;
@@ -34,6 +34,9 @@ public class Chapter {
     @SerializedName("VisibilityActivatedOn")
     @Expose
     private String visibilityActivatedOn;
+    @SerializedName("completedLessons")
+    @Expose
+    private Integer completedLessons;
 
     public String getChapterID() {
         return chapterID;
@@ -75,19 +78,19 @@ public class Chapter {
         this.nameInRetail = nameInRetail;
     }
 
-    public int getActiveStatus() {
+    public String getActiveStatus() {
         return activeStatus;
     }
 
-    public void setActiveStatus(int activeStatus) {
+    public void setActiveStatus(String activeStatus) {
         this.activeStatus = activeStatus;
     }
 
-    public int getVisibilityStatus() {
+    public String getVisibilityStatus() {
         return visibilityStatus;
     }
 
-    public void setVisibilityStatus(int visibilityStatus) {
+    public void setVisibilityStatus(String visibilityStatus) {
         this.visibilityStatus = visibilityStatus;
     }
 
@@ -114,4 +117,13 @@ public class Chapter {
     public void setVisibilityActivatedOn(String visibilityActivatedOn) {
         this.visibilityActivatedOn = visibilityActivatedOn;
     }
+
+    public Integer getCompletedLessons() {
+        return completedLessons;
+    }
+
+    public void setCompletedLessons(Integer completedLessons) {
+        this.completedLessons = completedLessons;
+    }
+
 }

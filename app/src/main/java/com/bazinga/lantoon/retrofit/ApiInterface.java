@@ -1,7 +1,9 @@
 package com.bazinga.lantoon.retrofit;
 
+import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
+import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
@@ -32,8 +34,8 @@ public interface ApiInterface {
     Call<List<Language>> getLanguages();
 
     //Chapter List
-    @GET("Lantoon/public/ChapterHandler.php/chapterlist/slide/{languageid}/{slidenumber}")
-    Call<List<Chapter>> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno);
+    @GET("Lantoon/public/ChapterHandler.php/chapterlist1/slide/{languageid}/{slidenumber}/{uid}")
+    Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid);
 
     //Profile
     @GET("Lantoon/public/UserHandler.php/getprofile/{uid}")
@@ -63,7 +65,7 @@ public interface ApiInterface {
     //Score Update
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/ScoreHandler.php/scoreupdate")
-    Call<Score> scoreUpdate(@Body Score score);
+    Call<PostLessonResponse> scoreUpdate(@Body Score score);
 
     //Login
     @Headers("Content-Type: application/json")

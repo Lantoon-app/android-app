@@ -1,6 +1,7 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,8 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.bazinga.lantoon.R;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
+
+import static com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity.mPager;
 import static com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity.startTime;
 
 public class LessonCompletedPopup {
@@ -19,7 +25,7 @@ public class LessonCompletedPopup {
 
     }
 
-    public void showPopupWindow(final View view, Activity activity) {
+    public void showPopupWindow(final View view, Activity activity, PostLessonResponse body) {
 
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
@@ -42,24 +48,29 @@ public class LessonCompletedPopup {
        int minutes = ((endTime - startTime) / (1000*60)) % 60);
         int hours   = ((endTime - startTime) / (1000*60*60)) % 24);*/
         long totalSecs = ((endTime - startTime) / 1000) % 60;
-        long totalMins = ((endTime - startTime) / (1000*60)) % 60;
+        long totalMins = ((endTime - startTime) / (1000 * 60)) % 60;
 
-        long responseSecs = totalSecs/QuestionsActivity.totalQues;
-        long responseMins = totalMins/QuestionsActivity.totalQues;
+        long responseSecs = totalSecs / QuestionsActivity.totalQues;
+        long responseMins = totalMins / QuestionsActivity.totalQues;
         //Initialize the elements of our window, install the handler
 
         TextView tvTotalTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvTotalTimeSpendPopupLessonCompleted);
         TextView tvResponseTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvResponseTimeSpendPopupLessonCompleted);
-        tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend ("+totalMins+"."+totalSecs+")");
-        tvResponseTimeSpendPopupLessonCompleted.setText("Response time ("+ responseMins +"."+responseSecs+")");
+        tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + totalMins + "." + totalSecs + ")");
+        tvResponseTimeSpendPopupLessonCompleted.setText("Response time (" + responseMins + "." + responseSecs + ")");
 
         Button btnExitPopupLessonCompleted = popupView.findViewById(R.id.btnExitPopupLessonCompleted);
         btnExitPopupLessonCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
-                activity.finish();
 
+                /*Intent intent = new Intent(activity, QuestionsActivity.class);
+                intent.putExtra(Utils.TAG_LANGUAGE_ID, body.getContinuenext().getLangid());
+                intent.putExtra(Utils.TAG_CHAPTER_NO, body.getContinuenext().getChapterno());
+                intent.putExtra(Utils.TAG_LESSON_NO, body.getContinuenext().getLessonno());
+                activity.startActivity(intent);*/
+                activity.finish();
             }
         });
         Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);
@@ -67,7 +78,10 @@ public class LessonCompletedPopup {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+            //activity.startActivityForResult(new Intent(activity,QuestionsActivity.class),22);
                 activity.finish();
+                activity.startActivity(activity.getIntent().putExtra(Utils.TAG_LANGUAGE_ID, Integer.valueOf(body.getContinuenext().getLangid())).putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(body.getContinuenext().getChapterno())).putExtra(Utils.TAG_LESSON_NO, Integer.valueOf(body.getContinuenext().getLessonno())));
+                //overridePendingTransition(0, 0);
             }
         });
 
@@ -79,7 +93,7 @@ public class LessonCompletedPopup {
             public boolean onTouch(View v, MotionEvent event) {
 
                 //Close the window when clicked
-                popupWindow.dismiss();
+                //popupWindow.dismiss();
                 return true;
             }
         });

@@ -1,13 +1,19 @@
 package com.bazinga.lantoon.home.chapter;
 
+import android.content.Context;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.bazinga.lantoon.home.chapter.model.Chapter;
+import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.home.chapter.widget.HorizontalSwipeRefreshLayout;
+import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -22,27 +28,28 @@ public class ChapterViewModel extends ViewModel {
     private int currentPageNo = PAGE_START;
     HorizontalSwipeRefreshLayout swipeRefreshLayout;
 
-    public ChapterViewModel() {
 
-        getData(currentPageNo,swipeRefreshLayout);
+    public ChapterViewModel(int LearnLangId, String userid) {
+
+        getData(currentPageNo,swipeRefreshLayout,LearnLangId,userid);
     }
 
-    public void getData(int currentPageNo, HorizontalSwipeRefreshLayout swipeRefreshLayout) {
+    public void getData(int currentPageNo, HorizontalSwipeRefreshLayout swipeRefreshLayout, int LearnLangId,String userid) {
         System.out.println("Chapter Current page = " + String.valueOf(currentPageNo));
         chapterMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<Chapter>> call = apiInterface.getChapter(1, currentPageNo);
-        call.enqueue(new Callback<List<Chapter>>() {
+        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo,userid);
+        call.enqueue(new Callback<ChapterResponse>() {
             @Override
-            public void onResponse(Call<List<Chapter>> call, Response<List<Chapter>> response) {
+            public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
 
-                System.out.println("Chapter list success=  " + response.message().toString());
-                chapterMutableLiveData.setValue(response.body());
+                Log.d("Chapter list success",new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                chapterMutableLiveData.setValue(response.body().getData());
 
             }
 
             @Override
-            public void onFailure(Call<List<Chapter>> call, Throwable t) {
+            public void onFailure(Call<ChapterResponse> call, Throwable t) {
                 System.out.println("Chapter list error=  " + t.toString());
                 swipeRefreshLayout.setRefreshing(false);
             }

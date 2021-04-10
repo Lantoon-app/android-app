@@ -2,6 +2,7 @@ package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -28,10 +29,12 @@ import java.util.Map;
 
 public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
+    public static Context context;
     CommonFunction cf;
-    SessionManager sessionManager;
+    public static QuestionsViewModel questionViewModel;
+    public static SessionManager sessionManager;
     public static ViewPager2 mPager;
-    ProgressDialog progress;
+    public static ProgressDialog progress;
     public static long startTime;
     public static int totalQues = 0;
     public static String strFilePath = "";
@@ -39,11 +42,14 @@ public class QuestionsActivity extends AppCompatActivity {
     public static int Pmark = 0,Nmark = 0,OutOfTotal = 0;
     public static Map<String, String> countMap = new HashMap<>();
     public static String strUserId,strTotalQues, strCompletedQues;
+
+
     //public static String strUserId,strLanguageId,strChapterNo,strLessonNo,strStartTime,strEndTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         strFilePath = getCacheDir().getPath();
+        context = this;
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -58,7 +64,7 @@ public class QuestionsActivity extends AppCompatActivity {
         progress = new ProgressDialog(this);
     }
 
-    private void init() {
+    private void init(int langid, int chaperno, int lessonno) {
 
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -69,16 +75,14 @@ public class QuestionsActivity extends AppCompatActivity {
         strChapterNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_CHAPTER_NO,0));
         strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
 
-        QuestionsViewModel questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID, 0),
-                        getIntent().getIntExtra(Utils.TAG_CHAPTER_NO, 0),
-                        getIntent().getIntExtra(Utils.TAG_LESSON_NO, 0))).get(QuestionsViewModel.class);
+        questionViewModel = new ViewModelProvider(this,
+                new QuestionsViewModelFactory(langid,chaperno,lessonno)).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
             switch (task.getStatus()) {
                 case TaskState.CANCELLED:
-                    Toast.makeText(this, "Canceled by user", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Canceled by user", Toast.LENGTH_SHORT).show();
                     progress.dismiss();
                     break;
                 case TaskState.RUNNING:
@@ -91,21 +95,24 @@ public class QuestionsActivity extends AppCompatActivity {
                 case TaskState.COMPLETED:
                     Log.d("TAG", "Finished");
 
-                    questionViewModel.getQuestionsMutableLiveData().observe(this, fragments -> {
+                    questionViewModel.getQuestionsMutableLiveData().observe(QuestionsActivity.this, fragments -> {
 
                         MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
                         //mPager.setUserInputEnabled(false);
                         mPager.setAdapter(mPageAdapter);
+                        //mPager.setUserInputEnabled(false);
                         mPager.clearFocus();
                         progress.dismiss();
                         totalQues = mPageAdapter.getItemCount();
                         startTime = System.currentTimeMillis();
                         score = new Score();
                         score.setUid(sessionManager.getUserDetails().getUid());
-                        score.setLangid(String.valueOf(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID,0)));
-                        score.setChaptno(String.valueOf(getIntent().getIntExtra(Utils.TAG_CHAPTER_NO,0)));
-                        score.setLessonno(String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0)));
+                        score.setLangid(String.valueOf(langid));
+                        score.setChaptno(String.valueOf(chaperno));
+                        score.setLessonno(String.valueOf(lessonno));
                         score.setTotalques(String.valueOf(totalQues));
+                        score.setGcode("LANENG");
+                        score.setSpentTime("10:30:22");
                         /*  //Add a new Fragment to the list with bundle
                         Bundle b = new Bundle();
                         //b.putInt("position", i);
@@ -126,7 +133,9 @@ public class QuestionsActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
 
             if (requestCode == MY_PERMISSION_REQUEST_CODE)
-                init();
+                init(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID, 0),
+                        getIntent().getIntExtra(Utils.TAG_CHAPTER_NO, 0),
+                        getIntent().getIntExtra(Utils.TAG_LESSON_NO, 0));
             //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
@@ -179,21 +188,4 @@ public class QuestionsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-/*@Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("asdfsdafsdafsdafsdafsdafsafsdafsdafsafsad");
-        if(requestCode == RESULT_OK) {
-            if (requestCode == 1) {
-            *//*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-            lessonCompletedPopup.showPopupWindow(mPager,this);*//*
-                System.out.println("asdfsdafsdafsdafsdafsdaf");
-
-            }
-        }
-    }*/
 }

@@ -14,10 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.chapter.adapter.ChapterAdapter;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsViewModel;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionsViewModelFactory;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.home.chapter.utils.EqualSpacingItemDecoration;
 import com.bazinga.lantoon.home.chapter.utils.PaginationScrollListener;
 import com.bazinga.lantoon.home.chapter.widget.HorizontalSwipeRefreshLayout;
+import com.bazinga.lantoon.login.SessionManager;
 
 
 import java.util.ArrayList;
@@ -29,7 +32,7 @@ public class ChapterFragment extends Fragment implements HorizontalSwipeRefreshL
     private ChapterViewModel chapterViewModel;
     ChapterAdapter mChapterAdapter;
     GridLayoutManager mLayoutManager;
-
+SessionManager sessionManager;
     RecyclerView mRecyclerView;
     HorizontalSwipeRefreshLayout mSwipeRefreshLayout;
     public static final int PAGE_START = 1;
@@ -41,14 +44,16 @@ public class ChapterFragment extends Fragment implements HorizontalSwipeRefreshL
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        chapterViewModel = new ViewModelProvider(this).get(ChapterViewModel.class);
+        sessionManager = new SessionManager(getContext());
+        chapterViewModel = new ViewModelProvider(this,
+                new ChapterViewModelFactory(sessionManager.getUserDetails().getLearnlang(), sessionManager.getUserDetails().getUid())).get(ChapterViewModel.class);
         View root = inflater.inflate(R.layout.fragment_chapter, container, false);
         mRecyclerView = root.findViewById(R.id.rvChapter);
         mSwipeRefreshLayout = root.findViewById(R.id.swipeRefresh);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        mChapterAdapter = new ChapterAdapter(new ArrayList<Chapter>(), getActivity());
+        mChapterAdapter = new ChapterAdapter(new ArrayList<Chapter>(), getActivity(), sessionManager.getUserDetails().getLearnlang());
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -65,7 +70,7 @@ public class ChapterFragment extends Fragment implements HorizontalSwipeRefreshL
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage++;
-                chapterViewModel.getData(currentPage,mSwipeRefreshLayout);
+                chapterViewModel.getData(currentPage,mSwipeRefreshLayout,sessionManager.getUserDetails().getLearnlang(),sessionManager.getUserDetails().getUid());
                 preparedListItem();
 
             }
@@ -91,7 +96,7 @@ public class ChapterFragment extends Fragment implements HorizontalSwipeRefreshL
         currentPage = PAGE_START;
         isLastPage = false;
         mChapterAdapter.clear();
-        chapterViewModel.getData(currentPage,mSwipeRefreshLayout);
+        chapterViewModel.getData(currentPage,mSwipeRefreshLayout,sessionManager.getUserDetails().getLearnlang(),sessionManager.getUserDetails().getUid());
         preparedListItem();
     }
 
