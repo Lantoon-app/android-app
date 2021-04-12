@@ -31,6 +31,9 @@ public class LoginData {
     @SerializedName("photo")
     @Expose
     private String photo;
+    @SerializedName("speakcode")
+    @Expose
+    private String SpeakCode;
 
     public String getUid() {
         return uid;
@@ -104,5 +107,12 @@ public class LoginData {
         this.photo = photo;
     }
 
+    public String getSpeakCode() {
+        return SpeakCode;
+    }
+
+    public void setSpeakCode(String SpeakCode) {
+        this.SpeakCode = SpeakCode;
+    }
 
 }

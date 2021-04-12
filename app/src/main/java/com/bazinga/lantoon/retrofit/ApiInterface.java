@@ -2,7 +2,6 @@ package com.bazinga.lantoon.retrofit;
 
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
-import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -25,7 +23,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
-import retrofit2.http.Url;
 
 public interface ApiInterface {
 
@@ -78,6 +75,4 @@ public interface ApiInterface {
     @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
     Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("type") int type);
 
-    /*@GET("Lantoon/public/QuestionHandler.php/reference/{reflanguageid}/{chapterno}/{lessonno}/{cellval}")
-    Call<Help> getQuestionHelp(@Path("reflanguageid") int reflanguageid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("cellval") String cellval);*/
 }

@@ -16,17 +16,26 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
+import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
+import com.bazinga.lantoon.retrofit.ApiClient;
+import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CommonFunction {
     Context context;
@@ -157,9 +166,9 @@ public class CommonFunction {
 
         //String languagePref = Locale.ENGLISH;
         final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ENGLISH);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, Locale.ENGLISH);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, Locale.ENGLISH);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, QuestionsActivity.strSpeakCode);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
 
         /*final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -248,5 +257,24 @@ public class CommonFunction {
             }
         });*/
     }
+    public static void postLesson(View view, Activity activity) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
+        call.enqueue(new Callback<PostLessonResponse>() {
+            @Override
+            public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
+                Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+
+                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                lessonCompletedPopup.showPopupWindow(view, activity,response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<PostLessonResponse> call, Throwable t) {
+                Log.e("response postLesson", t.getMessage());
+            }
+        });
+    }
 }

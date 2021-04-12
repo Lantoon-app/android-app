@@ -2,6 +2,8 @@ package com.bazinga.lantoon.home.chapter.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +13,18 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
 import com.bazinga.lantoon.home.chapter.BaseViewHolder;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
+import com.bazinga.lantoon.home.chapter.lesson.model.ContinueNext;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 
 import java.util.List;
+import java.util.Locale;
 
 
 public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -28,7 +33,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private boolean isLoaderVisible = false;
     Activity activity;
     int learnlang;
-
+    private ContinueNext continueNext;
     private List<Chapter> mChapterList;
     private Callback mCallback;
 
@@ -80,7 +85,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyItemInserted(mChapterList.size() - 1);
     }
 
-    public void addAll(List<Chapter> postItems) {
+    public void addAll(List<Chapter> postItems, ContinueNext continueNext) {
+        this.continueNext = continueNext;
         for (Chapter response : postItems) {
             add(response);
         }
@@ -128,7 +134,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public class ViewHolder extends BaseViewHolder {
 
         TextView tvChapter;
-        ImageView ivDisabled,ivLock;
+        ImageView ivDisabled, ivLock;
         ProgressBar pbChapter;
         RatingBar ratingBar;
 
@@ -139,39 +145,57 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             ratingBar = itemView.findViewById(R.id.ratingBar);
             ivDisabled = itemView.findViewById(R.id.ivDisabled);
             ivLock = itemView.findViewById(R.id.ivLock);
+            pbChapter.setProgress(0);
+
         }
 
         protected void clear() {
 
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         public void onBind(int position) {
             super.onBind(position);
-            int langid, chaperno, lessonno;
             Chapter mChapter = mChapterList.get(position);
             tvChapter.setText("CHAPTER " + mChapter.getChapterNo());
-            ratingBar.setMax(5);
-            ratingBar.setRating(3);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, QuestionsActivity.class);
-                    intent.putExtra(Utils.TAG_LANGUAGE_ID,learnlang);
-                    intent.putExtra(Utils.TAG_CHAPTER_NO,Integer.valueOf(mChapter.getChapterNo()));
-                    intent.putExtra(Utils.TAG_LESSON_NO,1);
+                    intent.putExtra(Utils.TAG_LANGUAGE_ID, learnlang);
+                    intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
+                    if (continueNext.getChapterno() != 4)
+                        intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getChapterno() + 1);
+                    else intent.putExtra(Utils.TAG_LESSON_NO, mChapter.getCompletedLessons());
                     activity.startActivity(intent);
                 }
             });
-            if (Integer.valueOf(mChapterList.get(position).getVisibilityStatus()) == 1) {
-                pbChapter.setProgress(50);
+
+            Log.d("chapters ", "Completed "+mChapter.getCompletedLessons()+ " Active "+continueNext.getChapterno() + " Cno "+mChapterList.get(position).getChapterNo());
+           /* if (mChapter.getCompletedLessons() == 0) {
+
+            }*/
+            pbChapter.setProgress(mChapter.getCompletedLessons());
+
+            if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
+
+
+                tvChapter.setVisibility(View.VISIBLE);
                 ivLock.setVisibility(View.INVISIBLE);
-            } else {
-                pbChapter.setProgress(0);
+                ivDisabled.setVisibility(View.INVISIBLE);
+                ratingBar.setRating(mChapter.getCompletedLessons());
+
+
+            }else {
+
                 tvChapter.setVisibility(View.INVISIBLE);
                 ivLock.setVisibility(View.VISIBLE);
                 ivDisabled.setVisibility(View.VISIBLE);
+                ratingBar.setNumStars(0);
             }
+
 
         }
     }

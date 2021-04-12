@@ -55,11 +55,12 @@ public class QuestionsViewModel extends ViewModel {
     private TaskModel mTask;
     private QuestionsAsyncTask taskAsync;
     DownloadZipFileTask downloadZipFileTask;
-    int langid, chaperno, lessonno;
-    public QuestionsViewModel(int langid, int chaperno, int lessonno) {
+    int langid, chaperno, lessonno, knownLang;
+    public QuestionsViewModel(int langid, int chaperno, int lessonno,int knownLang) {
         this.langid = langid;
         this.chaperno = chaperno;
         this.lessonno = lessonno;
+        this.knownLang = knownLang;
     }
 
     private void startTask() {
@@ -100,7 +101,7 @@ public class QuestionsViewModel extends ViewModel {
             downloadZipFile(langid, chaperno, lessonno, 2);
             downloadZipFile(langid, chaperno, lessonno, 3);
             downloadZipFile(langid, chaperno, lessonno, 4);
-            questionsFragmentData(langid, chaperno, lessonno,2,QuestionsActivity.strUserId);
+            questionsFragmentData(langid, chaperno, lessonno,knownLang,QuestionsActivity.strUserId);
             return true;
         }
 

@@ -29,6 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.bazinga.lantoon.CommonFunction.postLesson;
+
 public class QuestionRightWrongPopup {
     AnimatedVectorDrawableCompat animatedVectorDrawableCompat;
     AnimatedVectorDrawable animatedVectorDrawable;
@@ -216,25 +218,6 @@ public class QuestionRightWrongPopup {
 
     }
 
-    private void postLesson(View view, Activity activity) {
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
-        call.enqueue(new Callback<PostLessonResponse>() {
-            @Override
-            public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
-                Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
-
-                    LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                    lessonCompletedPopup.showPopupWindow(view, activity,response.body());
-
-            }
-
-            @Override
-            public void onFailure(Call<PostLessonResponse> call, Throwable t) {
-                Log.e("response postLesson", t.getMessage());
-            }
-        });
-    }
 
 }

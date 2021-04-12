@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 
 import static com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity.mPager;
@@ -70,7 +71,7 @@ public class LessonCompletedPopup {
                 intent.putExtra(Utils.TAG_CHAPTER_NO, body.getContinuenext().getChapterno());
                 intent.putExtra(Utils.TAG_LESSON_NO, body.getContinuenext().getLessonno());
                 activity.startActivity(intent);*/
-                activity.finish();
+                activity.startActivityForResult(new Intent(activity, HomeActivity.class),2);
             }
         });
         Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);

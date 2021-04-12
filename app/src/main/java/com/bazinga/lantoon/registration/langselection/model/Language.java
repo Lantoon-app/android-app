@@ -25,6 +25,9 @@ public class Language {
     @SerializedName("Status")
     @Expose
     private String status;
+    @SerializedName("SpeakCode")
+    @Expose
+    private String SpeakCode;
 
     public String getLanguageID() {
         return languageID;
@@ -81,4 +84,13 @@ public class Language {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getSpeakCode() {
+        return SpeakCode;
+    }
+
+    public void setSpeakCode(String SpeakCode) {
+        this.SpeakCode = SpeakCode;
+    }
+
 }

@@ -59,7 +59,7 @@ public class LoginViewModel extends ViewModel {
                         }
 
                         Log.d("Login onResponse body= ", new Gson().toJson(response.body()));
-                        Log.d("Login onResponse body= ", String.valueOf(response.code()));
+                        Log.d("Login onResponse body= ", String.valueOf(response.body().getLoginData().getSpeakCode()));
                         //Log.d("Login onResponse msg= ", loggedInUser.getData().getEmail());
                     } else {
                         Log.e("Login onResponse msg= ", response.message() + response.code());

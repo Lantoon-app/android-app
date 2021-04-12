@@ -41,7 +41,7 @@ public class QuestionsActivity extends AppCompatActivity {
     public static Score score;
     public static int Pmark = 0,Nmark = 0,OutOfTotal = 0;
     public static Map<String, String> countMap = new HashMap<>();
-    public static String strUserId,strTotalQues, strCompletedQues;
+    public static String strUserId,strTotalQues,strSpeakCode, strCompletedQues;
 
 
     //public static String strUserId,strLanguageId,strChapterNo,strLessonNo,strStartTime,strEndTime;
@@ -57,6 +57,7 @@ public class QuestionsActivity extends AppCompatActivity {
         }, MY_PERMISSION_REQUEST_CODE);
         sessionManager = new SessionManager(this);
         strUserId = sessionManager.getUserDetails().getUid();
+        strSpeakCode = sessionManager.getUserDetails().getSpeakCode();
         cf= new CommonFunction();
         cf.fullScreen(getWindow());
         setContentView(R.layout.activity_questions);
@@ -76,7 +77,7 @@ public class QuestionsActivity extends AppCompatActivity {
         strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
 
         questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(langid,chaperno,lessonno)).get(QuestionsViewModel.class);
+                new QuestionsViewModelFactory(langid,chaperno,lessonno,sessionManager.getUserDetails().getKnownlang())).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());

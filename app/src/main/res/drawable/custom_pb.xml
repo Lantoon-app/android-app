@@ -19,9 +19,9 @@
     </item>
     <item>
         <shape
-            android:innerRadius="40dp"
+            android:innerRadius="45dp"
             android:shape="ring"
-            android:thicknessRatio="10"
+            android:thicknessRatio="19.5"
             android:useLevel="false">
             <solid android:color="#DDD" />
         </shape>
@@ -31,13 +31,14 @@
             android:fromDegrees="270"
             android:toDegrees="270">
             <shape
-                android:innerRadius="40dp"
+                android:innerRadius="45dp"
                 android:shape="ring"
-                android:thicknessRatio="10"
+                android:thicknessRatio="19.5"
                 android:useLevel="true">
                 <gradient
-                    android:endColor="@color/fb_color"
-                    android:startColor="@color/google_color"
+                    android:startColor="#FFCBAC"
+                    android:centerColor="#FFA772"
+                    android:endColor="#E83124"
                     android:type="sweep" />
             </shape>
         </rotate>
