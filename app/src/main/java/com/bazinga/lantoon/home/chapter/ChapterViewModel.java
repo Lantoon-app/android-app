@@ -36,15 +36,20 @@ public class ChapterViewModel extends ViewModel {
         call.enqueue(new Callback<ChapterResponse>() {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
-                Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
-                if (response.body().getStatus().getCode() == 1031)
+
+                if (response.body().getStatus().getCode() == 1031) {
+                    Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     chapterMutableLiveData.setValue(response.body());
+                }
+                else
+                    chapterMutableLiveData.setValue(null);
 
             }
 
             @Override
             public void onFailure(Call<ChapterResponse> call, Throwable t) {
                 System.out.println("Chapter list error=  " + t.toString());
+                chapterMutableLiveData.setValue(null);
             }
         });
     }

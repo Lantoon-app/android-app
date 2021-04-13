@@ -2,7 +2,9 @@ package com.bazinga.lantoon;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
@@ -30,7 +33,6 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -40,9 +42,9 @@ import retrofit2.Response;
 public class CommonFunction {
     Context context;
 
-  /*  public void CommonFunction(Context context) {
-        this.context = context;
-    }*/
+    /*  public void CommonFunction(Context context) {
+          this.context = context;
+      }*/
     int attemptCount = 0;
 
     public void fullScreen(Window window) {
@@ -135,23 +137,23 @@ public class CommonFunction {
     }
 
     public void checkQuestion(String tag, int quesNo, int
-            totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths,int pMark, int nMark) {
+            totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, int pMark, int nMark) {
         attemptCount++;
         QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
         if (CheckAnswerImage(tag)) {
             if (quesNo == totalQues) {
 
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), true,quesNo,attemptCount,false,pMark,nMark);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, pMark, nMark);
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount,false,pMark,nMark);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, pMark, nMark);
             }
 
         } else {
-            qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount,false,pMark,nMark);
+            qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, pMark, nMark);
             setShuffleImages(activity, imageViewIds, imagePaths, view);
         }
-        System.out.println("attemptCount "+attemptCount);
+        System.out.println("attemptCount " + attemptCount);
     }
 
     public boolean CheckAnswerImage(String imagePath) {
@@ -160,7 +162,7 @@ public class CommonFunction {
         else return false;
     }
 
-    public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion, View view, Activity activity,int quesNo,int pMark, int nMark) {
+    public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo, int pMark, int nMark) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
 
@@ -219,12 +221,12 @@ public class CommonFunction {
                 attemptCount++;
                 if (answerWord.equals(data.get(0))) {
 
-                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount,true,pMark,nMark);
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, pMark, nMark);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, false, quesNo, attemptCount,true,pMark,nMark);
+                    qrwp.showPopup(activity, view, false, false, quesNo, attemptCount, true, pMark, nMark);
                 }
-                Log.d("attemptCount",QuestionsActivity.countMap.toString());
+                Log.d("attemptCount", QuestionsActivity.countMap.toString());
 
                 /*if(data.get(0).equals(answerWord)) {
                     Log.d("check ok", data.get(0) + " " + answerWord);
@@ -257,18 +259,76 @@ public class CommonFunction {
             }
         });*/
     }
-    public static void postLesson(View view, Activity activity) {
+
+    public void onClickHomeButton(View view, Activity activity, int quesNo) {
+        //Uncomment the below code to Set the message and title from the strings.xml file
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+        //Setting message manually and performing action on button click
+        builder.setMessage(activity.getString(R.string.ad_home_button_pressed_msg))
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (attemptCount != 0) {
+                            QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
+                            QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
+                            QuestionsActivity.score.setCompletedques(String.valueOf(quesNo));
+                        }else {
+                            QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
+                            QuestionsActivity.score.setCompletedques(String.valueOf(quesNo-1));
+                        }
+
+                        if (quesNo == 1) {
+                            QuestionsActivity.CalculateMarks(0, 0, 0);
+                        } else if (quesNo == 2 && QuestionsActivity.OutOfTotal == 0) {
+                            QuestionsActivity.CalculateMarks(0, 0, 0);
+                        }
+                        Log.d("attemptCount", QuestionsActivity.countMap.toString());
+
+                    /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                    lessonCompletedPopup.showPopupWindow(view, activity);*/
+                        postLesson(view, activity, quesNo);
+                        System.out.println(new
+
+                                GsonBuilder().
+
+                                setPrettyPrinting().
+
+                                create().
+
+                                toJson(QuestionsActivity.score));
+                    }
+                })
+                .
+
+                        setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                dialog.cancel();
+                                dialog.dismiss();
+                            }
+                        });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("Alert");
+        alert.show();
+    }
+
+    public void postLesson(View view, Activity activity, int quesNo) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
         call.enqueue(new Callback<PostLessonResponse>() {
             @Override
             public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
+
                 Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
-                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                lessonCompletedPopup.showPopupWindow(view, activity,response.body());
-
+                if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
+                    LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                    lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo);
+                }
             }
 
             @Override
@@ -276,5 +336,9 @@ public class CommonFunction {
                 Log.e("response postLesson", t.getMessage());
             }
         });
+    }
+
+    public void wentWorngToast(Context context) {
+        Toast.makeText(context, "Something went wrong, Try again later", Toast.LENGTH_LONG);
     }
 }

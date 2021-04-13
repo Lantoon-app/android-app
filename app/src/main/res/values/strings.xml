@@ -82,6 +82,7 @@
     <string name="title_select_language">SELECT LANGUAGE</string>
     <string name="choose_your_language">CHOOSE YOUR LANGUAGE</string>
     <string name="ad_signout_msg">Are you sure you want to sign out ?</string>
+    <string name="ad_home_button_pressed_msg">Are you sure you want to exit ?</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>

@@ -3,6 +3,7 @@ package com.bazinga.lantoon.retrofit;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
+import com.bazinga.lantoon.home.leader.model.LeaderResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
@@ -75,4 +76,7 @@ public interface ApiInterface {
     @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
     Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("type") int type);
 
+
+    @GET("Lantoon/public/UserHandler.php/getleaders/{uid}/{slidenumber}")
+    Call<LeaderResponse> getLeaders(@Path("uid") String userid, @Path("slidenumber") int slidenumber);
 }

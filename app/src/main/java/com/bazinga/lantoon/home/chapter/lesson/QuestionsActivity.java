@@ -35,13 +35,13 @@ public class QuestionsActivity extends AppCompatActivity {
     public static SessionManager sessionManager;
     public static ViewPager2 mPager;
     public static ProgressDialog progress;
-    public static long startTime;
-    public static int totalQues = 0;
+    public static long startTime = 0;
+    public static int totalQues;
     public static String strFilePath = "";
     public static Score score;
-    public static int Pmark = 0,Nmark = 0,OutOfTotal = 0;
+    public static int Pmark = 0, Nmark = 0, OutOfTotal = 0;
     public static Map<String, String> countMap = new HashMap<>();
-    public static String strUserId,strTotalQues,strSpeakCode, strCompletedQues;
+    public static String strUserId, strTotalQues, strSpeakCode, strCompletedQues;
 
 
     //public static String strUserId,strLanguageId,strChapterNo,strLessonNo,strStartTime,strEndTime;
@@ -58,7 +58,7 @@ public class QuestionsActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         strUserId = sessionManager.getUserDetails().getUid();
         strSpeakCode = sessionManager.getUserDetails().getSpeakCode();
-        cf= new CommonFunction();
+        cf = new CommonFunction();
         cf.fullScreen(getWindow());
         setContentView(R.layout.activity_questions);
         mPager = findViewById(R.id.view_pager);
@@ -77,7 +77,7 @@ public class QuestionsActivity extends AppCompatActivity {
         strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
 
         questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(langid,chaperno,lessonno,sessionManager.getUserDetails().getKnownlang())).get(QuestionsViewModel.class);
+                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getUserDetails().getKnownlang())).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
@@ -91,7 +91,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     startTime = System.currentTimeMillis();
                     break;
                 case TaskState.STOP:
-                    progress.dismiss();
+
                     break;
                 case TaskState.COMPLETED:
                     Log.d("TAG", "Finished");
@@ -102,6 +102,7 @@ public class QuestionsActivity extends AppCompatActivity {
                         //mPager.setUserInputEnabled(false);
                         mPager.setAdapter(mPageAdapter);
                         //mPager.setUserInputEnabled(false);
+                        mPager.setCurrentItem(getIntent().getIntExtra(Utils.TAG_START_QUESTION_NO,1)-1);
                         mPager.clearFocus();
                         progress.dismiss();
                         totalQues = mPageAdapter.getItemCount();
@@ -121,7 +122,9 @@ public class QuestionsActivity extends AppCompatActivity {
 
                         mPager.add(L1Fragment.class,b);
                         mPager.notifyDataSetChanged();*/
+                        progress.dismiss();
                     });
+
                     break;
 
             }
@@ -179,14 +182,27 @@ public class QuestionsActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
-    public static void CalculateMarks(int pmark,int nmark,int defaultPMark){
-        Pmark = Pmark+pmark;
-        Nmark = Nmark+nmark;
-        OutOfTotal = OutOfTotal+defaultPMark;
+    public static void CalculateMarks(int pmark, int nmark, int defaultPMark) {
+        Pmark = Pmark + pmark;
+        Nmark = Nmark + nmark;
+        OutOfTotal = OutOfTotal + defaultPMark;
         score.setPmark(String.valueOf(Pmark));
         score.setNmark(String.valueOf(Nmark));
         score.setOutOfTotal(String.valueOf(OutOfTotal));
 
+    }
+
+    public static void clearData() {
+        startTime = 0;
+        totalQues = 0;
+
+        score = new Score();
+        Pmark = 0;
+        Nmark = 0;
+        OutOfTotal = 0;
+        countMap.clear();
+        strTotalQues = "";
+        strCompletedQues = "";
     }
 
 }

@@ -164,16 +164,28 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 public void onClick(View v) {
                     //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, QuestionsActivity.class);
-                    intent.putExtra(Utils.TAG_LANGUAGE_ID, learnlang);
-                    intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
-                    if (continueNext.getChapterno() != 4)
-                        intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getChapterno() + 1);
+                    if(Integer.valueOf(mChapter.getChapterNo()) == continueNext.getChapterno()) {
+                        intent.putExtra(Utils.TAG_LANGUAGE_ID, continueNext.getLangid());
+                        intent.putExtra(Utils.TAG_CHAPTER_NO, continueNext.getChapterno());
+                        intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getLessonno());
+                        intent.putExtra(Utils.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
+                    }else {
+                        intent.putExtra(Utils.TAG_LANGUAGE_ID, continueNext.getLangid());
+                        intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
+                        intent.putExtra(Utils.TAG_LESSON_NO, 1);
+                        intent.putExtra(Utils.TAG_START_QUESTION_NO, 1);
+                    /*intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
+                    if (continueNext.getLessonno() != 4)
+                        intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getLessonno() + 1);
                     else intent.putExtra(Utils.TAG_LESSON_NO, mChapter.getCompletedLessons());
+                    intent.putExtra(Utils.TAG_START_QUESTION_NO,continueNext.getStartingquesno());*/
+
+                    }
                     activity.startActivity(intent);
                 }
             });
 
-            Log.d("chapters ", "Completed "+mChapter.getCompletedLessons()+ " Active "+continueNext.getChapterno() + " Cno "+mChapterList.get(position).getChapterNo());
+            Log.d("chapters ", "Completed "+mChapter.getCompletedLessons()+ " Active "+continueNext.getStartingquesno() + " Cno "+mChapterList.get(position).getChapterNo());
            /* if (mChapter.getCompletedLessons() == 0) {
 
             }*/

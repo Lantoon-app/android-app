@@ -188,6 +188,7 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgBtnHome:
+                cf.onClickHomeButton(getView(),getActivity(),getArguments().getInt(Utils.TAG_QUESTION_NO));
                 break;
             case R.id.imgBtnHelp:
                 if(question.getReference() != null) {

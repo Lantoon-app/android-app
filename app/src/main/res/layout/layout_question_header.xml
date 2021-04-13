@@ -15,7 +15,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/question_home"
             android:gravity="center" />
 
@@ -31,7 +31,6 @@
             android:id="@+id/tvQuestionNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
             android:fontFamily="@font/open_sans_bold"
             android:text="7/10"
             android:textColor="@color/black"

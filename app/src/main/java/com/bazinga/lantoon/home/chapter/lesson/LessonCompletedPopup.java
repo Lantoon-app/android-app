@@ -26,7 +26,7 @@ public class LessonCompletedPopup {
 
     }
 
-    public void showPopupWindow(final View view, Activity activity, PostLessonResponse body) {
+    public void showPopupWindow(final View view, Activity activity, PostLessonResponse postLessonResponse, int quesNo) {
 
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
@@ -71,21 +71,29 @@ public class LessonCompletedPopup {
                 intent.putExtra(Utils.TAG_CHAPTER_NO, body.getContinuenext().getChapterno());
                 intent.putExtra(Utils.TAG_LESSON_NO, body.getContinuenext().getLessonno());
                 activity.startActivity(intent);*/
-                activity.startActivityForResult(new Intent(activity, HomeActivity.class),2);
+                activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
             }
         });
         Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);
+        if (quesNo != QuestionsActivity.totalQues)
+            btnContinuePopupLessonCompleted.setVisibility(View.GONE);
         btnContinuePopupLessonCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
-            //activity.startActivityForResult(new Intent(activity,QuestionsActivity.class),22);
+                //activity.startActivityForResult(new Intent(activity,QuestionsActivity.class),22);
                 activity.finish();
-                activity.startActivity(activity.getIntent().putExtra(Utils.TAG_LANGUAGE_ID, Integer.valueOf(body.getContinuenext().getLangid())).putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(body.getContinuenext().getChapterno())).putExtra(Utils.TAG_LESSON_NO, Integer.valueOf(body.getContinuenext().getLessonno())));
+                Intent intent = new Intent(activity, QuestionsActivity.class);
+
+                intent.putExtra(Utils.TAG_LANGUAGE_ID, postLessonResponse.getContinuenext().getLangid());
+                intent.putExtra(Utils.TAG_CHAPTER_NO, postLessonResponse.getContinuenext().getChapterno());
+                intent.putExtra(Utils.TAG_LESSON_NO, postLessonResponse.getContinuenext().getLessonno());
+                intent.putExtra(Utils.TAG_START_QUESTION_NO, 1);
+                activity.startActivity(intent);
                 //overridePendingTransition(0, 0);
             }
         });
-
+        QuestionsActivity.clearData();
 
         //Handler for clicking on the inactive zone of the window
 

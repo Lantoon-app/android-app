@@ -106,20 +106,22 @@ public class ChapterFragment extends Fragment {
 
             @Override
             public void onChanged(ChapterResponse chapterResponse) {
+                if (chapterResponse == null) {
+                    mChapterAdapter.removeLoading();
+                    isLastPage = true;
+                    isLoading = false;
+                } else {
+                    if (ChapterFragment.this.currentPage != PAGE_START)
+                        mChapterAdapter.removeLoading();
+                    mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
+                    if (ChapterFragment.this.currentPage < totalPage) mChapterAdapter.addLoading();
+                    else isLastPage = true;
+                    isLoading = false;
+                }
 
-                if (ChapterFragment.this.currentPage != PAGE_START) mChapterAdapter.removeLoading();
-                mChapterAdapter.addAll(chapterResponse.getData(),chapterResponse.getContinuenext());
-                if (ChapterFragment.this.currentPage < totalPage) mChapterAdapter.addLoading();
-                else isLastPage = true;
-                isLoading = false;
             }
         });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("result code", String.valueOf(resultCode));
-        Log.d("req code", String.valueOf(requestCode));
-    }
+
 }

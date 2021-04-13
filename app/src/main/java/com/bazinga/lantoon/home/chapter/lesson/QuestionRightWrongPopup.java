@@ -1,11 +1,11 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.Animatable2.AnimationCallback;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,21 +15,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import androidx.annotation.RequiresApi;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
+import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
-import com.bazinga.lantoon.home.chapter.lesson.model.Score;
-import com.bazinga.lantoon.retrofit.ApiClient;
-import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.GsonBuilder;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static com.bazinga.lantoon.CommonFunction.postLesson;
 
 public class QuestionRightWrongPopup {
     AnimatedVectorDrawableCompat animatedVectorDrawableCompat;
@@ -40,8 +33,10 @@ public class QuestionRightWrongPopup {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void showPopup(Activity activity, final View view, boolean right, boolean isLast, int quesNo, int attemptCount, boolean isSpeech, int pMark, int nMark) {
 
+        CommonFunction cf =new CommonFunction();
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_question_answer_anim, null);
@@ -82,7 +77,7 @@ public class QuestionRightWrongPopup {
                             Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                            postLesson(view, activity);
+                            cf.postLesson(view, activity, quesNo);
                             System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
 
                         } else {
@@ -111,7 +106,7 @@ public class QuestionRightWrongPopup {
                             Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                            postLesson(view, activity);
+                            cf.postLesson(view, activity, quesNo);
                             System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                         } else {
                             QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
@@ -148,7 +143,7 @@ public class QuestionRightWrongPopup {
                                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                                postLesson(view, activity);
+                                cf.postLesson(view, activity, quesNo);
                                 System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
 
                             } else {
@@ -185,7 +180,7 @@ public class QuestionRightWrongPopup {
                                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                                postLesson(view, activity);
+                                cf.postLesson(view, activity, quesNo);
                                 System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
 
                             } else {
@@ -217,6 +212,7 @@ public class QuestionRightWrongPopup {
         });
 
     }
+
 
 
 

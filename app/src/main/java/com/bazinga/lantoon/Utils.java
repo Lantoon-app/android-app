@@ -6,6 +6,7 @@ import java.io.File;
 
 public class Utils {
 
+
     public static String TAG_EMAILID = "email";
     public static String TAG_USERNAME = "uname";
     public static String TAG_PASSWORD = "password";
@@ -28,6 +29,7 @@ public class Utils {
     public static String TAG_LANGUAGE_ID="langid";
     public static String TAG_CHAPTER_NO="chaperno";
     public static String TAG_LESSON_NO="lessonno";
+    public static String TAG_START_QUESTION_NO = "sartquesno";
 
     //public static String ZIP_FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
     //public static String FILE_DESTINATION_PATH= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
