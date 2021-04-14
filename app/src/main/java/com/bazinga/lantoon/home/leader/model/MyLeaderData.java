@@ -3,7 +3,7 @@ package com.bazinga.lantoon.home.leader.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Leader {
+public class MyLeaderData {
     @SerializedName("uid")
     @Expose
     private String uid;

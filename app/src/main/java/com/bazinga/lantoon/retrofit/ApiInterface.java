@@ -77,6 +77,6 @@ public interface ApiInterface {
     Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("type") int type);
 
 
-    @GET("Lantoon/public/UserHandler.php/getleaders/{uid}/{slidenumber}")
-    Call<LeaderResponse> getLeaders(@Path("uid") String userid, @Path("slidenumber") int slidenumber);
+    @GET("Lantoon/public/ScoreHandler.php/leaderboard/{slideno}/{uid}/{langid}")
+    Call<LeaderResponse> getLeaders(@Path("slideno") int slideno,@Path("uid") String uid,@Path("langid") int langid);
 }

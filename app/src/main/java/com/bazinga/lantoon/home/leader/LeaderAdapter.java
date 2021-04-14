@@ -1,17 +1,25 @@
 package com.bazinga.lantoon.home.leader;
 
-import android.app.Activity;
-import android.os.Build;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
@@ -19,62 +27,64 @@ import com.bazinga.lantoon.home.leader.model.Leader;
 
 import java.util.List;
 
-public class LeaderAdapter extends RecyclerView.Adapter<LeaderBaseViewHolder> {
-    private static final int VIEW_TYPE_LOADING = 0;
-    public static final int VIEW_TYPE_NORMAL = 1;
-    private boolean isLoaderVisible = false;
-    Activity activity;
-    private List<Leader> mLeaderList;
-    private Callback mCallback;
-    String strUserId;
+public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public LeaderAdapter(List<Leader> leaderList, Activity activity, String strUserId) {
-        this.mLeaderList = leaderList;
-        this.activity = activity;
-        this.strUserId = strUserId;
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
 
-    }
+    public List<Leader> mItemList;
+    Context context;
 
-    public void setCallback(Callback callback) {
-        mCallback = callback;
+
+    public LeaderAdapter(List<Leader> itemList, Context context) {
+
+        this.mItemList = itemList;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public LeaderBaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case VIEW_TYPE_NORMAL:
-                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leader, parent, false));
-            case VIEW_TYPE_LOADING:
-                return new EmptyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false));
-            default:
-                return null;
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull LeaderBaseViewHolder holder, int position) {
-        holder.onBind(position);
-    }
-
-
-    @Override
-    public int getItemViewType(int position) {
-        if (isLoaderVisible) {
-            return position == mLeaderList.size() - 1 ? VIEW_TYPE_LOADING : VIEW_TYPE_NORMAL;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leader, parent, false);
+            return new ItemViewHolder(view);
         } else {
-            return VIEW_TYPE_NORMAL;
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_leader_loading, parent, false);
+            return new LoadingViewHolder(view);
         }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+
+        if (viewHolder instanceof ItemViewHolder) {
+
+            populateItemRows((ItemViewHolder) viewHolder, position);
+        } else if (viewHolder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) viewHolder, position);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mLeaderList == null ? 0 : mLeaderList.size();
+        return mItemList == null ? 0 : mItemList.size();
+    }
+
+    /**
+     * The following method decides the type of ViewHolder to display in the RecyclerView
+     *
+     * @param position
+     * @return
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return mItemList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public void add(Leader response) {
-        mLeaderList.add(response);
-        notifyItemInserted(mLeaderList.size() - 1);
+        mItemList.add(response);
+        notifyItemInserted(mItemList.size() - 1);
     }
 
     public void addAll(List<Leader> postItems) {
@@ -85,94 +95,61 @@ public class LeaderAdapter extends RecyclerView.Adapter<LeaderBaseViewHolder> {
     }
 
 
-    private void remove(Leader postItems) {
-        int position = mLeaderList.indexOf(postItems);
-        if (position > -1) {
-            mLeaderList.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
+    private class ItemViewHolder extends RecyclerView.ViewHolder {
 
-    public void addLoading() {
-        isLoaderVisible = true;
-        add(new Leader());
-    }
+        View view;
+        ImageView ivLeaderItem;
+        TextView tvUserNameLeaderItem, tvRankLeaderItem, tvGemCountLeaderItem;
 
-    public void removeLoading() {
-        isLoaderVisible = false;
-        int position = mLeaderList.size() - 1;
-        Leader item = getItem(position);
-        if (item != null) {
-            mLeaderList.remove(position);
-            notifyItemRemoved(position);
-        }
-    }
-
-    public void clear() {
-        while (getItemCount() > 0) {
-            remove(getItem(0));
-        }
-    }
-
-    Leader getItem(int position) {
-        return mLeaderList.get(position);
-    }
-
-
-    public interface Callback {
-        void onRepoEmptyViewRetryClick();
-    }
-
-    public class ViewHolder extends LeaderBaseViewHolder {
-
-       /* TextView tvChapter;
-        ImageView ivDisabled, ivLock;
-        ProgressBar pbChapter;
-        RatingBar ratingBar;*/
-
-        public ViewHolder(View itemView) {
+        public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-           /* tvChapter = itemView.findViewById(R.id.tvChapterNumber);
-            pbChapter = itemView.findViewById(R.id.pbChapter);
-            ratingBar = itemView.findViewById(R.id.ratingBar);
-            ivDisabled = itemView.findViewById(R.id.ivDisabled);
-            ivLock = itemView.findViewById(R.id.ivLock);
-            pbChapter.setProgress(0);*/
-
-        }
-
-        protected void clear() {
-
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        public void onBind(int position) {
-            super.onBind(position);
-            Leader mLeader = mLeaderList.get(position);
-            //tvChapter.setText("CHAPTER " + mChapter.getChapterNo());
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-
+            view = itemView;
+            ivLeaderItem = itemView.findViewById(R.id.ivLeaderItem);
+            tvUserNameLeaderItem = itemView.findViewById(R.id.tvUserNameLeaderItem);
+            tvRankLeaderItem = itemView.findViewById(R.id.tvRankLeaderItem);
+            tvGemCountLeaderItem = itemView.findViewById(R.id.tvGemCountLeaderItem);
         }
     }
 
-    public class EmptyViewHolder extends LeaderBaseViewHolder {
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
 
-        public EmptyViewHolder(View itemView) {
+        ProgressBar progressBar;
+
+        public LoadingViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
+    }
 
-        @Override
-        protected void clear() {
-
-        }
+    private void showLoadingView(LoadingViewHolder viewHolder, int position) {
+        //ProgressBar would be displayed
 
     }
+
+    private void populateItemRows(ItemViewHolder viewHolder, int position) {
+
+        Leader leader = mItemList.get(position);
+        if(position == 0) {
+            viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_first_rank);
+            viewHolder.tvUserNameLeaderItem.setTextColor(Color.WHITE);
+            viewHolder.tvRankLeaderItem.setTextColor(Color.WHITE);
+            viewHolder.tvGemCountLeaderItem.setTextColor(Color.WHITE);
+        }
+        if (leader.getPicture() != null) {
+            byte[] decodedString = Base64.decode(leader.getPicture(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            RoundedBitmapDrawable dr =
+                    RoundedBitmapDrawableFactory.create(viewHolder.itemView.getResources(), decodedByte);
+            dr.setGravity(Gravity.CENTER);
+            dr.setCircular(true);
+            viewHolder.ivLeaderItem.setBackground(null);
+            viewHolder.ivLeaderItem.setImageDrawable(dr);
+        }
+        viewHolder.tvUserNameLeaderItem.setText(leader.getUname());
+        viewHolder.tvRankLeaderItem.setText(String.valueOf(leader.getRank()));
+        viewHolder.tvGemCountLeaderItem.setText(String.valueOf(leader.getGemcount()));
+
+    }
+
+
 }

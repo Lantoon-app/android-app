@@ -24,7 +24,6 @@ import com.bazinga.lantoon.home.chapter.lesson.model.ContinueNext;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 
 import java.util.List;
-import java.util.Locale;
 
 
 public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -54,7 +53,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case VIEW_TYPE_NORMAL:
                 return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chapter, parent, false));
             case VIEW_TYPE_LOADING:
-                return new EmptyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false));
+                return new EmptyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chapter_loading, parent, false));
             default:
                 return null;
         }

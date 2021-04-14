@@ -21,20 +21,20 @@ public class LeaderViewModel extends ViewModel {
     public static final int PAGE_START = 1;
     private int currentPageNo = PAGE_START;
 
-    public LeaderViewModel(String userid) {
-        //getData(PAGE_START, userid);
+    public LeaderViewModel(String userid,int langId) {
+        getData(PAGE_START, userid,langId);
     }
 
-    public void getData(int slideNo, String userid) {
+    public void getData(int slideNo, String userid, int langId) {
 
         leaderResponseMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<LeaderResponse> call = apiInterface.getLeaders(userid,slideNo);
+        Call<LeaderResponse> call = apiInterface.getLeaders(slideNo,userid,langId);
         call.enqueue(new Callback<LeaderResponse>() {
             @Override
             public void onResponse(Call<LeaderResponse> call, Response<LeaderResponse> response) {
-
-                if (response.body().getStatus().getCode() == 1031) {
+                Log.d("LeaderResponse success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                if (response.body().getStatus().getCode() == 1033) {
                     Log.d("LeaderResponse success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     leaderResponseMutableLiveData.setValue(response.body());
                 } else

@@ -37,7 +37,7 @@ public class ChapterViewModel extends ViewModel {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
 
-                if (response.body().getStatus().getCode() == 1031) {
+                if (response.body().getStatus().getCode() == 1032) {
                     Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     chapterMutableLiveData.setValue(response.body());
                 }
