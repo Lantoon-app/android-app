@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:maxLength="15"
+        android:textSize="15sp"
         android:layout_centerVertical="true"
         android:layout_marginStart="80dp"
         android:fontFamily="@font/open_sans_bold"
@@ -36,6 +37,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="158dp"
+        android:textSize="15sp"
         android:fontFamily="@font/open_sans_bold"
         android:maxLength="5"
         android:text="01" />
@@ -55,6 +57,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="14dp"
+        android:textSize="15sp"
         android:fontFamily="@font/open_sans_bold"
         android:maxLength="6"
         android:text="113644" />

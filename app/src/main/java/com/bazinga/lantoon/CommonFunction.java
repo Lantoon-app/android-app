@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
@@ -260,7 +261,8 @@ public class CommonFunction {
         });*/
     }
 
-    public void onClickHomeButton(View view, Activity activity, int quesNo) {
+    public void onClickHomeButton(View view, final Activity activity, int quesNo) {
+
         //Uncomment the below code to Set the message and title from the strings.xml file
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
@@ -269,34 +271,39 @@ public class CommonFunction {
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if (attemptCount != 0) {
-                            QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
-                            QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
-                            QuestionsActivity.score.setCompletedques(String.valueOf(quesNo));
-                        }else {
-                            QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
-                            QuestionsActivity.score.setCompletedques(String.valueOf(quesNo-1));
+                        if (QuestionsActivity.isNewChapter) {
+                            if (attemptCount != 0) {
+                                QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
+                                QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
+                                QuestionsActivity.score.setCompletedques(String.valueOf(quesNo));
+                            } else {
+                                QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
+                                QuestionsActivity.score.setCompletedques(String.valueOf(quesNo - 1));
+                            }
+
+                            if (quesNo == 1) {
+                                QuestionsActivity.CalculateMarks(0, 0, 0);
+                            } else if (quesNo == 2 && QuestionsActivity.OutOfTotal == 0) {
+                                QuestionsActivity.CalculateMarks(0, 0, 0);
+                            }
+                            Log.d("attemptCount", QuestionsActivity.countMap.toString());
+
+
+                            postLesson(view, activity, quesNo);
+                            System.out.println(new
+
+                                    GsonBuilder().
+
+                                    setPrettyPrinting().
+
+                                    create().
+
+                                    toJson(QuestionsActivity.score));
+                        }
+                        else {
+                            activity.finish();
                         }
 
-                        if (quesNo == 1) {
-                            QuestionsActivity.CalculateMarks(0, 0, 0);
-                        } else if (quesNo == 2 && QuestionsActivity.OutOfTotal == 0) {
-                            QuestionsActivity.CalculateMarks(0, 0, 0);
-                        }
-                        Log.d("attemptCount", QuestionsActivity.countMap.toString());
-
-                    /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                    lessonCompletedPopup.showPopupWindow(view, activity);*/
-                        postLesson(view, activity, quesNo);
-                        System.out.println(new
-
-                                GsonBuilder().
-
-                                setPrettyPrinting().
-
-                                create().
-
-                                toJson(QuestionsActivity.score));
                     }
                 })
                 .
@@ -316,18 +323,20 @@ public class CommonFunction {
     }
 
     public void postLesson(View view, Activity activity, int quesNo) {
+
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
         call.enqueue(new Callback<PostLessonResponse>() {
             @Override
             public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
+                if (response != null) {
+                    Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
-                Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
-
-                if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
-                    LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                    lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo);
+                    if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
+                        LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                        lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo);
+                    }
                 }
             }
 
@@ -336,6 +345,7 @@ public class CommonFunction {
                 Log.e("response postLesson", t.getMessage());
             }
         });
+
     }
 
     public void wentWorngToast(Context context) {

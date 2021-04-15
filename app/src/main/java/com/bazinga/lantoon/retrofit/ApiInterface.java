@@ -4,11 +4,12 @@ import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.home.leader.model.LeaderResponse;
+import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
 import com.bazinga.lantoon.home.profile.ProfilePictureData;
-import com.bazinga.lantoon.login.data.model.LoggedInUser;
+import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.model.User;
 import com.google.gson.JsonObject;
@@ -39,10 +40,19 @@ public interface ApiInterface {
     @GET("Lantoon/public/UserHandler.php/getprofile/{uid}")
     Call<Profile> getProfile(@Path("uid") String uid);
 
+    //My Languages
+    @GET("Lantoon/public/UserHandler.php/mylanguages/{uid}")
+    Call<MyLanguageResponse> getMyLanguage(@Path("uid") String uid);
+
     //Update Profile
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/updateprofile")
     Call<Profile> updateProfile(@Body ProfileData profileData);
+
+    //Update MyLearnLanguage
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/updatemylanguage")
+    Call<LoggedInUserResponse> updateLanguage(@Query("uid") String uid, @Query("learnlang") String learnlang, @Query("knownlang") String knownlang);
 
     //Update Profile Picture
     @Headers("Content-Type: application/json")
@@ -54,6 +64,11 @@ public interface ApiInterface {
     Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);*/
     @GET("Lantoon/public/QuestionHandler.php/onelessonquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}/{uid}")
     Call<JsonObject> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
+    //https://lantoon.net/Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}
+
+    //Completed Lesson Questions
+    @GET("Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}")
+    Call<JsonObject> getCompletedQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
 
     //Signup
     @Headers("Content-Type: application/json")
@@ -68,7 +83,7 @@ public interface ApiInterface {
     //Login
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/login")
-    Call<LoggedInUser> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid);
+    Call<LoggedInUserResponse> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid);
 
 
     //Questions Images and Audio files

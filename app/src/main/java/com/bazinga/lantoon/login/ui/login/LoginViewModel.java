@@ -8,12 +8,10 @@ import android.util.Log;
 import android.util.Patterns;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.login.SessionManager;
-import com.bazinga.lantoon.login.data.model.LoggedInUser;
+import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +22,7 @@ public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    LoggedInUser loggedInUser;
+    LoggedInUserResponse loggedInUserResponse;
 
 
     LiveData<LoginFormState> getLoginFormState() {
@@ -42,19 +40,19 @@ public class LoginViewModel extends ViewModel {
 
             System.out.println("Login input" + username + password);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<LoggedInUser> call = apiInterface.userLogin(username.trim(), password.trim(), deviceId);
+            Call<LoggedInUserResponse> call = apiInterface.userLogin(username.trim(), password.trim(), deviceId);
             //Call<LoggedInUser> call = apiInterface.userLogin("test@test.com", "12345678", "afsdfsdfsdfsd");
-            call.enqueue(new Callback<LoggedInUser>() {
+            call.enqueue(new Callback<LoggedInUserResponse>() {
                 @Override
-                public void onResponse(Call<LoggedInUser> call, Response<LoggedInUser> response) {
+                public void onResponse(Call<LoggedInUserResponse> call, Response<LoggedInUserResponse> response) {
                     Log.e("Login onResponse body= ", response.body().toString());
                     if (response.isSuccessful() && response.body() != null) {
 
-                        loggedInUser = response.body();
-                        if (loggedInUser.getStatus().getCode() == 1008) {
-                            loginResult.setValue(new LoginResult(new LoggedInUserView(loggedInUser.getLoginData())));
+                        loggedInUserResponse = response.body();
+                        if (loggedInUserResponse.getStatus().getCode() == 1008) {
+                            loginResult.setValue(new LoginResult(new LoggedInUserView(loggedInUserResponse.getLoginData())));
                         } else {
-                            loginResult.setValue(new LoginResult(loggedInUser.getStatus().getMessage()));
+                            loginResult.setValue(new LoginResult(loggedInUserResponse.getStatus().getMessage()));
                             //loginResult.setValue(new LoginResult(R.string.login_failed));
                         }
 
@@ -69,7 +67,7 @@ public class LoginViewModel extends ViewModel {
                 }
 
                 @Override
-                public void onFailure(Call<LoggedInUser> call, Throwable t) {
+                public void onFailure(Call<LoggedInUserResponse> call, Throwable t) {
                     call.cancel();
                     t.printStackTrace();
                     loginResult.setValue(new LoginResult(t.getMessage()));

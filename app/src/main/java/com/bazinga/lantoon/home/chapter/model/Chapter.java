@@ -1,5 +1,6 @@
 package com.bazinga.lantoon.home.chapter.model;
 
+import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -37,6 +38,9 @@ public class Chapter {
     @SerializedName("completedLessons")
     @Expose
     private Integer completedLessons;
+    @SerializedName("activeLesson")
+    @Expose
+    private ActiveLesson activeLesson;
 
     public String getChapterID() {
         return chapterID;
@@ -125,5 +129,11 @@ public class Chapter {
     public void setCompletedLessons(Integer completedLessons) {
         this.completedLessons = completedLessons;
     }
+    public ActiveLesson getActiveLesson() {
+        return activeLesson;
+    }
 
+    public void setActiveLesson(ActiveLesson activeLesson) {
+        this.activeLesson = activeLesson;
+    }
 }

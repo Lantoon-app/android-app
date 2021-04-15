@@ -39,6 +39,7 @@ import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.login.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -64,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));*/
         sessionManager = new SessionManager(this);
-
+Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
         initToolbar();
         initNavigation();
         //showBottomNavigation(false);

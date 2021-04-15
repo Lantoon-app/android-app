@@ -25,8 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="490dp"
         android:layout_margin="30dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_change_language" />
+        tools:listitem="@layout/item_change_my_language" />
 </androidx.constraintlayout.widget.ConstraintLayout>

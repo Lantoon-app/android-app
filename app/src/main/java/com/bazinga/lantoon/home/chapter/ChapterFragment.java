@@ -114,6 +114,7 @@ public class ChapterFragment extends Fragment {
                     if (ChapterFragment.this.currentPage != PAGE_START)
                         mChapterAdapter.removeLoading();
                     mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
+                    mChapterAdapter.notifyDataSetChanged();
                     if (ChapterFragment.this.currentPage < totalPage) mChapterAdapter.addLoading();
                     else isLastPage = true;
                     isLoading = false;

@@ -8,13 +8,14 @@
 
     <ImageView
         android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:textSize="15sp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
-        android:visibility="invisible"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_profile" />
 
@@ -22,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="80dp"
         android:fontFamily="@font/open_sans_bold"
         android:text="NAME" />
 
@@ -31,9 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="150dp"
-        android:text="RANK"
-        android:fontFamily="@font/open_sans_bold" />
+        android:layout_marginEnd="130dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/open_sans_bold"
+        android:text="RANK" />
 
     <ImageView
         android:layout_width="30dp"
@@ -41,14 +43,17 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="69dp"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:src="@drawable/ic_gem_filled" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="14dp"
+        android:textSize="15sp"
         android:fontFamily="@font/open_sans_bold"
+        android:maxLength="6"
         android:text="POINTS" />
 </RelativeLayout>

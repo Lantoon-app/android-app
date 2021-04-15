@@ -134,62 +134,31 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         TextView tvChapter;
         ImageView ivDisabled, ivLock;
-        ProgressBar pbChapter;
+        final ProgressBar pbChapter;
         RatingBar ratingBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            //pbChapter = new ProgressBar(activity).findViewById(R.id.pbChapter);
+            //pbChapter.setProgress(20);
+            pbChapter =  itemView.findViewById(R.id.pbChapter);
             tvChapter = itemView.findViewById(R.id.tvChapterNumber);
-            pbChapter = itemView.findViewById(R.id.pbChapter);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             ivDisabled = itemView.findViewById(R.id.ivDisabled);
             ivLock = itemView.findViewById(R.id.ivLock);
             pbChapter.setProgress(0);
 
         }
-
+        @Override
         protected void clear() {
 
         }
-
         @RequiresApi(api = Build.VERSION_CODES.N)
         public void onBind(int position) {
             super.onBind(position);
             Chapter mChapter = mChapterList.get(position);
-            tvChapter.setText("CHAPTER " + mChapter.getChapterNo());
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(activity, QuestionsActivity.class);
-                    if(Integer.valueOf(mChapter.getChapterNo()) == continueNext.getChapterno()) {
-                        intent.putExtra(Utils.TAG_LANGUAGE_ID, continueNext.getLangid());
-                        intent.putExtra(Utils.TAG_CHAPTER_NO, continueNext.getChapterno());
-                        intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getLessonno());
-                        intent.putExtra(Utils.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
-                    }else {
-                        intent.putExtra(Utils.TAG_LANGUAGE_ID, continueNext.getLangid());
-                        intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
-                        intent.putExtra(Utils.TAG_LESSON_NO, 1);
-                        intent.putExtra(Utils.TAG_START_QUESTION_NO, 1);
-                    /*intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
-                    if (continueNext.getLessonno() != 4)
-                        intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getLessonno() + 1);
-                    else intent.putExtra(Utils.TAG_LESSON_NO, mChapter.getCompletedLessons());
-                    intent.putExtra(Utils.TAG_START_QUESTION_NO,continueNext.getStartingquesno());*/
-
-                    }
-                    activity.startActivity(intent);
-                }
-            });
-
-            Log.d("chapters ", "Completed "+mChapter.getCompletedLessons()+ " Active "+continueNext.getStartingquesno() + " Cno "+mChapterList.get(position).getChapterNo());
-           /* if (mChapter.getCompletedLessons() == 0) {
-
-            }*/
             pbChapter.setProgress(mChapter.getCompletedLessons());
-
+            tvChapter.setText("CHAPTER " + mChapter.getChapterNo());
             if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
 
 
@@ -199,13 +168,47 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 ratingBar.setRating(mChapter.getCompletedLessons());
 
 
-            }else {
+            } else {
 
                 tvChapter.setVisibility(View.INVISIBLE);
                 ivLock.setVisibility(View.VISIBLE);
                 ivDisabled.setVisibility(View.VISIBLE);
                 ratingBar.setNumStars(0);
             }
+            if(Integer.valueOf(mChapter.getChapterNo()) <= continueNext.getChapterno() ) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(activity, QuestionsActivity.class);
+                        if (Integer.valueOf(mChapter.getChapterNo()) == continueNext.getChapterno()) {
+                            intent.putExtra(Utils.TAG_IS_NEW_CHAPTER, true);
+                            intent.putExtra(Utils.TAG_LANGUAGE_ID, continueNext.getLangid());
+                            intent.putExtra(Utils.TAG_CHAPTER_NO, continueNext.getChapterno());
+                            intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getLessonno());
+                            intent.putExtra(Utils.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
+                        } else {
+                            if (mChapter.getActiveLesson() != null) {
+                                intent.putExtra(Utils.TAG_IS_NEW_CHAPTER, false);
+                                intent.putExtra(Utils.TAG_LANGUAGE_ID, Integer.valueOf(mChapter.getLanguageName()));
+                                intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
+                                intent.putExtra(Utils.TAG_LESSON_NO, mChapter.getActiveLesson().getLessonno());
+                                intent.putExtra(Utils.TAG_START_QUESTION_NO, mChapter.getActiveLesson().getStartingquesno());
+                            }
+
+                        }
+                        activity.startActivity(intent);
+                    }
+                });
+            }
+
+            Log.d("chapters ", "Completed " + mChapter.getCompletedLessons() + " Active " + continueNext.getStartingquesno() + " Cno " + mChapterList.get(position).getChapterNo());
+           /* if (mChapter.getCompletedLessons() == 0) {
+
+            }*/
+
+
+
 
 
         }

@@ -6,6 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bazinga.lantoon.home.HomeActivity;
+import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
+import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
+import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
@@ -19,20 +23,22 @@ import retrofit2.Response;
 
 public class MyLanguageViewModel extends ViewModel {
 
-    MutableLiveData<List<Language>> languageLiveData;
-    List<Language> languageList;
+    MutableLiveData<List<MyLanguageData>> languageLiveData;
+    MyLanguageResponse languageList;
 
     public MyLanguageViewModel() {
+
         languageLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<List<Language>> call = apiInterface.getLanguages();
-        call.enqueue(new Callback<List<Language>>() {
+        Call<MyLanguageResponse> call = apiInterface.getMyLanguage(HomeActivity.sessionManager.getUserDetails().getUid());
+        call.enqueue(new Callback<MyLanguageResponse>() {
             @Override
-            public void onResponse(Call<List<Language>> call, Response<List<Language>> response) {
+            public void onResponse(Call<MyLanguageResponse> call, Response<MyLanguageResponse> response) {
 
                 //System.out.println("language list success=  " + response.message().toString());
                 if (response.isSuccessful()) {
-                    languageLiveData.setValue(response.body());
+                    if (response.body().getStatus().getCode() == 1031)
+                        languageLiveData.setValue(response.body().getData());
                     Log.e("response body= ", new Gson().toJson(response.body()));
                 } else {
                     Log.e("response message= ", response.message() + response.code());
@@ -42,7 +48,7 @@ public class MyLanguageViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<List<Language>> call, Throwable t) {
+            public void onFailure(Call<MyLanguageResponse> call, Throwable t) {
 
                 call.cancel();
                 t.printStackTrace();
@@ -51,7 +57,7 @@ public class MyLanguageViewModel extends ViewModel {
         });
     }
 
-    public LiveData<List<Language>> getLanguageMutableLiveData() {
+    public LiveData<List<MyLanguageData>> getLanguageMutableLiveData() {
         return languageLiveData;
     }
 }

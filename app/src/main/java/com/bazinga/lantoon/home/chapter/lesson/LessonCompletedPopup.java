@@ -75,8 +75,8 @@ public class LessonCompletedPopup {
             }
         });
         Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);
-        if (quesNo != QuestionsActivity.totalQues)
-            btnContinuePopupLessonCompleted.setVisibility(View.GONE);
+        /*if (quesNo != QuestionsActivity.totalQues || !QuestionsActivity.isNewChapter)
+            btnContinuePopupLessonCompleted.setVisibility(View.GONE);*/
         btnContinuePopupLessonCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +84,7 @@ public class LessonCompletedPopup {
                 //activity.startActivityForResult(new Intent(activity,QuestionsActivity.class),22);
                 activity.finish();
                 Intent intent = new Intent(activity, QuestionsActivity.class);
-
+                intent.putExtra(Utils.TAG_IS_NEW_CHAPTER,true);
                 intent.putExtra(Utils.TAG_LANGUAGE_ID, postLessonResponse.getContinuenext().getLangid());
                 intent.putExtra(Utils.TAG_CHAPTER_NO, postLessonResponse.getContinuenext().getChapterno());
                 intent.putExtra(Utils.TAG_LESSON_NO, postLessonResponse.getContinuenext().getLessonno());

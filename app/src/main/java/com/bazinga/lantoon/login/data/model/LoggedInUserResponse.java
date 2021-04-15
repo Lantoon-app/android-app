@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
-public class LoggedInUser {
+public class LoggedInUserResponse {
 
 
     @SerializedName("status")

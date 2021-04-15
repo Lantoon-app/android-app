@@ -31,6 +31,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     public static Context context;
     CommonFunction cf;
+    public static boolean isNewChapter;
     public static QuestionsViewModel questionViewModel;
     public static SessionManager sessionManager;
     public static ViewPager2 mPager;
@@ -66,7 +67,7 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void init(int langid, int chaperno, int lessonno) {
-
+        isNewChapter = getIntent().getBooleanExtra(Utils.TAG_IS_NEW_CHAPTER,true);
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
