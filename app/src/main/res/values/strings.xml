@@ -75,6 +75,7 @@
     <string name="enter_email_id_msg">Enter the Email id Registered with your account</string>
     <string name="enter_your_email_id">Enter your email id</string>
     <string name="send_otp">SEND OTP</string>
+    <string name="enter_Old_password">Enter Your Old Password</string>
     <string name="enter_new_password">Enter New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="hint_date_of_birth">Date of Birth</string>
@@ -83,6 +84,9 @@
     <string name="choose_your_language">CHOOSE YOUR LANGUAGE</string>
     <string name="ad_signout_msg">Are you sure you want to sign out ?</string>
     <string name="ad_home_button_pressed_msg">Are you sure you want to exit ?</string>
+    <string name="change_language">CHANGE LANGUAGE</string>
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="btn_change">CHANGE</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>

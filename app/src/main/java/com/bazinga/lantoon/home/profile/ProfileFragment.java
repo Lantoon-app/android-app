@@ -84,6 +84,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         profileViewModel.getUser().observe(getActivity(), profile -> {
             if (profile.getStatus().getCode() == 1023) {
                 profileData = profile.getProfileData();
+                Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
                 if (!profileData.getPicture().equals("")) {
                     byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -99,6 +100,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 System.out.println(profile.getDurationData().toString());
                 DurationSpinnerAdapter durationSpinnerAdapter = new DurationSpinnerAdapter(getContext(), durationDataList);
                 spinnerDuration.setAdapter(durationSpinnerAdapter);
+                spinnerDuration.setSelection(profileData.getMindurationperday()-1);
                 etFullName.setText(profileData.getUname());
                 etDOB.setText(profileData.getDob());
                 if (!profileData.getCountrycode().equals("")) {
@@ -137,7 +139,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 profileData.setDob(etDOB.getText().toString());
                 profileData.setCountrycode(countryCodePicker.getSelectedCountryCode());
                 profileData.setPhone(etPhoneNumber.getText().toString());
-                profileData.setMindurationperday(Integer.valueOf(durationDataList.get(spinnerDuration.getSelectedItemPosition()).getDurationMin()));
+                profileData.setMindurationperday(Integer.valueOf(durationDataList.get(spinnerDuration.getSelectedItemPosition()).getId()));
                 profileViewModel.postProfileData(profileData);
                 break;
         }

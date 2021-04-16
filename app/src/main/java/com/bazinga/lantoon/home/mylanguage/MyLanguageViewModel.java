@@ -39,9 +39,9 @@ public class MyLanguageViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus().getCode() == 1031)
                         languageLiveData.setValue(response.body().getData());
-                    Log.e("response body= ", new Gson().toJson(response.body()));
+                    Log.d("response body= ", new Gson().toJson(response.body()));
                 } else {
-                    Log.e("response message= ", response.message() + response.code());
+                    Log.d("response message= ", response.message() + response.code());
                 }
 
 

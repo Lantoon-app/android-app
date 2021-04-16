@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class LeaderFragment extends Fragment {
 
     SessionManager sessionManager;
     private LeaderViewModel leaderViewModel;
+    ProgressBar progressBar;
     RecyclerView recyclerView;
     LeaderAdapter leaderAdapter;
     LinearLayoutManager mLayoutManager;
@@ -56,6 +58,7 @@ public class LeaderFragment extends Fragment {
                 new LeaderViewModelProvider(sessionManager.getUserDetails().getUid(), sessionManager.getUserDetails().getLearnlang())).get(LeaderViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_leader, container, false);
+        progressBar = root.findViewById(R.id.pbLeader);
         rlFull = root.findViewById(R.id.rlFull);
         rlFull.setVisibility(View.GONE);
         recyclerView = root.findViewById(R.id.rvLeader);
@@ -81,7 +84,7 @@ public class LeaderFragment extends Fragment {
 
 
     private void preparedListItem() {
-
+progressBar.setVisibility(View.VISIBLE);
 
         leaderViewModel.getLeaders().observe(getActivity(), new Observer<LeaderResponse>() {
 
@@ -90,7 +93,17 @@ public class LeaderFragment extends Fragment {
                 if (leaderResponse != null) {
                     isLoading = false;
                     leaderAdapter.addAll(leaderResponse.getData());
-                    setFooter(leaderResponse.getMyLeaderData());
+                    if (leaderResponse.getMyLeaderData() != null)
+                        setFooter(leaderResponse.getMyLeaderData());
+                    /*else {
+                        MyLeaderData myLeaderData = new MyLeaderData();
+                        myLeaderData.setGemcount(0);
+                        myLeaderData.setPicture(null);
+                        myLeaderData.setRank(0);
+                        myLeaderData.setUname(sessionManager.getUserDetails().getUname());
+                        setFooter(myLeaderData);
+                    }*/
+                    progressBar.setVisibility(View.INVISIBLE);
                     rlFull.setVisibility(View.VISIBLE);
                 }
 
@@ -98,7 +111,7 @@ public class LeaderFragment extends Fragment {
         });
     }
 
-    private void setFooter(MyLeaderData myLeaderData) {
+    private void setFooter(@NonNull MyLeaderData myLeaderData) {
         if (myLeaderData.getPicture() != null) {
             byte[] decodedString = Base64.decode(myLeaderData.getPicture(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

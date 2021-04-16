@@ -1,5 +1,6 @@
 package com.bazinga.lantoon.retrofit;
 
+import com.bazinga.lantoon.home.changepassword.model.ChangePasswordResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
@@ -53,6 +54,11 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/updatemylanguage")
     Call<LoggedInUserResponse> updateLanguage(@Query("uid") String uid, @Query("learnlang") String learnlang, @Query("knownlang") String knownlang);
+
+    //Change Password
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/changepassword")
+    Call<ChangePasswordResponse> changePassword(@Query("uid") String uid, @Query("newpass") String newpass, @Query("oldpass") String oldpass);
 
     //Update Profile Picture
     @Headers("Content-Type: application/json")
