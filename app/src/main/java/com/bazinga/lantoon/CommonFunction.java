@@ -270,7 +270,9 @@ public class CommonFunction {
         builder.setMessage(activity.getString(R.string.ad_home_button_pressed_msg))
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
                     public void onClick(DialogInterface dialog, int id) {
+                        Log.d("ssssss",String.valueOf(QuestionsActivity.isNewChapter));
                         if (QuestionsActivity.isNewChapter) {
                             if (attemptCount != 0) {
                                 QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
@@ -324,27 +326,31 @@ public class CommonFunction {
 
     public void postLesson(View view, Activity activity, int quesNo) {
 
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
-        call.enqueue(new Callback<PostLessonResponse>() {
-            @Override
-            public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
-                if (response != null) {
-                    Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
+                call.enqueue(new Callback<PostLessonResponse>() {
+                    @Override
+                    public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
-                    if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
-                        LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                        lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo);
+                        if (response.body() != null) {
+                            Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+
+                            if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
+                                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                                lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo);
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<PostLessonResponse> call, Throwable t) {
-                Log.e("response postLesson", t.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<PostLessonResponse> call, Throwable t) {
+                        Log.e("response postLesson", t.getMessage());
+                    }
+                });
+
+
+
 
     }
 

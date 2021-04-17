@@ -38,6 +38,9 @@ public class Chapter {
     @SerializedName("completedLessons")
     @Expose
     private Integer completedLessons;
+    @SerializedName("gemcount")
+    @Expose
+    private Integer gemcount;
     @SerializedName("activeLesson")
     @Expose
     private ActiveLesson activeLesson;
@@ -128,6 +131,13 @@ public class Chapter {
 
     public void setCompletedLessons(Integer completedLessons) {
         this.completedLessons = completedLessons;
+    }
+    public Integer getGemcount() {
+        return gemcount;
+    }
+
+    public void setGemcount(Integer gemcount) {
+        this.gemcount = gemcount;
     }
     public ActiveLesson getActiveLesson() {
         return activeLesson;

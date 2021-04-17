@@ -26,9 +26,11 @@ import android.widget.Toast;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.ValidationFunction;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsViewModel;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bazinga.lantoon.login.forget.ForgetPasswordActivity;
 import com.google.gson.GsonBuilder;
 
 public class LoginActivity extends AppCompatActivity {
@@ -51,6 +53,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login);
         loadingProgressBar = findViewById(R.id.pbLoading);
         tvForgetPassword = findViewById(R.id.tvForgetPassword);
+        tvForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+            }
+        });
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
@@ -125,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //lllogin.setVisibility(View.INVISIBLE);
-                if(usernameEditText.getText().toString().equalsIgnoreCase("") || passwordEditText.getText().toString()!=null) {
+                if(!ValidationFunction.isEmpty(usernameEditText) || ValidationFunction.isEmpty(passwordEditText)) {
                     loadingProgressBar.setVisibility(View.VISIBLE);
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString(), getIntent().getStringExtra(Utils.TAG_DEVICE_ID));

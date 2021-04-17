@@ -45,22 +45,23 @@ public class LoginViewModel extends ViewModel {
             call.enqueue(new Callback<LoggedInUserResponse>() {
                 @Override
                 public void onResponse(Call<LoggedInUserResponse> call, Response<LoggedInUserResponse> response) {
-                    Log.e("Login onResponse body= ", response.body().toString());
+                   //Log.e("Login onResponse body= ", response.body().toString());
                     if (response.isSuccessful() && response.body() != null) {
 
                         loggedInUserResponse = response.body();
                         if (loggedInUserResponse.getStatus().getCode() == 1008) {
+                            Log.d("Login onResponse body= ", new Gson().toJson(response.body()));
+                            Log.d("Login onResponse body= ", String.valueOf(response.body().getLoginData().getSpeakCode()));
                             loginResult.setValue(new LoginResult(new LoggedInUserView(loggedInUserResponse.getLoginData())));
                         } else {
                             loginResult.setValue(new LoginResult(loggedInUserResponse.getStatus().getMessage()));
                             //loginResult.setValue(new LoginResult(R.string.login_failed));
                         }
 
-                        Log.d("Login onResponse body= ", new Gson().toJson(response.body()));
-                        Log.d("Login onResponse body= ", String.valueOf(response.body().getLoginData().getSpeakCode()));
+
                         //Log.d("Login onResponse msg= ", loggedInUser.getData().getEmail());
                     } else {
-                        Log.e("Login onResponse msg= ", response.message() + response.code());
+                        //Log.e("Login onResponse msg= ", response.message() + response.code());
                         loginResult.setValue(new LoginResult(response.message() + response.code()));
                     }
 

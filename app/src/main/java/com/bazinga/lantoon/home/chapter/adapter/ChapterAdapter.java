@@ -141,7 +141,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             super(itemView);
             //pbChapter = new ProgressBar(activity).findViewById(R.id.pbChapter);
             //pbChapter.setProgress(20);
-            pbChapter =  itemView.findViewById(R.id.pbChapter);
+            pbChapter = itemView.findViewById(R.id.pbChapter);
             tvChapter = itemView.findViewById(R.id.tvChapterNumber);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             ivDisabled = itemView.findViewById(R.id.ivDisabled);
@@ -149,15 +149,18 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             pbChapter.setProgress(0);
 
         }
+
         @Override
         protected void clear() {
 
         }
+
         @RequiresApi(api = Build.VERSION_CODES.N)
         public void onBind(int position) {
             super.onBind(position);
             Chapter mChapter = mChapterList.get(position);
             pbChapter.setProgress(mChapter.getCompletedLessons());
+            ratingBar.setRating(mChapter.getGemcount());
             tvChapter.setText("CHAPTER " + mChapter.getChapterNo());
             if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
 
@@ -165,7 +168,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 tvChapter.setVisibility(View.VISIBLE);
                 ivLock.setVisibility(View.INVISIBLE);
                 ivDisabled.setVisibility(View.INVISIBLE);
-                ratingBar.setRating(mChapter.getCompletedLessons());
+
 
 
             } else {
@@ -175,7 +178,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 ivDisabled.setVisibility(View.VISIBLE);
                 ratingBar.setNumStars(0);
             }
-            if(Integer.valueOf(mChapter.getChapterNo()) <= continueNext.getChapterno() ) {
+            if (Integer.valueOf(mChapter.getChapterNo()) <= continueNext.getChapterno()) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -183,20 +186,29 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         Intent intent = new Intent(activity, QuestionsActivity.class);
                         if (Integer.valueOf(mChapter.getChapterNo()) == continueNext.getChapterno()) {
                             intent.putExtra(Utils.TAG_IS_NEW_CHAPTER, true);
+                            intent.putExtra(Utils.TAG_IS_RANDOM_QUESTIONS,false);
                             intent.putExtra(Utils.TAG_LANGUAGE_ID, continueNext.getLangid());
                             intent.putExtra(Utils.TAG_CHAPTER_NO, continueNext.getChapterno());
                             intent.putExtra(Utils.TAG_LESSON_NO, continueNext.getLessonno());
                             intent.putExtra(Utils.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
-                        } else {
-                            if (mChapter.getActiveLesson() != null) {
-                                intent.putExtra(Utils.TAG_IS_NEW_CHAPTER, false);
-                                intent.putExtra(Utils.TAG_LANGUAGE_ID, Integer.valueOf(mChapter.getLanguageName()));
-                                intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
-                                intent.putExtra(Utils.TAG_LESSON_NO, mChapter.getActiveLesson().getLessonno());
-                                intent.putExtra(Utils.TAG_START_QUESTION_NO, mChapter.getActiveLesson().getStartingquesno());
-                            }
-
+                        } else if (mChapter.getActiveLesson() != null && mChapter.getActiveLesson().getLessonno() >0) {
+                            intent.putExtra(Utils.TAG_IS_NEW_CHAPTER, false);
+                            intent.putExtra(Utils.TAG_IS_RANDOM_QUESTIONS,false);
+                            intent.putExtra(Utils.TAG_LANGUAGE_ID, Integer.valueOf(mChapter.getLanguageName()));
+                            intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
+                            intent.putExtra(Utils.TAG_LESSON_NO, mChapter.getActiveLesson().getLessonno());
+                            intent.putExtra(Utils.TAG_START_QUESTION_NO, mChapter.getActiveLesson().getStartingquesno());
+                        }else if (mChapter.getActiveLesson() != null && mChapter.getActiveLesson().getLessonno() == 0){
+                            Log.d("isRandomQuestion adap","true" );
+                            Log.d("isRandomQuestion gem",mChapter.getGemcount().toString() );
+                            intent.putExtra(Utils.TAG_IS_NEW_CHAPTER, false);
+                            intent.putExtra(Utils.TAG_IS_RANDOM_QUESTIONS,true);
+                            intent.putExtra(Utils.TAG_LANGUAGE_ID, Integer.valueOf(mChapter.getLanguageName()));
+                            intent.putExtra(Utils.TAG_CHAPTER_NO, Integer.valueOf(mChapter.getChapterNo()));
+                            intent.putExtra(Utils.TAG_LESSON_NO, 0);
+                            intent.putExtra(Utils.TAG_START_QUESTION_NO,0);
                         }
+
                         activity.startActivity(intent);
                     }
                 });
@@ -206,9 +218,6 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
            /* if (mChapter.getCompletedLessons() == 0) {
 
             }*/
-
-
-
 
 
         }

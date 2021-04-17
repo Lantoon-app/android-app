@@ -31,7 +31,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     public static Context context;
     CommonFunction cf;
-    public static boolean isNewChapter;
+    public static boolean isNewChapter, isRandomQuestion;
     public static QuestionsViewModel questionViewModel;
     public static SessionManager sessionManager;
     public static ViewPager2 mPager;
@@ -66,8 +66,10 @@ public class QuestionsActivity extends AppCompatActivity {
         progress = new ProgressDialog(this);
     }
 
-    private void init(int langid, int chaperno, int lessonno) {
-        isNewChapter = getIntent().getBooleanExtra(Utils.TAG_IS_NEW_CHAPTER,true);
+    private void init(int langid, int chaperno, int lessonno, boolean isNewChapter, boolean isRandomQuestion) {
+        Log.d("isRandomQuestionsss",String.valueOf(isRandomQuestion));
+        this.isNewChapter = isNewChapter;
+        this.isRandomQuestion = isRandomQuestion;
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
@@ -140,7 +142,7 @@ public class QuestionsActivity extends AppCompatActivity {
             if (requestCode == MY_PERMISSION_REQUEST_CODE)
                 init(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID, 0),
                         getIntent().getIntExtra(Utils.TAG_CHAPTER_NO, 0),
-                        getIntent().getIntExtra(Utils.TAG_LESSON_NO, 0));
+                        getIntent().getIntExtra(Utils.TAG_LESSON_NO, 0),getIntent().getBooleanExtra(Utils.TAG_IS_NEW_CHAPTER,false),getIntent().getBooleanExtra(Utils.TAG_IS_RANDOM_QUESTIONS,false));
             //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();

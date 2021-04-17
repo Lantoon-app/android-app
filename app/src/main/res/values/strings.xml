@@ -87,6 +87,8 @@
     <string name="change_language">CHANGE LANGUAGE</string>
     <string name="change_password">CHANGE PASSWORD</string>
     <string name="btn_change">CHANGE</string>
+    <string name="validate">VALIDATE</string>
+    <string name="submit">SUBMIT</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>

@@ -133,7 +133,14 @@ public class QuestionsViewModel extends ViewModel {
     }
 
     private void downloadZipFile(int langid, int chaperno, int lessonno, int type) {
-        String folderStruc = String.valueOf(langid+"/"+chaperno+"/"+lessonno+"/");
+        Log.d("isRandomQuestion", String.valueOf(QuestionsActivity.isRandomQuestion));
+        String folderStruc;
+        if(!QuestionsActivity.isRandomQuestion)
+         folderStruc = String.valueOf(langid+"/"+chaperno+"/"+lessonno+"/");
+        else folderStruc = String.valueOf(langid+"/"+chaperno+"/");
+
+        Log.d("isRandomQuestion", String.valueOf(QuestionsActivity.isRandomQuestion) + " "+folderStruc);
+
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> call = apiInterface.downloadFileByUrl(langid, chaperno, lessonno, type);
 
@@ -286,6 +293,7 @@ public class QuestionsViewModel extends ViewModel {
     }
 
     private void questionsFragmentData(int langid, int chaperno, int lessonno,int reflanguageid, String uid) {
+        System.out.println("langid"+langid+"chaperno"+chaperno+"lessonno"+lessonno+"uid"+uid);
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<JsonObject> call = apiInterface.getQuestions(langid, chaperno, lessonno,reflanguageid,uid);

@@ -11,6 +11,7 @@ import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
 import com.bazinga.lantoon.home.profile.ProfilePictureData;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
+import com.bazinga.lantoon.login.forget.OtpResponse;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.model.User;
 import com.google.gson.JsonObject;
@@ -60,6 +61,16 @@ public interface ApiInterface {
     @POST("Lantoon/public/UserHandler.php/changepassword")
     Call<ChangePasswordResponse> changePassword(@Query("uid") String uid, @Query("newpass") String newpass, @Query("oldpass") String oldpass);
 
+    //Post OTP
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/validatemail")
+    Call<OtpResponse> getOtp(@Query("email") String email);
+
+    //Change Forget Password
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/changeforgetpass")
+    Call<JsonObject> changeForgetPassword(@Query("uid") String uid, @Query("newpass") String newpass);
+
     //Update Profile Picture
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/updateprofilepic")
@@ -72,7 +83,7 @@ public interface ApiInterface {
     Call<JsonObject> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
     //https://lantoon.net/Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}
 
-    //Completed Lesson Questions
+    //Completed Lesson Questions (Not Used)
     @GET("Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}")
     Call<JsonObject> getCompletedQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
 
