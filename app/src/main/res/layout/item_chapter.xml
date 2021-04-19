@@ -43,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:background="@drawable/chapter_rating_bg"
         android:numStars="5"
         android:isIndicator="true"
         android:scaleX="0.8"

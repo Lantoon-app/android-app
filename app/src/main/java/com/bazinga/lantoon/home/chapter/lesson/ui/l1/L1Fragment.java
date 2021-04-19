@@ -281,22 +281,22 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudioSlow3:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);
                 break;
             case R.id.btnAudioSlow4:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
                 tvQuestionName.setText(questions.get(3).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
 

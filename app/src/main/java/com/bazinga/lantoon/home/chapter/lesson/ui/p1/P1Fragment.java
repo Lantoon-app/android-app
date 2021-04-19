@@ -161,7 +161,7 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.btnAudioSlow:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
                 cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());

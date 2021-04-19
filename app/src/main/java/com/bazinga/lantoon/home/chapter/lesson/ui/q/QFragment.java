@@ -208,12 +208,12 @@ public class QFragment extends Fragment implements View.OnClickListener {
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 tvQuestionName.setText(question.getWord());
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 tvQuestionAnswer.setText(question.getAnsWord());
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;

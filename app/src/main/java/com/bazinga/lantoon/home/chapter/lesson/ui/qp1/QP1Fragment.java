@@ -207,11 +207,11 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
                 tvQuestionAnswer.setText(question.getAnsWord());
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 tvQuestionName.setText(question.getWord());
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 tvQuestionAnswer.setText(question.getAnsWord());
                 break;
             case R.id.imgBtnAnsImage1:

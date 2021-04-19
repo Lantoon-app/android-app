@@ -152,7 +152,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.btnAudioSlow:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.btnMic:
                 if (quesNo == totalQues)

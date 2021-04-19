@@ -10,6 +10,8 @@ import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
 import com.bazinga.lantoon.home.profile.ProfilePictureData;
+import com.bazinga.lantoon.home.target.model.Target;
+import com.bazinga.lantoon.home.target.model.TargetResponse;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.login.forget.OtpResponse;
 import com.bazinga.lantoon.registration.langselection.model.Language;
@@ -108,7 +110,13 @@ public interface ApiInterface {
     @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
     Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("type") int type);
 
-
+    //Leaderboard
     @GET("Lantoon/public/ScoreHandler.php/leaderboard/{slideno}/{uid}/{langid}")
     Call<LeaderResponse> getLeaders(@Path("slideno") int slideno,@Path("uid") String uid,@Path("langid") int langid);
+
+    //Targets
+    @GET("Lantoon/public/TargetHandler.php/mytargets/{uid}")
+    Call<TargetResponse> getTargets(@Path("uid") String uid);
+
+
 }

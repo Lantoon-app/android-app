@@ -33,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textAllCaps="true"
                 android:text="ENGLISH / english"
                 android:textColor="@color/white"
                 android:textSize="18dp" />

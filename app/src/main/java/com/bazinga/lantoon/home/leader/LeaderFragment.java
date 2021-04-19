@@ -84,17 +84,18 @@ public class LeaderFragment extends Fragment {
 
 
     private void preparedListItem() {
-progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
 
         leaderViewModel.getLeaders().observe(getActivity(), new Observer<LeaderResponse>() {
 
             @Override
             public void onChanged(LeaderResponse leaderResponse) {
-                if (leaderResponse != null) {
-                    isLoading = false;
-                    leaderAdapter.addAll(leaderResponse.getData());
-                    if (leaderResponse.getMyLeaderData() != null)
-                        setFooter(leaderResponse.getMyLeaderData());
+                if (getChildFragmentManager() != null) {
+                    if (leaderResponse != null) {
+                        isLoading = false;
+                        leaderAdapter.addAll(leaderResponse.getData());
+                        if (leaderResponse.getMyLeaderData() != null)
+                            setFooter(leaderResponse.getMyLeaderData());
                     /*else {
                         MyLeaderData myLeaderData = new MyLeaderData();
                         myLeaderData.setGemcount(0);
@@ -103,10 +104,10 @@ progressBar.setVisibility(View.VISIBLE);
                         myLeaderData.setUname(sessionManager.getUserDetails().getUname());
                         setFooter(myLeaderData);
                     }*/
-                    progressBar.setVisibility(View.INVISIBLE);
-                    rlFull.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        rlFull.setVisibility(View.VISIBLE);
+                    }
                 }
-
             }
         });
     }

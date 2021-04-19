@@ -205,11 +205,11 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 tvQuestionName.setText(question.getWord());
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
                 cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());
