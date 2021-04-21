@@ -77,6 +77,13 @@ public class CommonFunction {
                 .setDuration(duration)
                 .start();
     }
+public void mikeAnimation(View view, int duration) {
+    ObjectAnimator
+            .ofFloat(view, "translationY", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0)
+            .setDuration(duration)
+            .start();
+
+    }
 
     public void setImage(Activity activity, String filePath, ImageView imageView) {
         /*File file = new File(folderPath);
@@ -262,6 +269,7 @@ public class CommonFunction {
     }
 
     public void onClickHomeButton(View view, final Activity activity, int quesNo) {
+        String timeSpent = QuestionsActivity.tvTimer.getText().toString();
 
         //Uncomment the below code to Set the message and title from the strings.xml file
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -272,7 +280,8 @@ public class CommonFunction {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.d("ssssss",String.valueOf(QuestionsActivity.isNewChapter));
+                        QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
+                        Log.d("ssssss", String.valueOf(QuestionsActivity.isNewChapter));
                         if (QuestionsActivity.isNewChapter) {
                             if (attemptCount != 0) {
                                 QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
@@ -290,8 +299,8 @@ public class CommonFunction {
                             }
                             Log.d("attemptCount", QuestionsActivity.countMap.toString());
 
-
-                            postLesson(view, activity, quesNo);
+                            QuestionsActivity.score.setSpentTime(timeSpent);
+                            postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                             System.out.println(new
 
                                     GsonBuilder().
@@ -301,8 +310,7 @@ public class CommonFunction {
                                     create().
 
                                     toJson(QuestionsActivity.score));
-                        }
-                        else {
+                        } else {
                             activity.finish();
                         }
 
@@ -312,7 +320,7 @@ public class CommonFunction {
 
                         setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-
+                                QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
                                 dialog.cancel();
                                 dialog.dismiss();
                             }
@@ -324,32 +332,33 @@ public class CommonFunction {
         alert.show();
     }
 
-    public void postLesson(View view, Activity activity, int quesNo) {
+    public void postLesson(View view, Activity activity, int quesNo, String strTimeSpent) {
 
 
-                ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-                Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
-                call.enqueue(new Callback<PostLessonResponse>() {
-                    @Override
-                    public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
+        call.enqueue(new Callback<PostLessonResponse>() {
+            @Override
+            public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
-                        if (response.body() != null) {
-                            Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                if (response.body() != null) {
+                    Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
-                            if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
-                                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                                lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo);
-                            }
-                        }
+                    if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
+                        QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
+
+                        QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
+                        LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                        lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
                     }
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<PostLessonResponse> call, Throwable t) {
-                        Log.e("response postLesson", t.getMessage());
-                    }
-                });
-
-
+            @Override
+            public void onFailure(Call<PostLessonResponse> call, Throwable t) {
+                Log.e("response postLesson", t.getMessage());
+            }
+        });
 
 
     }

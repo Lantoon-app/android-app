@@ -30,14 +30,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:gravity="center">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tvTotalTimeSpendPopupLessonCompleted"
                 android:layout_width="match_parent"
@@ -48,9 +45,15 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnExitPopupLessonCompleted"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
@@ -59,24 +62,9 @@
                 android:text="Exit"
                 android:textSize="15dp"
                 app:backgroundTint="@null" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvResponseTimeSpendPopupLessonCompleted"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinuePopupLessonCompleted"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"

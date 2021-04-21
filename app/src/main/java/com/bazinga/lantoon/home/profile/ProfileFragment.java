@@ -3,6 +3,7 @@ package com.bazinga.lantoon.home.profile;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -24,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
@@ -67,6 +70,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     ImageView ivProfilePhoto;
     Spinner spinnerDuration;
     final Calendar myCalendar = Calendar.getInstance();
+    String currentPhotoPath;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -153,10 +157,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Take Photo")) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(getContext().getCacheDir(), "temp.jpg");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);
+
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    try {
+                        startActivityForResult(takePictureIntent, 1);
+                    } catch (ActivityNotFoundException e) {
+                        // display error state to the user
+                    }
                 } else if (options[item].equals("Choose from Gallery")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);
@@ -174,20 +181,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
-                File f = new File(getContext().getCacheDir().getPath());
-                for (File temp : f.listFiles()) {
-                    if (temp.getName().equals("temp.jpg")) {
-                        f = temp;
-                        break;
-                    }
-                }
+
                 try {
-                    Bitmap bitmap;
-                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                    bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
+                    Bundle extras = data.getExtras();
+                    Bitmap bitmap = (Bitmap) extras.get("data");
                     bitmap = getResizedBitmap(bitmap, 400);
                     RoundedBitmapDrawable dr =
                             RoundedBitmapDrawableFactory.create(getContext().getResources(), bitmap);
+                    dr.setGravity(Gravity.CENTER);
+                    dr.setCircular(true);
                     ivProfilePhoto.setBackground(null);
                     ivProfilePhoto.setImageDrawable(dr);
                     String strBase64 = BitMapToString(bitmap);
@@ -195,7 +197,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     String path = getContext().getCacheDir().getPath()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
-                    f.delete();
+                    //f.delete();
                     OutputStream outFile = null;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
                     try {
@@ -213,6 +215,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             } else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
@@ -221,7 +224,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
+                Bitmap bitmap = (BitmapFactory.decodeFile(picturePath));
+                bitmap = getResizedBitmap(bitmap, 400);
+
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                thumbnail = Bitmap.createScaledBitmap(thumbnail,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
+
                 //thumbnail = getResizedBitmap(thumbnail, 500);
                 Log.w("path of image from gallery......******************.........", picturePath + "");
                 RoundedBitmapDrawable dr =
@@ -230,7 +238,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 dr.setCircular(true);
                 ivProfilePhoto.setBackground(null);
                 ivProfilePhoto.setImageDrawable(dr);
-                SendDetail(BitMapToString(thumbnail));
+
+                SendDetail(BitMapToString(bitmap));
             }
         }
     }

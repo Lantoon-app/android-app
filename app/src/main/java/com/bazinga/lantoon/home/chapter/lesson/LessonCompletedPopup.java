@@ -26,7 +26,7 @@ public class LessonCompletedPopup {
 
     }
 
-    public void showPopupWindow(final View view, Activity activity, PostLessonResponse postLessonResponse, int quesNo) {
+    public void showPopupWindow(final View view, Activity activity, PostLessonResponse postLessonResponse, int quesNo, String strTimeSpent) {
 
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
@@ -56,9 +56,10 @@ public class LessonCompletedPopup {
         //Initialize the elements of our window, install the handler
 
         TextView tvTotalTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvTotalTimeSpendPopupLessonCompleted);
-        TextView tvResponseTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvResponseTimeSpendPopupLessonCompleted);
-        tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + totalMins + "." + totalSecs + ")");
-        tvResponseTimeSpendPopupLessonCompleted.setText("Response time (" + responseMins + "." + responseSecs + ")");
+        //TextView tvResponseTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvResponseTimeSpendPopupLessonCompleted);
+
+        tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + strTimeSpent+")");
+        //tvResponseTimeSpendPopupLessonCompleted.setText("Response time (" + responseMins + "." + responseSecs + ")");
 
         Button btnExitPopupLessonCompleted = popupView.findViewById(R.id.btnExitPopupLessonCompleted);
         btnExitPopupLessonCompleted.setOnClickListener(new View.OnClickListener() {

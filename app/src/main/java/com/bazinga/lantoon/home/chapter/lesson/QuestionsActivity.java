@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -35,6 +37,7 @@ public class QuestionsActivity extends AppCompatActivity {
     public static QuestionsViewModel questionViewModel;
     public static SessionManager sessionManager;
     public static ViewPager2 mPager;
+    public static TextView tvTimer;
     public static ProgressDialog progress;
     public static long startTime = 0;
     public static int totalQues;
@@ -43,6 +46,21 @@ public class QuestionsActivity extends AppCompatActivity {
     public static int Pmark = 0, Nmark = 0, OutOfTotal = 0;
     public static Map<String, String> countMap = new HashMap<>();
     public static String strUserId, strTotalQues, strSpeakCode, strCompletedQues;
+    public static Handler timerHandler = new Handler();
+    public static Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            tvTimer.setText(String.format("%d:%02d", minutes, seconds));
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
 
 
     //public static String strUserId,strLanguageId,strChapterNo,strLessonNo,strStartTime,strEndTime;
@@ -63,7 +81,9 @@ public class QuestionsActivity extends AppCompatActivity {
         cf.fullScreen(getWindow());
         setContentView(R.layout.activity_questions);
         mPager = findViewById(R.id.view_pager);
+        tvTimer = findViewById(R.id.tvTimer);
         progress = new ProgressDialog(this);
+
     }
 
     private void init(int langid, int chaperno, int lessonno, boolean isNewChapter, boolean isRandomQuestion) {
@@ -91,7 +111,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     break;
                 case TaskState.RUNNING:
                     progress.show();
-                    startTime = System.currentTimeMillis();
+
                     break;
                 case TaskState.STOP:
 
@@ -117,7 +137,7 @@ public class QuestionsActivity extends AppCompatActivity {
                         score.setLessonno(String.valueOf(lessonno));
                         score.setTotalques(String.valueOf(totalQues));
                         score.setGcode("LANENG");
-                        score.setSpentTime("10:30:22");
+                        //score.setSpentTime("10:30:22");
                         /*  //Add a new Fragment to the list with bundle
                         Bundle b = new Bundle();
                         //b.putInt("position", i);
@@ -126,6 +146,9 @@ public class QuestionsActivity extends AppCompatActivity {
                         mPager.add(L1Fragment.class,b);
                         mPager.notifyDataSetChanged();*/
                         progress.dismiss();
+                        startTime = System.currentTimeMillis();
+                        timerHandler.postDelayed(timerRunnable, 0);
+
                     });
 
                     break;

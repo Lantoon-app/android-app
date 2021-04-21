@@ -32,6 +32,8 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -39,7 +41,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -56,7 +61,9 @@ public class QuestionsViewModel extends ViewModel {
     private QuestionsAsyncTask taskAsync;
     DownloadZipFileTask downloadZipFileTask;
     int langid, chaperno, lessonno, knownLang;
-    public QuestionsViewModel(int langid, int chaperno, int lessonno,int knownLang) {
+
+    public QuestionsViewModel(int langid, int chaperno, int lessonno, int knownLang) {
+        Log.d("numbers",String.valueOf(langid+chaperno+lessonno+knownLang));
         this.langid = langid;
         this.chaperno = chaperno;
         this.lessonno = lessonno;
@@ -97,17 +104,19 @@ public class QuestionsViewModel extends ViewModel {
         protected Boolean doInBackground(Void... params) {
             Log.i(TAG, "doInBackground: ");
 
-            downloadZipFile(langid, chaperno, lessonno, 1);
+            /*downloadZipFile(langid, chaperno, lessonno, 1);
             downloadZipFile(langid, chaperno, lessonno, 2);
             downloadZipFile(langid, chaperno, lessonno, 3);
-            downloadZipFile(langid, chaperno, lessonno, 4);
-            questionsFragmentData(langid, chaperno, lessonno,knownLang,QuestionsActivity.strUserId);
+            downloadZipFile(langid, chaperno, lessonno, 4);*/
+            downloadZipFile(langid, chaperno, lessonno);
+
             return true;
         }
 
         @Override
         protected void onProgressUpdate(Float... values) {
             Log.d(TAG, "onProgressUpdate() called with: values = [" + Arrays.toString(values) + "]");
+
             mTask.setValue(values[0]);
             progressTask.postValue(mTask);
 
@@ -117,8 +126,8 @@ public class QuestionsViewModel extends ViewModel {
         protected void onPostExecute(Boolean aBoolean) {
             Log.i(TAG, "onPostExecute: ");
             //Finalized
-            mTask.setStatus(TaskState.COMPLETED);
-            progressTask.setValue(mTask);
+
+
         }
 
     }
@@ -132,27 +141,28 @@ public class QuestionsViewModel extends ViewModel {
         taskAsync.cancel(true);
     }
 
-    private void downloadZipFile(int langid, int chaperno, int lessonno, int type) {
+    private void downloadZipFile(int langid, int chaperno, int lessonno) {
         Log.d("isRandomQuestion", String.valueOf(QuestionsActivity.isRandomQuestion));
         String folderStruc;
-        if(!QuestionsActivity.isRandomQuestion)
-         folderStruc = String.valueOf(langid+"/"+chaperno+"/"+lessonno+"/");
-        else folderStruc = String.valueOf(langid+"/"+chaperno+"/");
+        if (!QuestionsActivity.isRandomQuestion)
+            folderStruc = String.valueOf(langid + "/" + chaperno + "/" + lessonno + "/");
+        else folderStruc = String.valueOf(langid + "/" + chaperno + "/");
 
-        Log.d("isRandomQuestion", String.valueOf(QuestionsActivity.isRandomQuestion) + " "+folderStruc);
+        Log.d("isRandomQuestion", String.valueOf(QuestionsActivity.isRandomQuestion) + " " + folderStruc);
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> call = apiInterface.downloadFileByUrl(langid, chaperno, lessonno, type);
+        //Call<ResponseBody> call = apiInterface.downloadFileByUrl(langid, chaperno, lessonno, type);
+        Call<ResponseBody> call = apiInterface.downloadFileByUrlNew(langid, chaperno, lessonno);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "Got the body for the file " +response.message().toString());
+                    Log.d(TAG, "Got the body for the file " + response.message().toString());
 
                     //Toast.makeText(get, "Downloading...", Toast.LENGTH_SHORT).show();
 
-                    downloadZipFileTask = new DownloadZipFileTask(type,folderStruc);
+                    downloadZipFileTask = new DownloadZipFileTask(folderStruc);
                     downloadZipFileTask.execute(response.body());
 
                 } else {
@@ -169,11 +179,11 @@ public class QuestionsViewModel extends ViewModel {
     }
 
     private class DownloadZipFileTask extends AsyncTask<ResponseBody, Pair<Integer, Long>, String> {
-        int type = 0;
+        //int type = 0;
         String folerStruc = "";
 
-        public DownloadZipFileTask(int type, String folerStruc) {
-            this.type = type;
+        public DownloadZipFileTask(String folerStruc) {
+            //this.type = type;
             this.folerStruc = folerStruc;
         }
 
@@ -188,7 +198,7 @@ public class QuestionsViewModel extends ViewModel {
         protected String doInBackground(ResponseBody... urls) {
             //Copy you logic to calculate progress and call
             try {
-                saveToDisk(urls[0], String.valueOf((type)) + ".zip", type,folerStruc);
+                saveToDisk(urls[0], String.valueOf((1)) + ".zip", folerStruc);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -231,16 +241,16 @@ public class QuestionsViewModel extends ViewModel {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void saveToDisk(ResponseBody body, String filename, int type, String folerStruc) throws Exception {
+    private void saveToDisk(ResponseBody body, String filename, String folerStruc) throws Exception {
         try {
             String folderName = "";
-            File destinationFile = new File(QuestionsActivity.strFilePath, filename);
+            File destinationFile = new File(QuestionsActivity.strFilePath + File.separator, filename);
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
 
             try {
-
+                Log.d("destinationFile", destinationFile.getPath());
                 inputStream = body.byteStream();
                 outputStream = new FileOutputStream(destinationFile);
                 byte data[] = new byte[4096];
@@ -270,17 +280,17 @@ public class QuestionsViewModel extends ViewModel {
                 return;
             } finally {
 
-                UnzipUtility unzipUtility = new UnzipUtility();
-                if (type == 1)
+                //UnzipUtility unzipUtility = new UnzipUtility();
+                /*if (type == 1)
                     folderName = Utils.IMAGE_FILE_DESTINATION_FOLDER;
                 if (type == 2)
                     folderName = Utils.AUDIO_FILE_DESTINATION_FOLDER;
                 if (type == 3)
                     folderName = Utils.IMAGEQUES_FILE_DESTINATION_FOLDER;
                 if (type == 4)
-                    folderName = Utils.AUDIOANS_FILE_DESTINATION_FOLDER;
-
-                unzipUtility.unzip(destinationFile.getPath(), QuestionsActivity.strFilePath + File.separator + folderName+folerStruc);
+                    folderName = Utils.AUDIOANS_FILE_DESTINATION_FOLDER;*/
+                Log.d("unziploc", QuestionsActivity.strFilePath + Utils.FILE_DESTINATION_FOLDER + folerStruc);
+                unzip(destinationFile.getPath(), QuestionsActivity.strFilePath + Utils.FILE_DESTINATION_FOLDER + folerStruc);
 
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();
@@ -292,21 +302,21 @@ public class QuestionsViewModel extends ViewModel {
         }
     }
 
-    private void questionsFragmentData(int langid, int chaperno, int lessonno,int reflanguageid, String uid) {
-        System.out.println("langid"+langid+"chaperno"+chaperno+"lessonno"+lessonno+"uid"+uid);
+    private void questionsFragmentData(int langid, int chaperno, int lessonno, int reflanguageid, String uid) {
+        System.out.println("langid" + langid + "chaperno" + chaperno + "lessonno" + lessonno + "uid" + uid);
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<JsonObject> call = apiInterface.getQuestions(langid, chaperno, lessonno,reflanguageid,uid);
+        Call<JsonObject> call = apiInterface.getQuestions(langid, chaperno, lessonno, reflanguageid, uid);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
-                    Status status = gson.fromJson(response.body().get("status").getAsJsonObject(),Status.class);
+                    Status status = gson.fromJson(response.body().get("status").getAsJsonObject(), Status.class);
 
                     //int statusCode = response.body().get("status").getAsJsonObject().get("code").getAsInt();
-                    if(status.getCode() == 1022) {
+                    if (status.getCode() == 1022) {
                         //Log.d("response ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                         JsonObject jsonObject = response.body().get("data").getAsJsonObject();
                         Log.d("response ", new GsonBuilder().setPrettyPrinting().create().toJson(jsonObject));
@@ -314,9 +324,11 @@ public class QuestionsViewModel extends ViewModel {
 
                         List<Fragment> fragments = buildFragments(jsonObject);
                         questionsLiveData.setValue(fragments);
+                        mTask.setStatus(TaskState.COMPLETED);
+                        progressTask.setValue(mTask);
                     }
 
-               } else {
+                } else {
                     Log.e("response message= ", response.message() + response.code());
                 }
 
@@ -390,5 +402,80 @@ public class QuestionsViewModel extends ViewModel {
 
         return fragments;
     }
+    public void unzip(String zipFilePath, String unzipAtLocation) throws Exception {
 
+        Log.d("zipFilePath",zipFilePath);
+        Log.d("unzipAtLocation",unzipAtLocation);
+        File archive = new File(zipFilePath);
+
+        try {
+
+            ZipFile zipfile = new ZipFile(archive);
+
+            for (Enumeration e = zipfile.entries(); e.hasMoreElements(); ) {
+
+                ZipEntry entry = (ZipEntry) e.nextElement();
+
+                unzipEntry(zipfile, entry, unzipAtLocation);
+            }
+            questionsFragmentData(langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
+            Log.d("unzip", "done");
+        } catch (Exception e) {
+
+            Log.e("Unzip zip", "Unzip exception", e);
+        }
+    }
+
+    private void unzipEntry(ZipFile zipfile, ZipEntry entry, String outputDir) throws IOException {
+
+        if (entry.isDirectory()) {
+            createDir(new File(outputDir, entry.getName()));
+            return;
+        }
+
+        File outputFile = new File(outputDir, entry.getName());
+        if (!outputFile.getParentFile().exists()) {
+            createDir(outputFile.getParentFile());
+        }
+
+        Log.v("ZIP E", "Extracting: " + entry);
+
+        InputStream zin = zipfile.getInputStream(entry);
+        BufferedInputStream inputStream = new BufferedInputStream(zin);
+        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile));
+
+        try {
+
+            //IOUtils.copy(inputStream, outputStream);
+
+            try {
+
+                for (int c = inputStream.read(); c != -1; c = inputStream.read()) {
+                    outputStream.write(c);
+                }
+
+            } finally {
+
+                outputStream.close();
+            }
+
+        } finally {
+            outputStream.close();
+            inputStream.close();
+        }
+    }
+
+    private void createDir(File dir) {
+
+        if (dir.exists()) {
+            return;
+        }
+
+        Log.v("ZIP E", "Creating dir " + dir.getName());
+
+        if (!dir.mkdirs()) {
+
+            throw new RuntimeException("Can not create dir " + dir);
+        }
+    }
 }

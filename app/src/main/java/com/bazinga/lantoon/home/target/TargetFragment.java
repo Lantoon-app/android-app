@@ -1,18 +1,21 @@
 package com.bazinga.lantoon.home.target;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.calendar.CalendarView;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.target.model.Target;
 
@@ -22,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -29,18 +33,38 @@ public class TargetFragment extends Fragment {
 
     private TargetViewModel targetViewModel;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         targetViewModel = new ViewModelProvider(this).get(TargetViewModel.class);
         View root = inflater.inflate(R.layout.fragment_target, container, false);
         CalendarView calendarView = root.findViewById(R.id.calendarView);
+
+        HashSet<Date> events = new HashSet<>();
+
         List<Calendar> calendars = new ArrayList<>();
 
 
         List<Date> dates = getDates("2021-04-11", "2021-04-18");
         for (Date date : dates)
-            calendars.add(getCalenderDate(date));
+            events.add(date);
+        //calendars.add(getCalenderDate(date));
         //System.out.println(getCalenderDate(date).getTime());
+        //CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+
+        //calendarView.updateCalendar(events);
+
+        // assign event handler
+        calendarView.updateCalendar(events);
+        calendarView.setEventHandler(new CalendarView.EventHandler() {
+            @Override
+            public void onDayLongPress(Date date) {
+                // show returned day
+                DateFormat df = SimpleDateFormat.getDateInstance();
+                Toast.makeText(getActivity(), df.format(date), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         ListView lvTargets = root.findViewById(R.id.lvTargets);
 
@@ -48,6 +72,7 @@ public class TargetFragment extends Fragment {
             @Override
             public void onChanged(List<Target> targets) {
                 if (targets != null)
+                    //calendarView.updateCalendarTarget(targets);
                     lvTargets.setAdapter(new TargetListAdapter(getContext(), targets));
             }
         });

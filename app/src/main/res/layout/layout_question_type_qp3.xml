@@ -220,6 +220,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:gravity="center"
+            android:layout_marginTop="20dp"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_question_mic"
             app:iconGravity="textStart"

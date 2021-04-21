@@ -39,6 +39,7 @@ public class Utils {
     public static String AUDIO_FILE_DESTINATION_FOLDER=File.separator +"content"+ File.separator +"audio"+File.separator;
     public static String IMAGEQUES_FILE_DESTINATION_FOLDER=File.separator +"content"+ File.separator +"imageques"+File.separator;
     public static String AUDIOANS_FILE_DESTINATION_FOLDER=File.separator +"content"+ File.separator +"audioans"+File.separator;
+    public static String FILE_DESTINATION_FOLDER=File.separator +"content"+File.separator;
 
    /* public static String IMAGE_FILE_DESTINATION_FOLDER_PATH= ZIP_FILE_DESTINATION_PATH+IMAGE_FILE_DESTINATION_FOLDER+"/";
     public static String AUDIO_FILE_DESTINATION_FOLDER_PATH= ZIP_FILE_DESTINATION_PATH+AUDIO_FILE_DESTINATION_FOLDER+"/";

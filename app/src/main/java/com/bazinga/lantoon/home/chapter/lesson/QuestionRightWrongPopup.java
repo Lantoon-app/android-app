@@ -79,11 +79,12 @@ public class QuestionRightWrongPopup {
                                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                                cf.postLesson(view, activity, quesNo);
+                                QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
+                                cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
                                 System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                             } else {
 
-                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo);
+                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
                             }
 
                         } else {
@@ -113,11 +114,12 @@ public class QuestionRightWrongPopup {
                                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                                cf.postLesson(view, activity, quesNo);
+                                QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
+                                cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
                                 System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                             } else {
 
-                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo);
+                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
                             }
                         } else {
                             QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
@@ -154,10 +156,11 @@ public class QuestionRightWrongPopup {
                                     Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                                    cf.postLesson(view, activity, quesNo);
+                                    QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
+                                    cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
                                     System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                 } else {
-                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo);
+                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
                                 }
                             } else {
 
@@ -193,10 +196,11 @@ public class QuestionRightWrongPopup {
                                     Log.d("attemptCount", QuestionsActivity.countMap.toString());
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
-                                    cf.postLesson(view, activity, quesNo);
+                                    QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
+                                    cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
                                     System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                 } else {
-                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo);
+                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
                                 }
                             } else {
 
