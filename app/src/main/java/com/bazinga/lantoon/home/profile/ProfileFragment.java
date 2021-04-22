@@ -92,6 +92,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 if (!profileData.getPicture().equals("")) {
                     byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
                     Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    decodedByte = Bitmap.createScaledBitmap(decodedByte,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
                     RoundedBitmapDrawable dr =
                             RoundedBitmapDrawableFactory.create(getContext().getResources(), decodedByte);
                     dr.setGravity(Gravity.CENTER);
@@ -186,14 +187,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     Bundle extras = data.getExtras();
                     Bitmap bitmap = (Bitmap) extras.get("data");
                     bitmap = getResizedBitmap(bitmap, 400);
+                    Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
                     RoundedBitmapDrawable dr =
-                            RoundedBitmapDrawableFactory.create(getContext().getResources(), bitmap);
+                            RoundedBitmapDrawableFactory.create(getContext().getResources(), thumbnail);
                     dr.setGravity(Gravity.CENTER);
                     dr.setCircular(true);
                     ivProfilePhoto.setBackground(null);
                     ivProfilePhoto.setImageDrawable(dr);
-                    String strBase64 = BitMapToString(bitmap);
-                    SendDetail(strBase64);
+                    //String strBase64 = BitMapToString(bitmap);
+                    SendDetail(BitMapToString(bitmap));
                     String path = getContext().getCacheDir().getPath()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
@@ -227,8 +229,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 Bitmap bitmap = (BitmapFactory.decodeFile(picturePath));
                 bitmap = getResizedBitmap(bitmap, 400);
 
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                thumbnail = Bitmap.createScaledBitmap(thumbnail,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
+                //Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
 
                 //thumbnail = getResizedBitmap(thumbnail, 500);
                 Log.w("path of image from gallery......******************.........", picturePath + "");
@@ -281,8 +283,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         call.enqueue(new Callback<ProfilePicture>() {
             @Override
             public void onResponse(Call<ProfilePicture> call, Response<ProfilePicture> response) {
-                if (response.body().getStatus().getCode() == 1028)
+                if (response.body().getStatus().getCode() == 1028) {
                     Log.d("profile picture data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                    HomeActivity.sessionManager.setProfilePic(response.body().getData().getProfilepic());
+                }
                 loading.dismiss();
             }
 

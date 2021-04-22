@@ -58,6 +58,11 @@ public interface ApiInterface {
     @POST("Lantoon/public/UserHandler.php/updatemylanguage")
     Call<LoggedInUserResponse> updateLanguage(@Query("uid") String uid, @Query("learnlang") String learnlang, @Query("knownlang") String knownlang);
 
+    //Update Refer Language
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/changeknownlanguage")
+    Call<LoggedInUserResponse> updateReferLanguage(@Query("uid") String uid, @Query("learnlang") String learnlang, @Query("knownlang") String knownlang);
+
     //Change Password
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/changepassword")
@@ -109,14 +114,15 @@ public interface ApiInterface {
     @Streaming
     @GET("Lantoon/public/QuestionHandler.php/zipfile/{languageid}/{chapterno}/{lessonno}/{type}")
     Call<ResponseBody> downloadFileByUrl(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno, @Path("type") int type);
-//Questions Images and Audio files
+
+    //Questions Images and Audio files
     @Streaming
     @GET("Lantoon/public/QuestionHandler.php/zipfilenew/{languageid}/{chapterno}/{lessonno}")
     Call<ResponseBody> downloadFileByUrlNew(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno);
 
     //Leaderboard
     @GET("Lantoon/public/ScoreHandler.php/leaderboard/{slideno}/{uid}/{langid}")
-    Call<LeaderResponse> getLeaders(@Path("slideno") int slideno,@Path("uid") String uid,@Path("langid") int langid);
+    Call<LeaderResponse> getLeaders(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
 
     //Targets
     @GET("Lantoon/public/TargetHandler.php/mytargets/{uid}")

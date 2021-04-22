@@ -147,8 +147,11 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         loadingProgressBar.setVisibility(View.GONE);
         String user = new GsonBuilder().create().toJson(model.getloginData());
+        String picture = model.getloginData().getPhoto();
 
         sessionManager.createLoginSession(user);
+        sessionManager.setProfilePic(picture);
+        sessionManager.setUserName(model.getloginData().getUname());
         /*String welcome = getString(R.string.welcome) + model.getloginData().getUname();
         // TODO : initiate successful logged in experience
         Toast.makeText(this, welcome, Toast.LENGTH_LONG).show();*/

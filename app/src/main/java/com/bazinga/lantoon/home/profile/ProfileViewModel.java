@@ -51,6 +51,7 @@ public class ProfileViewModel extends ViewModel {
                 if(response.body().getStatus().getCode() == 1025 )
                 Log.d("update profile data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                 mUser.setValue(response.body());
+                HomeActivity.sessionManager.setUserName(response.body().getProfileData().getUname());
             }
 
             @Override

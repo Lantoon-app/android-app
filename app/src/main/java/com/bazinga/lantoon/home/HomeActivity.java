@@ -28,6 +28,8 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -36,6 +38,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.MainActivity;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.home.profile.Profile;
+import com.bazinga.lantoon.home.profile.ProfileData;
+import com.bazinga.lantoon.home.profile.ProfileViewModel;
 import com.bazinga.lantoon.login.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -44,7 +49,6 @@ import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 
 public class HomeActivity extends AppCompatActivity {
-
 
     public static SessionManager sessionManager;
     private static final float END_SCALE = 0.85f;
@@ -65,7 +69,8 @@ public class HomeActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));*/
         sessionManager = new SessionManager(this);
-Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
+
+        Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
         initToolbar();
         initNavigation();
         //showBottomNavigation(false);
@@ -143,6 +148,27 @@ Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(se
                 return true;
             }
         });
+        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull @NotNull View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull @NotNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull @NotNull View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+                setHeader();
+            }
+        });
         //animateNavigationDrawer();
         setHeader();
     }
@@ -152,11 +178,12 @@ Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(se
         ImageView ivNavHeaderUserImage = view.findViewById(R.id.ivNavHeaderUserImage);
         TextView tvNavHeaderUsername = view.findViewById(R.id.tvNavHeaderUsername);
         TextView tvNavHeaderUserId = view.findViewById(R.id.tvNavHeaderUserId);
-        tvNavHeaderUsername.setText(sessionManager.getUserDetails().getUname());
+        tvNavHeaderUsername.setText(sessionManager.getUserName());
         tvNavHeaderUserId.setText(sessionManager.getUserDetails().getUid());
-        if (!sessionManager.getUserDetails().getPhoto().equals("")) {
-            byte[] decodedString = Base64.decode(sessionManager.getUserDetails().getPhoto(), Base64.DEFAULT);
+        if (!sessionManager.getProfilePic().equals("") || sessionManager.getProfilePic() != null) {
+            byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            //decodedByte = Bitmap.createScaledBitmap(decodedByte, ivNavHeaderUserImage.getWidth(), ivNavHeaderUserImage.getHeight(), true);
             RoundedBitmapDrawable dr =
                     RoundedBitmapDrawableFactory.create(getApplicationContext().getResources(), decodedByte);
             dr.setGravity(Gravity.CENTER);
@@ -214,10 +241,11 @@ Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(se
         }
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2) {
+        if (requestCode == 2) {
             System.out.println("result code " + String.valueOf(resultCode));
             System.out.println("req code " + String.valueOf(requestCode));
 

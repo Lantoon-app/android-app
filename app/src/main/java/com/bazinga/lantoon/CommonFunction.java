@@ -77,11 +77,12 @@ public class CommonFunction {
                 .setDuration(duration)
                 .start();
     }
-public void mikeAnimation(View view, int duration) {
-    ObjectAnimator
-            .ofFloat(view, "translationY", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0)
-            .setDuration(duration)
-            .start();
+
+    public void mikeAnimation(View view, int duration) {
+        ObjectAnimator
+                .ofFloat(view, "translationY", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0)
+                .setDuration(duration)
+                .start();
 
     }
 
@@ -280,6 +281,9 @@ public void mikeAnimation(View view, int duration) {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
+                        if (quesNo == 1) {
+                            activity.finish();
+                        }
                         QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
                         Log.d("ssssss", String.valueOf(QuestionsActivity.isNewChapter));
                         if (QuestionsActivity.isNewChapter) {

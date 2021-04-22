@@ -39,7 +39,7 @@ public class ChangePasswordFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_change_password, container, false);
 
-        final TextView textView = root.findViewById(R.id.text_changepassword);
+
         etChangePasswordOldPassword = root.findViewById(R.id.etChangePasswordOldPassword);
         etChangePasswordNewPassword = root.findViewById(R.id.etChangePasswordNewPassword);
         etChangePasswordCnfPassword = root.findViewById(R.id.etChangePasswordCnfPassword);

@@ -60,7 +60,7 @@
         tools:layout="@layout/fragment_leader" />
     <fragment
         android:id="@+id/bottom_setting"
-        android:name="com.bazinga.lantoon.home.setting.SettingFragment"
+        android:name="com.bazinga.lantoon.home.changereferlanguage.ChangeReferenceLanguageFragment"
         android:label="@string/title_select_language"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_change_refer_language" />
 </navigation>

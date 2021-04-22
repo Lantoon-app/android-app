@@ -6,30 +6,34 @@
     android:background="@drawable/bg"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/change_language"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/llView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ListView
-        android:id="@+id/llView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="490dp"
-        android:layout_margin="30dp"
-        android:clickable="true"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_change_my_language" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/change_language"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <ListView
+            android:id="@+id/llView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:layout_marginBottom="104dp"
+            android:clickable="true"
+            tools:listitem="@layout/item_change_my_language" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

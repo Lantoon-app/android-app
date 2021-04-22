@@ -1,14 +1,14 @@
-package com.bazinga.lantoon.home.setting;
+package com.bazinga.lantoon.home.changereferlanguage;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SettingViewModel extends ViewModel {
+public class ChangeReferenceLanguageViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SettingViewModel() {
+    public ChangeReferenceLanguageViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is Setting fragment");
     }

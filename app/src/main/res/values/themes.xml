@@ -37,9 +37,10 @@
         <item name="android:isIndicator">true</item>
         <item name="android:progressDrawable">@drawable/custom_pb</item>
     </style>
+
     <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
-        <item name="android:minHeight">15dip</item>
+        <item name="android:minHeight">25dip</item>
         <item name="android:maxHeight">47dip</item>
         <item name="android:numStars">5</item>
         <item name="android:max">5</item>

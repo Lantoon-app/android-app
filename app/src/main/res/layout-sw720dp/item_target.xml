@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:gravity="center_horizontal"
+    android:layout_margin="10dp">
+
+    <com.bazinga.lantoon.SlantView
+        android:id="@+id/slantView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rotation="182"
+        android:rotationX="-66"
+        android:rotationY="58"
+        android:scaleX="-10"
+        android:scaleY="100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/slantView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/slantView"
+        app:layout_constraintTop_toTopOf="@+id/slantView">
+
+        <TextView
+            android:id="@+id/tvLesson"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:textSize="28sp"
+            android:layout_margin="20dp"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:text="LESSON 01" />
+
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/calendar_icon" />
+
+        <TextView
+            android:id="@+id/tvDates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="28sp"
+            android:textAllCaps="true"
+            android:text="MAR 29th to MAR 31st" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
