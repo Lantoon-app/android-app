@@ -75,8 +75,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 Manifest.permission.RECORD_AUDIO
         }, MY_PERMISSION_REQUEST_CODE);
         sessionManager = new SessionManager(this);
-        strUserId = sessionManager.getUserDetails().getUid();
-        strSpeakCode = sessionManager.getUserDetails().getSpeakCode();
+        strUserId = sessionManager.getUid();
+        strSpeakCode = sessionManager.getSpeakCode();
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
         setContentView(R.layout.activity_questions);
@@ -100,7 +100,7 @@ public class QuestionsActivity extends AppCompatActivity {
         strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
 
         questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getUserDetails().getKnownlang())).get(QuestionsViewModel.class);
+                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getKnownLang())).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
@@ -126,12 +126,13 @@ public class QuestionsActivity extends AppCompatActivity {
                         mPager.setAdapter(mPageAdapter);
                         //mPager.setUserInputEnabled(false);
                         mPager.setCurrentItem(getIntent().getIntExtra(Utils.TAG_START_QUESTION_NO,1)-1);
+                        //mPager.setCurrentItem(19);
                         mPager.clearFocus();
                         progress.dismiss();
                         totalQues = mPageAdapter.getItemCount();
                         startTime = System.currentTimeMillis();
                         score = new Score();
-                        score.setUid(sessionManager.getUserDetails().getUid());
+                        score.setUid(sessionManager.getUid());
                         score.setLangid(String.valueOf(langid));
                         score.setChaptno(String.valueOf(chaperno));
                         score.setLessonno(String.valueOf(lessonno));

@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.leader;
+package com.bazinga.lantoon.home.leaderboard;
 
 import android.util.Log;
 
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.bazinga.lantoon.home.leader.model.LeaderResponse;
+import com.bazinga.lantoon.home.leaderboard.model.LeaderResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.GsonBuilder;

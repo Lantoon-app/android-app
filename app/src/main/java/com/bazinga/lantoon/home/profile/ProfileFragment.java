@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     Spinner spinnerDuration;
     final Calendar myCalendar = Calendar.getInstance();
     String currentPhotoPath;
+    boolean fragmentDestroyed = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -86,31 +87,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         spinnerDuration.setOnItemSelectedListener(this);
 
         profileViewModel.getUser().observe(getActivity(), profile -> {
-            if (profile.getStatus().getCode() == 1023) {
-                profileData = profile.getProfileData();
-                Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
-                if (!profileData.getPicture().equals("")) {
-                    byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                    decodedByte = Bitmap.createScaledBitmap(decodedByte,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
-                    RoundedBitmapDrawable dr =
-                            RoundedBitmapDrawableFactory.create(getContext().getResources(), decodedByte);
-                    dr.setGravity(Gravity.CENTER);
-                    dr.setCircular(true);
-                    ivProfilePhoto.setBackground(null);
-                    ivProfilePhoto.setImageDrawable(dr);
+            if (!fragmentDestroyed) {
+                if (profile.getStatus().getCode() == 1023) {
+                    profileData = profile.getProfileData();
+                    Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
+                    if (!profileData.getPicture().equals("")) {
+                        byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                        decodedByte = Bitmap.createScaledBitmap(decodedByte, ivProfilePhoto.getWidth(), ivProfilePhoto.getHeight(), true);
+                        RoundedBitmapDrawable dr =
+                                RoundedBitmapDrawableFactory.create(getContext().getResources(), decodedByte);
+                        dr.setGravity(Gravity.CENTER);
+                        dr.setCircular(true);
+                        ivProfilePhoto.setBackground(null);
+                        ivProfilePhoto.setImageDrawable(dr);
 
-                }
-                durationDataList = profile.getDurationData();
-                System.out.println(profile.getDurationData().toString());
-                DurationSpinnerAdapter durationSpinnerAdapter = new DurationSpinnerAdapter(getContext(), durationDataList);
-                spinnerDuration.setAdapter(durationSpinnerAdapter);
-                spinnerDuration.setSelection(profileData.getMindurationperday()-1);
-                etFullName.setText(profileData.getUname());
-                etDOB.setText(profileData.getDob());
-                if (!profileData.getCountrycode().equals("")) {
-                    countryCodePicker.setCountryForPhoneCode(Integer.valueOf(profileData.getCountrycode()));
-                    etPhoneNumber.setText(profileData.getPhone());
+                    }
+                    durationDataList = profile.getDurationData();
+                    System.out.println(profile.getDurationData().toString());
+                    DurationSpinnerAdapter durationSpinnerAdapter = new DurationSpinnerAdapter(getContext(), durationDataList);
+                    spinnerDuration.setAdapter(durationSpinnerAdapter);
+                    spinnerDuration.setSelection(profileData.getMindurationperday() - 1);
+                    etFullName.setText(profileData.getUname());
+                    etDOB.setText(profileData.getDob());
+                    if (!profileData.getCountrycode().equals("")) {
+                        countryCodePicker.setCountryForPhoneCode(Integer.valueOf(profileData.getCountrycode()));
+                        etPhoneNumber.setText(profileData.getPhone());
+                    }
                 }
             }
         });
@@ -187,7 +190,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     Bundle extras = data.getExtras();
                     Bitmap bitmap = (Bitmap) extras.get("data");
                     bitmap = getResizedBitmap(bitmap, 400);
-                    Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
+                    Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap, ivProfilePhoto.getWidth(), ivProfilePhoto.getHeight(), true);
                     RoundedBitmapDrawable dr =
                             RoundedBitmapDrawableFactory.create(getContext().getResources(), thumbnail);
                     dr.setGravity(Gravity.CENTER);
@@ -230,7 +233,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 bitmap = getResizedBitmap(bitmap, 400);
 
                 //Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap,ivProfilePhoto.getWidth(),ivProfilePhoto.getHeight(),true);
+                Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap, ivProfilePhoto.getWidth(), ivProfilePhoto.getHeight(), true);
 
                 //thumbnail = getResizedBitmap(thumbnail, 500);
                 Log.w("path of image from gallery......******************.........", picturePath + "");
@@ -273,7 +276,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         System.out.println(strPicture);
         profilePictureData = new ProfilePictureData();
         profilePictureData.setProfilepic(strPicture);
-        profilePictureData.setUserid(HomeActivity.sessionManager.getUserDetails().getUid());
+        profilePictureData.setUserid(HomeActivity.sessionManager.getUid());
         final ProgressDialog loading = new ProgressDialog(getContext());
         loading.setMessage("Please Wait...");
         loading.show();
@@ -311,5 +314,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 parent.setSelection(i);
         }*/
         //parent.setSelection(2);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentDestroyed = true;
     }
 }

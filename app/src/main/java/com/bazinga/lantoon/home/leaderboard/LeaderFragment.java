@@ -1,9 +1,8 @@
-package com.bazinga.lantoon.home.leader;
+package com.bazinga.lantoon.home.leaderboard;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,9 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.chapter.utils.PaginationScrollListener;
-import com.bazinga.lantoon.home.leader.model.Leader;
-import com.bazinga.lantoon.home.leader.model.LeaderResponse;
-import com.bazinga.lantoon.home.leader.model.MyLeaderData;
+import com.bazinga.lantoon.home.leaderboard.model.Leader;
+import com.bazinga.lantoon.home.leaderboard.model.LeaderResponse;
+import com.bazinga.lantoon.home.leaderboard.model.MyLeaderData;
 import com.bazinga.lantoon.login.SessionManager;
 
 import java.util.ArrayList;
@@ -45,6 +44,7 @@ public class LeaderFragment extends Fragment {
     private int currentPage = PAGE_START;
     boolean isLoading = false;
     private boolean isLastPage = false;
+    boolean fragmentDestroyed = false;
 
     RelativeLayout rlFull;
     //footer
@@ -55,7 +55,7 @@ public class LeaderFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         sessionManager = new SessionManager(getContext());
         leaderViewModel = new ViewModelProvider(getActivity(),
-                new LeaderViewModelProvider(sessionManager.getUserDetails().getUid(), sessionManager.getUserDetails().getLearnlang())).get(LeaderViewModel.class);
+                new LeaderViewModelProvider(sessionManager.getUid(), sessionManager.getLearLang())).get(LeaderViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_leader, container, false);
         progressBar = root.findViewById(R.id.pbLeader);
@@ -90,8 +90,9 @@ public class LeaderFragment extends Fragment {
 
             @Override
             public void onChanged(LeaderResponse leaderResponse) {
-                if (getChildFragmentManager() != null) {
-                    if (leaderResponse != null) {
+
+                if (leaderResponse != null) {
+                    if (!fragmentDestroyed) {
                         isLoading = false;
                         leaderAdapter.addAll(leaderResponse.getData());
                         if (leaderResponse.getMyLeaderData() != null)
@@ -135,7 +136,7 @@ public class LeaderFragment extends Fragment {
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage++;
-                leaderViewModel.getData(currentPage, sessionManager.getUserDetails().getUid(), sessionManager.getUserDetails().getLearnlang());
+                leaderViewModel.getData(currentPage, sessionManager.getUid(), sessionManager.getLearLang());
                 preparedListItem();
 
             }
@@ -151,6 +152,12 @@ public class LeaderFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentDestroyed = true;
     }
 
     private void loadMore() {

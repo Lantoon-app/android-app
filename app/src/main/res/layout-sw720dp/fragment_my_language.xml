@@ -6,34 +6,16 @@
     android:background="@drawable/bg"
     android:layout_height="match_parent">
 
-    <LinearLayout
+
+    <ListView
+        android:id="@+id/llView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:clickable="true"
+        android:scrollIndicators="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:text="@string/change_language"
-            android:textColor="@color/black"
-            android:textSize="40sp" />
-
-        <ListView
-            android:id="@+id/llView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="30dp"
-            android:layout_marginBottom="104dp"
-            android:clickable="true"
-            tools:listitem="@layout/item_change_my_language" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_change_my_language" />
 </androidx.constraintlayout.widget.ConstraintLayout>

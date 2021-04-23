@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,12 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.ValidationFunction;
 import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.leader.LeaderViewModelProvider;
-import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.GsonBuilder;
-
-import java.util.Locale;
 
 
 public class ChangePasswordFragment extends Fragment {
@@ -33,6 +28,7 @@ public class ChangePasswordFragment extends Fragment {
     EditText etChangePasswordOldPassword, etChangePasswordNewPassword, etChangePasswordCnfPassword;
     Button btnChangePassword;
     ValidationFunction vf;
+    boolean fragmentDestroyed = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +40,7 @@ public class ChangePasswordFragment extends Fragment {
         etChangePasswordNewPassword = root.findViewById(R.id.etChangePasswordNewPassword);
         etChangePasswordCnfPassword = root.findViewById(R.id.etChangePasswordCnfPassword);
         changePasswordViewModel = new ViewModelProvider(getActivity(),
-                new ChangePasswordViewModelProvider(HomeActivity.sessionManager.getUserDetails().getUid(),
+                new ChangePasswordViewModelProvider(HomeActivity.sessionManager.getUid(),
                         etChangePasswordNewPassword.getText().toString().trim()
                         , etChangePasswordOldPassword.getText().toString().trim()
                 )).get(ChangePasswordViewModel.class);
@@ -65,14 +61,16 @@ public class ChangePasswordFragment extends Fragment {
                     etChangePasswordNewPassword.setError("Password not valid");
                 } else {
 
-                    changePasswordViewModel.update(HomeActivity.sessionManager.getUserDetails().getUid(),
+                    changePasswordViewModel.update(HomeActivity.sessionManager.getUid(),
                             etChangePasswordNewPassword.getText().toString().trim()
                             , etChangePasswordOldPassword.getText().toString().trim());
                     changePasswordViewModel.getResult().observe(getActivity(), new Observer<Status>() {
                         @Override
                         public void onChanged(@Nullable Status s) {
-                            Toast.makeText(getContext(),s.getMessage(),Toast.LENGTH_SHORT).show();
-                            Log.d("Status ",new GsonBuilder().setPrettyPrinting().create().toJson(s));
+                            if(!fragmentDestroyed) {
+                                Toast.makeText(getContext(), s.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.d("Status ", new GsonBuilder().setPrettyPrinting().create().toJson(s));
+                            }
                         }
                     });
                 }
@@ -82,5 +80,10 @@ public class ChangePasswordFragment extends Fragment {
         });
 
         return root;
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentDestroyed = true;
     }
 }

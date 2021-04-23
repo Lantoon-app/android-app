@@ -132,6 +132,7 @@ public class QuestionRightWrongPopup {
                 animatedVectorDrawable.start();
             }
         } else {
+            Log.d("checkerror ", "attemptCount"+attemptCount+isSpeech+isLast);
             mediaPlayer = MediaPlayer.create(activity, R.raw.wrong_answer);
             mediaPlayer.start();
             ImageView imageViewWrong = popupView.findViewById(R.id.imageViewWrong);

@@ -30,18 +30,20 @@ public class ChapterViewModel extends ViewModel {
     }
 
     public void getData(int currentPageNo, int LearnLangId, String userid) {
+        Log.d("Chapter",currentPageNo+"learnid"+LearnLangId+"user"+userid);
+
         chapterMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid);
         call.enqueue(new Callback<ChapterResponse>() {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
-
-                if (response.body().getStatus().getCode() == 1032) {
-                    Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
-                    chapterMutableLiveData.setValue(response.body());
-                }
-                else
+                if (response.isSuccessful()) {
+                    if (response.body().getStatus().getCode() == 1032) {
+                        Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                        chapterMutableLiveData.setValue(response.body());
+                    }
+                } else
                     chapterMutableLiveData.setValue(null);
 
             }

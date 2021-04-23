@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.leader.model;
+package com.bazinga.lantoon.home.leaderboard.model;
 
 import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.annotations.Expose;

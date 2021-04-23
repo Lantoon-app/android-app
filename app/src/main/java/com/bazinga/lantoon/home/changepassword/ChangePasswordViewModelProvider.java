@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bazinga.lantoon.home.leader.LeaderViewModel;
-
 import org.jetbrains.annotations.NotNull;
 
 public class ChangePasswordViewModelProvider implements ViewModelProvider.Factory {

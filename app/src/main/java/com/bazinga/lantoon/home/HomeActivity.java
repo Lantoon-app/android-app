@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));*/
         sessionManager = new SessionManager(this);
 
-        Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
+        //Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
         initToolbar();
         initNavigation();
         //showBottomNavigation(false);
@@ -179,7 +179,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView tvNavHeaderUsername = view.findViewById(R.id.tvNavHeaderUsername);
         TextView tvNavHeaderUserId = view.findViewById(R.id.tvNavHeaderUserId);
         tvNavHeaderUsername.setText(sessionManager.getUserName());
-        tvNavHeaderUserId.setText(sessionManager.getUserDetails().getUid());
+        tvNavHeaderUserId.setText(sessionManager.getUid());
         if (!sessionManager.getProfilePic().equals("") || sessionManager.getProfilePic() != null) {
             byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

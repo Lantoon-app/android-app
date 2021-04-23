@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.github.florent37.diagonallayout.DiagonalLayout;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -67,11 +68,17 @@ public class TargetListAdapter extends BaseAdapter implements Filterable {
             convertView = inflater.inflate(R.layout.item_target, null);
         }
 
-        SlantView slantView = convertView.findViewById(R.id.slantView);
+        DiagonalLayout diagonalLayout = convertView.findViewById(R.id.slantView);
         ImageView imgView = convertView.findViewById(R.id.imgView);
         TextView tvLesson = convertView.findViewById(R.id.tvLesson);
         TextView tvDates = convertView.findViewById(R.id.tvDates);
-        convertView.setBackground(c.getDrawable(R.drawable.top_bg));
+        if (targetList.get(position).getTargetstatus() == 1) {
+            convertView.setBackground(c.getDrawable(R.drawable.top_bg));
+        } else if (targetList.get(position).getTargetstatus() == 2) {
+            convertView.setBackground(c.getDrawable(R.drawable.com_facebook_button_background));
+        } else if (targetList.get(position).getTargetstatus() == 3) {
+            convertView.setBackground(c.getDrawable(R.drawable.edittext_bg));
+        }
         tvLesson.setText(targetList.get(position).getDisplayText());
         String dtFrom = targetList.get(position).getFromDate();
         String dtTo = targetList.get(position).getToDate();

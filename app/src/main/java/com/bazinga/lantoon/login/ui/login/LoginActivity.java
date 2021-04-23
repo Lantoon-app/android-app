@@ -151,11 +151,15 @@ public class LoginActivity extends AppCompatActivity {
 
         sessionManager.createLoginSession(user);
         sessionManager.setProfilePic(picture);
+        sessionManager.setUid(model.getloginData().getUid());
         sessionManager.setUserName(model.getloginData().getUname());
+        sessionManager.setLearnLang(model.getloginData().getLearnlang());
+        sessionManager.setKnownLang(model.getloginData().getKnownlang());
+        sessionManager.setSpeakCode(model.getloginData().getSpeakCode());
         /*String welcome = getString(R.string.welcome) + model.getloginData().getUname();
         // TODO : initiate successful logged in experience
         Toast.makeText(this, welcome, Toast.LENGTH_LONG).show();*/
-        System.out.println("Login username "+sessionManager.getUserDetails().getUname());
+        System.out.println("Login username "+sessionManager.getUserName());
         startActivity(new Intent(this, HomeActivity.class));
     }
 

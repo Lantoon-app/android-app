@@ -35,8 +35,12 @@ public class SessionManager {
 
     // User name (make variable public to access from outside)
     public static final String KEY_SP_STRING_USER = "userdata";
+    public static final String KEY_SP_STRING_USERID = "userid";
     public static final String KEY_SP_STRING_USER_NAME = "username";
     public static final String KEY_SP_STRING_USER_PICTURE = "picture";
+    public static String KEY_SP_LEARN_LANGUAGE = "learnlang";
+    public static String KEY_SP_KNOWN_LANGUAGE = "knownlang";
+    public static String KEY_SP_SPEAKE_CODE = "speakcode";
 
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
@@ -75,7 +79,29 @@ public class SessionManager {
         editor.commit();
     }
 
-    public void setUserName(String strName) {
+    public void setUid(String strUserId) {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        editor.putString(KEY_SP_STRING_USERID, strUserId);
+
+
+        // commit changes
+        editor.commit();
+    }
+
+    public String getUid() {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        String strUserId = pref.getString(KEY_SP_STRING_USERID, null);
+
+
+        return strUserId;
+    }
+public void setUserName(String strName) {
         // Storing login value as TRUE
         // editor.putBoolean(IS_LOGIN, true);
 
@@ -96,6 +122,74 @@ public class SessionManager {
 
 
         return name;
+    }
+public void setSpeakCode(String speakCode) {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        editor.putString(KEY_SP_SPEAKE_CODE, speakCode);
+
+
+        // commit changes
+        editor.commit();
+    }
+
+    public String getSpeakCode() {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        String speakCode = pref.getString(KEY_SP_SPEAKE_CODE, null);
+
+
+        return speakCode;
+    }
+
+    public void setLearnLang(Integer learnLang) {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        editor.putInt(KEY_SP_LEARN_LANGUAGE, learnLang);
+
+
+        // commit changes
+        editor.commit();
+    }
+
+    public Integer getLearLang() {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        Integer learnlang = pref.getInt(KEY_SP_LEARN_LANGUAGE, 0);
+
+
+        return learnlang;
+    }
+
+    public void setKnownLang(Integer knownLang) {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        editor.putInt(KEY_SP_KNOWN_LANGUAGE, knownLang);
+
+
+        // commit changes
+        editor.commit();
+    }
+
+    public Integer getKnownLang() {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        Integer knownLang = pref.getInt(KEY_SP_KNOWN_LANGUAGE, 0);
+
+
+        return knownLang;
     }
 
     public String getProfilePic() {
@@ -137,7 +231,7 @@ public class SessionManager {
     /**
      * Get stored session data
      */
-    public LoginData getUserDetails() {
+   /* public LoginData getUserDetails() {
 
         // user name
         LoginData loginData = new GsonBuilder().create().fromJson(pref.getString(KEY_SP_STRING_USER, null), LoginData.class);
@@ -145,7 +239,7 @@ public class SessionManager {
 
         // return user
         return loginData;
-    }
+    }*/
 
 
     /**

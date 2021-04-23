@@ -30,7 +30,7 @@ public class MyLanguageViewModel extends ViewModel {
 
         languageLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<MyLanguageResponse> call = apiInterface.getMyLanguage(HomeActivity.sessionManager.getUserDetails().getUid());
+        Call<MyLanguageResponse> call = apiInterface.getMyLanguage(HomeActivity.sessionManager.getUid());
         call.enqueue(new Callback<MyLanguageResponse>() {
             @Override
             public void onResponse(Call<MyLanguageResponse> call, Response<MyLanguageResponse> response) {

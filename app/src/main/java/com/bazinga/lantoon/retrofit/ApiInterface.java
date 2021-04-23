@@ -4,13 +4,12 @@ import com.bazinga.lantoon.home.changepassword.model.ChangePasswordResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
-import com.bazinga.lantoon.home.leader.model.LeaderResponse;
+import com.bazinga.lantoon.home.leaderboard.model.LeaderResponse;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
 import com.bazinga.lantoon.home.profile.ProfilePictureData;
-import com.bazinga.lantoon.home.target.model.Target;
 import com.bazinga.lantoon.home.target.model.TargetResponse;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.login.forget.OtpResponse;
@@ -56,12 +55,12 @@ public interface ApiInterface {
     //Update MyLearnLanguage
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/updatemylanguage")
-    Call<LoggedInUserResponse> updateLanguage(@Query("uid") String uid, @Query("learnlang") String learnlang, @Query("knownlang") String knownlang);
+    Call<LoggedInUserResponse> updateLanguage(@Query("uid") String uid, @Query("learnlang") String learnlang, @Query("knownlang") int knownlang);
 
     //Update Refer Language
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/changeknownlanguage")
-    Call<LoggedInUserResponse> updateReferLanguage(@Query("uid") String uid, @Query("learnlang") String learnlang, @Query("knownlang") String knownlang);
+    Call<LoggedInUserResponse> updateReferLanguage(@Query("uid") String uid, @Query("learnlang") int learnlang, @Query("knownlang") String knownlang);
 
     //Change Password
     @Headers("Content-Type: application/json")

@@ -1,12 +1,9 @@
-package com.bazinga.lantoon.home.leader;
+package com.bazinga.lantoon.home.leaderboard;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +19,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.leader.model.Leader;
+import com.bazinga.lantoon.home.leaderboard.model.Leader;
 
 import java.util.List;
 
@@ -129,7 +125,7 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private void populateItemRows(ItemViewHolder viewHolder, int position) {
 
         Leader leader = mItemList.get(position);
-        if(position == 0) {
+        if(leader.getRank() == 1) {
             viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_first_rank);
             viewHolder.tvUserNameLeaderItem.setTextColor(Color.WHITE);
             viewHolder.tvRankLeaderItem.setTextColor(Color.WHITE);

@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/bottom_leader"
-        android:name="com.bazinga.lantoon.home.leader.LeaderFragment"
+        android:name="com.bazinga.lantoon.home.leaderboard.LeaderFragment"
         android:label="@string/title_leader"
         tools:layout="@layout/fragment_leader" />
     <fragment

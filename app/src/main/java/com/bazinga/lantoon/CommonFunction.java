@@ -233,7 +233,7 @@ public class CommonFunction {
                     qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, pMark, nMark);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, false, quesNo, attemptCount, true, pMark, nMark);
+                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, pMark, nMark);
                 }
                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
 

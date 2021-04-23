@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.calendar.CalendarView;
 import com.bazinga.lantoon.home.HomeActivity;
+import com.bazinga.lantoon.home.target.adpter.TargetAdapter;
 import com.bazinga.lantoon.home.target.model.Target;
 
 import java.text.DateFormat;
@@ -36,6 +37,10 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
     private TargetViewModel targetViewModel;
     Button btnCompleted, btnOnGoing, btnUpcoming;
     TargetListAdapter targetListAdapter;
+    TargetAdapter targetAdapter;
+    List<Target> targetList;
+    ListView lvTargets;
+    boolean fragmentDestroyed = false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,16 +56,22 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
         btnCompleted.setTextColor(Color.BLUE);
 
 
-        ListView lvTargets = root.findViewById(R.id.lvTargets);
+        lvTargets = root.findViewById(R.id.lvTargets);
+        //lvTargets.setVisibility(View.INVISIBLE);
 
-        targetViewModel.getTargets(HomeActivity.sessionManager.getUserDetails().getUid()).observe(getActivity(), new Observer<List<Target>>() {
+        targetViewModel.getTargets(HomeActivity.sessionManager.getUid()).observe(getActivity(), new Observer<List<Target>>() {
             @Override
             public void onChanged(List<Target> targets) {
-                if (targets != null) {
-                    //calendarView.updateCalendarTarget(targets);
-                    targetListAdapter = new TargetListAdapter(getContext(), targets);
-                    targetListAdapter.getFilter().filter("1");
-                    lvTargets.setAdapter(targetListAdapter);
+                if (!fragmentDestroyed) {
+                    if (targets != null) {
+                        targetList = targets;
+
+                        /*targetAdapter = new TargetAdapter(getContext(),targetList);
+                        lvTargets.setAdapter(targetAdapter);*/
+                        targetListAdapter = new TargetListAdapter(getContext(), targets);
+                        targetListAdapter.getFilter().filter("1");
+                        lvTargets.setAdapter(targetListAdapter);
+                    }
                 }
             }
         });
@@ -92,5 +103,10 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentDestroyed = true;
+    }
 
 }

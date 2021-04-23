@@ -24,7 +24,7 @@ public class ProfileViewModel extends ViewModel {
         mUser = new MutableLiveData<>();
         //mText.setValue("This is Profile fragment");
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<Profile> call = apiInterface.getProfile(HomeActivity.sessionManager.getUserDetails().getUid());
+        Call<Profile> call = apiInterface.getProfile(HomeActivity.sessionManager.getUid());
         call.enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Call<Profile> call, Response<Profile> response) {

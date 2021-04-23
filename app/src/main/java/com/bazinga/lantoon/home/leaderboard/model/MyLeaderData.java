@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.leader.model;
+package com.bazinga.lantoon.home.leaderboard.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

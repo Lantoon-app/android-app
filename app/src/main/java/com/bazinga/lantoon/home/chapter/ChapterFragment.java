@@ -44,16 +44,17 @@ public class ChapterFragment extends Fragment {
     private int totalPage = 3;
     private boolean isLoading = false;
     int itemCount = 0;
+    boolean fragmentDestroyed = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         sessionManager = new SessionManager(getContext());
         chapterViewModel = new ViewModelProvider(this,
-                new ChapterViewModelFactory(sessionManager.getUserDetails().getLearnlang(), sessionManager.getUserDetails().getUid())).get(ChapterViewModel.class);
+                new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid())).get(ChapterViewModel.class);
         View root = inflater.inflate(R.layout.fragment_chapter, container, false);
         mRecyclerView = root.findViewById(R.id.rvChapter);
 
-        mChapterAdapter = new ChapterAdapter(new ArrayList<Chapter>(), getActivity(), sessionManager.getUserDetails().getLearnlang());
+        mChapterAdapter = new ChapterAdapter(new ArrayList<Chapter>(), getActivity(), sessionManager.getLearLang());
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -69,7 +70,7 @@ public class ChapterFragment extends Fragment {
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage++;
-                chapterViewModel.getData(currentPage, sessionManager.getUserDetails().getLearnlang(), sessionManager.getUserDetails().getUid());
+                chapterViewModel.getData(currentPage, sessionManager.getLearLang(), sessionManager.getUid());
                 preparedListItem();
 
             }
@@ -106,23 +107,30 @@ public class ChapterFragment extends Fragment {
 
             @Override
             public void onChanged(ChapterResponse chapterResponse) {
-                if (chapterResponse == null) {
-                    mChapterAdapter.removeLoading();
-                    isLastPage = true;
-                    isLoading = false;
-                } else {
-                    if (ChapterFragment.this.currentPage != PAGE_START)
+                if (!fragmentDestroyed) {
+                    if (chapterResponse == null) {
                         mChapterAdapter.removeLoading();
-                    mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
-                    mChapterAdapter.notifyDataSetChanged();
-                    if (ChapterFragment.this.currentPage < totalPage) mChapterAdapter.addLoading();
-                    else isLastPage = true;
-                    isLoading = false;
+                        isLastPage = true;
+                        isLoading = false;
+                    } else {
+                        if (ChapterFragment.this.currentPage != PAGE_START)
+                            mChapterAdapter.removeLoading();
+                        mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
+                        mChapterAdapter.notifyDataSetChanged();
+                        if (ChapterFragment.this.currentPage < totalPage)
+                            mChapterAdapter.addLoading();
+                        else isLastPage = true;
+                        isLoading = false;
+                    }
                 }
-
             }
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentDestroyed = true;
+    }
 
 }

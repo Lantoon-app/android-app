@@ -36,36 +36,38 @@ public class MyLanguageFragment extends Fragment {
     private MyLanguageViewModel myLanguageViewModel;
     private ListView listView;
     List<MyLanguageData> myLanguageDataList;
+    boolean fragmentDestroyed = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         myLanguageViewModel = new ViewModelProvider(this).get(MyLanguageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my_language, container, false);
         listView = root.findViewById(R.id.llView);
+        listView.setDivider(null);
 
         myLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<MyLanguageData>>() {
             @Override
             public void onChanged(List<MyLanguageData> languages) {
                 Log.d("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(languages));
-                myLanguageDataList = languages;
-                MyLanguagesAdapter adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList);
-
-
-                listView.setAdapter(adapter);
+                if (!fragmentDestroyed) {
+                    myLanguageDataList = languages;
+                    MyLanguagesAdapter adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList);
+                    listView.setAdapter(adapter);
+                }
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("selected ", myLanguageDataList.get(position).getLearnLanguage().getImagePath());
-                updateLanguage(HomeActivity.sessionManager.getUserDetails().getUid(), myLanguageDataList.get(position).getLearnLanguage().getLanguageID(), myLanguageDataList.get(position).getKnownLanguage().getLanguageID());
+                updateLanguage(HomeActivity.sessionManager.getUid(), myLanguageDataList.get(position).getLearnLanguage().getLanguageID(), HomeActivity.sessionManager.getKnownLang());
             }
         });
 
         return root;
     }
 
-    private void updateLanguage(String uid, String learnlanguageID, String knownLanguageID) {
+    private void updateLanguage(String uid, String learnlanguageID, int knownLanguageID) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<LoggedInUserResponse> call = apiInterface.updateLanguage(uid, learnlanguageID, knownLanguageID);
         call.enqueue(new Callback<LoggedInUserResponse>() {
@@ -76,10 +78,10 @@ public class MyLanguageFragment extends Fragment {
                     Log.d("response updateLanguage", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
                     if (response.body().getStatus().getCode() == 1035) {
-                        String user = new GsonBuilder().create().toJson(response.body().getLoginData());
-                        SessionManager sessionManager = new SessionManager(getContext());
-                        sessionManager.createLoginSession(user);
-                        Toast.makeText(getActivity(),"Language updated successfully",Toast.LENGTH_SHORT).show();
+                        HomeActivity.sessionManager.setSpeakCode(response.body().getLoginData().getSpeakCode());
+                        HomeActivity.sessionManager.setLearnLang(response.body().getLoginData().getLearnlang());
+                        HomeActivity.sessionManager.setKnownLang(response.body().getLoginData().getKnownlang());
+                        Toast.makeText(getActivity(), "Language updated successfully", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(getView()).navigate(R.id.bottom_lesson);
                     }
                 }
@@ -91,5 +93,11 @@ public class MyLanguageFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        fragmentDestroyed = true;
     }
 }

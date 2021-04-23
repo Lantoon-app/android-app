@@ -76,7 +76,7 @@ public class LessonCompletedPopup {
             }
         });
         Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);
-        if (QuestionsActivity.isRandomQuestion || !QuestionsActivity.isNewChapter || quesNo != QuestionsActivity.totalQues)
+        if (QuestionsActivity.isRandomQuestion || quesNo != QuestionsActivity.totalQues)
             btnContinuePopupLessonCompleted.setVisibility(View.GONE);
 
         /*if (quesNo != QuestionsActivity.totalQues || !QuestionsActivity.isNewChapter)

@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.leader;
+package com.bazinga.lantoon.home.leaderboard;
 
 import android.view.View;
 
