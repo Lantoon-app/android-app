@@ -3,7 +3,6 @@ package com.bazinga.lantoon.home.chapter.lesson;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,12 +18,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.login.SessionManager;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +36,7 @@ public class QuestionsActivity extends AppCompatActivity {
     public static TextView tvTimer;
     public static ProgressDialog progress;
     public static long startTime = 0;
+    public static long startLessonTime = 0;
     public static int totalQues;
     public static String strFilePath = "";
     public static Score score;
@@ -51,7 +48,8 @@ public class QuestionsActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            long millis = System.currentTimeMillis() - startTime;
+            //long millis = System.currentTimeMillis() - startTime;
+            long millis = (System.currentTimeMillis() - startTime) +startLessonTime;
             int seconds = (int) (millis / 1000);
             int minutes = seconds / 60;
             seconds = seconds % 60;
@@ -86,10 +84,11 @@ public class QuestionsActivity extends AppCompatActivity {
 
     }
 
-    private void init(int langid, int chaperno, int lessonno, boolean isNewChapter, boolean isRandomQuestion) {
+    private void init(int langid, int chaperno, int lessonno,String strSpentTime, boolean isNewChapter, boolean isRandomQuestion) {
         Log.d("isRandomQuestionsss",String.valueOf(isRandomQuestion));
         this.isNewChapter = isNewChapter;
         this.isRandomQuestion = isRandomQuestion;
+        this.startLessonTime = Long.decode(strSpentTime);
         progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
@@ -125,12 +124,12 @@ public class QuestionsActivity extends AppCompatActivity {
                         //mPager.setUserInputEnabled(false);
                         mPager.setAdapter(mPageAdapter);
                         //mPager.setUserInputEnabled(false);
-                        mPager.setCurrentItem(getIntent().getIntExtra(Utils.TAG_START_QUESTION_NO,1)-1);
+                        mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO,1)-1);
                         //mPager.setCurrentItem(19);
                         mPager.clearFocus();
                         progress.dismiss();
                         totalQues = mPageAdapter.getItemCount();
-                        startTime = System.currentTimeMillis();
+                        //startTime = System.currentTimeMillis();
                         score = new Score();
                         score.setUid(sessionManager.getUid());
                         score.setLangid(String.valueOf(langid));
@@ -164,9 +163,12 @@ public class QuestionsActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
 
             if (requestCode == MY_PERMISSION_REQUEST_CODE)
-                init(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID, 0),
-                        getIntent().getIntExtra(Utils.TAG_CHAPTER_NO, 0),
-                        getIntent().getIntExtra(Utils.TAG_LESSON_NO, 0),getIntent().getBooleanExtra(Utils.TAG_IS_NEW_CHAPTER,false),getIntent().getBooleanExtra(Utils.TAG_IS_RANDOM_QUESTIONS,false));
+                init(getIntent().getIntExtra(Tags.TAG_LANGUAGE_ID, 0),
+                        getIntent().getIntExtra(Tags.TAG_CHAPTER_NO, 0),
+                        getIntent().getIntExtra(Tags.TAG_LESSON_NO, 0),
+                        getIntent().getStringExtra(Tags.TAG_SPENT_TIME),
+                        getIntent().getBooleanExtra(Tags.TAG_IS_NEW_CHAPTER,false),
+                        getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS,false));
             //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();

@@ -7,21 +7,19 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.registration.langselection.adapter.LanguageAdapter;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.langselection.viewmodel.LanguageViewModel;
 import com.bazinga.lantoon.registration.SignupActivity;
 
 import java.util.List;
-import java.util.UUID;
 
 public class LangSelectionActivity extends AppCompatActivity {
 
@@ -93,10 +91,10 @@ public class LangSelectionActivity extends AppCompatActivity {
                     knownLangId = Integer.valueOf(languageList.get(iKnowVp.getCurrentItem()).getLanguageID());
                     learnLangId = Integer.valueOf(languageList.get(iWantLearnVp.getCurrentItem()).getLanguageID());
                     Intent intent = new Intent(LangSelectionActivity.this, SignupActivity.class);
-                    intent.putExtra(Utils.TAG_KNOWN_LANGUAGE, knownLangId);
-                    intent.putExtra(Utils.TAG_LEARN_LANGUAGE, learnLangId);
-                    intent.putExtra(Utils.TAG_DEVICE_ID, getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
-                    intent.putExtra(Utils.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION));
+                    intent.putExtra(Tags.TAG_KNOWN_LANGUAGE, knownLangId);
+                    intent.putExtra(Tags.TAG_LEARN_LANGUAGE, learnLangId);
+                    intent.putExtra(Tags.TAG_DEVICE_ID, getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
+                    intent.putExtra(Tags.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Tags.TAG_CURRENT_LOCATION));
                     startActivity(intent);
                 }else {
                     Toast.makeText(LangSelectionActivity.this,"Both Languages are equal",Toast.LENGTH_SHORT).show();

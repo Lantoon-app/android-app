@@ -80,6 +80,8 @@ public class ReferencePopup {
         imgBtnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mediaPlayer!=null)
+                    mediaPlayer.release();
                 popupWindow.dismiss();
             }
         });
@@ -116,7 +118,8 @@ public class ReferencePopup {
         popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
+                if(mediaPlayer!=null)
+                    mediaPlayer.release();
                 //Close the window when clicked
                 popupWindow.dismiss();
                 return true;

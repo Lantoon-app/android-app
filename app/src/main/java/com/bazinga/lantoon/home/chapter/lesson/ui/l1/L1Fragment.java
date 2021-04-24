@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Audio;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.google.gson.Gson;
@@ -47,13 +47,14 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
     Button btnAudio1, btnAudio2, btnAudio3, btnAudio4, btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
     CommonFunction cf;
+    MediaPlayer mediaPlayer;
 
     public static L1Fragment newInstance(int questionNo, int totalQuestions, String data) {
         L1Fragment fragment = new L1Fragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(Utils.TAG_QUESTION_NO, questionNo);
-        bundle.putInt(Utils.TAG_QUESTIONS_TOTAL, totalQuestions);
-        bundle.putString(Utils.TAG_QUESTION_TYPE, data);
+        bundle.putInt(Tags.TAG_QUESTION_NO, questionNo);
+        bundle.putInt(Tags.TAG_QUESTIONS_TOTAL, totalQuestions);
+        bundle.putString(Tags.TAG_QUESTION_TYPE, data);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -105,7 +106,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
 
     }
-    private void setClickableButton(boolean clickable){
+
+    private void setClickableButton(boolean clickable) {
         btnAudio1.setClickable(clickable);
         btnAudio2.setClickable(clickable);
         btnAudio3.setClickable(clickable);
@@ -115,6 +117,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         btnAudioSlow3.setClickable(clickable);
         btnAudioSlow4.setClickable(clickable);
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -125,21 +128,20 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         //cf.fullScreen(getActivity().getWindow());
         audio = new Audio();
         try {
-            setTopBarState(getArguments().getInt(Utils.TAG_QUESTION_NO), getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL));
+            setTopBarState(getArguments().getInt(Tags.TAG_QUESTION_NO), getArguments().getInt(Tags.TAG_QUESTIONS_TOTAL));
 
-            questions = jsonStringToArray(getArguments().getString(Utils.TAG_QUESTION_TYPE));
+            questions = jsonStringToArray(getArguments().getString(Tags.TAG_QUESTION_TYPE));
             //PlayAudios(questions);
-                imgBtnHelp.setVisibility(View.INVISIBLE);
+            imgBtnHelp.setVisibility(View.INVISIBLE);
 
 
             String imgFile = QuestionsActivity.strFilePath + File.separator + questions.get(0).getRightImagePath() + questions.get(0).getCellValue() + ".jpg";
             Log.d("Imagefile", imgFile);
 
-            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(0).getRightImagePath(),imbBtnQuestionImg1);
-            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(1).getRightImagePath(),imbBtnQuestionImg2);
-            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(2).getRightImagePath(),imbBtnQuestionImg3);
-            cf.setImage(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(3).getRightImagePath(),imbBtnQuestionImg4);
-
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(0).getRightImagePath(), imbBtnQuestionImg1);
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(1).getRightImagePath(), imbBtnQuestionImg2);
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(2).getRightImagePath(), imbBtnQuestionImg3);
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(3).getRightImagePath(), imbBtnQuestionImg4);
 
 
             Log.d("data l1 ", questions.get(2).getQid());
@@ -188,7 +190,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(questions.get(0).getWord());
             cf.shakeAnimation(imbBtnQuestionImg1, 1000);
-            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
             mediaPlayer.prepare();
             mediaPlayer.start();
@@ -252,13 +254,13 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgBtnHome:
-                cf.onClickHomeButton(getView(),getActivity(),getArguments().getInt(Utils.TAG_QUESTION_NO));
-                break ;
+                cf.onClickHomeButton(getView(), getActivity(), getArguments().getInt(Tags.TAG_QUESTION_NO));
+                break;
             case R.id.imgBtnHelp:
                 break;
             case R.id.imgBtnNext:
-                QuestionsActivity.countMap.put(String.valueOf(getArguments().getInt(Utils.TAG_QUESTION_NO)),"0");
-                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
+                QuestionsActivity.countMap.put(String.valueOf(getArguments().getInt(Tags.TAG_QUESTION_NO)), "0");
+                QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                 break;
             case R.id.btnAudio1:
                 audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
@@ -281,28 +283,38 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
                 break;
             case R.id.btnAudioSlow1:
-                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
+                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudioSlow2:
-                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
+                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudioSlow3:
-                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
+                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);
                 break;
             case R.id.btnAudioSlow4:
-                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
+                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
                 tvQuestionName.setText(questions.get(3).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
 
                 break;
         }
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     @Override

@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
@@ -52,9 +52,9 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
     public static P2Fragment newInstance(int questionNo, int totalQuestions, String data) {
         P2Fragment fragment = new P2Fragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(Utils.TAG_QUESTION_NO, questionNo);
-        bundle.putInt(Utils.TAG_QUESTIONS_TOTAL, totalQuestions);
-        bundle.putString(Utils.TAG_QUESTION_TYPE, data);
+        bundle.putInt(Tags.TAG_QUESTION_NO, questionNo);
+        bundle.putInt(Tags.TAG_QUESTIONS_TOTAL, totalQuestions);
+        bundle.putString(Tags.TAG_QUESTION_TYPE, data);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -107,11 +107,11 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
         mViewModel = new ViewModelProvider(this).get(P2ViewModel.class);
         cf = new CommonFunction();
         audio = new Audio();
-        quesNo = getArguments().getInt(Utils.TAG_QUESTION_NO);
-        totalQues = getArguments().getInt(Utils.TAG_QUESTIONS_TOTAL);
+        quesNo = getArguments().getInt(Tags.TAG_QUESTION_NO);
+        totalQues = getArguments().getInt(Tags.TAG_QUESTIONS_TOTAL);
         setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
-        question = g.fromJson(getArguments().getString(Utils.TAG_QUESTION_TYPE), Question.class);
+        question = g.fromJson(getArguments().getString(Tags.TAG_QUESTION_TYPE), Question.class);
         if(question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
@@ -148,7 +148,7 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgBtnHome:
-                cf.onClickHomeButton(getView(),getActivity(),getArguments().getInt(Utils.TAG_QUESTION_NO));
+                cf.onClickHomeButton(getView(),getActivity(),getArguments().getInt(Tags.TAG_QUESTION_NO));
                 break;
             case R.id.imgBtnHelp:
                 if(question.getReference() != null) {

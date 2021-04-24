@@ -12,7 +12,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
 import com.bazinga.lantoon.home.chapter.lesson.ui.p1.P1Fragment;
@@ -27,10 +27,7 @@ import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -289,8 +286,8 @@ public class QuestionsViewModel extends ViewModel {
                     folderName = Utils.IMAGEQUES_FILE_DESTINATION_FOLDER;
                 if (type == 4)
                     folderName = Utils.AUDIOANS_FILE_DESTINATION_FOLDER;*/
-                Log.d("unziploc", QuestionsActivity.strFilePath + Utils.FILE_DESTINATION_FOLDER + folerStruc);
-                unzip(destinationFile.getPath(), QuestionsActivity.strFilePath + Utils.FILE_DESTINATION_FOLDER + folerStruc);
+                Log.d("unziploc", QuestionsActivity.strFilePath + Tags.FILE_DESTINATION_FOLDER + folerStruc);
+                unzip(destinationFile.getPath(), QuestionsActivity.strFilePath + Tags.FILE_DESTINATION_FOLDER + folerStruc);
 
                 if (inputStream != null) inputStream.close();
                 if (outputStream != null) outputStream.close();

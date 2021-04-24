@@ -3,7 +3,6 @@ package com.bazinga.lantoon.login.ui.login;
 import android.app.Activity;
 
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -25,10 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.ValidationFunction;
 import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsViewModel;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.login.forget.ForgetPasswordActivity;
 import com.google.gson.GsonBuilder;
@@ -123,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(), getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
+                            passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
                 }
                 return false;
             }
@@ -136,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(!ValidationFunction.isEmpty(usernameEditText) || ValidationFunction.isEmpty(passwordEditText)) {
                     loadingProgressBar.setVisibility(View.VISIBLE);
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(), getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
+                            passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
                 }else{
                     Toast.makeText(getApplicationContext(),R.string.empty_username_password,Toast.LENGTH_SHORT).show();
                 }

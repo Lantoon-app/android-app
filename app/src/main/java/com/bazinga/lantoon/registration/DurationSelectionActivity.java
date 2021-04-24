@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
@@ -81,21 +81,21 @@ public class DurationSelectionActivity extends AppCompatActivity implements View
                 5,
                 "google");*/
         progressBar(true);
-        User user = new User(getIntent().getStringExtra(Utils.TAG_EMAILID),
-                getIntent().getStringExtra(Utils.TAG_USERNAME),
-                getIntent().getStringExtra(Utils.TAG_PASSWORD),
-                getIntent().getStringExtra(Utils.TAG_COUNTRY_CODE),
-                getIntent().getStringExtra(Utils.TAG_PHONE_NUMBER),
-                Utils.TAG_REGION,
-                Utils.TAG_INSTITUTE,
-                Utils.TAG_GROUP_CODE,
-                getIntent().getIntExtra(Utils.TAG_LEARN_LANGUAGE,0),
-                getIntent().getIntExtra(Utils.TAG_KNOWN_LANGUAGE,0),
-                getIntent().getStringExtra(Utils.TAG_DEVICE_ID),
-                getIntent().getIntExtra(Utils.TAG_USER_ROLE,0),
-                getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION),
+        User user = new User(getIntent().getStringExtra(Tags.TAG_EMAILID),
+                getIntent().getStringExtra(Tags.TAG_USERNAME),
+                getIntent().getStringExtra(Tags.TAG_PASSWORD),
+                getIntent().getStringExtra(Tags.TAG_COUNTRY_CODE),
+                getIntent().getStringExtra(Tags.TAG_PHONE_NUMBER),
+                Tags.TAG_REGION,
+                Tags.TAG_INSTITUTE,
+                Tags.TAG_GROUP_CODE,
+                getIntent().getIntExtra(Tags.TAG_LEARN_LANGUAGE,0),
+                getIntent().getIntExtra(Tags.TAG_KNOWN_LANGUAGE,0),
+                getIntent().getStringExtra(Tags.TAG_DEVICE_ID),
+                getIntent().getIntExtra(Tags.TAG_USER_ROLE,0),
+                getIntent().getStringExtra(Tags.TAG_CURRENT_LOCATION),
                 intMinsPerDay,
-                getIntent().getIntExtra(Utils.TAG_REGISTRATION_TYPE,0));
+                getIntent().getIntExtra(Tags.TAG_REGISTRATION_TYPE,0));
         System.out.println("user data " + new Gson().toJson(user));
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<User> call = apiInterface.createUser(user);

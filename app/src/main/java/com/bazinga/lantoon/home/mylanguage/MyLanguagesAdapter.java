@@ -31,14 +31,14 @@ public class MyLanguagesAdapter extends ArrayAdapter<MyLanguageData> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_my_language, parent, false);
         }
 
-        ImageView imageView = convertView.findViewById(R.id.imgView);
+        //ImageView imageView = convertView.findViewById(R.id.imgView);
 
         // Lookup view for data population
         TextView tvName = convertView.findViewById(R.id.textView);
         // Populate the data into the template view using the data object
-        RequestOptions requestOptions = new RequestOptions();
+       /* RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(getContext()).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + myLanguageData.getLearnLanguage().getImagePath()).apply(requestOptions).into(imageView);
+        Glide.with(getContext()).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + myLanguageData.getLearnLanguage().getImagePath()).apply(requestOptions).into(imageView);*/
         tvName.setText(myLanguageData.getLearnLanguage().getLanguageName());
         // Return the completed view to render on screen
         return convertView;

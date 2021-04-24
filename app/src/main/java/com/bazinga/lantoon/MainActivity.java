@@ -3,14 +3,11 @@ package com.bazinga.lantoon;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -61,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent langSelectionIntent = new Intent(MainActivity.this, LangSelectionActivity.class);
-                langSelectionIntent.putExtra(Utils.TAG_DEVICE_ID, strDeviceId);
-                langSelectionIntent.putExtra(Utils.TAG_CURRENT_LOCATION, strCurrentLoaction);
+                langSelectionIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
+                langSelectionIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(langSelectionIntent);
             }
         });
@@ -72,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                loginIntent.putExtra(Utils.TAG_DEVICE_ID, strDeviceId);
-                loginIntent.putExtra(Utils.TAG_CURRENT_LOCATION, strCurrentLoaction);
+                loginIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
+                loginIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(loginIntent);
             }
         });

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 
 public class LevelSlectionActivity extends AppCompatActivity {
     LinearLayout llNew, llTest;
@@ -46,17 +46,17 @@ public class LevelSlectionActivity extends AppCompatActivity {
 
 
         Intent intentDuration = new Intent(LevelSlectionActivity.this, DurationSelectionActivity.class);
-        intentDuration.putExtra(Utils.TAG_EMAILID, getIntent().getStringExtra(Utils.TAG_EMAILID));
-        intentDuration.putExtra(Utils.TAG_USERNAME, getIntent().getStringExtra(Utils.TAG_USERNAME));
-        intentDuration.putExtra(Utils.TAG_PASSWORD, getIntent().getStringExtra(Utils.TAG_PASSWORD));
-        intentDuration.putExtra(Utils.TAG_COUNTRY_CODE, getIntent().getStringExtra(Utils.TAG_COUNTRY_CODE));
-        intentDuration.putExtra(Utils.TAG_PHONE_NUMBER, getIntent().getStringExtra(Utils.TAG_PHONE_NUMBER));
-        intentDuration.putExtra(Utils.TAG_LEARN_LANGUAGE, getIntent().getIntExtra(Utils.TAG_LEARN_LANGUAGE,0));
-        intentDuration.putExtra(Utils.TAG_KNOWN_LANGUAGE, getIntent().getIntExtra(Utils.TAG_KNOWN_LANGUAGE,0));
-        intentDuration.putExtra(Utils.TAG_DEVICE_ID, getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
-        intentDuration.putExtra(Utils.TAG_USER_ROLE, rollId);
-        intentDuration.putExtra(Utils.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION));
-        intentDuration.putExtra(Utils.TAG_REGISTRATION_TYPE,getIntent().getIntExtra(Utils.TAG_REGISTRATION_TYPE,0));
+        intentDuration.putExtra(Tags.TAG_EMAILID, getIntent().getStringExtra(Tags.TAG_EMAILID));
+        intentDuration.putExtra(Tags.TAG_USERNAME, getIntent().getStringExtra(Tags.TAG_USERNAME));
+        intentDuration.putExtra(Tags.TAG_PASSWORD, getIntent().getStringExtra(Tags.TAG_PASSWORD));
+        intentDuration.putExtra(Tags.TAG_COUNTRY_CODE, getIntent().getStringExtra(Tags.TAG_COUNTRY_CODE));
+        intentDuration.putExtra(Tags.TAG_PHONE_NUMBER, getIntent().getStringExtra(Tags.TAG_PHONE_NUMBER));
+        intentDuration.putExtra(Tags.TAG_LEARN_LANGUAGE, getIntent().getIntExtra(Tags.TAG_LEARN_LANGUAGE,0));
+        intentDuration.putExtra(Tags.TAG_KNOWN_LANGUAGE, getIntent().getIntExtra(Tags.TAG_KNOWN_LANGUAGE,0));
+        intentDuration.putExtra(Tags.TAG_DEVICE_ID, getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
+        intentDuration.putExtra(Tags.TAG_USER_ROLE, rollId);
+        intentDuration.putExtra(Tags.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Tags.TAG_CURRENT_LOCATION));
+        intentDuration.putExtra(Tags.TAG_REGISTRATION_TYPE,getIntent().getIntExtra(Tags.TAG_REGISTRATION_TYPE,0));
         startActivity(intentDuration);
 
     }

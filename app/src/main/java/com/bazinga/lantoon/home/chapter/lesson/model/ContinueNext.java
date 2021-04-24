@@ -16,6 +16,9 @@ public class ContinueNext {
     @SerializedName("startingquesno")
     @Expose
     private Integer startingquesno;
+    @SerializedName("spenttime")
+    @Expose
+    private String spentTime;
 
     public Integer getLangid() {
         return langid;
@@ -47,5 +50,13 @@ public class ContinueNext {
 
     public void setStartingquesno(Integer startingquesno) {
         this.startingquesno = startingquesno;
+    }
+
+    public String getSpentTime() {
+        return spentTime;
+    }
+
+    public void setSpentTime(String spentTime) {
+        this.spentTime = spentTime;
     }
 }

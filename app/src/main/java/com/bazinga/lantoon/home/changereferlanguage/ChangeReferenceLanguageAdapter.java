@@ -32,7 +32,7 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         Language myLanguageData = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_my_language, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_language, parent, false);
         }
         if(Integer.valueOf(myLanguageData.getLanguageID())  == HomeActivity.sessionManager.getKnownLang())
             convertView.setBackground(getContext().getDrawable(R.drawable.button_bg));

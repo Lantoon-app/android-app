@@ -18,6 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_change_my_language" />
+        tools:listitem="@layout/item_change_language" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

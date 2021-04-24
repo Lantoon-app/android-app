@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Utils;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.ValidationFunction;
 import com.bazinga.lantoon.login.ui.login.LoginActivity;
 import com.facebook.CallbackManager;
@@ -78,8 +78,8 @@ public class SignupActivity extends AppCompatActivity {
     public void init() {
 
         Intent intent = getIntent();
-        knownLangId = intent.getIntExtra(Utils.TAG_KNOWN_LANGUAGE,0);
-        learnLangId = intent.getIntExtra(Utils.TAG_LEARN_LANGUAGE,0);
+        knownLangId = intent.getIntExtra(Tags.TAG_KNOWN_LANGUAGE,0);
+        learnLangId = intent.getIntExtra(Tags.TAG_LEARN_LANGUAGE,0);
 
         etFullName = (EditText) findViewById(R.id.etFullName);
         etEmail = (EditText) findViewById(R.id.etEmailAddress);
@@ -137,16 +137,16 @@ public class SignupActivity extends AppCompatActivity {
     private void nextLevelSelection(String strFullName, String strEmail, String strPass, String strCountryCode, String strPhoneNumber, int registrationTypeId) {
         Toast.makeText(SignupActivity.this, "Success", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SignupActivity.this, LevelSlectionActivity.class);
-        intent.putExtra(Utils.TAG_USERNAME,strFullName);
-        intent.putExtra(Utils.TAG_EMAILID,strEmail);
-        intent.putExtra(Utils.TAG_PASSWORD,strPass);
-        intent.putExtra(Utils.TAG_COUNTRY_CODE,strCountryCode);
-        intent.putExtra(Utils.TAG_PHONE_NUMBER,strPhoneNumber);
-        intent.putExtra(Utils.TAG_KNOWN_LANGUAGE,knownLangId);
-        intent.putExtra(Utils.TAG_LEARN_LANGUAGE,learnLangId);
-        intent.putExtra(Utils.TAG_DEVICE_ID, getIntent().getStringExtra(Utils.TAG_DEVICE_ID));
-        intent.putExtra(Utils.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Utils.TAG_CURRENT_LOCATION));
-        intent.putExtra(Utils.TAG_REGISTRATION_TYPE,registrationTypeId);
+        intent.putExtra(Tags.TAG_USERNAME,strFullName);
+        intent.putExtra(Tags.TAG_EMAILID,strEmail);
+        intent.putExtra(Tags.TAG_PASSWORD,strPass);
+        intent.putExtra(Tags.TAG_COUNTRY_CODE,strCountryCode);
+        intent.putExtra(Tags.TAG_PHONE_NUMBER,strPhoneNumber);
+        intent.putExtra(Tags.TAG_KNOWN_LANGUAGE,knownLangId);
+        intent.putExtra(Tags.TAG_LEARN_LANGUAGE,learnLangId);
+        intent.putExtra(Tags.TAG_DEVICE_ID, getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
+        intent.putExtra(Tags.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Tags.TAG_CURRENT_LOCATION));
+        intent.putExtra(Tags.TAG_REGISTRATION_TYPE,registrationTypeId);
         startActivity(intent);
     }
 
