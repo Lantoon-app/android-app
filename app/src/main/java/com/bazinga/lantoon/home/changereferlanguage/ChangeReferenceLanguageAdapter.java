@@ -29,21 +29,24 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Language myLanguageData = getItem(position);
+        //Language myLanguageData = getItem(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_language, parent, false);
+
         }
-        if(Integer.valueOf(myLanguageData.getLanguageID())  == HomeActivity.sessionManager.getKnownLang())
-            convertView.setBackground(getContext().getDrawable(R.drawable.button_bg));
+
         ImageView imageView = convertView.findViewById(R.id.imgView);
         TextView tvName = convertView.findViewById(R.id.textView);
 
         // Populate the data into the template view using the data object
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(getContext()).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + myLanguageData.getImagePath()).apply(requestOptions).into(imageView);
-        tvName.setText(myLanguageData.getLanguageName());
+        Glide.with(getContext()).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
+        tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
+        if (Integer.valueOf(getItem(position).getLanguageID()) == 1)
+            tvName.setTextColor(getContext().getColor(R.color.black));
 
         // Return the completed view to render on screen
         return convertView;

@@ -10,6 +10,7 @@ import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ChangeReferenceLanguageViewModel extends ViewModel {
                 //System.out.println("language list success=  " + response.message().toString());
                 if (response.isSuccessful()) {
                     languageLiveData.setValue(response.body());
-                    Log.e("response body= ", new Gson().toJson(response.body()));
+                    Log.d("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                 } else {
                     Log.e("response message= ", response.message() + response.code());
                 }

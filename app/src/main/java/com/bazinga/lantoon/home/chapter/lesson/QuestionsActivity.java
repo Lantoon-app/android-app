@@ -123,7 +123,7 @@ public class QuestionsActivity extends AppCompatActivity {
                         MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
                         //mPager.setUserInputEnabled(false);
                         mPager.setAdapter(mPageAdapter);
-                        //mPager.setUserInputEnabled(false);
+                        mPager.setUserInputEnabled(false);
                         mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO,1)-1);
                         //mPager.setCurrentItem(19);
                         mPager.clearFocus();

@@ -40,6 +40,7 @@ public class ChangeReferenceLanguageFragment extends Fragment {
     ListView listView;
     List<Language> LanguageDataList;
     boolean fragmentDestroyed = false;
+    ChangeReferenceLanguageAdapter changeReferenceLanguageAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class ChangeReferenceLanguageFragment extends Fragment {
                     LanguageDataList = languages;
                     LanguageDataList.removeIf(s -> s.getLanguageID().equalsIgnoreCase(String.valueOf(HomeActivity.sessionManager.getLearLang())));
 
-                    ChangeReferenceLanguageAdapter changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList);
+                    changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList);
                     listView.setAdapter(changeReferenceLanguageAdapter);
                 }
             }
@@ -64,6 +65,12 @@ public class ChangeReferenceLanguageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 updateReferenceLanguage(HomeActivity.sessionManager.getUid(), HomeActivity.sessionManager.getLearLang(), LanguageDataList.get(position).getLanguageID());
+            }
+        });
+        listView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
             }
         });
 
