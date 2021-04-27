@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:gravity="center"
-        android:layout_margin="20dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgView"
@@ -20,10 +25,11 @@
             android:src="@drawable/lang_eng" />
 
         <LinearLayout
+            android:id="@+id/llItem"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:background="@drawable/right_corner_radius"
+            android:background="@drawable/change_language_item_bg"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="0dp">
@@ -33,12 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textAllCaps="true"
                 android:text="ENGLISH / english"
-                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
                 android:textSize="18dp" />
 
         </LinearLayout>
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

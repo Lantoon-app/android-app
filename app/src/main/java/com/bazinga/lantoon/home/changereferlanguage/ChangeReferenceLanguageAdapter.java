@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bazinga.lantoon.R;
@@ -38,6 +39,7 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         }
 
         ImageView imageView = convertView.findViewById(R.id.imgView);
+        LinearLayout llItem = convertView.findViewById(R.id.llItem);
         TextView tvName = convertView.findViewById(R.id.textView);
 
         // Populate the data into the template view using the data object
@@ -45,8 +47,14 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
         Glide.with(getContext()).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
         tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
-        if (Integer.valueOf(getItem(position).getLanguageID()) == 1)
+        if (Integer.valueOf(getItem(position).getLanguageID()) == 1){
+            llItem.setBackground(getContext().getDrawable(R.drawable.right_corner_radius));
+            tvName.setTextColor(getContext().getColor(R.color.white));
+        }else {
+            llItem.setBackground(getContext().getDrawable(R.drawable.change_language_item_bg));
             tvName.setTextColor(getContext().getColor(R.color.black));
+        }
+
 
         // Return the completed view to render on screen
         return convertView;

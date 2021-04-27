@@ -50,8 +50,8 @@ public class MyLanguagesAdapter extends ArrayAdapter<MyLanguageData> {
         if (HomeActivity.sessionManager.getLearLang() == Integer.valueOf(myLanguageData.getLearnLanguage().getLanguageID())) {
             linearLayout11.setBackground(getContext().getDrawable(R.drawable.my_language_item_selected_bg));
             tvName.setTextColor(getContext().getColor(R.color.white));
-            ivLang.setImageResource(R.drawable.my_language_item_filled);
-        } else ivLang.setImageResource(R.drawable.my_language_item_empty);
+            ivLang.setImageResource(R.drawable.my_language_item_empty);
+        } else ivLang.setImageResource(R.drawable.my_language_item_filled);
         // Return the completed view to render on screen
         return convertView;
     }
