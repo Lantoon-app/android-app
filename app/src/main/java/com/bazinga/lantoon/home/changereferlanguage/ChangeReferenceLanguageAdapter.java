@@ -23,8 +23,10 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.List;
 
 public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
-    public ChangeReferenceLanguageAdapter(Context context, List<Language> languageArrayList) {
+    int referLang;
+    public ChangeReferenceLanguageAdapter(Context context, List<Language> languageArrayList,int referLang) {
         super(context, 0, languageArrayList);
+        this.referLang = referLang;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
         Glide.with(getContext()).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
         tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
-        if (Integer.valueOf(getItem(position).getLanguageID()) == 1){
+        if (Integer.valueOf(getItem(position).getLanguageID())==referLang){
             llItem.setBackground(getContext().getDrawable(R.drawable.right_corner_radius));
             tvName.setTextColor(getContext().getColor(R.color.white));
         }else {

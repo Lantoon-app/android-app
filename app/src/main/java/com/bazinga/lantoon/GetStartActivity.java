@@ -26,8 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.jetbrains.annotations.NotNull;
 
-public class MainActivity extends AppCompatActivity {
-    SessionManager sessionManager;
+public class GetStartActivity extends AppCompatActivity {
+
     CommonFunction cf;
     private FusedLocationProviderClient fusedLocationClient;
     private int locationPermissionCode = 2;
@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sessionManager = new SessionManager(MainActivity.this);
-        sessionManager.checkLogin();
         setContentView(R.layout.activity_getstart);
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                Intent intent = new Intent(GetStartActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getstartCreateAccBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent langSelectionIntent = new Intent(MainActivity.this, LangSelectionActivity.class);
+                Intent langSelectionIntent = new Intent(GetStartActivity.this, LangSelectionActivity.class);
                 langSelectionIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
                 langSelectionIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(langSelectionIntent);
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         getstartSigninBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent loginIntent = new Intent(GetStartActivity.this, LoginActivity.class);
                 loginIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
                 loginIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(loginIntent);

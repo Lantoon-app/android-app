@@ -56,7 +56,7 @@ public class ChangeReferenceLanguageFragment extends Fragment {
                     LanguageDataList = languages;
                     LanguageDataList.removeIf(s -> s.getLanguageID().equalsIgnoreCase(String.valueOf(HomeActivity.sessionManager.getLearLang())));
 
-                    changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList);
+                    changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList,HomeActivity.sessionManager.getKnownLang());
                     listView.setAdapter(changeReferenceLanguageAdapter);
                 }
             }

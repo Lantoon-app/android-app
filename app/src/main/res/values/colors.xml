@@ -37,4 +37,8 @@
     <color name="spring">#448da64b</color>
     <color name="language_item_left_color">#DCDBDB</color>
 
+    <color name="target_completed">#FF9800</color>
+    <color name="target_ongoing">#286bb5</color>
+    <color name="target_upcoming">#938389</color>
+
 </resources>

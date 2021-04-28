@@ -4,15 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.bazinga.lantoon.MainActivity;
+import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.profile.ProfileData;
-import com.bazinga.lantoon.login.data.model.LoginData;
 import com.bazinga.lantoon.login.ui.login.LoginActivity;
-import com.bazinga.lantoon.registration.model.User;
-import com.google.gson.GsonBuilder;
-
-import java.util.HashMap;
 
 public class SessionManager {
     // Shared Preferences
@@ -215,6 +209,18 @@ public void setSpeakCode(String speakCode) {
             System.out.println("Login success");
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(_context, HomeActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            // Add new Flag to start new Activity
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            // Staring Login Activity
+            _context.startActivity(i);
+        }else {
+            System.out.println("Login success");
+            // user is not logged in redirect him to Login Activity
+            Intent i = new Intent(_context, GetStartActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

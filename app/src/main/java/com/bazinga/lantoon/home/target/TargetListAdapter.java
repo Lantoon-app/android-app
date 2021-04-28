@@ -69,15 +69,19 @@ public class TargetListAdapter extends BaseAdapter implements Filterable {
         }
 
         DiagonalLayout diagonalLayout = convertView.findViewById(R.id.slantView);
-        ImageView imgView = convertView.findViewById(R.id.imgView);
+        ImageView imgView = convertView.findViewById(R.id.ivSlant);
         TextView tvLesson = convertView.findViewById(R.id.tvLesson);
         TextView tvDates = convertView.findViewById(R.id.tvDates);
         if (targetList.get(position).getTargetstatus() == 1) {
-            convertView.setBackground(c.getDrawable(R.drawable.top_bg));
+            convertView.setBackground(c.getDrawable(R.drawable.target_completed));
         } else if (targetList.get(position).getTargetstatus() == 2) {
-            convertView.setBackground(c.getDrawable(R.drawable.com_facebook_button_background));
+            convertView.setBackground(c.getDrawable(R.drawable.target_ongoing));
+            tvLesson.setTextColor(Color.WHITE);
+            tvDates.setTextColor(Color.WHITE);
         } else if (targetList.get(position).getTargetstatus() == 3) {
-            convertView.setBackground(c.getDrawable(R.drawable.edittext_bg));
+            convertView.setBackground(c.getDrawable(R.drawable.target_upcoming));
+            tvLesson.setTextColor(Color.WHITE);
+            tvDates.setTextColor(Color.WHITE);
         }
         tvLesson.setText(targetList.get(position).getDisplayText());
         String dtFrom = targetList.get(position).getFromDate();

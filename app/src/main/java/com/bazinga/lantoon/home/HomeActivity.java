@@ -8,13 +8,10 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,28 +22,20 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.bazinga.lantoon.CommonFunction;
-import com.bazinga.lantoon.MainActivity;
+import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.profile.Profile;
-import com.bazinga.lantoon.home.profile.ProfileData;
-import com.bazinga.lantoon.home.profile.ProfileViewModel;
 import com.bazinga.lantoon.login.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -125,7 +114,7 @@ public class HomeActivity extends AppCompatActivity {
                                 drawer.closeDrawer(GravityCompat.START);
                                 Toast.makeText(getApplicationContext(), "Sign out Successfully",
                                         Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                                Intent intent = new Intent(HomeActivity.this, GetStartActivity.class);
                                 startActivity(intent);
                             }
                         })
