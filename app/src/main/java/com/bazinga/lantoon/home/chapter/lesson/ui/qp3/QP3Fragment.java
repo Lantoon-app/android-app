@@ -46,7 +46,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
     CommonFunction cf;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
-
+    MediaPlayer mediaPlayer;
     public static QP3Fragment newInstance(int questionNo, int totalQuestions, String data) {
         QP3Fragment fragment = new QP3Fragment();
         Bundle bundle = new Bundle();
@@ -150,21 +150,21 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
-            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                mp = new MediaPlayer();
+                mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionAnswer.setText(question.getAnsWord());
                     cf.shakeAnimation(imgBtnAnsImage, 1000);
-                    mp.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
-                    mp.prepare();
-                    mp.start();
-                    mp.setOnCompletionListener(mp1 -> {
+                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
                         setClickableButton(true);
@@ -222,7 +222,18 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         }
 
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        if (audio.mediaPlayer != null) {
+            audio.mediaPlayer.release();
+            audio.mediaPlayer = null;
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

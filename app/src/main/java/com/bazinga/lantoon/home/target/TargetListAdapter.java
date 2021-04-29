@@ -74,12 +74,17 @@ public class TargetListAdapter extends BaseAdapter implements Filterable {
         TextView tvDates = convertView.findViewById(R.id.tvDates);
         if (targetList.get(position).getTargetstatus() == 1) {
             convertView.setBackground(c.getDrawable(R.drawable.target_completed));
+            imgView.setBackgroundColor(c.getResources().getColor(R.color.target_completed));
+            tvLesson.setTextColor(Color.BLACK);
+            tvDates.setTextColor(Color.BLACK);
         } else if (targetList.get(position).getTargetstatus() == 2) {
             convertView.setBackground(c.getDrawable(R.drawable.target_ongoing));
+            imgView.setBackgroundColor(c.getResources().getColor(R.color.target_ongoing));
             tvLesson.setTextColor(Color.WHITE);
             tvDates.setTextColor(Color.WHITE);
         } else if (targetList.get(position).getTargetstatus() == 3) {
             convertView.setBackground(c.getDrawable(R.drawable.target_upcoming));
+            imgView.setBackgroundColor(c.getResources().getColor(R.color.target_upcoming));
             tvLesson.setTextColor(Color.WHITE);
             tvDates.setTextColor(Color.WHITE);
         }

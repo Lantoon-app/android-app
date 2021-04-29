@@ -180,6 +180,14 @@ public class P1Fragment extends Fragment implements View.OnClickListener {
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (audio.mediaPlayer != null) {
+            audio.mediaPlayer.release();
+            audio.mediaPlayer = null;
+        }
+    }
 
     @Override
     public void onDestroyView() {

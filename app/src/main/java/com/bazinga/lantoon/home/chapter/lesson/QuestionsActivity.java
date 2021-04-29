@@ -58,6 +58,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
             timerHandler.postDelayed(this, 500);
         }
+
     };
 
 
@@ -232,6 +233,12 @@ public class QuestionsActivity extends AppCompatActivity {
         countMap.clear();
         strTotalQues = "";
         strCompletedQues = "";
+
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 }

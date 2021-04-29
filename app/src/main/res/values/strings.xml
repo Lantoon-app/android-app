@@ -54,7 +54,7 @@
     <string name="menu_signout">SIGN OUT</string>
 
     <!-- Bottom Navigation -->
-    <string name="title_lesson">LESSON</string>
+    <string name="title_lesson">HOME</string>
     <string name="title_leader">LEADERBOARD</string>
     <string name="title_target">TARGETS</string>
     <string name="title_setting">SETTING</string>

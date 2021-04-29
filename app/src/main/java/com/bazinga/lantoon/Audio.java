@@ -15,7 +15,7 @@ import static android.content.Context.AUDIO_SERVICE;
 
 public class Audio {
     public SoundPool soundPool;
-    MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
 
     public void playAudioFile(String path) {
 

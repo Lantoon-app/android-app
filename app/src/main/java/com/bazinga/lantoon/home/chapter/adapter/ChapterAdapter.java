@@ -181,6 +181,24 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             tvChapter.setText("CHAPTER " + mChapterList.get(position).getChapterNo());
             if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
 
+                switch (progress) {
+                    case 0:
+                        getPbChapter().setProgress(0);
+                        break;
+                    case 25:
+                        getPbChapter().setProgress(25);
+                        break;
+                    case 50:
+                        getPbChapter().setProgress(75);
+                        break;
+                    case 100:
+                        getPbChapter().setProgress(100);
+                        break;
+                    default:
+                        getPbChapter().setProgress(0);
+                        break;
+
+                }
                 getPbChapter().setProgress(progress);
                 tvChapter.setVisibility(View.VISIBLE);
                 ivLock.setVisibility(View.INVISIBLE);

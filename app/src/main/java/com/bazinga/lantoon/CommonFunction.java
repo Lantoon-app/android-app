@@ -281,7 +281,11 @@ public class CommonFunction {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
-                        if (quesNo == 1) {
+                        /*QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
+                        QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
+                        QuestionsActivity.clearData();*/
+                        activity.finish();
+                        /*if (quesNo == 1) {
                             activity.finish();
                         }
                         QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
@@ -316,7 +320,7 @@ public class CommonFunction {
                                     toJson(QuestionsActivity.score));
                         } else {
                             activity.finish();
-                        }
+                        }*/
 
                     }
                 })

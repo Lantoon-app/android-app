@@ -197,34 +197,34 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                mp = new MediaPlayer();
+                mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionName.setText(questions.get(1).getWord());
                     cf.shakeAnimation(imbBtnQuestionImg2, 1000);
-                    mp.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
-                    mp.prepare();
-                    mp.start();
-                    mp.setOnCompletionListener(mp1 -> {
+                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
-                        mp1 = new MediaPlayer();
+                        mediaPlayer = new MediaPlayer();
                         try {
                             tvQuestionName.setText(questions.get(2).getWord());
                             cf.shakeAnimation(imbBtnQuestionImg3, 1000);
-                            mp1.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
-                            mp1.prepare();
-                            mp1.start();
-                            mp1.setOnCompletionListener(mp11 -> {
+                            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
+                            mediaPlayer.prepare();
+                            mediaPlayer.start();
+                            mediaPlayer.setOnCompletionListener(mp11 -> {
                                 mp11.stop();
                                 mp11.release();
-                                mp11 = new MediaPlayer();
+                                mediaPlayer = new MediaPlayer();
                                 try {
                                     tvQuestionName.setText(questions.get(3).getWord());
                                     cf.shakeAnimation(imbBtnQuestionImg4, 1000);
-                                    mp11.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
-                                    mp11.prepare();
-                                    mp11.start();
-                                    mp11.setOnCompletionListener(mp111 -> {
+                                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
+                                    mediaPlayer.prepare();
+                                    mediaPlayer.start();
+                                    mediaPlayer.setOnCompletionListener(mp111 -> {
                                         mp111.stop();
                                         mp111.release();
                                         setClickableButton(true);
@@ -314,6 +314,10 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
+        }
+        if (audio.mediaPlayer != null) {
+            audio.mediaPlayer.release();
+            audio.mediaPlayer = null;
         }
     }
 

@@ -49,6 +49,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
     CommonFunction cf;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
+    MediaPlayer mediaPlayer;
 
     public static QP2Fragment newInstance(int questionNo, int totalQuestions, String data) {
         QP2Fragment fragment = new QP2Fragment();
@@ -143,19 +144,19 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
-            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                mp = new MediaPlayer();
+                mediaPlayer = new MediaPlayer();
                 try {
-                    mp.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
-                    mp.prepare();
-                    mp.start();
-                    mp.setOnCompletionListener(mp1 -> {
+                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                    mediaPlayer.prepare();
+                    mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
                         setClickableButton(true);
@@ -224,6 +225,18 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnAnsImage4:
                 cf.checkQuestion(imgBtnAnsImage4.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());
                 break;
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        if (audio.mediaPlayer != null) {
+            audio.mediaPlayer.release();
+            audio.mediaPlayer = null;
         }
     }
     @Override

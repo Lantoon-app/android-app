@@ -7,11 +7,11 @@
     android:background="@drawable/start_bg"
     android:layout_gravity="center"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".SplashActivity">
 
-    <VideoView
-        android:id="@+id/videoView"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        />
+        android:layout_height="wrap_content"/>
 </LinearLayout>
