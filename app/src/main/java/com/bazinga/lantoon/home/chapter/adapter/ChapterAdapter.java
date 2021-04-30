@@ -171,7 +171,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
             //mChapterList.get(position);
-            getPbChapter().setProgress(0);
+            //getPbChapter().setProgress(0);
             int progress = mChapterList.get(position).getCompletedLessons();
             Log.d("progressss", String.valueOf(progress));
             //if(progress > 0)
@@ -182,9 +182,6 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
 
                 switch (progress) {
-                    case 0:
-                        getPbChapter().setProgress(0);
-                        break;
                     case 25:
                         getPbChapter().setProgress(25);
                         break;

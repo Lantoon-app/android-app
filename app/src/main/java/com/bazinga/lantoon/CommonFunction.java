@@ -41,11 +41,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CommonFunction {
-    Context context;
 
-    /*  public void CommonFunction(Context context) {
-          this.context = context;
-      }*/
     int attemptCount = 0;
 
     public void fullScreen(Window window) {
@@ -87,15 +83,7 @@ public class CommonFunction {
     }
 
     public void setImage(Activity activity, String filePath, ImageView imageView) {
-        /*File file = new File(folderPath);
-        File[] files = file.listFiles(new FilenameFilter() {
 
-            @Override
-            public boolean accept(File dir, String filename) {
-
-                return filename.contains(".jpg");
-            }
-        });*/
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
         Glide.with(activity).load(filePath).apply(requestOptions).into(imageView);
@@ -103,29 +91,6 @@ public class CommonFunction {
     }
 
     public void setShuffleImages(Activity activity, int[] imageViewIds, String[] imagePaths, View view) {
-        /*File file = new File(wrongImgFolderPath);
-        File[] wrongImageFile = file.listFiles(new FilenameFilter() {
-
-            @Override
-            public boolean accept(File dir, String filename) {
-
-                return filename.contains(".jpg");
-            }
-        });
-        ArrayList<File> arrayList = new ArrayList<File>();
-        for (int i = 0; i < wrongImageFile.length; i++) {
-            arrayList.add(wrongImageFile[i]);
-        }
-        file = new File(rightImgPaths);
-        File[] rightImageFile = file.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.contains(".jpg");
-            }
-        });
-        arrayList.add(rightImageFile[0]);*/
-
-
         Random rng = new Random();
         List<Integer> generated = new ArrayList<Integer>();
         for (int i = 0; i < imageViewIds.length; i++) {
@@ -174,17 +139,11 @@ public class CommonFunction {
     public void speechToText(Context context, TextView textView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo, int pMark, int nMark) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
-
-        //String languagePref = Locale.ENGLISH;
-        final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, QuestionsActivity.strSpeakCode);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
 
-        /*final Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.);
-*/
         QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
         speechRecognizer.startListening(speechRecognizerIntent);
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
@@ -217,7 +176,7 @@ public class CommonFunction {
 
             @Override
             public void onError(int i) {
-                textView.setHint("Speak again");
+                textView.setHint("Touch to Speak again");
             }
 
             @Override
@@ -237,10 +196,6 @@ public class CommonFunction {
                 }
                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
 
-                /*if(data.get(0).equals(answerWord)) {
-                    Log.d("check ok", data.get(0) + " " + answerWord);
-
-                }*/
             }
 
             @Override
@@ -254,19 +209,6 @@ public class CommonFunction {
             }
         });
 
-        /*micBtn.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP){
-                    speechRecognizer.stopListening();
-                }
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                    //micBtn.setImageResource(R.drawable.ic_mic_black_24dp);
-                    speechRecognizer.startListening(speechRecognizerIntent);
-                }
-                return false;
-            }
-        });*/
     }
 
     public void onClickHomeButton(View view, final Activity activity, int quesNo) {

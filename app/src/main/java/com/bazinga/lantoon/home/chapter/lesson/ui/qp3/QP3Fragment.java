@@ -123,7 +123,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getQtypeImagePath(), imbBtnQuestionImg);
         cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), imgBtnAnsImage);
 
-        cf.mikeAnimation(btnMic,2000);
+
     }
 
     private void setTopBarState(int quesNo, int totalQues) {
@@ -168,6 +168,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                         mp1.stop();
                         mp1.release();
                         setClickableButton(true);
+                        cf.mikeAnimation(btnMic,2000);
                     });
                 } catch (IOException e) {
                     e.printStackTrace();

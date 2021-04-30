@@ -112,8 +112,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         tvQuestionName.setText(question.getWord());
         cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
         //audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
-        cf.shakeAnimation(imbBtnQuestionImg, 1000);
-        cf.mikeAnimation(btnMic,2000);
+
         setClickableButton(true);
 
         Log.d("data p1 ", new GsonBuilder().setPrettyPrinting().create().toJson(question));
@@ -128,7 +127,9 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        cf.shakeAnimation(imbBtnQuestionImg, 1000);
         audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+        cf.mikeAnimation(btnMic,2000);
     }
 
     private void setTopBarState(int quesNo, int totalQues) {

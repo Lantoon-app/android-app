@@ -66,7 +66,7 @@ public class QuestionRightWrongPopup {
         if (right) {
             mediaPlayer = MediaPlayer.create(activity, R.raw.right_answer);
             mediaPlayer.start();
-            ImageView imageViewRight = popupView.findViewById(R.id.ivGif);
+            /*ImageView imageViewRight = popupView.findViewById(R.id.ivGif);
             imageViewRight.setVisibility(View.VISIBLE);
             Glide.with(activity).load(R.drawable.gif_correct_answer).listener(new RequestListener<Drawable>() {
                 @Override
@@ -114,8 +114,8 @@ public class QuestionRightWrongPopup {
                 }
 
 
-            }).into(imageViewRight);
-           /* ImageView imageViewRight = popupView.findViewById(R.id.imageViewRight);
+            }).into(imageViewRight);*/
+            ImageView imageViewRight = popupView.findViewById(R.id.imageViewRight);
             imageViewRight.setVisibility(View.VISIBLE);
             Drawable drawable = imageViewRight.getDrawable();
             if (drawable instanceof AnimatedVectorDrawableCompat) {
@@ -186,7 +186,7 @@ public class QuestionRightWrongPopup {
                     }
                 });
                 animatedVectorDrawable.start();
-            }*/
+            }
         } else {
             Log.d("checkerror ", "attemptCount"+attemptCount+isSpeech+isLast);
             mediaPlayer = MediaPlayer.create(activity, R.raw.wrong_answer);

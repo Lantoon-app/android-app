@@ -41,7 +41,7 @@ public class ChapterFragment extends Fragment {
     public static final int PAGE_START = 1;
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
-    private int totalPage = 3;
+    private int totalPage = 100;
     private boolean isLoading = false;
     int itemCount = 0;
     boolean fragmentDestroyed = false;
@@ -100,6 +100,12 @@ public class ChapterFragment extends Fragment {
         chapterViewModel.getData(currentPage,mSwipeRefreshLayout,sessionManager.getUserDetails().getLearnlang(),sessionManager.getUserDetails().getUid());
         preparedListItem();
     }*/
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     private void preparedListItem() {
         System.out.println("Chapter preparedListItem page no = " + String.valueOf(currentPage));

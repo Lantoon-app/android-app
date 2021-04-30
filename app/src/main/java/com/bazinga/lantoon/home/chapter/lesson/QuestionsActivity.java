@@ -122,7 +122,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     questionViewModel.getQuestionsMutableLiveData().observe(QuestionsActivity.this, fragments -> {
 
                         MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
-                        //mPager.setUserInputEnabled(false);
+
                         mPager.setAdapter(mPageAdapter);
                         mPager.setUserInputEnabled(false);
                         mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO,1)-1);

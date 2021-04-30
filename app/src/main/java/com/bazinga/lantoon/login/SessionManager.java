@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.bazinga.lantoon.GetStartActivity;
+import com.bazinga.lantoon.SplashActivity;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.login.ui.login.LoginActivity;
 
@@ -257,7 +258,7 @@ public void setSpeakCode(String speakCode) {
         editor.commit();
 
         // After logout redirect user to Loing Activity
-        Intent i = new Intent(_context, LoginActivity.class);
+        Intent i = new Intent(_context, SplashActivity.class);
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
