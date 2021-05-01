@@ -12,16 +12,24 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bazinga.lantoon.home.HomeActivity;
+import com.bazinga.lantoon.home.chapter.ChapterFragment;
 import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
+import com.bazinga.lantoon.home.chapter.lesson.RightOrWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
@@ -113,7 +121,7 @@ public class CommonFunction {
     public void checkQuestion(String tag, int quesNo, int
             totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, int pMark, int nMark) {
         attemptCount++;
-        QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
+        RightOrWrongPopup qrwp = new RightOrWrongPopup();
         if (CheckAnswerImage(tag)) {
             if (quesNo == totalQues) {
 
@@ -144,7 +152,7 @@ public class CommonFunction {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
 
-        QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
+        RightOrWrongPopup qrwp = new RightOrWrongPopup();
         speechRecognizer.startListening(speechRecognizerIntent);
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -212,9 +220,8 @@ public class CommonFunction {
     }
 
     public void onClickHomeButton(View view, final Activity activity, int quesNo) {
-        String timeSpent = QuestionsActivity.tvTimer.getText().toString();
-
-        //Uncomment the below code to Set the message and title from the strings.xml file
+        showExitPopup(view,activity);
+       /* //Uncomment the below code to Set the message and title from the strings.xml file
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
         //Setting message manually and performing action on button click
@@ -223,11 +230,11 @@ public class CommonFunction {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int id) {
-                        /*QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
+                        *//*QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
                         QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
-                        QuestionsActivity.clearData();*/
+                        QuestionsActivity.clearData();*//*
                         activity.finish();
-                        /*if (quesNo == 1) {
+                        *//*if (quesNo == 1) {
                             activity.finish();
                         }
                         QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
@@ -262,7 +269,7 @@ public class CommonFunction {
                                     toJson(QuestionsActivity.score));
                         } else {
                             activity.finish();
-                        }*/
+                        }*//*
 
                     }
                 })
@@ -270,7 +277,7 @@ public class CommonFunction {
 
                         setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
+                                //QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
                                 dialog.cancel();
                                 dialog.dismiss();
                             }
@@ -279,7 +286,68 @@ public class CommonFunction {
         AlertDialog alert = builder.create();
         //Setting the title manually
         alert.setTitle("Alert");
-        alert.show();
+        alert.show();*/
+    }
+
+    public void showExitPopup(View view,Activity activity) {
+        //Create a View object yourself through inflater
+        LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_home_exit, null);
+
+        //Specify the length and width through constants
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        //Make Inactive Items Outside Of PopupWindow
+        boolean focusable = true;
+
+        //Create a window with our parameters
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        //Set the location of the window on the screen
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        //Initialize the elements of our window, install the handler
+
+        TextView tvMessage = popupView.findViewById(R.id.tvMessage);
+        Button btnYes = popupView.findViewById(R.id.btnYes);
+        Button btnNo = popupView.findViewById(R.id.btnNo);
+        ImageButton imgBtnClose = popupView.findViewById(R.id.imgBtnClose);
+
+        tvMessage.setText(activity.getString(R.string.ad_home_button_pressed_msg));
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        imgBtnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                popupWindow.dismiss();
+            }
+        });
+
+
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
     public void postLesson(View view, Activity activity, int quesNo, String strTimeSpent) {

@@ -241,13 +241,15 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
             System.out.println("result code " + String.valueOf(resultCode));
             System.out.println("req code " + String.valueOf(requestCode));
-
+            navController.navigate(R.id.bottom_lesson);
         }
 
     }

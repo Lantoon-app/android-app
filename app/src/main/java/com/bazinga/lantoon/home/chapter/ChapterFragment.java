@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -101,11 +102,7 @@ public class ChapterFragment extends Fragment {
         preparedListItem();
     }*/
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-    }
 
     private void preparedListItem() {
         System.out.println("Chapter preparedListItem page no = " + String.valueOf(currentPage));
