@@ -7,32 +7,32 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="40dp"
+    android:layout_margin="@dimen/_40sdp"
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
     android:background="@drawable/border_bg_chapter_completed">
 <ImageView
-    android:layout_width="100dp"
-    android:layout_height="100dp"
+    android:layout_width="@dimen/_80sdp"
+    android:layout_height="@dimen/_80sdp"
     android:layout_gravity="center"
     android:src="@drawable/chapter_completed_img"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/_10sdp"
         android:fontFamily="@font/open_sans_semibold"
         android:gravity="center"
         android:text="@string/successfully_completed_the_lesson"
         android:textColor="@color/black"
-        android:textSize="15sp" />
+        android:textSize="@dimen/_15ssp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/_10sdp"
         android:gravity="center">
 
             <TextView
@@ -40,38 +40,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/_10sdp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:textSize="@dimen/_15ssp" />
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="horizontal">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnExitPopupLessonCompleted"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:background="@drawable/button_bg"
                 android:text="Exit"
-                android:textSize="15dp"
+                android:textSize="@dimen/_15ssp"
                 app:backgroundTint="@null" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinuePopupLessonCompleted"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:background="@drawable/button_bg"
                 android:text="CONTINUE"
-                android:textSize="15dp"
+                android:textSize="@dimen/_15ssp"
                 app:backgroundTint="@null" />
         </LinearLayout>
     </LinearLayout>

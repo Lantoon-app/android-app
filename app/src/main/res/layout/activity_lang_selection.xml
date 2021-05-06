@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/_100sdp"
         android:background="@drawable/top_bg"
         android:gravity="top"
         android:theme="@style/AppTheme.AppBarOverlay"
@@ -30,7 +30,7 @@
                 android:gravity="center"
                 android:text="@string/welcome_user"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="@dimen/_20ssp"
                 android:textStyle="bold" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -42,6 +42,7 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,16 +53,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
             android:text="@string/i_know"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="@dimen/_18ssp" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vpIknow"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:orientation="horizontal" />
@@ -71,28 +72,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
             android:text="@string/i_want_to_learn"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="@dimen/_18ssp" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vpIwantLearn"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/button_bg"
             android:text="@string/btn_next"
-            android:textSize="20dp"
+            android:textSize="@dimen/_18ssp"
             app:backgroundTint="@null" />
 
 

@@ -7,8 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <ImageView
     android:id="@+id/ivGif"
-    android:layout_width="150dp"
-    android:layout_height="150dp"
+    android:layout_width="@dimen/_130sdp"
+    android:layout_height="@dimen/_130sdp"
     android:visibility="gone"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -16,8 +16,8 @@
     app:layout_constraintTop_toTopOf="parent"/>
     <ImageView
         android:id="@+id/imageViewRight"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,8 @@
         app:srcCompat="@drawable/answer_right_anim" />
     <ImageView
         android:id="@+id/imageViewWrong"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

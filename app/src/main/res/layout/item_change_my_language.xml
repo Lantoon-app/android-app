@@ -7,8 +7,8 @@
     <LinearLayout
         android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_margin="15dp"
+        android:layout_height="@dimen/_60sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:background="@drawable/language_item_bg"
         android:gravity="right"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,19 +20,19 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="@dimen/_100sdp"
             android:gravity="start"
             android:layout_gravity="center"
             android:text="ENGLISH / english"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="18dp" />
+            android:textSize="@dimen/_15ssp" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/ivLang"
-        android:layout_width="100dp"
-        android:layout_height="70dp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_60sdp"
         android:background="@drawable/language_item_left_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/linearLayout11"

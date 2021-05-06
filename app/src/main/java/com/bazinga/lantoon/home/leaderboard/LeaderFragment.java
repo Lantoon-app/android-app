@@ -2,6 +2,7 @@ package com.bazinga.lantoon.home.leaderboard;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.Gravity;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
@@ -28,6 +30,11 @@ import com.bazinga.lantoon.home.leaderboard.model.Leader;
 import com.bazinga.lantoon.home.leaderboard.model.LeaderResponse;
 import com.bazinga.lantoon.home.leaderboard.model.MyLeaderData;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 
@@ -115,14 +122,26 @@ public class LeaderFragment extends Fragment {
 
     private void setFooter(@NonNull MyLeaderData myLeaderData) {
         if (myLeaderData.getPicture() != null) {
-            byte[] decodedString = Base64.decode(myLeaderData.getPicture(), Base64.DEFAULT);
+           /* byte[] decodedString = Base64.decode(myLeaderData.getPicture(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             RoundedBitmapDrawable dr =
                     RoundedBitmapDrawableFactory.create(getResources(), decodedByte);
             dr.setGravity(Gravity.CENTER);
             dr.setCircular(true);
             ivLeaderItemFooter.setBackground(null);
-            ivLeaderItemFooter.setImageDrawable(dr);
+            ivLeaderItemFooter.setImageDrawable(dr);*/
+            Glide.with(this).load(myLeaderData.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    ivLeaderItemFooter.setBackground(getActivity().getDrawable(R.drawable.icon_avatar));
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    return false;
+                }
+            }).into(ivLeaderItemFooter);
         }
         tvUserNameLeaderItemFooter.setText(myLeaderData.getUname());
         tvRankLeaderItemFooter.setText(String.valueOf(myLeaderData.getRank()));

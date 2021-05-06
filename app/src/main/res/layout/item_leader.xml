@@ -8,13 +8,11 @@
 
     <ImageView
         android:id="@+id/ivLeaderItem"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
         android:layout_centerVertical="true"
         android:src="@drawable/icon_avatar" />
 
@@ -22,13 +20,13 @@
         android:id="@+id/tvUserNameLeaderItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:maxLength="15"
-        android:textSize="15sp"
         android:layout_centerVertical="true"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="@dimen/_80sdp"
         android:fontFamily="@font/open_sans_bold"
-        android:text="RAMKUMAR" />
+        android:maxLength="15"
+        android:maxLines="1"
+        android:text="RAMKU"
+        android:textSize="@dimen/_12ssp" />
 
     <TextView
         android:id="@+id/tvRankLeaderItem"
@@ -36,18 +34,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="158dp"
-        android:textSize="15sp"
+        android:layout_marginEnd="@dimen/_130sdp"
+        android:textSize="@dimen/_12ssp"
         android:fontFamily="@font/open_sans_bold"
         android:maxLength="5"
         android:text="01" />
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="69dp"
+        android:layout_marginEnd="@dimen/_69sdp"
         android:src="@drawable/ic_gem_filled" />
 
     <TextView
@@ -56,8 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="14dp"
-        android:textSize="15sp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:textSize="@dimen/_12ssp"
         android:fontFamily="@font/open_sans_bold"
         android:maxLength="6"
         android:text="113644" />

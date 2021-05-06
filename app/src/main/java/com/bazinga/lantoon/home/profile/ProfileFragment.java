@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,8 +25,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -37,7 +40,16 @@ import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.registration.model.DurationData;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 import com.hbb20.CountryCodePicker;
 
@@ -50,6 +62,10 @@ import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,8 +107,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 if (profile.getStatus().getCode() == 1023) {
                     profileData = profile.getProfileData();
                     Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
-                    if (!profileData.getPicture().equals("")) {
-                        byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
+                    if (!profileData.getPicture().equals("") || profileData.getPicture() != null) {
+                       /* byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                         decodedByte = Bitmap.createScaledBitmap(decodedByte, ivProfilePhoto.getWidth(), ivProfilePhoto.getHeight(), true);
                         RoundedBitmapDrawable dr =
@@ -100,7 +116,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                         dr.setGravity(Gravity.CENTER);
                         dr.setCircular(true);
                         ivProfilePhoto.setBackground(null);
-                        ivProfilePhoto.setImageDrawable(dr);
+                        ivProfilePhoto.setImageDrawable(dr);*/
+                        Glide.with(this).load(profileData.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                ivProfilePhoto.setBackground(null);
+                                return false;
+                            }
+                        }).into(ivProfilePhoto);
 
                     }
                     durationDataList = profile.getDurationData();
@@ -198,7 +226,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     ivProfilePhoto.setBackground(null);
                     ivProfilePhoto.setImageDrawable(dr);
                     //String strBase64 = BitMapToString(bitmap);
-                    SendDetail(BitMapToString(bitmap));
+                   // SendDetail(BitMapToString(bitmap));
                     String path = getContext().getCacheDir().getPath()
                             + File.separator
                             + "Phoenix" + File.separator + "default";
@@ -228,6 +256,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
+
+                SendDetail(picturePath);
                 c.close();
                 Bitmap bitmap = (BitmapFactory.decodeFile(picturePath));
                 bitmap = getResizedBitmap(bitmap, 400);
@@ -244,7 +274,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 ivProfilePhoto.setBackground(null);
                 ivProfilePhoto.setImageDrawable(dr);
 
-                SendDetail(BitMapToString(bitmap));
+                //SendDetail(BitMapToString(bitmap));
             }
         }
     }
@@ -274,27 +304,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     private void SendDetail(String strPicture) {
         System.out.println(strPicture);
-        profilePictureData = new ProfilePictureData();
+        File imageFile = new File(strPicture);
+        RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imageFile);
+        MultipartBody.Part partImage = MultipartBody.Part.createFormData("file", imageFile.getName(), reqBody);
+        RequestBody userid = RequestBody.create(MediaType.parse("text/plain"),HomeActivity.sessionManager.getUid());
+       /* profilePictureData = new ProfilePictureData();
         profilePictureData.setProfilepic(strPicture);
-        profilePictureData.setUserid(HomeActivity.sessionManager.getUid());
+        profilePictureData.setUserid(HomeActivity.sessionManager.getUid());*/
+       /* UploadPic uploadPic = new UploadPic();
+        uploadPic.setImageFile(partImage);
+        uploadPic.setUerId(HomeActivity.sessionManager.getUid());*/
         final ProgressDialog loading = new ProgressDialog(getContext());
         loading.setMessage("Please Wait...");
         loading.show();
         loading.setCanceledOnTouchOutside(false);
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ProfilePicture> call = apiInterface.updateProfilePicture(profilePictureData);
-        call.enqueue(new Callback<ProfilePicture>() {
+        Call<ResponseBody> call = apiInterface.updateProfilePicture(userid,partImage);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ProfilePicture> call, Response<ProfilePicture> response) {
-                if (response.body().getStatus().getCode() == 1028) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                /*if (response.body().getStatus().getCode() == 1028) {
                     Log.d("profile picture data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     HomeActivity.sessionManager.setProfilePic(response.body().getData().getProfilepic());
-                }
+                }*/
+                Log.d("profile picture data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                 loading.dismiss();
             }
 
             @Override
-            public void onFailure(Call<ProfilePicture> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("profile picture error ", t.getMessage());
+                Snackbar.make(getView(),t.getMessage(),Snackbar.LENGTH_LONG).show();
                 loading.dismiss();
             }
         });

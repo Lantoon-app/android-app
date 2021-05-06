@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/_100sdp"
         android:background="@drawable/top_bg"
         android:gravity="top"
         android:theme="@style/AppTheme.AppBarOverlay"
@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:text="@string/title_create_account"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="@dimen/_20ssp"
                 android:textStyle="bold" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -51,16 +51,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/etFullName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/_50sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:ems="10"
                 android:gravity="center"
@@ -70,8 +71,9 @@
             <EditText
                 android:id="@+id/etEmailAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/_50sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:ems="10"
                 android:gravity="center"
@@ -81,20 +83,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:orientation="horizontal">
 
                 <com.hbb20.CountryCodePicker
                     android:id="@+id/countryCodePicker"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_50sdp"
                     android:background="@drawable/edittext_bg"
                     android:gravity="center"
                     app:ccp_hintExampleNumber="true"
                     app:ccp_showFlag="false"
                     app:ccp_showNameCode="false"
-                    app:ccp_textSize="14sp"
+                    app:ccp_textSize="@dimen/_15ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -102,8 +104,9 @@
 
                 <EditText
                     android:id="@+id/etPhoneNumber"
-                    android:layout_width="292dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:textSize="@dimen/_15ssp"
                     android:layout_gravity="center"
                     android:background="@drawable/edittext_bg"
                     android:ems="10"
@@ -116,8 +119,9 @@
             <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/_50sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:gravity="center"
                 android:hint="@string/hint_password"
@@ -127,8 +131,9 @@
             <EditText
                 android:id="@+id/etCnfPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/_50sdp"
+                android:textSize="@dimen/_15ssp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:gravity="center"
                 android:hint="@string/hint_cnf_password"
@@ -138,63 +143,63 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/button_bg"
                 android:text="@string/btn_signup"
-                android:textSize="20dp"
+                android:textSize="@dimen/_18ssp"
                 app:backgroundTint="@null" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
                 android:text="Or"
-                android:textSize="15dp" />
+                android:textSize="@dimen/_15ssp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="@dimen/_5sdp">
 
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/btnFb"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="@dimen/_60sdp"
                     android:visibility="gone" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnFbLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@color/fb_color"
                     android:drawableLeft="@drawable/ic_fb"
                     android:text="@string/btn_login_with_facebook"
                     android:textAllCaps="false"
-                    android:textSize="20dp"
+                    android:textSize="@dimen/_15ssp"
                     app:backgroundTint="@null" />
             </FrameLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGoogleLogin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/google_color"
                 android:drawableLeft="@drawable/ic_google"
                 android:text="@string/btn_login_with_google"
                 android:textAllCaps="false"
-                android:textSize="20dp"
+                android:textSize="@dimen/_15ssp"
                 app:backgroundTint="@null" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -202,7 +207,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Back to  "
-                    android:textSize="18dp" />
+                    android:textSize="@dimen/_15ssp" />
 
                 <TextView
                     android:id="@+id/tvBackToLogin"
@@ -210,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/login"
                     android:textColor="@color/blue"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/_15ssp"
                     android:textStyle="bold" />
             </LinearLayout>
 

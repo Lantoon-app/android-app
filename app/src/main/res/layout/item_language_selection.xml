@@ -24,11 +24,11 @@
         android:layout_height="wrap_content"
         android:text="English"
         android:textColor="@color/white"
-        android:textSize="15dp"
-        android:layout_marginBottom="10dp"
+        android:textSize="@dimen/_15ssp"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:layout_anchor="@+id/imgViewLanguage"
         app:layout_anchorGravity="bottom|center"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="165dp" />
+        tools:layout_editor_absoluteX="@dimen/_70sdp"
+        tools:layout_editor_absoluteY="@dimen/_165sdp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

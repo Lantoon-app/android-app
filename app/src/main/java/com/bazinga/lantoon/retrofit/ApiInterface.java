@@ -10,6 +10,7 @@ import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
 import com.bazinga.lantoon.home.profile.ProfilePictureData;
+import com.bazinga.lantoon.home.profile.UploadPic;
 import com.bazinga.lantoon.home.target.model.TargetResponse;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.login.forget.OtpResponse;
@@ -19,12 +20,17 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
@@ -77,10 +83,15 @@ public interface ApiInterface {
     @POST("Lantoon/public/UserHandler.php/changeforgetpass")
     Call<JsonObject> changeForgetPassword(@Query("uid") String uid, @Query("newpass") String newpass);
 
-    //Update Profile Picture
+    /*//Update Profile Picture
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/updateprofilepic")
-    Call<ProfilePicture> updateProfilePicture(@Body ProfilePictureData profilePictureData);
+    Call<ProfilePicture> updateProfilePicture(@Body ProfilePictureData profilePictureData);*/
+//Update Profile Picture
+    @Multipart
+    @POST("Lantoon/public/UserHandler.php/updateprofilepic")
+    Call<ResponseBody> updateProfilePicture(@Part("userid") RequestBody userid,
+                                            @Part MultipartBody.Part file);
 
     //Lesson Questions
     /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")

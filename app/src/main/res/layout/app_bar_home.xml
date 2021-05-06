@@ -15,15 +15,14 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_height="@dimen/_50sdp"
             android:background="@drawable/top_bg"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
-            <!--<androidx.appcompat.widget.AppCompatTextView
+            app:popupTheme="@style/AppTheme.PopupOverlay"><!--
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/titleHome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="left|center"
                 android:text="@string/welcome_user"
                 android:textColor="@color/white"
                 android:textSize="20dp"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,12 +15,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.leaderboard.model.Leader;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -125,26 +132,39 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private void populateItemRows(ItemViewHolder viewHolder, int position) {
 
         Leader leader = mItemList.get(position);
-        if(leader.getRank() == 1) {
+        if (leader.getRank() == 1) {
             viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_first_rank);
             viewHolder.tvUserNameLeaderItem.setTextColor(Color.WHITE);
             viewHolder.tvRankLeaderItem.setTextColor(Color.WHITE);
             viewHolder.tvGemCountLeaderItem.setTextColor(Color.WHITE);
-        }
-        if (leader.getPicture() != null) {
-            byte[] decodedString = Base64.decode(leader.getPicture(), Base64.DEFAULT);
+        } else {
+            if (leader.getPicture() != null) {
+           /* byte[] decodedString = Base64.decode(leader.getPicture(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             RoundedBitmapDrawable dr =
                     RoundedBitmapDrawableFactory.create(viewHolder.itemView.getResources(), decodedByte);
             dr.setGravity(Gravity.CENTER);
             dr.setCircular(true);
             viewHolder.ivLeaderItem.setBackground(null);
-            viewHolder.ivLeaderItem.setImageDrawable(dr);
-        }
-        viewHolder.tvUserNameLeaderItem.setText(leader.getUname());
-        viewHolder.tvRankLeaderItem.setText(String.valueOf(leader.getRank()));
-        viewHolder.tvGemCountLeaderItem.setText(String.valueOf(leader.getGemcount()));
+            viewHolder.ivLeaderItem.setImageDrawable(dr);*/
+                Glide.with(context).load(leader.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        viewHolder.ivLeaderItem.setBackground(context.getDrawable(R.drawable.icon_avatar));
+                        return false;
+                    }
 
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+                        return false;
+                    }
+                }).into(viewHolder.ivLeaderItem);
+            }
+            viewHolder.tvUserNameLeaderItem.setText(leader.getUname());
+            viewHolder.tvRankLeaderItem.setText(String.valueOf(leader.getRank()));
+            viewHolder.tvGemCountLeaderItem.setText(String.valueOf(leader.getGemcount()));
+        }
     }
 
 

@@ -17,8 +17,13 @@
 
     <style name="AppTheme" parent="Theme.Lantoon">
         <item name="android:textViewStyle">@style/OpenSandsTextViewStyle</item>
+        <item name="android:editTextStyle">@style/AppEditTextStyle</item>
     </style>
-
+    <style name="AppEditTextStyle" parent="android:Widget.EditText">
+        <item name="height">@dimen/_50sdp</item>
+        <item name="background">@drawable/edittext_bg</item>
+        <item name="android:textSize">@dimen/_15ssp</item>
+    </style>
     <style name="OpenSandsTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/open_sans_semibold</item>
     </style>
@@ -39,14 +44,18 @@
     </style>
 
     <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
-        <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
-        <item name="android:minHeight">25dip</item>
-        <item name="android:maxHeight">47dip</item>
+        <item name="android:progressDrawable">@drawable/custom_chapter_rating</item>
+        <item name="android:minHeight">@dimen/_5sdp</item>
+        <item name="android:maxHeight">@dimen/_25sdp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
         <item name="android:numStars">5</item>
         <item name="android:max">5</item>
     </style>
     <style name="QuestionButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/button_bg</item>
     </style>
+
+
 
 </resources>

@@ -20,7 +20,7 @@
         android:background="@color/nav_bottom_bg"
         app:headerLayout="@layout/nav_header_home"
         app:itemBackground="@drawable/nav_drawer_bottom_menu_item_bg"
-        app:itemIconSize="25dp"
+        app:itemIconSize="@dimen/_20sdp"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/activity_home_drawer" />

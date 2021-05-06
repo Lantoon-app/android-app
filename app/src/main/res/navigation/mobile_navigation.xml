@@ -29,11 +29,11 @@
         android:label="@string/menu_payment"
         tools:layout="@layout/fragment_payment" />
 
-    <fragment
+   <!-- <fragment
         android:id="@+id/nav_share"
         android:name="com.bazinga.lantoon.home.share.ShareFragment"
         android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        tools:layout="@layout/fragment_share" />-->
 
    <!-- <fragment
         android:id="@+id/nav_signout"

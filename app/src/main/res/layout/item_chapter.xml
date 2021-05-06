@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginStart="20dp"
+    android:layout_marginStart="@dimen/_20sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <ProgressBar
         android:id="@+id/pbChapter"
         style="@style/CircularDeterminateProgressBar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:progress="10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -18,8 +18,8 @@
         app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/ivDisabled"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
         android:visibility="gone"
         android:background="@drawable/circle"
         android:backgroundTint="@color/chapter_disabled_bg"
@@ -37,14 +37,15 @@
         app:layout_constraintStart_toStartOf="@+id/pbChapter"
         app:layout_constraintTop_toTopOf="@+id/pbChapter"
         android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
         tools:text="CHAPTER 1" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
         android:id="@+id/ratingBar"
         style="@style/CustomRatingBarStyle"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
         android:numStars="5"
         android:isIndicator="true"
         android:scaleX="0.8"
@@ -57,8 +58,8 @@
 
     <ImageView
         android:id="@+id/ivLock"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:src="@drawable/ic_lock"
         app:layout_constraintBottom_toBottomOf="@+id/pbChapter"
         app:layout_constraintEnd_toEndOf="@+id/pbChapter"

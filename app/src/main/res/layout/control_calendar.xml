@@ -10,16 +10,16 @@
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingTop="12dp"
-		android:paddingBottom="12dp"
-		android:paddingLeft="30dp"
-		android:paddingRight="30dp">
+		android:paddingTop="@dimen/_12sdp"
+		android:paddingBottom="@dimen/_12sdp"
+		android:paddingLeft="@dimen/_30sdp"
+		android:paddingRight="@dimen/_30sdp">
 
 		<!-- prev button -->
 		<ImageView
 			android:id="@+id/calendar_prev_button"
-			android:layout_width="30dp"
-			android:layout_height="30dp"
+			android:layout_width="@dimen/_30sdp"
+			android:layout_height="@dimen/_30sdp"
 			android:layout_centerVertical="true"
 			android:layout_alignParentLeft="true"
 			android:src="@drawable/previous_icon"/>
@@ -40,8 +40,8 @@
 		<!-- next button -->
 		<ImageView
 			android:id="@+id/calendar_next_button"
-			android:layout_width="30dp"
-			android:layout_height="30dp"
+			android:layout_width="@dimen/_30sdp"
+			android:layout_height="@dimen/_30sdp"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
 			android:src="@drawable/next_icon"/>
@@ -51,7 +51,7 @@
 	<LinearLayout
 		android:id="@+id/calendar_header"
 		android:layout_width="match_parent"
-		android:layout_height="40dp"
+		android:layout_height="@dimen/_40sdp"
 		android:gravity="center_vertical"
 		android:orientation="horizontal">
 

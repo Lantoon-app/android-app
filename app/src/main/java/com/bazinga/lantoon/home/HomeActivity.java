@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -31,11 +32,21 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bazinga.lantoon.BuildConfig;
 import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -147,6 +158,29 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+        navigationView.getMenu().findItem(R.id.nav_share).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+               /* Intent intent =new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Lantoon");
+                intent.putExtra(Intent.EXTRA_TEXT,"Learn any language from your native language https://play.google.com/store/apps/details?id=io.gonative.android.lbpbqe ");
+                intent.setType("text/plain");
+                startActivity(intent);*/
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Lantoon");
+                    String shareMessage= "\nLearn any language from your native language\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    startActivity(Intent.createChooser(shareIntent, "Choose one"));
+                } catch(Exception e) {
+                    //e.toString();
+                }
+                return false;
+            }
+        });
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull @NotNull View drawerView, float slideOffset) {
@@ -180,7 +214,7 @@ public class HomeActivity extends AppCompatActivity {
         tvNavHeaderUsername.setText(sessionManager.getUserName());
         tvNavHeaderUserId.setText(sessionManager.getUid());
         if (!sessionManager.getProfilePic().equals("") || sessionManager.getProfilePic() != null) {
-            byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
+           /* byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             //decodedByte = Bitmap.createScaledBitmap(decodedByte, ivNavHeaderUserImage.getWidth(), ivNavHeaderUserImage.getHeight(), true);
             RoundedBitmapDrawable dr =
@@ -188,7 +222,20 @@ public class HomeActivity extends AppCompatActivity {
             dr.setGravity(Gravity.CENTER);
             dr.setCircular(true);
             ivNavHeaderUserImage.setBackground(null);
-            ivNavHeaderUserImage.setImageDrawable(dr);
+            ivNavHeaderUserImage.setImageDrawable(dr);*/
+
+            Glide.with(this).load(sessionManager.getProfilePic()).circleCrop().addListener(new RequestListener<Drawable>() {
+                @Override
+                public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                    ivNavHeaderUserImage.setBackground(getDrawable(R.drawable.icon_avatar));
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    return false;
+                }
+            }).into(ivNavHeaderUserImage);
 
         }
     }
