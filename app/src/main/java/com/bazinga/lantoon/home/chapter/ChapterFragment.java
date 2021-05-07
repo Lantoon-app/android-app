@@ -1,35 +1,26 @@
 package com.bazinga.lantoon.home.chapter;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.chapter.adapter.ChapterAdapter;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsViewModel;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsViewModelFactory;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.home.chapter.utils.EqualSpacingItemDecoration;
 import com.bazinga.lantoon.home.chapter.utils.PaginationScrollListener;
-import com.bazinga.lantoon.home.chapter.widget.HorizontalSwipeRefreshLayout;
 import com.bazinga.lantoon.login.SessionManager;
 
-
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ChapterFragment extends Fragment {

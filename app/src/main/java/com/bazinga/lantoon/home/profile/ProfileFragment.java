@@ -7,16 +7,11 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,16 +20,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.registration.model.DurationData;
@@ -43,29 +35,20 @@ import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 import com.hbb20.CountryCodePicker;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,7 +60,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     private ProfileViewModel profileViewModel;
     private ProfileData profileData;
-    ProfilePictureData profilePictureData;
     private List<DurationData> durationDataList;
     EditText etFullName, etDOB, etPhoneNumber;
     CountryCodePicker countryCodePicker;
@@ -86,7 +68,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     ImageView ivProfilePhoto;
     Spinner spinnerDuration;
     final Calendar myCalendar = Calendar.getInstance();
-    String currentPhotoPath;
     boolean fragmentDestroyed = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -108,15 +89,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     profileData = profile.getProfileData();
                     Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
                     if (!profileData.getPicture().equals("") || profileData.getPicture() != null) {
-                       /* byte[] decodedString = Base64.decode(profileData.getPicture(), Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-                        decodedByte = Bitmap.createScaledBitmap(decodedByte, ivProfilePhoto.getWidth(), ivProfilePhoto.getHeight(), true);
-                        RoundedBitmapDrawable dr =
-                                RoundedBitmapDrawableFactory.create(getContext().getResources(), decodedByte);
-                        dr.setGravity(Gravity.CENTER);
-                        dr.setCircular(true);
-                        ivProfilePhoto.setBackground(null);
-                        ivProfilePhoto.setImageDrawable(dr);*/
+
                         Glide.with(this).load(profileData.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -143,6 +116,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                         etPhoneNumber.setText(profileData.getPhone());
                     }
                 }
+                if (profile.getStatus().getCode() == 1025) {
+                    Snackbar.make(getView(), profile.getStatus().getMessage(), Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
         date = (view, year, monthOfYear, dayOfMonth) -> {
@@ -163,7 +139,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivProfilePhoto:
-                selectImage();
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
+                    selectImage();
+                else
+                    Snackbar.make(getView(), getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
                 break;
             case R.id.etDOB:
                 new DatePickerDialog(getContext(), date, myCalendar
@@ -213,41 +192,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
+                Uri selectedImage = data.getData();
+                String[] filePath = {MediaStore.Images.Media.DATA};
+                Cursor c = getContext().getContentResolver().query(selectedImage, filePath, null, null, null);
+                c.moveToFirst();
+                int columnIndex = c.getColumnIndex(filePath[0]);
+                String picturePath = c.getString(columnIndex);
+                SendDetail(picturePath);
+                c.close();
 
-                try {
-                    Bundle extras = data.getExtras();
-                    Bitmap bitmap = (Bitmap) extras.get("data");
-                    bitmap = getResizedBitmap(bitmap, 400);
-                    Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap, ivProfilePhoto.getWidth(), ivProfilePhoto.getHeight(), true);
-                    RoundedBitmapDrawable dr =
-                            RoundedBitmapDrawableFactory.create(getContext().getResources(), thumbnail);
-                    dr.setGravity(Gravity.CENTER);
-                    dr.setCircular(true);
-                    ivProfilePhoto.setBackground(null);
-                    ivProfilePhoto.setImageDrawable(dr);
-                    //String strBase64 = BitMapToString(bitmap);
-                   // SendDetail(BitMapToString(bitmap));
-                    String path = getContext().getCacheDir().getPath()
-                            + File.separator
-                            + "Phoenix" + File.separator + "default";
-                    //f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    try {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
             } else if (requestCode == 2) {
                 Uri selectedImage = data.getData();
@@ -256,85 +209,44 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
-
                 SendDetail(picturePath);
                 c.close();
-                Bitmap bitmap = (BitmapFactory.decodeFile(picturePath));
-                bitmap = getResizedBitmap(bitmap, 400);
 
-                //Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Bitmap thumbnail = Bitmap.createScaledBitmap(bitmap, ivProfilePhoto.getWidth(), ivProfilePhoto.getHeight(), true);
-
-                //thumbnail = getResizedBitmap(thumbnail, 500);
-                Log.w("path of image from gallery......******************.........", picturePath + "");
-                RoundedBitmapDrawable dr =
-                        RoundedBitmapDrawableFactory.create(getContext().getResources(), thumbnail);
-                dr.setGravity(Gravity.CENTER);
-                dr.setCircular(true);
-                ivProfilePhoto.setBackground(null);
-                ivProfilePhoto.setImageDrawable(dr);
-
-                //SendDetail(BitMapToString(bitmap));
             }
         }
     }
 
-    public String BitMapToString(Bitmap userImage1) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        userImage1.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String Document_img1 = Base64.encodeToString(b, Base64.DEFAULT);
-        return Document_img1;
-    }
-
-    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
-        int width = image.getWidth();
-        int height = image.getHeight();
-
-        float bitmapRatio = (float) width / (float) height;
-        if (bitmapRatio > 1) {
-            width = maxSize;
-            height = (int) (width / bitmapRatio);
-        } else {
-            height = maxSize;
-            width = (int) (height * bitmapRatio);
-        }
-        return Bitmap.createScaledBitmap(image, width, height, true);
-    }
 
     private void SendDetail(String strPicture) {
         System.out.println(strPicture);
         File imageFile = new File(strPicture);
         RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imageFile);
-        MultipartBody.Part partImage = MultipartBody.Part.createFormData("file", imageFile.getName(), reqBody);
-        RequestBody userid = RequestBody.create(MediaType.parse("text/plain"),HomeActivity.sessionManager.getUid());
-       /* profilePictureData = new ProfilePictureData();
-        profilePictureData.setProfilepic(strPicture);
-        profilePictureData.setUserid(HomeActivity.sessionManager.getUid());*/
-       /* UploadPic uploadPic = new UploadPic();
-        uploadPic.setImageFile(partImage);
-        uploadPic.setUerId(HomeActivity.sessionManager.getUid());*/
+        MultipartBody.Part partImage = MultipartBody.Part.createFormData("profilepic", imageFile.getName(), reqBody);
+        RequestBody userid = RequestBody.create(MediaType.parse("text/plain"), HomeActivity.sessionManager.getUid());
         final ProgressDialog loading = new ProgressDialog(getContext());
         loading.setMessage("Please Wait...");
         loading.show();
         loading.setCanceledOnTouchOutside(false);
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> call = apiInterface.updateProfilePicture(userid,partImage);
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<ProfilePicture> call = apiInterface.updateProfilePicture(userid, partImage);
+        call.enqueue(new Callback<ProfilePicture>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                /*if (response.body().getStatus().getCode() == 1028) {
+            public void onResponse(Call<ProfilePicture> call, Response<ProfilePicture> response) {
+                if (response.body().getStatus().getCode() == 1028) {
+                    ivProfilePhoto.setBackground(null);
+                    Glide.with(getContext()).load(response.body().getData().getProfilepic()).circleCrop().into(ivProfilePhoto);
                     Log.d("profile picture data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     HomeActivity.sessionManager.setProfilePic(response.body().getData().getProfilepic());
-                }*/
+                    Snackbar.make(getView(), response.body().getStatus().getMessage(), Snackbar.LENGTH_SHORT).show();
+                }
                 Log.d("profile picture data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                 loading.dismiss();
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<ProfilePicture> call, Throwable t) {
                 Log.d("profile picture error ", t.getMessage());
-                Snackbar.make(getView(),t.getMessage(),Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_LONG).show();
                 loading.dismiss();
             }
         });
@@ -349,11 +261,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        /*for(int i=0; i<durationDataList.size(); i++){
-            if(profileData.getMindurationperday() == Integer.valueOf(durationDataList.get(i).getDurationMin()))
-                parent.setSelection(i);
-        }*/
-        //parent.setSelection(2);
+
     }
 
     @Override

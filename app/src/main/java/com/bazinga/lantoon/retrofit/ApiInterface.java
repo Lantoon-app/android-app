@@ -9,8 +9,6 @@ import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
-import com.bazinga.lantoon.home.profile.ProfilePictureData;
-import com.bazinga.lantoon.home.profile.UploadPic;
 import com.bazinga.lantoon.home.target.model.TargetResponse;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.login.forget.OtpResponse;
@@ -30,7 +28,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
@@ -90,7 +87,7 @@ public interface ApiInterface {
 //Update Profile Picture
     @Multipart
     @POST("Lantoon/public/UserHandler.php/updateprofilepic")
-    Call<ResponseBody> updateProfilePicture(@Part("userid") RequestBody userid,
+    Call<ProfilePicture> updateProfilePicture(@Part("userid") RequestBody userid,
                                             @Part MultipartBody.Part file);
 
     //Lesson Questions

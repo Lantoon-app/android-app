@@ -43,12 +43,12 @@ public class ProfileViewModel extends ViewModel {
     public void postProfileData(ProfileData profileData) {
 
         Log.d("update profile data ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
-      ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<Profile> call = apiInterface.updateProfile(profileData);
         call.enqueue(new Callback<Profile>() {
             @Override
             public void onResponse(Call<Profile> call, Response<Profile> response) {
-                if(response.body().getStatus().getCode() == 1025 )
+                //if(response.body().getStatus().getCode() == 1025 )
                 Log.d("update profile data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                 mUser.setValue(response.body());
                 HomeActivity.sessionManager.setUserName(response.body().getProfileData().getUname());

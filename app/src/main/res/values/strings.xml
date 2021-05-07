@@ -93,6 +93,7 @@
     <string name="ongoing">ONGOING</string>
     <string name="upcoming">UPCOMING</string>
     <string name="title_login">LOGIN</string>
+    <string name="msg_network_failed">N/W Connection Failed</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>
