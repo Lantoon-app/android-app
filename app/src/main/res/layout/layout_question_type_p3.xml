@@ -60,7 +60,6 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/open_sans_bold"
             android:gravity="center"
-            android:text="@string/moretextsample"
             android:textColor="@color/black"
             android:textSize="@dimen/_15ssp" />
 
@@ -85,7 +84,6 @@
             android:layout_gravity="center"
             android:fontFamily="@font/open_sans_bold"
             android:gravity="center"
-            android:text="@string/moretextsample"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />
 
@@ -94,8 +92,7 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/c5" />
+            android:layout_marginTop="@dimen/_10sdp" />
 
         <LinearLayout
             android:layout_width="wrap_content"

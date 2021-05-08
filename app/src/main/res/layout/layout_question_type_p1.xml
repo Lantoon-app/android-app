@@ -46,7 +46,6 @@
             android:layout_gravity="center"
             android:fontFamily="@font/open_sans_bold"
             android:gravity="center"
-            android:text="@string/moretextsample"
             android:textColor="@color/black"
             android:textSize="@dimen/_15ssp" />
 
@@ -108,14 +107,12 @@
                 android:id="@+id/imgBtnAnsImage1"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:background="@drawable/c5"
                 android:layout_margin="@dimen/_5sdp" />
 
             <ImageView
                 android:id="@+id/imgBtnAnsImage2"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:background="@drawable/c5"
                 android:layout_margin="@dimen/_5sdp" />
         </LinearLayout>
 
@@ -131,14 +128,12 @@
                 android:id="@+id/imgBtnAnsImage3"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:background="@drawable/c5"
                 android:layout_margin="@dimen/_5sdp" />
 
             <ImageView
                 android:id="@+id/imgBtnAnsImage4"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"
-                android:background="@drawable/c5"
                 android:layout_margin="@dimen/_5sdp" />
         </LinearLayout>
     </LinearLayout>

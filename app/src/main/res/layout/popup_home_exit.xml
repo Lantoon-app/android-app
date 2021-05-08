@@ -2,18 +2,16 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#00FFFFFF">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_20sdp"
-        android:background="@drawable/border_bg_reference"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_30sdp"
+        android:background="@drawable/border_bg_reference">
 
 
         <ImageButton
@@ -21,54 +19,62 @@
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:layout_gravity="top|end"
-            android:layout_margin="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
             android:background="@drawable/close_icon"
             android:gravity="center" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center"
+        android:text="@string/ad_home_button_pressed_msg"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15ssp" />
 
-        <TextView
-            android:id="@+id/tvMessage"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_20sdp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnYes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/button_bg"
             android:fontFamily="@font/open_sans_bold"
-            android:gravity="center"
-            android:text="@string/ad_home_button_pressed_msg"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_20ssp" />
+            android:text="@string/btn_yes"
+            android:textSize="@dimen/_15ssp"
+            app:backgroundTint="@null" />
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_80sdp"
-            android:layout_marginBottom="@dimen/_40sdp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/button_bg"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="@string/btn_no"
+            android:textSize="@dimen/_15ssp"
+            app:backgroundTint="@null" />
+    </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnYes"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:background="@drawable/button_bg"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="YES"
-                android:textSize="@dimen/_15ssp"
-                app:backgroundTint="@null" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnNo"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:background="@drawable/button_bg"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="NO"
-                android:textSize="@dimen/_15ssp"
-                app:backgroundTint="@null" />
-        </LinearLayout>
+</LinearLayout>
 
 
     </LinearLayout>

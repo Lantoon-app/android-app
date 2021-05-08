@@ -53,7 +53,6 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@string/moretextsample"
                 android:layout_margin="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp" />
@@ -111,7 +110,6 @@
                     android:layout_width="@dimen/_130sdp"
                     android:layout_height="@dimen/_130sdp"
                     android:layout_gravity="center"
-                    android:background="@drawable/c5"
                     android:layout_margin="@dimen/_10sdp"
                     />
             </LinearLayout>
@@ -186,14 +184,12 @@
                         android:id="@+id/imgBtnAnsImage1"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        android:background="@drawable/c5"
                         android:layout_margin="@dimen/_5sdp" />
 
                     <ImageView
                         android:id="@+id/imgBtnAnsImage2"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        android:background="@drawable/c5"
                         android:layout_margin="@dimen/_5sdp" />
                 </LinearLayout>
 
@@ -209,14 +205,12 @@
                         android:id="@+id/imgBtnAnsImage3"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        android:background="@drawable/c5"
                         android:layout_margin="@dimen/_5sdp" />
 
                     <ImageView
                         android:id="@+id/imgBtnAnsImage4"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="@dimen/_80sdp"
-                        android:background="@drawable/c5"
                         android:layout_margin="@dimen/_5sdp" />
                 </LinearLayout>
             </LinearLayout>
