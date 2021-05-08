@@ -15,11 +15,16 @@
         android:rotationY="0"
         android:scaleX="-10"
         android:scaleY="100"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-<include
-    android:id="@+id/header"
-    layout="@layout/layout_question_header"/>
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_question_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
@@ -28,9 +33,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
-        android:text=""
+        android:text="@string/moretextsample"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/_15ssp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
@@ -42,8 +47,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="@dimen/_70sdp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,50 +64,44 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio1"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_audio"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlow1"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_speaker_slow"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/imbBtnQuestionImg1"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp"/>
+                android:layout_width="@dimen/_78sdp"
+                android:layout_height="@dimen/_78sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/c5" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,7 +113,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -124,41 +122,34 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio2"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_audio"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlow2"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_speaker_slow"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/imbBtnQuestionImg2"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp" />
+                android:layout_width="@dimen/_78sdp"
+                android:layout_height="@dimen/_78sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/c5"/>
         </LinearLayout>
 
         <LinearLayout
@@ -170,7 +161,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -179,41 +170,34 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio3"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_audio"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlow3"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_speaker_slow"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/imbBtnQuestionImg3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp" />
+                android:layout_width="@dimen/_78sdp"
+                android:layout_height="@dimen/_78sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/c5"/>
         </LinearLayout>
 
         <LinearLayout
@@ -225,7 +209,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -234,54 +218,47 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio4"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_audio"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlow4"
                     style="@style/QuestionButtonStyle"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:insetLeft="0dp"
-                    android:insetTop="0dp"
-                    android:insetRight="0dp"
-                    android:insetBottom="0dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_question_speaker_slow"
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
-                    app:iconSize="40dp" />
+                    app:iconSize="@dimen/_20sdp" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/imbBtnQuestionImg4"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="5dp" />
+                android:layout_width="@dimen/_78sdp"
+                android:layout_height="@dimen/_78sdp"
+                android:layout_margin="@dimen/_5sdp"
+                android:background="@drawable/c5"/>
         </LinearLayout>
 
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/imgBtnNext"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:background="@drawable/question_next"
         android:gravity="end"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

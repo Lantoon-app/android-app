@@ -16,126 +16,119 @@
         android:scaleX="-10"
         android:scaleY="100"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/header"
-        layout="@layout/layout_question_header"/>
+        layout="@layout/layout_question_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.731"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.615">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMic"
+            style="@style/QuestionButtonStyle"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_question_mic"
+            app:iconGravity="textStart"
+            app:iconSize="@dimen/_60sdp" />
+
+        <TextView
+            android:id="@+id/tvRecText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/moretextsample"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15ssp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.605">
+        app:layout_constraintVertical_bias="0.611">
 
+        <TextView
+            android:id="@+id/tvQuestionName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/moretextsample"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+        <ImageView
+            android:id="@+id/imbBtnQuestionImg"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/c5" />
 
         <LinearLayout
-            android:layout_width="253dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.731"
-            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.615">
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnMic"
+                android:id="@+id/btnAudio"
                 style="@style/QuestionButtonStyle"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 app:backgroundTint="@null"
-                app:icon="@drawable/ic_question_mic"
+                app:icon="@drawable/ic_question_audio"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-                app:iconSize="60dp" />
+                app:iconSize="@dimen/_40sdp" />
 
-            <TextView
-                android:id="@+id/tvRecText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAudioSlow"
+                style="@style/QuestionButtonStyle"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                app:backgroundTint="@null"
+                app:icon="@drawable/ic_question_speaker_slow"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconSize="@dimen/_40sdp" />
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="273dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tvQuestionName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/open_sans_bold"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:id="@+id/imbBtnQuestionImg"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAudio"
-                    style="@style/QuestionButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginRight="20dp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_audio"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="60dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAudioSlow"
-                    style="@style/QuestionButtonStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="20dp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="60dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
