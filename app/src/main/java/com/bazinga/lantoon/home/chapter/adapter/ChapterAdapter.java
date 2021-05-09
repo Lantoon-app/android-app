@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.BaseViewHolder;
@@ -214,36 +216,41 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     @Override
                     public void onClick(View v) {
                         //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(activity, QuestionsActivity.class);
-                        if (Integer.valueOf(mChapterList.get(position).getChapterNo()) == continueNext.getChapterno()) {
-                            intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, true);
-                            intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
-                            intent.putExtra(Tags.TAG_LANGUAGE_ID, continueNext.getLangid());
-                            intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
-                            intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
-                            intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpentTime());
-                            intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
-                        } else if (mChapterList.get(position).getActiveLesson() != null && mChapterList.get(position).getActiveLesson().getLessonno() > 0) {
-                            intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, false);
-                            intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
-                            intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.valueOf(mChapterList.get(position).getLanguageName()));
-                            intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.valueOf(mChapterList.get(position).getChapterNo()));
-                            intent.putExtra(Tags.TAG_LESSON_NO, mChapterList.get(position).getActiveLesson().getLessonno());
-                            intent.putExtra(Tags.TAG_SPENT_TIME, "0");
-                            intent.putExtra(Tags.TAG_START_QUESTION_NO, mChapterList.get(position).getActiveLesson().getStartingquesno());
-                        } else if (mChapterList.get(position).getActiveLesson() != null && mChapterList.get(position).getActiveLesson().getLessonno() == 0) {
-                            Log.d("isRandomQuestion adap", "true");
-                            Log.d("isRandomQuestion gem", mChapterList.get(position).getGemcount().toString());
-                            intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, false);
-                            intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, true);
-                            intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.valueOf(mChapterList.get(position).getLanguageName()));
-                            intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.valueOf(mChapterList.get(position).getChapterNo()));
-                            intent.putExtra(Tags.TAG_LESSON_NO, 0);
-                            intent.putExtra(Tags.TAG_SPENT_TIME, "0");
-                            intent.putExtra(Tags.TAG_START_QUESTION_NO, 0);
+                        if (NetworkUtil.getConnectivityStatus(activity) != 0) {
+                            Intent intent = new Intent(activity, QuestionsActivity.class);
+                            if (Integer.valueOf(mChapterList.get(position).getChapterNo()) == continueNext.getChapterno()) {
+                                intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, true);
+                                intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
+                                intent.putExtra(Tags.TAG_LANGUAGE_ID, continueNext.getLangid());
+                                intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
+                                intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
+                                intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpentTime());
+                                intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
+                            } else if (mChapterList.get(position).getActiveLesson() != null && mChapterList.get(position).getActiveLesson().getLessonno() > 0) {
+                                intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, false);
+                                intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
+                                intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.valueOf(mChapterList.get(position).getLanguageName()));
+                                intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.valueOf(mChapterList.get(position).getChapterNo()));
+                                intent.putExtra(Tags.TAG_LESSON_NO, mChapterList.get(position).getActiveLesson().getLessonno());
+                                intent.putExtra(Tags.TAG_SPENT_TIME, "0");
+                                intent.putExtra(Tags.TAG_START_QUESTION_NO, mChapterList.get(position).getActiveLesson().getStartingquesno());
+                            } else if (mChapterList.get(position).getActiveLesson() != null && mChapterList.get(position).getActiveLesson().getLessonno() == 0) {
+                                Log.d("isRandomQuestion adap", "true");
+                                Log.d("isRandomQuestion gem", mChapterList.get(position).getGemcount().toString());
+                                intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, false);
+                                intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, true);
+                                intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.valueOf(mChapterList.get(position).getLanguageName()));
+                                intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.valueOf(mChapterList.get(position).getChapterNo()));
+                                intent.putExtra(Tags.TAG_LESSON_NO, 0);
+                                intent.putExtra(Tags.TAG_SPENT_TIME, "0");
+                                intent.putExtra(Tags.TAG_START_QUESTION_NO, 0);
+                            }
+
+                            activity.startActivity(intent);
+                        } else {
+                            CommonFunction.netWorkErrorAlert(activity);
                         }
 
-                        activity.startActivity(intent);
                     }
                 });
             }

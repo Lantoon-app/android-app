@@ -3,25 +3,38 @@ package com.bazinga.lantoon.home.chapter.lesson;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
+import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.login.SessionManager;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +47,8 @@ public class QuestionsActivity extends AppCompatActivity {
     public static SessionManager sessionManager;
     public static ViewPager2 mPager;
     public static TextView tvTimer;
-    public static ProgressDialog progress;
+    //public static ProgressDialog progress;
+    public static ProgressBar progressBar;
     public static long startTime = 0;
     public static long startLessonTime = 0;
     public static int totalQues;
@@ -81,8 +95,84 @@ public class QuestionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_questions);
         mPager = findViewById(R.id.view_pager);
         tvTimer = findViewById(R.id.tvTimer);
-        progress = new ProgressDialog(this);
+        tvTimer.setVisibility(View.INVISIBLE);
+        progressBar = findViewById(R.id.progressBar);
+        //progress = new ProgressDialog(this);
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                onBack();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+    }
 
+    private void onBack() {
+        //Create a View object yourself through inflater
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_home_exit, null);
+
+        //Specify the length and width through constants
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        //Make Inactive Items Outside Of PopupWindow
+        boolean focusable = true;
+
+        //Create a window with our parameters
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        //Set the location of the window on the screen
+        popupWindow.showAtLocation(this.getCurrentFocus().getRootView(), Gravity.CENTER, 0, 0);
+
+        //Initialize the elements of our window, install the handler
+
+        TextView tvMessage = popupView.findViewById(R.id.tvMessage);
+        Button btnYes = popupView.findViewById(R.id.btnYes);
+        Button btnNo = popupView.findViewById(R.id.btnNo);
+        ImageButton imgBtnClose = popupView.findViewById(R.id.imgBtnClose);
+
+        tvMessage.setText(getString(R.string.ad_home_button_pressed_msg));
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                if (cf.mediaPlayer != null)
+                    cf.mediaPlayer.release();
+                if (Audio.mediaPlayer != null) {
+                    Audio.mediaPlayer.release();
+                    Audio.mediaPlayer = null;
+
+                }
+                startActivityForResult(new Intent(QuestionsActivity.this, HomeActivity.class), 2);
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        imgBtnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                popupWindow.dismiss();
+            }
+        });
+
+
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
     private void init(int langid, int chaperno, int lessonno,String strSpentTime, boolean isNewChapter, boolean isRandomQuestion) {
@@ -90,9 +180,10 @@ public class QuestionsActivity extends AppCompatActivity {
         this.isNewChapter = isNewChapter;
         this.isRandomQuestion = isRandomQuestion;
         this.startLessonTime = Long.decode(strSpentTime);
-        progress.setMessage("Please wait...");
+
+        /*progress.setMessage("Please wait...");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setIndeterminate(true);
+        progress.setIndeterminate(false);*/
 
         /*strUserId = sessionManager.getUserDetails().getUid();
         strLanguageId = String.valueOf(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID,0));
@@ -107,10 +198,12 @@ public class QuestionsActivity extends AppCompatActivity {
             switch (task.getStatus()) {
                 case TaskState.CANCELLED:
                     Toast.makeText(context, "Canceled by user", Toast.LENGTH_SHORT).show();
-                    progress.dismiss();
+                    progressBar.setVisibility(View.GONE);
+                    //progress.dismiss();
                     break;
                 case TaskState.RUNNING:
-                    progress.show();
+                    progressBar.setVisibility(View.VISIBLE);
+                    //progress.show();
 
                     break;
                 case TaskState.STOP:
@@ -126,9 +219,9 @@ public class QuestionsActivity extends AppCompatActivity {
                         mPager.setAdapter(mPageAdapter);
                         mPager.setUserInputEnabled(false);
                         mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO,1)-1);
-                        //mPager.setCurrentItem(19);
+                        //mPager.setCurrentItem(5);
                         mPager.clearFocus();
-                        progress.dismiss();
+
                         totalQues = mPageAdapter.getItemCount();
                         //startTime = System.currentTimeMillis();
                         score = new Score();
@@ -146,9 +239,11 @@ public class QuestionsActivity extends AppCompatActivity {
 
                         mPager.add(L1Fragment.class,b);
                         mPager.notifyDataSetChanged();*/
-                        progress.dismiss();
+                        progressBar.setVisibility(View.GONE);
+                        //progress.dismiss();
                         startTime = System.currentTimeMillis();
                         timerHandler.postDelayed(timerRunnable, 0);
+                        tvTimer.setVisibility(View.VISIBLE);
 
                     });
 
@@ -236,5 +331,32 @@ public class QuestionsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        deleteCache(getApplicationContext());
+    }
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) { e.printStackTrace();}
+    }
 
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
 }

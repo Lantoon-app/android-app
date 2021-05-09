@@ -46,7 +46,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
     CommonFunction cf;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
-    MediaPlayer mediaPlayer;
+    //MediaPlayer mediaPlayer;
     public static QP3Fragment newInstance(int questionNo, int totalQuestions, String data) {
         QP3Fragment fragment = new QP3Fragment();
         Bundle bundle = new Bundle();
@@ -150,21 +150,21 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(mp -> {
+            cf.mediaPlayer = new MediaPlayer();
+            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+            cf.mediaPlayer.prepare();
+            cf.mediaPlayer.start();
+            cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                mediaPlayer = new MediaPlayer();
+                cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionAnswer.setText(question.getAnsWord());
                     cf.shakeAnimation(imgBtnAnsImage, 1000);
-                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                    mediaPlayer.setOnCompletionListener(mp1 -> {
+                    cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                    cf.mediaPlayer.prepare();
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
                         setClickableButton(true);
@@ -215,10 +215,15 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;
             case R.id.btnMic:
+                //String withoutSplChar = "t.e?s!t. le.tt!er ";
+                String ansWrd =question.getAnsWord().replaceAll("[^ .,a-zA-Z0-9]", "").replace(".","").trim();
+
+                System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
                 else
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+
                 break;
         }
 
@@ -226,14 +231,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        if (audio.mediaPlayer != null) {
-            audio.mediaPlayer.release();
-            audio.mediaPlayer = null;
-        }
+
     }
     @Override
     public void onDestroyView() {

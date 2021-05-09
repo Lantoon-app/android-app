@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.calendar.CalendarView;
 import com.bazinga.lantoon.home.HomeActivity;
@@ -53,28 +55,35 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
         btnCompleted.setOnClickListener(this::onClick);
         btnOnGoing.setOnClickListener(this::onClick);
         btnUpcoming.setOnClickListener(this::onClick);
-        btnCompleted.setTextColor(Color.BLUE);
+        btnCompleted.setTextColor(Color.WHITE);
+        //initial completed
+        btnCompleted.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+        btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+        btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+        btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+        btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
 
 
         lvTargets = root.findViewById(R.id.lvTargets);
         //lvTargets.setVisibility(View.INVISIBLE);
-
-        targetViewModel.getTargets(HomeActivity.sessionManager.getUid()).observe(getActivity(), new Observer<List<Target>>() {
-            @Override
-            public void onChanged(List<Target> targets) {
-                if (!fragmentDestroyed) {
-                    if (targets != null) {
-                        targetList = targets;
+        if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            targetViewModel.getTargets(HomeActivity.sessionManager.getUid()).observe(getActivity(), new Observer<List<Target>>() {
+                @Override
+                public void onChanged(List<Target> targets) {
+                    if (!fragmentDestroyed) {
+                        if (targets != null) {
+                            targetList = targets;
 
                         /*targetAdapter = new TargetAdapter(getContext(),targetList);
                         lvTargets.setAdapter(targetAdapter);*/
-                        targetListAdapter = new TargetListAdapter(getContext(), targets);
-                        targetListAdapter.getFilter().filter("1");
-                        lvTargets.setAdapter(targetListAdapter);
+                            targetListAdapter = new TargetListAdapter(getContext(), targets);
+                            targetListAdapter.getFilter().filter("1");
+                            lvTargets.setAdapter(targetListAdapter);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }else CommonFunction.netWorkErrorAlert(getActivity());
         return root;
     }
 
@@ -84,21 +93,30 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btnCompleted:
                 targetListAdapter.getFilter().filter("1");
-                btnCompleted.setTextColor(Color.BLUE);
-                btnOnGoing.setTextColor(Color.WHITE);
-                btnUpcoming.setTextColor(Color.WHITE);
+                btnCompleted.setTextColor(Color.WHITE);
+                btnCompleted.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
                 break;
             case R.id.btnOnGoing:
                 targetListAdapter.getFilter().filter("2");
-                btnCompleted.setTextColor(Color.WHITE);
-                btnOnGoing.setTextColor(Color.BLUE);
-                btnUpcoming.setTextColor(Color.WHITE);
+                btnOnGoing.setTextColor(Color.WHITE);
+                btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
                 break;
             case R.id.btnUpcoming:
                 targetListAdapter.getFilter().filter("3");
-                btnCompleted.setTextColor(Color.WHITE);
-                btnOnGoing.setTextColor(Color.WHITE);
-                btnUpcoming.setTextColor(Color.BLUE);
+                btnUpcoming.setTextColor(Color.WHITE);
+                btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
                 break;
         }
     }

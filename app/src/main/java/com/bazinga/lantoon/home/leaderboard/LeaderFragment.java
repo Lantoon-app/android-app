@@ -24,6 +24,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.chapter.utils.PaginationScrollListener;
 import com.bazinga.lantoon.home.leaderboard.model.Leader;
@@ -91,19 +93,19 @@ public class LeaderFragment extends Fragment {
 
 
     private void preparedListItem() {
-        progressBar.setVisibility(View.VISIBLE);
 
-        leaderViewModel.getLeaders().observe(getActivity(), new Observer<LeaderResponse>() {
+            progressBar.setVisibility(View.VISIBLE);
+            leaderViewModel.getLeaders().observe(getActivity(), new Observer<LeaderResponse>() {
 
-            @Override
-            public void onChanged(LeaderResponse leaderResponse) {
+                @Override
+                public void onChanged(LeaderResponse leaderResponse) {
 
-                if (leaderResponse != null) {
-                    if (!fragmentDestroyed) {
-                        isLoading = false;
-                        leaderAdapter.addAll(leaderResponse.getData());
-                        if (leaderResponse.getMyLeaderData() != null)
-                            setFooter(leaderResponse.getMyLeaderData());
+                    if (leaderResponse != null) {
+                        if (!fragmentDestroyed) {
+                            isLoading = false;
+                            leaderAdapter.addAll(leaderResponse.getData());
+                            if (leaderResponse.getMyLeaderData() != null)
+                                setFooter(leaderResponse.getMyLeaderData());
                     /*else {
                         MyLeaderData myLeaderData = new MyLeaderData();
                         myLeaderData.setGemcount(0);
@@ -112,13 +114,17 @@ public class LeaderFragment extends Fragment {
                         myLeaderData.setUname(sessionManager.getUserDetails().getUname());
                         setFooter(myLeaderData);
                     }*/
-                        progressBar.setVisibility(View.INVISIBLE);
-                        rlFull.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.INVISIBLE);
+                            rlFull.setVisibility(View.VISIBLE);
+                        }
+                    }else {
+                        //CommonFunction.netWorkErrorAlert(getActivity());
                     }
                 }
-            }
-        });
+            });
+
     }
+
 
     private void setFooter(@NonNull MyLeaderData myLeaderData) {
         if (myLeaderData.getPicture() != null) {

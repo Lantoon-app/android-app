@@ -1,12 +1,8 @@
 package com.bazinga.lantoon.home.leaderboard;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.util.Base64;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
@@ -138,6 +132,10 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             viewHolder.tvRankLeaderItem.setTextColor(Color.WHITE);
             viewHolder.tvGemCountLeaderItem.setTextColor(Color.WHITE);
         } else {
+            viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_all_rank);
+            viewHolder.tvUserNameLeaderItem.setTextColor(Color.GRAY);
+            viewHolder.tvRankLeaderItem.setTextColor(Color.GRAY);
+            viewHolder.tvGemCountLeaderItem.setTextColor(Color.GRAY);
             if (leader.getPicture() != null) {
            /* byte[] decodedString = Base64.decode(leader.getPicture(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -161,10 +159,11 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 }).into(viewHolder.ivLeaderItem);
             }
-            viewHolder.tvUserNameLeaderItem.setText(leader.getUname());
-            viewHolder.tvRankLeaderItem.setText(String.valueOf(leader.getRank()));
-            viewHolder.tvGemCountLeaderItem.setText(String.valueOf(leader.getGemcount()));
+
         }
+        viewHolder.tvUserNameLeaderItem.setText(leader.getUname());
+        viewHolder.tvRankLeaderItem.setText(String.valueOf(leader.getRank()));
+        viewHolder.tvGemCountLeaderItem.setText(String.valueOf(leader.getGemcount()));
     }
 
 

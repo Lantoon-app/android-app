@@ -105,10 +105,10 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         setTopBarState(quesNo, totalQues);
         Gson g = new Gson();
         question = g.fromJson(getArguments().getString(Tags.TAG_QUESTION_TYPE), Question.class);
-        if(question.getReference() == null)
+        if (question.getReference() == null)
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
-            referencePopup = new ReferencePopup( question.getReference());
+            referencePopup = new ReferencePopup(question.getReference());
         tvQuestionName.setText(question.getWord());
         cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
         //audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
@@ -129,7 +129,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         super.onResume();
         cf.shakeAnimation(imbBtnQuestionImg, 1000);
         audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
-        cf.mikeAnimation(btnMic,2000);
+        cf.mikeAnimation(btnMic, 2000);
     }
 
     private void setTopBarState(int quesNo, int totalQues) {
@@ -143,10 +143,10 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgBtnHome:
-                cf.onClickHomeButton(getView(),getActivity(),getArguments().getInt(Tags.TAG_QUESTION_NO));
+                cf.onClickHomeButton(getView(), getActivity(), getArguments().getInt(Tags.TAG_QUESTION_NO));
                 break;
             case R.id.imgBtnHelp:
-                if(question.getReference() != null) {
+                if (question.getReference() != null) {
                     referencePopup.showPopupWindow(getView());
                 }
                 break;
@@ -154,25 +154,27 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.btnAudioSlow:
-                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
                 break;
             case R.id.btnMic:
+                //String withoutSplChar = "t.e?s!t. le.tt!er ";
+                String ansWrd =question.getAnsWord().replaceAll("[^ .,a-zA-Z0-9]", "").replace(".","").trim();
+
+                System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), true,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
                 else
-                    cf.speechToText(getContext(), tvRecText, question.getAnsWord(), false,getView(),getActivity(),quesNo,question.getPlusMark(),question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
 
                 break;
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (audio.mediaPlayer != null) {
-            audio.mediaPlayer.release();
-            audio.mediaPlayer = null;
-        }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

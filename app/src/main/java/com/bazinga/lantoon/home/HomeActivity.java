@@ -5,18 +5,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -32,6 +40,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.BuildConfig;
 import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.R;
@@ -76,6 +85,36 @@ public class HomeActivity extends AppCompatActivity {
         initToolbar();
         initNavigation();
         //showBottomNavigation(false);
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                onBack();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+    }
+
+    private void onBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.ad_home_button_pressed_msg))
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        finishAffinity();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.setTitle("Alert");
+        alert.show();
     }
 
     private void initToolbar() {
@@ -154,7 +193,6 @@ public class HomeActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                bottomNavView.releasePointerCapture();
                 return false;
             }
         });
@@ -171,11 +209,11 @@ public class HomeActivity extends AppCompatActivity {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
                     shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Lantoon");
-                    String shareMessage= "\nLearn any language from your native language\n\n";
-                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID +"\n\n";
+                    String shareMessage = "\nLearn any language from your native language\n\n";
+                    shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     startActivity(Intent.createChooser(shareIntent, "Choose one"));
-                } catch(Exception e) {
+                } catch (Exception e) {
                     //e.toString();
                 }
                 return false;
@@ -287,7 +325,6 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
-
 
 
     @Override

@@ -28,6 +28,7 @@
     <color name="chapter_completed_border">#6d6d6d</color>
     <color name="home_bottom_nav_bg">#F7D049</color>
     <color name="chapter_disabled_bg">#3b3b3b</color>
+    <color name="target_button_text_disabled">#3b3b3b</color>
 
     <color name="today">#4b82ff</color>
     <color name="greyed_out">#c7c7c7</color>

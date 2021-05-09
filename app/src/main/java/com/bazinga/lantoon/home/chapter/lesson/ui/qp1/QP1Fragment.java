@@ -143,20 +143,20 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(mp -> {
+            cf.mediaPlayer = new MediaPlayer();
+            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+            cf.mediaPlayer.prepare();
+            cf.mediaPlayer.start();
+            cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                mp = new MediaPlayer();
+                cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionAnswer.setText(question.getAnsWord());
-                    mp.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
-                    mp.prepare();
-                    mp.start();
-                    mp.setOnCompletionListener(mp1 -> {
+                    cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                    cf.mediaPlayer.prepare();
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
                         setClickableButton(true);
@@ -232,10 +232,7 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (audio.mediaPlayer != null) {
-            audio.mediaPlayer.release();
-            audio.mediaPlayer = null;
-        }
+
     }
     @Override
     public void onDestroyView() {

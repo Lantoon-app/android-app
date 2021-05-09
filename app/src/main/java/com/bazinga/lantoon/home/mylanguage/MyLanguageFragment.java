@@ -15,6 +15,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
@@ -44,23 +46,28 @@ public class MyLanguageFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_language, container, false);
         listView = root.findViewById(R.id.llView);
         listView.setDivider(null);
-
-        myLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<MyLanguageData>>() {
-            @Override
-            public void onChanged(List<MyLanguageData> languages) {
-                Log.d("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(languages));
-                if (!fragmentDestroyed) {
-                    myLanguageDataList = languages;
-                    MyLanguagesAdapter adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList);
-                    listView.setAdapter(adapter);
+        if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            myLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<MyLanguageData>>() {
+                @Override
+                public void onChanged(List<MyLanguageData> languages) {
+                    Log.d("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(languages));
+                    if (!fragmentDestroyed) {
+                        myLanguageDataList = languages;
+                        MyLanguagesAdapter adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList);
+                        listView.setAdapter(adapter);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            CommonFunction.netWorkErrorAlert(getActivity());
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("selected ", myLanguageDataList.get(position).getLearnLanguage().getImagePath());
-                updateLanguage(HomeActivity.sessionManager.getUid(), myLanguageDataList.get(position).getLearnLanguage().getLanguageID(), HomeActivity.sessionManager.getKnownLang());
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
+                    updateLanguage(HomeActivity.sessionManager.getUid(), myLanguageDataList.get(position).getLearnLanguage().getLanguageID(), HomeActivity.sessionManager.getKnownLang());
+                else CommonFunction.netWorkErrorAlert(getActivity());
             }
         });
 

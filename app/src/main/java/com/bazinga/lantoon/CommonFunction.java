@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -29,7 +30,8 @@ import android.widget.Toast;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.ChapterFragment;
 import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
-import com.bazinga.lantoon.home.chapter.lesson.RightOrWrongPopup;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
+import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
@@ -38,6 +40,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ import retrofit2.Response;
 public class CommonFunction {
 
     int attemptCount = 0;
+    public static MediaPlayer mediaPlayer;
 
     public void fullScreen(Window window) {
         if (Build.VERSION.SDK_INT < 16) {
@@ -121,7 +125,7 @@ public class CommonFunction {
     public void checkQuestion(String tag, int quesNo, int
             totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, int pMark, int nMark) {
         attemptCount++;
-        RightOrWrongPopup qrwp = new RightOrWrongPopup();
+        QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
         if (CheckAnswerImage(tag)) {
             if (quesNo == totalQues) {
 
@@ -152,7 +156,7 @@ public class CommonFunction {
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
         speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE, QuestionsActivity.strSpeakCode);
 
-        RightOrWrongPopup qrwp = new RightOrWrongPopup();
+        QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
         speechRecognizer.startListening(speechRecognizerIntent);
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -220,7 +224,7 @@ public class CommonFunction {
     }
 
     public void onClickHomeButton(View view, final Activity activity, int quesNo) {
-        showExitPopup(view,activity);
+        showExitPopup(view, activity);
        /* //Uncomment the below code to Set the message and title from the strings.xml file
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
@@ -289,7 +293,7 @@ public class CommonFunction {
         alert.show();*/
     }
 
-    public void showExitPopup(View view,Activity activity) {
+    public void showExitPopup(View view, Activity activity) {
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_home_exit, null);
@@ -320,6 +324,13 @@ public class CommonFunction {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+                if (mediaPlayer != null)
+                    mediaPlayer.release();
+                if (Audio.mediaPlayer != null) {
+                    Audio.mediaPlayer.release();
+                    Audio.mediaPlayer = null;
+
+                }
                 activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
             }
         });
@@ -352,35 +363,40 @@ public class CommonFunction {
 
     public void postLesson(View view, Activity activity, int quesNo, String strTimeSpent) {
 
+        if (NetworkUtil.getConnectivityStatus(activity) != 0) {
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
+            call.enqueue(new Callback<PostLessonResponse>() {
+                @Override
+                public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
 
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
-        call.enqueue(new Callback<PostLessonResponse>() {
-            @Override
-            public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
+                    if (response.body() != null) {
+                        Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
-                if (response.body() != null) {
-                    Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                        if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
+                            QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
 
-                    if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
-                        QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
-
-                        QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
-                        LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                        lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+                            QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
+                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                            lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<PostLessonResponse> call, Throwable t) {
-                Log.e("response postLesson", t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<PostLessonResponse> call, Throwable t) {
+                    Log.e("response postLesson", t.getMessage());
+                }
+            });
 
-
+        }else {
+            netWorkErrorAlert(activity);
+            activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
+        }
     }
-
+public static void netWorkErrorAlert(Activity activity){
+    Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
+}
     public void wentWorngToast(Context context) {
         Toast.makeText(context, "Something went wrong, Try again later", Toast.LENGTH_LONG);
     }

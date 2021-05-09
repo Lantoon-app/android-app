@@ -47,7 +47,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
     Button btnAudio1, btnAudio2, btnAudio3, btnAudio4, btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
     CommonFunction cf;
-    MediaPlayer mediaPlayer;
+    //MediaPlayer cf.mediaPlayer;
 
     public static L1Fragment newInstance(int questionNo, int totalQuestions, String data) {
         L1Fragment fragment = new L1Fragment();
@@ -190,41 +190,41 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(questions.get(0).getWord());
             cf.shakeAnimation(imbBtnQuestionImg1, 1000);
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(mp -> {
+            cf.mediaPlayer = new MediaPlayer();
+            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
+            cf.mediaPlayer.prepare();
+            cf.mediaPlayer.start();
+            cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                mediaPlayer = new MediaPlayer();
+                cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionName.setText(questions.get(1).getWord());
                     cf.shakeAnimation(imbBtnQuestionImg2, 1000);
-                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                    mediaPlayer.setOnCompletionListener(mp1 -> {
+                    cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
+                    cf.mediaPlayer.prepare();
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
-                        mediaPlayer = new MediaPlayer();
+                        cf.mediaPlayer = new MediaPlayer();
                         try {
                             tvQuestionName.setText(questions.get(2).getWord());
                             cf.shakeAnimation(imbBtnQuestionImg3, 1000);
-                            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
-                            mediaPlayer.prepare();
-                            mediaPlayer.start();
-                            mediaPlayer.setOnCompletionListener(mp11 -> {
+                            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
+                            cf.mediaPlayer.prepare();
+                            cf.mediaPlayer.start();
+                            cf.mediaPlayer.setOnCompletionListener(mp11 -> {
                                 mp11.stop();
                                 mp11.release();
-                                mediaPlayer = new MediaPlayer();
+                                cf.mediaPlayer = new MediaPlayer();
                                 try {
                                     tvQuestionName.setText(questions.get(3).getWord());
                                     cf.shakeAnimation(imbBtnQuestionImg4, 1000);
-                                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
-                                    mediaPlayer.prepare();
-                                    mediaPlayer.start();
-                                    mediaPlayer.setOnCompletionListener(mp111 -> {
+                                    cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
+                                    cf.mediaPlayer.prepare();
+                                    cf.mediaPlayer.start();
+                                    cf.mediaPlayer.setOnCompletionListener(mp111 -> {
                                         mp111.stop();
                                         mp111.release();
                                         setClickableButton(true);
@@ -311,18 +311,12 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        if (audio.mediaPlayer != null) {
-            audio.mediaPlayer.release();
-            audio.mediaPlayer = null;
-        }
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-}
+           }
+
+   }

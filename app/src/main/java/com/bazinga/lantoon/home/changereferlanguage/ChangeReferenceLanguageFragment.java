@@ -17,6 +17,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
@@ -48,23 +50,34 @@ public class ChangeReferenceLanguageFragment extends Fragment {
         listView = root.findViewById(R.id.llView);
         listView.setDivider(null);
         changeReferenceLanguageViewModel = new ViewModelProvider(this).get(ChangeReferenceLanguageViewModel.class);
-        changeReferenceLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<Language>>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onChanged(List<Language> languages) {
-                if (!fragmentDestroyed) {
-                    LanguageDataList = languages;
-                    LanguageDataList.removeIf(s -> s.getLanguageID().equalsIgnoreCase(String.valueOf(HomeActivity.sessionManager.getLearLang())));
 
-                    changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList,HomeActivity.sessionManager.getKnownLang());
-                    listView.setAdapter(changeReferenceLanguageAdapter);
+        if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            changeReferenceLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<Language>>() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onChanged(List<Language> languages) {
+                    if (!fragmentDestroyed) {
+                        LanguageDataList = languages;
+                        LanguageDataList.removeIf(s -> s.getLanguageID().equalsIgnoreCase(String.valueOf(HomeActivity.sessionManager.getLearLang())));
+
+                        changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList,HomeActivity.sessionManager.getKnownLang());
+                        listView.setAdapter(changeReferenceLanguageAdapter);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            CommonFunction.netWorkErrorAlert(getActivity());
+        }
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                updateReferenceLanguage(HomeActivity.sessionManager.getUid(), HomeActivity.sessionManager.getLearLang(), LanguageDataList.get(position).getLanguageID());
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+                    updateReferenceLanguage(HomeActivity.sessionManager.getUid(), HomeActivity.sessionManager.getLearLang(), LanguageDataList.get(position).getLanguageID());
+                } else {
+                    CommonFunction.netWorkErrorAlert(getActivity());
+                }
+
             }
         });
         listView.setOnScrollChangeListener(new View.OnScrollChangeListener() {

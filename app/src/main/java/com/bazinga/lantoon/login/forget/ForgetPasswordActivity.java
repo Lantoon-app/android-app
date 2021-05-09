@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.ValidationFunction;
 import com.bazinga.lantoon.home.mylanguage.MyLanguageViewModel;
@@ -102,69 +104,94 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSendOtp:
-                forgetPasswordViewModel.getOtpLiveData(etForgetPasswordEmail.getText().toString()).observe(this, new Observer<OtpResponse>() {
-                    @Override
-                    public void onChanged(OtpResponse otpResponse) {
-                        if (otpResponse != null) {
-                            Toast.makeText(ForgetPasswordActivity.this, otpResponse.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
-                            if (otpResponse.getStatus().getCode() == 1045) {
-                                userID = otpResponse.getOTPdata().getUid();
-                                otp = otpResponse.getOTPdata().getOtp();
-                                etForgetPasswordEmail.setVisibility(View.GONE);
-                                tvForgetPasswordMsg.setText("Enter OTP");
-                                etForgetPasswordOtp.setVisibility(View.VISIBLE);
-                                btnSendOtp.setVisibility(View.GONE);
-                                btnValidate.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-                });
-                break;
-            case R.id.btnValidate:
-                if(otp != 0) {
-                    userOtp = Integer.valueOf(etForgetPasswordOtp.getText().toString());
-                    forgetPasswordViewModel.validateOTP(otp,userOtp).observe(this, new Observer<Boolean>() {
+                if (NetworkUtil.getConnectivityStatus(ForgetPasswordActivity.this) != 0) {
+                    forgetPasswordViewModel.getOtpLiveData(etForgetPasswordEmail.getText().toString()).observe(this, new Observer<OtpResponse>() {
                         @Override
-                        public void onChanged(Boolean aBoolean) {
-                            if (aBoolean) {
-                                tvForgetPasswordMsg.setText("Change Password");
-                                etForgetPasswordOtp.setVisibility(View.GONE);
-                                btnValidate.setVisibility(View.GONE);
-                                llChangePassword.setVisibility(View.VISIBLE);
-                                btnSubmit.setVisibility(View.VISIBLE);
-                                Toast.makeText(ForgetPasswordActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(ForgetPasswordActivity.this, "Please Enter Valid OTP", Toast.LENGTH_SHORT).show();
+                        public void onChanged(OtpResponse otpResponse) {
+                            if (otpResponse != null) {
+                                Toast.makeText(ForgetPasswordActivity.this, otpResponse.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
+                                if (otpResponse.getStatus().getCode() == 1045) {
+                                    userID = otpResponse.getOTPdata().getUid();
+                                    otp = otpResponse.getOTPdata().getOtp();
+                                    etForgetPasswordEmail.setVisibility(View.GONE);
+                                    tvForgetPasswordMsg.setText("Enter OTP");
+                                    etForgetPasswordOtp.setVisibility(View.VISIBLE);
+                                    btnSendOtp.setVisibility(View.GONE);
+                                    btnValidate.setVisibility(View.VISIBLE);
+                                }
                             }
                         }
                     });
+                } else {
+                    CommonFunction.netWorkErrorAlert(ForgetPasswordActivity.this);
                 }
+
+                break;
+            case R.id.btnValidate:
+                if (NetworkUtil.getConnectivityStatus(ForgetPasswordActivity.this) != 0) {
+                    if (otp != 0) {
+                        try {
+                            userOtp = Integer.valueOf(etForgetPasswordOtp.getText().toString());
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(ForgetPasswordActivity.this, "Please Enter Valid OTP", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                        forgetPasswordViewModel.validateOTP(otp, userOtp).observe(this, new Observer<Boolean>() {
+                            @Override
+                            public void onChanged(Boolean aBoolean) {
+                                if (aBoolean) {
+                                    tvForgetPasswordMsg.setText("Change Password");
+                                    etForgetPasswordOtp.setVisibility(View.GONE);
+                                    btnValidate.setVisibility(View.GONE);
+                                    llChangePassword.setVisibility(View.VISIBLE);
+                                    btnSubmit.setVisibility(View.VISIBLE);
+                                    Toast.makeText(ForgetPasswordActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(ForgetPasswordActivity.this, "Please Enter Valid OTP", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    CommonFunction.netWorkErrorAlert(ForgetPasswordActivity.this);
+                }
+
                 break;
             case R.id.btnSubmit:
-                String strPass = etForgetPasswordPassword.getText().toString().trim();
-                String strCnfPass = etForgetPasswordCnfPassword.getText().toString().trim();
-                 if (vf.isEmpty(etForgetPasswordPassword) || strPass.length()<8) {
-                     etForgetPasswordPassword.setError("Enter Valid New Password");
-            } else if (vf.isEmpty(etForgetPasswordCnfPassword) || strCnfPass.length()<8) {
-                     etForgetPasswordCnfPassword.setError("Enter Valid Confirm Password");
-            } else if (!strPass.equals(strCnfPass)){
-                     etForgetPasswordPassword.setError("Password and Confirm password Not matching");
-            }/*else if (!vf.isValidPassword(strPass)){
-                     etForgetPasswordPassword.setError("Password not valid");
-            }*/else {
-                     forgetPasswordViewModel.changeForgetPassword(userID,strPass).observe(this, new Observer<Status>() {
-                         @Override
-                         public void onChanged(Status status) {
-                             if(status!= null)
-                                 if(status.getCode() == 1037) {
-                                     Toast.makeText(ForgetPasswordActivity.this, "Password reset Successfully", Toast.LENGTH_SHORT).show();
-                                     finish();
-                                     startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
-                                 }else Toast.makeText(ForgetPasswordActivity.this,"Something Went Wrong",Toast.LENGTH_SHORT).show();
+                if (NetworkUtil.getConnectivityStatus(ForgetPasswordActivity.this) != 0) {
+                    String strPass = "";
+                    String strCnfPass = "";
 
-                         }
-                     });
-                 }
+                    strPass = etForgetPasswordPassword.getText().toString().trim();
+                    strCnfPass = etForgetPasswordCnfPassword.getText().toString().trim();
+
+                    if (vf.isEmpty(etForgetPasswordPassword) || strPass.length() < 8) {
+                        etForgetPasswordPassword.setError("Enter Valid New Password");
+                    } else if (vf.isEmpty(etForgetPasswordCnfPassword) || strCnfPass.length() < 8) {
+                        etForgetPasswordCnfPassword.setError("Enter Valid Confirm Password");
+                    } else if (!strPass.equals(strCnfPass)) {
+                        etForgetPasswordPassword.setError("Password and Confirm password Not matching");
+                    }/*else if (!vf.isValidPassword(strPass)){
+                     etForgetPasswordPassword.setError("Password not valid");
+            }*/ else {
+                        forgetPasswordViewModel.changeForgetPassword(userID, strPass).observe(this, new Observer<Status>() {
+                            @Override
+                            public void onChanged(Status status) {
+                                if (status != null)
+                                    if (status.getCode() == 1037) {
+                                        Toast.makeText(ForgetPasswordActivity.this, "Password reset Successfully", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
+                                    } else
+                                        Toast.makeText(ForgetPasswordActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                } else {
+                    CommonFunction.netWorkErrorAlert(ForgetPasswordActivity.this);
+                }
+
                 break;
         }
 

@@ -49,7 +49,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
     CommonFunction cf;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
-    MediaPlayer mediaPlayer;
+    //MediaPlayer cf.mediaPlayer;
 
     public static QP2Fragment newInstance(int questionNo, int totalQuestions, String data) {
         QP2Fragment fragment = new QP2Fragment();
@@ -144,19 +144,19 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-            mediaPlayer.setOnCompletionListener(mp -> {
+            cf.mediaPlayer = new MediaPlayer();
+            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+            cf.mediaPlayer.prepare();
+            cf.mediaPlayer.start();
+            cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                mediaPlayer = new MediaPlayer();
+                cf.mediaPlayer = new MediaPlayer();
                 try {
-                    mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
-                    mediaPlayer.prepare();
-                    mediaPlayer.start();
-                    mediaPlayer.setOnCompletionListener(mp1 -> {
+                    cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                    cf.mediaPlayer.prepare();
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
                         setClickableButton(true);
@@ -230,14 +230,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        if (audio.mediaPlayer != null) {
-            audio.mediaPlayer.release();
-            audio.mediaPlayer = null;
-        }
+
     }
     @Override
     public void onDestroyView() {

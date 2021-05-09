@@ -66,55 +66,7 @@ public class QuestionRightWrongPopup {
         if (right) {
             mediaPlayer = MediaPlayer.create(activity, R.raw.right_answer);
             mediaPlayer.start();
-            /*ImageView imageViewRight = popupView.findViewById(R.id.ivGif);
-            imageViewRight.setVisibility(View.VISIBLE);
-            Glide.with(activity).load(R.drawable.gif_correct_answer).listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    return false;
-                }
 
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    if (resource instanceof GifDrawable) {
-                        ((GifDrawable)resource).setLoopCount(1);
-                        ((GifDrawable)resource).registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
-                            @Override
-                            public void onAnimationEnd(Drawable drawable) {
-                                super.onAnimationEnd(drawable);
-                                mediaPlayer.release();
-                                popupWindow.dismiss();
-                                QuestionsActivity.CalculateMarks(pMark, 0, pMark);
-                                if (isLast) {
-                                    if (!QuestionsActivity.isRandomQuestion) {
-                                        QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
-                                        QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
-                                        QuestionsActivity.score.setCompletedques(String.valueOf(quesNo));
-                                        Log.d("attemptCount", QuestionsActivity.countMap.toString());
-                                        //LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                                        //lessonCompletedPopup.showPopupWindow(view, activity);
-                                        QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                        cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
-                                        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
-                                    } else {
-
-                                        lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
-                                    }
-
-                                } else {
-                                    QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
-                                    Log.d("attemptCount", QuestionsActivity.countMap.toString());
-                                    QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
-                                }
-                                System.out.println("Pmark " + QuestionsActivity.Pmark + "Nmark " + QuestionsActivity.Nmark + "OutOfTotal " + QuestionsActivity.OutOfTotal);
-                            }
-                        });
-                    }
-                    return false;
-                }
-
-
-            }).into(imageViewRight);*/
             ImageView imageViewRight = popupView.findViewById(R.id.imageViewRight);
             imageViewRight.setVisibility(View.VISIBLE);
             Drawable drawable = imageViewRight.getDrawable();

@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="@+id/pbChapter"
         app:layout_constraintTop_toTopOf="@+id/pbChapter"
         android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp"
+        android:textSize="@dimen/_10ssp"
         tools:text="CHAPTER 1" />
 
     <androidx.appcompat.widget.AppCompatRatingBar

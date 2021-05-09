@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.HomeActivity;
@@ -82,45 +83,47 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         spinnerDuration = root.findViewById(R.id.spinnerDuration);
         btnUpdate = root.findViewById(R.id.btnUpdate);
         spinnerDuration.setOnItemSelectedListener(this);
+        if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            profileViewModel.getUser().observe(getActivity(), profile -> {
+                if (!fragmentDestroyed) {
+                    if (profile.getStatus().getCode() == 1023) {
+                        profileData = profile.getProfileData();
+                        Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
+                        if (!profileData.getPicture().equals("") || profileData.getPicture() != null) {
 
-        profileViewModel.getUser().observe(getActivity(), profile -> {
-            if (!fragmentDestroyed) {
-                if (profile.getStatus().getCode() == 1023) {
-                    profileData = profile.getProfileData();
-                    Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
-                    if (!profileData.getPicture().equals("") || profileData.getPicture() != null) {
+                            Glide.with(this).load(profileData.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                    return false;
+                                }
 
-                        Glide.with(this).load(profileData.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                return false;
-                            }
+                                @Override
+                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                    ivProfilePhoto.setBackground(null);
+                                    return false;
+                                }
+                            }).into(ivProfilePhoto);
 
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                ivProfilePhoto.setBackground(null);
-                                return false;
-                            }
-                        }).into(ivProfilePhoto);
-
+                        }
+                        durationDataList = profile.getDurationData();
+                        System.out.println(profile.getDurationData().toString());
+                        DurationSpinnerAdapter durationSpinnerAdapter = new DurationSpinnerAdapter(getContext(), durationDataList);
+                        spinnerDuration.setAdapter(durationSpinnerAdapter);
+                        spinnerDuration.setSelection(profileData.getMindurationperday() - 1);
+                        etFullName.setText(profileData.getUname());
+                        etDOB.setText(profileData.getDob());
+                        if (!profileData.getCountrycode().equals("")) {
+                            countryCodePicker.setCountryForPhoneCode(Integer.valueOf(profileData.getCountrycode()));
+                            etPhoneNumber.setText(profileData.getPhone());
+                        }
                     }
-                    durationDataList = profile.getDurationData();
-                    System.out.println(profile.getDurationData().toString());
-                    DurationSpinnerAdapter durationSpinnerAdapter = new DurationSpinnerAdapter(getContext(), durationDataList);
-                    spinnerDuration.setAdapter(durationSpinnerAdapter);
-                    spinnerDuration.setSelection(profileData.getMindurationperday() - 1);
-                    etFullName.setText(profileData.getUname());
-                    etDOB.setText(profileData.getDob());
-                    if (!profileData.getCountrycode().equals("")) {
-                        countryCodePicker.setCountryForPhoneCode(Integer.valueOf(profileData.getCountrycode()));
-                        etPhoneNumber.setText(profileData.getPhone());
+                    if (profile.getStatus().getCode() == 1025) {
+                        Snackbar.make(getView(), profile.getStatus().getMessage(), Snackbar.LENGTH_SHORT).show();
                     }
                 }
-                if (profile.getStatus().getCode() == 1025) {
-                    Snackbar.make(getView(), profile.getStatus().getMessage(), Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
+            });
+        } else
+            CommonFunction.netWorkErrorAlert(getActivity());
         date = (view, year, monthOfYear, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
@@ -142,7 +145,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
                     selectImage();
                 else
-                    Snackbar.make(getView(), getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
+                    CommonFunction.netWorkErrorAlert(getActivity());
                 break;
             case R.id.etDOB:
                 new DatePickerDialog(getContext(), date, myCalendar
@@ -150,12 +153,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 break;
             case R.id.btnUpdate:
-                profileData.setUname(etFullName.getText().toString());
-                profileData.setDob(etDOB.getText().toString());
-                profileData.setCountrycode(countryCodePicker.getSelectedCountryCode());
-                profileData.setPhone(etPhoneNumber.getText().toString());
-                profileData.setMindurationperday(Integer.valueOf(durationDataList.get(spinnerDuration.getSelectedItemPosition()).getId()));
-                profileViewModel.postProfileData(profileData);
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+                    profileData.setUname(etFullName.getText().toString());
+                    profileData.setDob(etDOB.getText().toString());
+                    profileData.setCountrycode(countryCodePicker.getSelectedCountryCode());
+                    profileData.setPhone(etPhoneNumber.getText().toString());
+                    profileData.setMindurationperday(Integer.valueOf(durationDataList.get(spinnerDuration.getSelectedItemPosition()).getId()));
+                    profileViewModel.postProfileData(profileData);
+                } else
+                    CommonFunction.netWorkErrorAlert(getActivity());
+
                 break;
         }
     }
@@ -198,7 +205,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
-                SendDetail(picturePath);
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
+                    SendDetail(picturePath);
+                else CommonFunction.netWorkErrorAlert(getActivity());
                 c.close();
 
 
@@ -209,7 +218,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
-                SendDetail(picturePath);
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
+                    SendDetail(picturePath);
+                else CommonFunction.netWorkErrorAlert(getActivity());
                 c.close();
 
             }
@@ -221,7 +232,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         System.out.println(strPicture);
         File imageFile = new File(strPicture);
         RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imageFile);
-        MultipartBody.Part partImage = MultipartBody.Part.createFormData("profilepic", imageFile.getName(), reqBody);
+        MultipartBody.Part partImage = MultipartBody.Part.createFormData("profilepic", "profilepic", reqBody);
         RequestBody userid = RequestBody.create(MediaType.parse("text/plain"), HomeActivity.sessionManager.getUid());
         final ProgressDialog loading = new ProgressDialog(getContext());
         loading.setMessage("Please Wait...");

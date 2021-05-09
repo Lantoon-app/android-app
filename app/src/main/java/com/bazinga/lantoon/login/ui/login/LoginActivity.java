@@ -2,9 +2,12 @@ package com.bazinga.lantoon.login.ui.login;
 
 import android.app.Activity;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,6 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.ValidationFunction;
@@ -131,15 +136,49 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //lllogin.setVisibility(View.INVISIBLE);
-                if(!ValidationFunction.isEmpty(usernameEditText) || ValidationFunction.isEmpty(passwordEditText)) {
-                    loadingProgressBar.setVisibility(View.VISIBLE);
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
-                }else{
-                    Toast.makeText(getApplicationContext(),R.string.empty_username_password,Toast.LENGTH_SHORT).show();
+                if (NetworkUtil.getConnectivityStatus(LoginActivity.this) != 0) {
+                    if (!ValidationFunction.isEmpty(usernameEditText) || ValidationFunction.isEmpty(passwordEditText)) {
+                        loadingProgressBar.setVisibility(View.VISIBLE);
+                        loginViewModel.login(usernameEditText.getText().toString(),
+                                passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.empty_username_password, Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    CommonFunction.netWorkErrorAlert(LoginActivity.this);
                 }
             }
         });
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                onBack();
+            }
+        };
+        this.getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+    }
+
+    private void onBack() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.ad_home_button_pressed_msg))
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        finishAffinity();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        dialog.cancel();
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.setTitle("Alert");
+        alert.show();
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

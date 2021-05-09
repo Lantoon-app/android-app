@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.chapter.adapter.ChapterAdapter;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
@@ -19,6 +21,8 @@ import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.home.chapter.utils.EqualSpacingItemDecoration;
 import com.bazinga.lantoon.home.chapter.utils.PaginationScrollListener;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bazinga.lantoon.login.forget.ForgetPasswordActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -94,32 +98,36 @@ public class ChapterFragment extends Fragment {
     }*/
 
 
-
     private void preparedListItem() {
         System.out.println("Chapter preparedListItem page no = " + String.valueOf(currentPage));
+        if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            chapterViewModel.getChapters().observe(getActivity(), new Observer<ChapterResponse>() {
 
-        chapterViewModel.getChapters().observe(getActivity(), new Observer<ChapterResponse>() {
-
-            @Override
-            public void onChanged(ChapterResponse chapterResponse) {
-                if (!fragmentDestroyed) {
-                    if (chapterResponse == null) {
-                        mChapterAdapter.removeLoading();
-                        isLastPage = true;
-                        isLoading = false;
-                    } else {
-                        if (ChapterFragment.this.currentPage != PAGE_START)
+                @Override
+                public void onChanged(ChapterResponse chapterResponse) {
+                    if (!fragmentDestroyed) {
+                        if (chapterResponse == null) {
                             mChapterAdapter.removeLoading();
-                        mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
-                        mChapterAdapter.notifyDataSetChanged();
-                        if (ChapterFragment.this.currentPage < totalPage)
-                            mChapterAdapter.addLoading();
-                        else isLastPage = true;
-                        isLoading = false;
+                            isLastPage = true;
+                            isLoading = false;
+                        } else {
+                            if (ChapterFragment.this.currentPage != PAGE_START)
+                                mChapterAdapter.removeLoading();
+                            mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
+                            mChapterAdapter.notifyDataSetChanged();
+                            if (ChapterFragment.this.currentPage < totalPage)
+                                mChapterAdapter.addLoading();
+                            else isLastPage = true;
+                            isLoading = false;
+                        }
                     }
                 }
-            }
-        });
+            });
+        } else {
+            //CommonFunction.netWorkErrorAlert(getActivity());
+           // Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
