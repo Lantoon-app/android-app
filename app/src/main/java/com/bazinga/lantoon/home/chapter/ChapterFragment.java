@@ -1,20 +1,30 @@
 package com.bazinga.lantoon.home.chapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bazinga.lantoon.BuildConfig;
 import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.adapter.ChapterAdapter;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
@@ -83,7 +93,6 @@ public class ChapterFragment extends Fragment {
             }
         });
         System.out.println("Chapter Current page no = " + String.valueOf(currentPage));
-
         return root;
     }
 
@@ -111,22 +120,59 @@ public class ChapterFragment extends Fragment {
                             isLastPage = true;
                             isLoading = false;
                         } else {
-                            if (ChapterFragment.this.currentPage != PAGE_START)
-                                mChapterAdapter.removeLoading();
-                            mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
-                            mChapterAdapter.notifyDataSetChanged();
-                            if (ChapterFragment.this.currentPage < totalPage)
-                                mChapterAdapter.addLoading();
-                            else isLastPage = true;
-                            isLoading = false;
+                            if (chapterResponse.getStatus().getCode() == 1032) {
+                                if (ChapterFragment.this.currentPage != PAGE_START)
+                                    mChapterAdapter.removeLoading();
+                                mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
+                                mChapterAdapter.notifyDataSetChanged();
+                                if (ChapterFragment.this.currentPage < totalPage)
+                                    mChapterAdapter.addLoading();
+                                else isLastPage = true;
+                                isLoading = false;
+                            } else if (chapterResponse.getStatus().getCode() == 1111) {
+                                appUpdateAlert(chapterResponse.getStatus().getMessage());
+                            }
                         }
                     }
                 }
             });
         } else {
+
+
             //CommonFunction.netWorkErrorAlert(getActivity());
-           // Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
+            // Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
         }
+
+    }
+
+    private void appUpdateAlert(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        //Setting message manually and performing action on button click
+        builder.setTitle("App New Version Alert !");
+        builder.setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        final String appPackageName = BuildConfig.APPLICATION_ID; // getPackageName() from Context or Activity object
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        } catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getActivity().finishAffinity();
+                        dialog.cancel();
+                    }
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.setTitle("Alert");
+        alert.show();
 
     }
 

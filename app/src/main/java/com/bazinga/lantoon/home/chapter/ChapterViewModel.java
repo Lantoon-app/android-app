@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bazinga.lantoon.BuildConfig;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
@@ -34,15 +35,15 @@ public class ChapterViewModel extends ViewModel {
 
         chapterMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid);
+        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE);
         call.enqueue(new Callback<ChapterResponse>() {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
                 if (response.isSuccessful()) {
-                    if (response.body().getStatus().getCode() == 1032) {
+                    //if (response.body().getStatus().getCode() == 1032) {
                         Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                         chapterMutableLiveData.setValue(response.body());
-                    }
+                    //}
                 } else
                     chapterMutableLiveData.setValue(null);
 

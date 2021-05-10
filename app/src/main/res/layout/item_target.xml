@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_10ssp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="MAR 30 th to APR 23 RD"
             android:textAllCaps="true" />

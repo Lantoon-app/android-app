@@ -99,6 +99,7 @@
     <string name="btn_no">NO</string>
     <string name="btn_exit">EXIT</string>
     <string name="btn_continue">CONTINUE</string>
+    <string name="msg_update_app_alert">Please update app to continue.</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>

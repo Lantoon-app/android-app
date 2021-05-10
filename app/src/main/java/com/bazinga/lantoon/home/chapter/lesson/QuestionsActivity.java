@@ -334,7 +334,7 @@ public class QuestionsActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        deleteCache(getApplicationContext());
+        //deleteCache(getApplicationContext());
     }
     public static void deleteCache(Context context) {
         try {

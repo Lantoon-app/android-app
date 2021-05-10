@@ -20,6 +20,7 @@ import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.login.ui.login.LoginActivity;
 import com.bazinga.lantoon.registration.langselection.view.LangSelectionActivity;
+import com.bazinga.lantoon.retrofit.ApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,11 +45,17 @@ public class GetStartActivity extends AppCompatActivity {
         strDeviceId = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         ImageView imageView = (ImageView) findViewById(R.id.imageViewLogo);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GetStartActivity.this, HomeActivity.class);
-                startActivity(intent);
+            public boolean onLongClick(View v) {
+                if (ApiClient.BASE_URL.equals("http://bazinga.ai/"))
+                    ApiClient.BASE_URL = "https://www.lantoon.net/";
+                else if (ApiClient.BASE_URL.equals("https://www.lantoon.net/"))
+                    ApiClient.BASE_URL = "http://bazinga.ai/";
+
+                Toast.makeText(GetStartActivity.this, "Server Changed to "+ApiClient.BASE_URL, Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
         Button getstartCreateAccBtn = findViewById(R.id.getstartCreateAccBtn);
