@@ -33,12 +33,14 @@ public class GetStartActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private int locationPermissionCode = 2;
     String strDeviceId = "", strCurrentLoaction = "";
+    SessionManager sessionManager;
 
     @SuppressLint("HardwareIds")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getstart);
+        sessionManager = new SessionManager(this);
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
         getCurrentLocation();

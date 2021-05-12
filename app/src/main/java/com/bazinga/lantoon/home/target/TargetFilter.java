@@ -2,6 +2,7 @@ package com.bazinga.lantoon.home.target;
 
 import android.widget.Filter;
 
+import com.bazinga.lantoon.home.target.adpter.TargetListAdapter;
 import com.bazinga.lantoon.home.target.model.Target;
 
 import java.util.ArrayList;

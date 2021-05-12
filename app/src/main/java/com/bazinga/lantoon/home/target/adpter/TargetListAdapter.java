@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.target;
+package com.bazinga.lantoon.home.target.adpter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.SlantView;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
+import com.bazinga.lantoon.home.target.TargetFilter;
 import com.bazinga.lantoon.home.target.model.Target;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -31,7 +32,7 @@ import java.util.List;
 public class TargetListAdapter extends BaseAdapter implements Filterable {
 
     Context c;
-    List<Target> targetList;
+    public List<Target> targetList;
     LayoutInflater inflater;
 
     List<Target> filterList;

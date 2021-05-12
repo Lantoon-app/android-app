@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -21,9 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bazinga.lantoon.Audio;
@@ -33,6 +37,12 @@ import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
 import java.util.HashMap;
@@ -48,7 +58,7 @@ public class QuestionsActivity extends AppCompatActivity {
     public static ViewPager2 mPager;
     public static TextView tvTimer;
     //public static ProgressDialog progress;
-    public static ProgressBar progressBar;
+    public static ImageView progressBar;
     public static long startTime = 0;
     public static long startLessonTime = 0;
     public static int totalQues;
@@ -97,6 +107,28 @@ public class QuestionsActivity extends AppCompatActivity {
         tvTimer = findViewById(R.id.tvTimer);
         tvTimer.setVisibility(View.INVISIBLE);
         progressBar = findViewById(R.id.progressBar);
+        Glide.with(this).load(R.drawable.gif_eye_animation).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                if (resource instanceof GifDrawable) {
+                    ((GifDrawable)resource).registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+                        @Override
+                        public void onAnimationEnd(Drawable drawable) {
+                            super.onAnimationEnd(drawable);
+
+                        }
+                    });
+                }
+                return false;
+            }
+
+
+        }).into(progressBar);
         //progress = new ProgressDialog(this);
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override

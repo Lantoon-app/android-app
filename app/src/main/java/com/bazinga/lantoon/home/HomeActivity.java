@@ -77,12 +77,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        sessionManager = new SessionManager(this);
         setContentView(R.layout.activity_home);
         /*Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));*/
-        sessionManager = new SessionManager(this);
+
 
         //Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
         initToolbar();
@@ -252,9 +253,10 @@ public class HomeActivity extends AppCompatActivity {
         ImageView ivNavHeaderUserImage = view.findViewById(R.id.ivNavHeaderUserImage);
         TextView tvNavHeaderUsername = view.findViewById(R.id.tvNavHeaderUsername);
         TextView tvNavHeaderUserId = view.findViewById(R.id.tvNavHeaderUserId);
-        tvNavHeaderUsername.setText(sessionManager.getUserName());
-        tvNavHeaderUserId.setText(sessionManager.getUid());
-        if (!sessionManager.getProfilePic().equals("") || sessionManager.getProfilePic() != null) {
+        if (sessionManager != null) {
+            tvNavHeaderUsername.setText(sessionManager.getUserName());
+            tvNavHeaderUserId.setText(sessionManager.getUid());
+            if (sessionManager.getProfilePic() != null) {
            /* byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             //decodedByte = Bitmap.createScaledBitmap(decodedByte, ivNavHeaderUserImage.getWidth(), ivNavHeaderUserImage.getHeight(), true);
@@ -265,19 +267,20 @@ public class HomeActivity extends AppCompatActivity {
             ivNavHeaderUserImage.setBackground(null);
             ivNavHeaderUserImage.setImageDrawable(dr);*/
 
-            Glide.with(this).load(sessionManager.getProfilePic()).circleCrop().addListener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    ivNavHeaderUserImage.setBackground(getDrawable(R.drawable.icon_avatar));
-                    return false;
-                }
+                Glide.with(this).load(sessionManager.getProfilePic()).circleCrop().addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        ivNavHeaderUserImage.setBackground(getDrawable(R.drawable.icon_avatar));
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    return false;
-                }
-            }).into(ivNavHeaderUserImage);
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                }).into(ivNavHeaderUserImage);
 
+            }
         }
     }
 
@@ -340,11 +343,14 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
     public static void deleteCache(Context context) {
         try {
             File dir = context.getCacheDir();
             deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean deleteDir(File dir) {
@@ -357,7 +363,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
             return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
+        } else if (dir != null && dir.isFile()) {
             return dir.delete();
         } else {
             return false;

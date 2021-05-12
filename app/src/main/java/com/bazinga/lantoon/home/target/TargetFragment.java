@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -19,18 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.calendar.CalendarView;
 import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.target.adpter.TargetAdapter;
+import com.bazinga.lantoon.home.target.adpter.TargetListAdapter;
 import com.bazinga.lantoon.home.target.model.Target;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -39,7 +30,6 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
     private TargetViewModel targetViewModel;
     Button btnCompleted, btnOnGoing, btnUpcoming;
     TargetListAdapter targetListAdapter;
-    TargetAdapter targetAdapter;
     List<Target> targetList;
     ListView lvTargets;
     boolean fragmentDestroyed = false;
@@ -92,31 +82,37 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnCompleted:
-                targetListAdapter.getFilter().filter("1");
-                btnCompleted.setTextColor(Color.WHITE);
-                btnCompleted.setBackground(getActivity().getDrawable(R.drawable.button_bg));
-                btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
-                btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
-                btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
-                btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                if(targetListAdapter!=null) {
+                    targetListAdapter.getFilter().filter("1");
+                    btnCompleted.setTextColor(Color.WHITE);
+                    btnCompleted.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                    btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                    btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                    btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                    btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                }
                 break;
             case R.id.btnOnGoing:
-                targetListAdapter.getFilter().filter("2");
-                btnOnGoing.setTextColor(Color.WHITE);
-                btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.button_bg));
-                btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
-                btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
-                btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
-                btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                if(targetListAdapter!=null) {
+                    targetListAdapter.getFilter().filter("2");
+                    btnOnGoing.setTextColor(Color.WHITE);
+                    btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                    btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                    btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                    btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                    btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                }
                 break;
             case R.id.btnUpcoming:
-                targetListAdapter.getFilter().filter("3");
-                btnUpcoming.setTextColor(Color.WHITE);
-                btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.button_bg));
-                btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
-                btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
-                btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
-                btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                if(targetListAdapter!=null) {
+                    targetListAdapter.getFilter().filter("3");
+                    btnUpcoming.setTextColor(Color.WHITE);
+                    btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                    btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                    btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                    btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
+                    btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_item_leader_all_rank));
+                }
                 break;
         }
     }
