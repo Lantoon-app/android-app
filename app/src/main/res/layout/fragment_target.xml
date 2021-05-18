@@ -24,7 +24,7 @@
         android:layout_weight="1"
         app:backgroundTint="@null"
         android:layout_margin="@dimen/_5sdp"
-        android:background="@drawable/button_bg"/>
+        android:background="@drawable/button_bg_target_selected"/>
     <Button
         android:id="@+id/btnOnGoing"
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         app:backgroundTint="@null"
         android:layout_margin="@dimen/_5sdp"
         android:textColor="@color/target_button_text_disabled"
-        android:background="@drawable/bg_item_leader_all_rank"/>
+        android:background="@drawable/button_bg_target_unselected"/>
     <Button
         android:id="@+id/btnUpcoming"
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
         app:backgroundTint="@null"
         android:layout_margin="@dimen/_5sdp"
         android:textColor="@color/target_button_text_disabled"
-        android:background="@drawable/bg_item_leader_all_rank"/>
+        android:background="@drawable/button_bg_target_unselected"/>
 </LinearLayout>
 
     <ListView

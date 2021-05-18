@@ -4,19 +4,19 @@
     <item
         android:id="@+id/bottom_lesson"
         android:icon="@drawable/ic_bottom_nav_lesson"
-        android:title=""/>
+        android:title="@string/btm_nav_title_home"/>
     <item
         android:id="@+id/bottom_target"
         android:icon="@drawable/ic_bottom_nav_target"
-        android:title="" />
+        android:title="@string/btm_nav_title_target" />
     <item
         android:id="@+id/bottom_leader"
         android:icon="@drawable/ic_bottom_nav_leader"
-        android:title="" />
+        android:title="@string/btm_nav_title_leaderboard" />
 
     <item
         android:id="@+id/bottom_setting"
         android:icon="@drawable/ic_bottom_nav_setting"
-        android:title="" />
+        android:title="@string/btm_nav_title_reference_language" />
 
 </menu>
