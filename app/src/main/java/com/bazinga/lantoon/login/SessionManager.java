@@ -37,6 +37,8 @@ public class SessionManager {
     public static String KEY_SP_KNOWN_LANGUAGE = "knownlang";
     public static String KEY_SP_SPEAKE_CODE = "speakcode";
 
+    public static String KEY_SP_BASEURL = "baseurl";
+
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
 
@@ -96,7 +98,8 @@ public class SessionManager {
 
         return strUserId;
     }
-public void setUserName(String strName) {
+
+    public void setUserName(String strName) {
         // Storing login value as TRUE
         // editor.putBoolean(IS_LOGIN, true);
 
@@ -118,7 +121,8 @@ public void setUserName(String strName) {
 
         return name;
     }
-public void setSpeakCode(String speakCode) {
+
+    public void setSpeakCode(String speakCode) {
         // Storing login value as TRUE
         // editor.putBoolean(IS_LOGIN, true);
 
@@ -218,7 +222,7 @@ public void setSpeakCode(String speakCode) {
 
             // Staring Login Activity
             _context.startActivity(i);
-        }else {
+        } else {
             System.out.println("Login success");
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(_context, GetStartActivity.class);
@@ -276,4 +280,27 @@ public void setSpeakCode(String speakCode) {
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);
     }
+
+   /* public void setBaseUrl(String baseUrl) {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        editor.putString(KEY_SP_BASEURL, baseUrl);
+
+
+        // commit changes
+        editor.commit();
+    }
+
+    public String getBaseUrl() {
+        // Storing login value as TRUE
+        // editor.putBoolean(IS_LOGIN, true);
+
+        // Storing user in pref
+        String baseUrl = pref.getString(KEY_SP_BASEURL,"https://www.lantoon.net/");
+
+
+        return baseUrl;
+    }*/
 }

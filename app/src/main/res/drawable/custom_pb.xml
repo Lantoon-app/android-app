@@ -3,8 +3,8 @@
     <item android:id="@android:id/background">
         <shape
             android:shape="oval">
-            <size android:width="@dimen/_80sdp"
-                android:height="@dimen/_80sdp"/>
+            <size android:width="@dimen/_100sdp"
+                android:height="@dimen/_100sdp"/>
 
 
             <gradient
@@ -19,7 +19,7 @@
     </item>
     <item>
         <shape
-            android:innerRadius="@dimen/_36sdp"
+            android:innerRadius="@dimen/_45sdp"
             android:shape="ring"
             android:thicknessRatio="19.5"
             android:useLevel="false">
@@ -31,7 +31,7 @@
             android:fromDegrees="270"
             android:toDegrees="270">
             <shape
-                android:innerRadius="@dimen/_36sdp"
+                android:innerRadius="@dimen/_45sdp"
                 android:shape="ring"
                 android:thicknessRatio="19.5"
                 android:useLevel="true">

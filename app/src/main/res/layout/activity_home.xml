@@ -23,6 +23,7 @@
         app:itemIconSize="@dimen/_20sdp"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
+        app:itemTextAppearance="@style/NavigationDrawerStyle"
         app:menu="@menu/activity_home_drawer" />
 
 

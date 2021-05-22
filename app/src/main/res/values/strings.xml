@@ -100,6 +100,10 @@
     <string name="btn_exit">EXIT</string>
     <string name="btn_continue">CONTINUE</string>
     <string name="msg_update_app_alert">Please update app to continue.</string>
+    <string name="btm_nav_title_home">Home</string>
+    <string name="btm_nav_title_target">Targets</string>
+    <string name="btm_nav_title_leaderboard">Leaderboard</string>
+    <string name="btm_nav_title_reference_language">Language</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>

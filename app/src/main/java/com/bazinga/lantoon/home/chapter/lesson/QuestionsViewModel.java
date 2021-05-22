@@ -195,7 +195,7 @@ public class QuestionsViewModel extends ViewModel {
         protected String doInBackground(ResponseBody... urls) {
             //Copy you logic to calculate progress and call
             try {
-                saveToDisk(urls[0], String.valueOf((1)) + ".zip", folerStruc);
+                saveToDisk(urls[0],   "1.zip", folerStruc);
             } catch (Exception e) {
                 e.printStackTrace();
             }

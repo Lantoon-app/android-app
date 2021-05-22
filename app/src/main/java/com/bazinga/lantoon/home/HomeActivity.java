@@ -4,24 +4,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +21,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -41,22 +28,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.BuildConfig;
 import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -76,13 +59,17 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Lantoon cache "+getCacheDir().getPath()+ Tags.FILE_DESTINATION_FOLDER);
+        deleteDir(new File(getCacheDir().getPath()+File.separator+"1.zip"));
+        deleteDir(new File(getCacheDir().getPath()+ Tags.FILE_DESTINATION_FOLDER));
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        sessionManager = new SessionManager(this);
         setContentView(R.layout.activity_home);
         /*Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));*/
-        sessionManager = new SessionManager(this);
+
 
         //Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
         initToolbar();
@@ -165,6 +152,8 @@ public class HomeActivity extends AppCompatActivity {
                                 NavigationUI.onNavDestinationSelected(item, navController);
                                 //This is for closing the drawer after acting on it
                                 drawer.closeDrawer(GravityCompat.START);
+                                deleteDir(new File(getCacheDir().getPath()+File.separator+"1.zip"));
+                                deleteDir(new File(getCacheDir().getPath()+ Tags.FILE_DESTINATION_FOLDER));
                                 Toast.makeText(getApplicationContext(), "Sign out Successfully",
                                         Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(HomeActivity.this, GetStartActivity.class);
@@ -193,9 +182,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         navigationView.getMenu().findItem(R.id.nav_profile).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
                 return false;
             }
         });
@@ -222,6 +211,7 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull @NotNull View drawerView, float slideOffset) {
@@ -252,9 +242,10 @@ public class HomeActivity extends AppCompatActivity {
         ImageView ivNavHeaderUserImage = view.findViewById(R.id.ivNavHeaderUserImage);
         TextView tvNavHeaderUsername = view.findViewById(R.id.tvNavHeaderUsername);
         TextView tvNavHeaderUserId = view.findViewById(R.id.tvNavHeaderUserId);
-        tvNavHeaderUsername.setText(sessionManager.getUserName());
-        tvNavHeaderUserId.setText(sessionManager.getUid());
-        if (!sessionManager.getProfilePic().equals("") || sessionManager.getProfilePic() != null) {
+        if (sessionManager != null) {
+            tvNavHeaderUsername.setText(sessionManager.getUserName());
+            tvNavHeaderUserId.setText(sessionManager.getUid());
+            if (sessionManager.getProfilePic() != null) {
            /* byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             //decodedByte = Bitmap.createScaledBitmap(decodedByte, ivNavHeaderUserImage.getWidth(), ivNavHeaderUserImage.getHeight(), true);
@@ -265,19 +256,20 @@ public class HomeActivity extends AppCompatActivity {
             ivNavHeaderUserImage.setBackground(null);
             ivNavHeaderUserImage.setImageDrawable(dr);*/
 
-            Glide.with(this).load(sessionManager.getProfilePic()).circleCrop().addListener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                    ivNavHeaderUserImage.setBackground(getDrawable(R.drawable.icon_avatar));
-                    return false;
-                }
+                Glide.with(this).load(sessionManager.getProfilePic()).circleCrop().addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        ivNavHeaderUserImage.setBackground(getDrawable(R.drawable.icon_avatar));
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    return false;
-                }
-            }).into(ivNavHeaderUserImage);
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                }).into(ivNavHeaderUserImage);
 
+            }
         }
     }
 
@@ -340,26 +332,37 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
+
     public static void deleteCache(Context context) {
         try {
             File dir = context.getCacheDir();
             deleteDir(dir);
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
+        try {
+            if (dir != null && dir.isDirectory()) {
+                String[] children = dir.list();
+                for (int i = 0; i < children.length; i++) {
+                    boolean success = deleteDir(new File(dir, children[i]));
+                    System.out.println("Lantoon cache path children "+children[i]);
+                    if (!success) {
+                        return false;
+                    }
                 }
+                return dir.delete();
+            } else if (dir != null && dir.isFile()) {
+                System.out.println("Lantoon cache path "+dir.getPath());
+                return dir.delete();
+            } else {
+                return false;
             }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
