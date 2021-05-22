@@ -41,6 +41,7 @@ public class TargetViewModel extends ViewModel {
 
             @Override
             public void onFailure(Call<TargetResponse> call, Throwable t) {
+                Log.e("Target error",t.getMessage());
                 listMutableLiveData.setValue(null);
             }
         });

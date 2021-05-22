@@ -224,6 +224,7 @@ public class CommonFunction {
     }
 
     public void onClickHomeButton(View view, final Activity activity, int quesNo) {
+        //mediaClose();
         showExitPopup(view, activity);
        /* //Uncomment the below code to Set the message and title from the strings.xml file
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -324,13 +325,7 @@ public class CommonFunction {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
-                if (mediaPlayer != null)
-                    mediaPlayer.release();
-                if (Audio.mediaPlayer != null) {
-                    Audio.mediaPlayer.release();
-                    Audio.mediaPlayer = null;
-
-                }
+                mediaClose();
                 activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
             }
         });
@@ -389,15 +384,29 @@ public class CommonFunction {
                 }
             });
 
-        }else {
+        } else {
             netWorkErrorAlert(activity);
             activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
         }
     }
-public static void netWorkErrorAlert(Activity activity){
-    Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
-}
+
+    public static void netWorkErrorAlert(Activity activity) {
+        Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
+    }
+public static void noDataSnackBar(Activity activity) {
+        Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
+    }
+
     public void wentWorngToast(Context context) {
         Toast.makeText(context, "Something went wrong, Try again later", Toast.LENGTH_LONG);
+    }
+
+    public static void mediaClose() {
+        if (mediaPlayer != null)
+            mediaPlayer.release();
+        if (Audio.mediaPlayer != null) {
+            Audio.mediaPlayer.release();
+            Audio.mediaPlayer = null;
+        }
     }
 }

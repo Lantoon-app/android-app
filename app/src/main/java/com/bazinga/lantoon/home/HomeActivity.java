@@ -182,9 +182,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         navigationView.getMenu().findItem(R.id.nav_profile).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
                 return false;
             }
         });
@@ -211,6 +211,7 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull @NotNull View drawerView, float slideOffset) {
