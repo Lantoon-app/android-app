@@ -6,10 +6,6 @@
     android:background="@drawable/top_bg"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/_16sdp"
-    android:paddingTop="@dimen/_16sdp"
-    android:paddingRight="@dimen/_16sdp"
-    android:paddingBottom="@dimen/_16sdp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
@@ -38,6 +34,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="@dimen/_10ssp"
+        android:layout_marginBottom="@dimen/_16sdp"
         android:text="@string/nav_header_subtitle" />
 
 </LinearLayout>
