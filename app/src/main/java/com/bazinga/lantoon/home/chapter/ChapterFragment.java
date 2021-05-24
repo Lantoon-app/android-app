@@ -155,11 +155,12 @@ public class ChapterFragment extends Fragment {
                 .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         final String appPackageName = BuildConfig.APPLICATION_ID; // getPackageName() from Context or Activity object
-                        try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        /*try {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                         } catch (android.content.ActivityNotFoundException anfe) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                        }
+                        }*/
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {

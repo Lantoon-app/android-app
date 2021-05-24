@@ -161,7 +161,10 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
 
         }
-        viewHolder.tvUserNameLeaderItem.setText(leader.getUname());
+        if (leader.getUname().length() > 5)
+            viewHolder.tvUserNameLeaderItem.setText(leader.getUname().substring(0, 5) + "..");
+        else
+            viewHolder.tvUserNameLeaderItem.setText(leader.getUname());
         viewHolder.tvRankLeaderItem.setText(String.valueOf(leader.getRank()));
         viewHolder.tvGemCountLeaderItem.setText(String.valueOf(leader.getGemcount()));
     }

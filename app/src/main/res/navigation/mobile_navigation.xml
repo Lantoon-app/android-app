@@ -57,7 +57,7 @@
         android:id="@+id/bottom_leader"
         android:name="com.bazinga.lantoon.home.leaderboard.LeaderFragment"
         android:label="@string/title_leader"
-        tools:layout="@layout/fragment_leader" />
+        tools:layout="@layout/fragment_leaderboard" />
     <fragment
         android:id="@+id/bottom_setting"
         android:name="com.bazinga.lantoon.home.changereferlanguage.ChangeReferenceLanguageFragment"

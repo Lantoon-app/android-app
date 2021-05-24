@@ -59,9 +59,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Lantoon cache "+getCacheDir().getPath()+ Tags.FILE_DESTINATION_FOLDER);
-        deleteDir(new File(getCacheDir().getPath()+File.separator+"1.zip"));
-        deleteDir(new File(getCacheDir().getPath()+ Tags.FILE_DESTINATION_FOLDER));
+        System.out.println("Lantoon cache " + getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER);
+        deleteDir(new File(getCacheDir().getPath() + File.separator + "1.zip"));
+        deleteDir(new File(getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER));
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         sessionManager = new SessionManager(this);
         setContentView(R.layout.activity_home);
@@ -132,12 +132,12 @@ public class HomeActivity extends AppCompatActivity {
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-
         NavigationUI.setupWithNavController(navigationView, navController);
         NavigationUI.setupWithNavController(bottomNavView, navController);
         navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                bottomNavView.setItemBackground(null);
                 //Uncomment the below code to Set the message and title from the strings.xml file
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
 
@@ -152,8 +152,8 @@ public class HomeActivity extends AppCompatActivity {
                                 NavigationUI.onNavDestinationSelected(item, navController);
                                 //This is for closing the drawer after acting on it
                                 drawer.closeDrawer(GravityCompat.START);
-                                deleteDir(new File(getCacheDir().getPath()+File.separator+"1.zip"));
-                                deleteDir(new File(getCacheDir().getPath()+ Tags.FILE_DESTINATION_FOLDER));
+                                deleteDir(new File(getCacheDir().getPath() + File.separator + "1.zip"));
+                                deleteDir(new File(getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER));
                                 Toast.makeText(getApplicationContext(), "Sign out Successfully",
                                         Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(HomeActivity.this, GetStartActivity.class);
@@ -164,9 +164,7 @@ public class HomeActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 //  Action for 'NO' Button
                                 dialog.cancel();
-                                //This is for maintaining the behavior of the Navigation view
-                                NavigationUI.onNavDestinationSelected(item, navController);
-                                //This is for closing the drawer after acting on it
+
                                 drawer.closeDrawer(GravityCompat.START);
 
                             }
@@ -182,15 +180,37 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         navigationView.getMenu().findItem(R.id.nav_profile).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
+                bottomNavView.setItemBackground(null);
+                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
                 return false;
             }
         });
+        navigationView.getMenu().findItem(R.id.nav_change_password).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                bottomNavView.setItemBackground(null);
+                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+                return false;
+            }
+        });
+        navigationView.getMenu().findItem(R.id.nav_new_language).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                bottomNavView.setItemBackground(null);
+                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+                return false;
+            }
+        });
+
         navigationView.getMenu().findItem(R.id.nav_share).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                navigationView.setItemBackground(null);
                /* Intent intent =new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Lantoon");
@@ -208,6 +228,38 @@ public class HomeActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     //e.toString();
                 }
+                return false;
+            }
+        });
+        bottomNavView.getMenu().findItem(R.id.bottom_lesson).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                navigationView.setItemBackground(null);
+                bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
+                return false;
+            }
+        });
+        bottomNavView.getMenu().findItem(R.id.bottom_target).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                navigationView.setItemBackground(null);
+                bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
+                return false;
+            }
+        });
+        bottomNavView.getMenu().findItem(R.id.bottom_leader).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                navigationView.setItemBackground(null);
+                bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
+                return false;
+            }
+        });
+        bottomNavView.getMenu().findItem(R.id.bottom_setting).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                navigationView.setItemBackground(null);
+                bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
             }
         });
@@ -349,14 +401,14 @@ public class HomeActivity extends AppCompatActivity {
                 String[] children = dir.list();
                 for (int i = 0; i < children.length; i++) {
                     boolean success = deleteDir(new File(dir, children[i]));
-                    System.out.println("Lantoon cache path children "+children[i]);
+                    System.out.println("Lantoon cache path children " + children[i]);
                     if (!success) {
                         return false;
                     }
                 }
                 return dir.delete();
             } else if (dir != null && dir.isFile()) {
-                System.out.println("Lantoon cache path "+dir.getPath());
+                System.out.println("Lantoon cache path " + dir.getPath());
                 return dir.delete();
             } else {
                 return false;

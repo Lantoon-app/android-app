@@ -1,11 +1,7 @@
 package com.bazinga.lantoon.home.leaderboard;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Base64;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +12,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bazinga.lantoon.CommonFunction;
-import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.chapter.utils.PaginationScrollListener;
 import com.bazinga.lantoon.home.leaderboard.model.Leader;
@@ -66,7 +58,7 @@ public class LeaderFragment extends Fragment {
         leaderViewModel = new ViewModelProvider(getActivity(),
                 new LeaderViewModelProvider(sessionManager.getUid(), sessionManager.getLearLang())).get(LeaderViewModel.class);
 
-        View root = inflater.inflate(R.layout.fragment_leader, container, false);
+        View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         progressBar = root.findViewById(R.id.pbLeader);
         rlFull = root.findViewById(R.id.rlFull);
         rlFull.setVisibility(View.GONE);
@@ -149,7 +141,11 @@ public class LeaderFragment extends Fragment {
                 }
             }).into(ivLeaderItemFooter);
         }
-        tvUserNameLeaderItemFooter.setText(myLeaderData.getUname());
+        /*if (myLeaderData.getUname().length() > 5)
+            tvUserNameLeaderItemFooter.setText(myLeaderData.getUname().substring(0, 5) + "..");
+        else
+            tvUserNameLeaderItemFooter.setText(myLeaderData.getUname());*/
+        tvUserNameLeaderItemFooter.setText("You");
         tvRankLeaderItemFooter.setText(String.valueOf(myLeaderData.getRank()));
         tvGemCountLeaderItemFooter.setText(String.valueOf(myLeaderData.getGemcount()));
     }
