@@ -37,8 +37,9 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         sessionManager = new SessionManager(SplashActivity.this);
         ImageView imageView = findViewById(R.id.imageView);
+        ImageView ivGif = findViewById(R.id.ivGif);
         sessionManager.checkLogin();
-        /*Glide.with(this).load(R.drawable.logo_gif).listener(new RequestListener<Drawable>() {
+        /*Glide.with(this).load(R.drawable.gif_baloons).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;
@@ -60,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
             }
 
 
-        }).into(imageView);*/
+        }).into(ivGif);*/
 
 
     }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.registration.langselection.model.Language;
+import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -46,7 +47,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHo
         holder.languageName.setText(languageList.get(position).getLanguageName() + " / " + languageList.get(position).getNativeName());
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(context).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + languageList.get(position).getImagePath()).apply(requestOptions).into(holder.languageImage);
+        Glide.with(context).load(ApiClient.BASE_URL +"Lantoon%20Admin%20Panel/" + languageList.get(position).getImagePath()).apply(requestOptions).into(holder.languageImage);
     }
 
     @Override
