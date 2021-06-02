@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.PlayPauseView;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
@@ -43,7 +44,8 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
     ImageButton imgBtnHome, imgBtnHelp;
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg, imgBtnAnsImage1,imgBtnAnsImage2,imgBtnAnsImage3,imgBtnAnsImage4;
-    Button btnAudio1, btnAudio2, btnAudioSlow1, btnAudioSlow2;
+    Button  btnAudioSlow1, btnAudioSlow2;
+    PlayPauseView btnAudio1, btnAudio2;
     int[] imageViewIds;
     String[] imagePaths;
     CommonFunction cf;
@@ -143,6 +145,7 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
+            btnAudio1.setState(PlayPauseView.STATE_PLAY);
             cf.mediaPlayer = new MediaPlayer();
             cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
             cf.mediaPlayer.prepare();
@@ -150,6 +153,9 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
             cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
+                btnAudio1.setState(PlayPauseView.STATE_PAUSE);
+                btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                btnAudio2.setState(PlayPauseView.STATE_PLAY);
                 cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionAnswer.setText(question.getAnsWord());
@@ -159,6 +165,8 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
                     cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
+                        btnAudio2.setState(PlayPauseView.STATE_PAUSE);
+                        btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                         setClickableButton(true);
                     });
                 } catch (IOException e) {
@@ -198,12 +206,12 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
             case R.id.imgBtnNext:
                 break;
             case R.id.btnAudio1:
-                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio1);
                 tvQuestionName.setText(question.getWord());
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath());
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath(),btnAudio2);
                 tvQuestionAnswer.setText(question.getAnsWord());
                 break;
             case R.id.btnAudioSlow1:

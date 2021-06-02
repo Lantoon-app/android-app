@@ -54,12 +54,13 @@ public class QuestionRightWrongPopup {
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
         //Make Inactive Items Outside Of PopupWindow
-        boolean focusable = true;
+        boolean focusable = false;
 
         //Create a window with our parameters
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         //Set the location of the window on the screen
+        popupWindow.setOutsideTouchable(false);
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
         //Initialize the elements of our window, install the handler
@@ -76,8 +77,7 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable) {
                         super.onAnimationEnd(drawable);
-                        mediaPlayer.release();
-                        popupWindow.dismiss();
+
                         QuestionsActivity.CalculateMarks(pMark, 0, pMark);
                         if (isLast) {
                             if (!QuestionsActivity.isRandomQuestion) {
@@ -101,6 +101,9 @@ public class QuestionRightWrongPopup {
                             QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                         }
                         System.out.println("Pmark " + QuestionsActivity.Pmark + "Nmark " + QuestionsActivity.Nmark + "OutOfTotal " + QuestionsActivity.OutOfTotal);
+                        mediaPlayer.release();
+                        popupWindow.dismiss();
+                        cf.isCheckImageQuestion = true;
                     }
                 });
                 animatedVectorDrawableCompat.start();
@@ -111,8 +114,7 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable) {
                         super.onAnimationEnd(drawable);
-                        mediaPlayer.release();
-                        popupWindow.dismiss();
+
                         QuestionsActivity.CalculateMarks(pMark, 0, pMark);
                         if (isLast) {
                             if (!QuestionsActivity.isRandomQuestion) {
@@ -135,6 +137,9 @@ public class QuestionRightWrongPopup {
                             QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                         }
                         System.out.println("Pmark " + QuestionsActivity.Pmark + "Nmark " + QuestionsActivity.Nmark + "OutOfTotal " + QuestionsActivity.OutOfTotal);
+                        mediaPlayer.release();
+                        popupWindow.dismiss();
+                        cf.isCheckImageQuestion = true;
                     }
                 });
                 animatedVectorDrawable.start();
@@ -152,8 +157,7 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable1) {
                         super.onAnimationEnd(drawable1);
-                        mediaPlayer.release();
-                        popupWindow.dismiss();
+
 
                         if (attemptCount == 2 && isSpeech) {
                             QuestionsActivity.CalculateMarks(0, nMark, pMark);
@@ -182,6 +186,9 @@ public class QuestionRightWrongPopup {
                             QuestionsActivity.CalculateMarks(0, nMark, 0);
                         }
                         System.out.println("Pmark " + QuestionsActivity.Pmark + "Nmark " + QuestionsActivity.Nmark + "OutOfTotal " + QuestionsActivity.OutOfTotal);
+                        mediaPlayer.release();
+                        popupWindow.dismiss();
+                        cf.isCheckImageQuestion = true;
                     }
                 });
                 animatedVectorDrawableCompat.start();
@@ -192,8 +199,7 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable1) {
                         super.onAnimationEnd(drawable1);
-                        mediaPlayer.release();
-                        popupWindow.dismiss();
+
                         QuestionsActivity.CalculateMarks(0, nMark, 0);
                         if (attemptCount == 2 && isSpeech) {
                             QuestionsActivity.CalculateMarks(0, nMark, pMark);
@@ -222,6 +228,9 @@ public class QuestionRightWrongPopup {
                             QuestionsActivity.CalculateMarks(0, nMark, 0);
                         }
                         System.out.println("Pmark " + QuestionsActivity.Pmark + "Nmark " + QuestionsActivity.Nmark + "OutOfTotal " + QuestionsActivity.OutOfTotal);
+                        mediaPlayer.release();
+                        popupWindow.dismiss();
+                        cf.isCheckImageQuestion = true;
                     }
                 });
                 animatedVectorDrawable.start();
@@ -229,7 +238,7 @@ public class QuestionRightWrongPopup {
         }
         //Handler for clicking on the inactive zone of the window
 
-        popupView.setOnTouchListener(new View.OnTouchListener() {
+      /*  popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mediaPlayer.release();
@@ -238,7 +247,7 @@ public class QuestionRightWrongPopup {
                 return true;
             }
         });
-
+*/
     }
 
 

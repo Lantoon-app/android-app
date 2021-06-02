@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bazinga.lantoon.home.HomeActivity;
+import com.bazinga.lantoon.home.chapter.ChapterCompletedPopup;
 import com.bazinga.lantoon.home.chapter.ChapterFragment;
 import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
@@ -55,6 +56,7 @@ public class CommonFunction {
 
     int attemptCount = 0;
     public static MediaPlayer mediaPlayer;
+    public static boolean isCheckImageQuestion = true;
 
     public void fullScreen(Window window) {
         if (Build.VERSION.SDK_INT < 16) {
@@ -122,24 +124,27 @@ public class CommonFunction {
 
     }
 
-    public void checkQuestion(String tag, int quesNo, int
-            totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, int pMark, int nMark) {
-        attemptCount++;
-        QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
-        if (CheckAnswerImage(tag)) {
-            if (quesNo == totalQues) {
+    public void checkQuestion(String tag, int quesNo, int totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, int pMark, int nMark) {
+        if(isCheckImageQuestion) {
+            isCheckImageQuestion = false;
+            attemptCount++;
+            QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
+            if (CheckAnswerImage(tag)) {
+                if (quesNo == totalQues) {
 
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, pMark, nMark);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, pMark, nMark);
+
+                } else {
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, pMark, nMark);
+                }
 
             } else {
                 qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, pMark, nMark);
+                setShuffleImages(activity, imageViewIds, imagePaths, view);
             }
-
-        } else {
-            qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, pMark, nMark);
-            setShuffleImages(activity, imageViewIds, imagePaths, view);
+            System.out.println("attemptCount " + attemptCount);
         }
-        System.out.println("attemptCount " + attemptCount);
+
     }
 
     public boolean CheckAnswerImage(String imagePath) {
@@ -372,8 +377,13 @@ public class CommonFunction {
                             QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
 
                             QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
-                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                            lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+                            if(response.body().getContinuenext().getLessonno() == 1) {
+                                ChapterCompletedPopup chapterCompletedPopup = new ChapterCompletedPopup();
+                                chapterCompletedPopup.showPopupWindow(view,activity, response.body(), quesNo, strTimeSpent);
+                            }else {
+                                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                                lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+                            }
                         }
                     }
                 }
@@ -393,7 +403,8 @@ public class CommonFunction {
     public static void netWorkErrorAlert(Activity activity) {
         Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
     }
-public static void noDataSnackBar(Activity activity) {
+
+    public static void noDataSnackBar(Activity activity) {
         Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
     }
 

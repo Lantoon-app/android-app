@@ -6,25 +6,25 @@
     android:viewportHeight="320">
 
     <path
-        android:fillColor="#FDFDFD"
+        android:fillColor="#000"
         android:pathData="M 176.5 45 Q 188.3 43.2 192 49.5 L 196 58.5 L 196 257.5 L 195 262.5 L 189.5 271 Q 186.3 274.3 179.5 274 L 171.5 271 L 106.5 206 L 67.5 206 Q 60.3 204.2 57 198.5 L 55 192.5 L 55 125.5 L 60.5 116 L 65.5 113 L 105.5 113 L 169.5 49 L 176.5 45 Z M 179 55 L 171 63 Q 168 62 169 65 L 167 66 L 107 127 L 107 191 L 108 194 L 177 262 L 182 264 L 185 261 L 186 257 L 186 61 L 185 58 Q 184 54 179 55 Z M 69 123 L 65 127 L 65 192 L 66 194 L 70 196 L 98 196 L 97 194 L 97 126 L 98 125 L 98 123 L 69 123 Z"
         android:strokeWidth="1"
-        android:strokeColor="#FDFDFD" />
+        android:strokeColor="#000" />
     <path
-        android:fillColor="#FDFDFD"
+        android:fillColor="#000"
         android:pathData="M206 71L223.5 72L239.5 77Q257.7 84.3 270 97.5Q283 110.5 290 129.5L294 144.5L295 165.5L294 166.5L293 179.5L285 200.5Q276.6 216.2 263.5 227Q252.8 236.3 238.5 242L220.5 247L207.5 248L206 246.5L206 238L219.5 237L236.5 232Q253.6 224.6 265 211.5Q273.6 202.1 279 189.5L284 172.5L285 154.5L282 137.5L273 117.5L255.5 98Q245.6 89.9 232.5 85L215.5 81L207.5 81L206 79.5L206 71Z"
         android:strokeWidth="1"
-        android:strokeColor="#FDFDFD" />
+        android:strokeColor="#000" />
     <path
-        android:fillColor="#FDFDFD"
+        android:fillColor="#000"
         android:pathData="M207.5 102Q238.2 104.8 252 124.5Q265.1 138.9 263 168.5Q258.6 191.2 243.5 203L226.5 213L215.5 216L206 216L206 207.5L207.5 206L215.5 206L224.5 203Q234.3 198.8 241 191.5Q249.5 182.5 253 168.5L253 150.5Q248.5 132 235.5 122Q224.8 112.5 206 112L206 103.5L207.5 102Z"
         android:strokeWidth="1"
-        android:strokeColor="#FDFDFD" />
+        android:strokeColor="#000" />
     <path
-        android:fillColor="#FDFDFD"
+        android:fillColor="#000"
         android:pathData="M206 134L213.5 134Q222.2 136.8 227 143.5Q233.8 149.7 232 164.5Q229.9 173.9 223.5 179Q217.4 185.1 206 185L206 176.5L207.5 175Q216.5 174 220 167.5Q223.3 163.8 222 155.5L215.5 146L206 143L206 134Z"
         android:strokeWidth="1"
-        android:strokeColor="#FDFDFD" />
+        android:strokeColor="#000" />
 
 
 </vector>

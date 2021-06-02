@@ -46,8 +46,10 @@ public class Audio {
 
         if (mediaPlayer != null) {
             mediaPlayer.release();
-            pV.setState(PlayPauseView.STATE_PAUSE);
-            pV.setImageDrawable(activity.getDrawable(R.drawable.anim_vector_play));
+            if(pV!=null) {
+                pV.setState(PlayPauseView.STATE_PAUSE);
+                pV.setImageDrawable(activity.getDrawable(R.drawable.anim_vector_play));
+            }
         }
         try {
             mediaPlayer = new MediaPlayer();

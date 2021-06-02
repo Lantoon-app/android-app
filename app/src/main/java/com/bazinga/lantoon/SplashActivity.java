@@ -9,10 +9,12 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.bazinga.lantoon.home.chapter.ChapterCompletedPopup;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -38,7 +40,16 @@ public class SplashActivity extends AppCompatActivity {
         sessionManager = new SessionManager(SplashActivity.this);
         ImageView imageView = findViewById(R.id.imageView);
         ImageView ivGif = findViewById(R.id.ivGif);
+        ChapterCompletedPopup chapterCompletedPopup = new ChapterCompletedPopup();
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // chapterCompletedPopup.showPopupWindow(v,SplashActivity.this,null,0,"0");
+            }
+        });
+
         sessionManager.checkLogin();
+
         /*Glide.with(this).load(R.drawable.gif_baloons).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
