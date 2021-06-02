@@ -46,6 +46,7 @@ public class LessonCompletedPopup {
         TextView tvTotalTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvTotalTimeSpendPopupLessonCompleted);
 
 
+
         tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + strTimeSpent+")");
 
 

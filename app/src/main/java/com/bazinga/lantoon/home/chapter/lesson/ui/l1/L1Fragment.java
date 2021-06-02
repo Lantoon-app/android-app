@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.PlayPauseView;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.Tags;
@@ -45,7 +46,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     ImageButton imgBtnHome, imgBtnHelp, imgBtnNext;
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
-    Button btnAudio1, btnAudio2, btnAudio3, btnAudio4, btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
+    Button  btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
+    PlayPauseView btnAudio1,btnAudio2, btnAudio3, btnAudio4;
     CommonFunction cf;
     //MediaPlayer cf.mediaPlayer;
 
@@ -190,6 +192,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(questions.get(0).getWord());
             cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+            btnAudio1.setState(PlayPauseView.STATE_PLAY);
             cf.mediaPlayer = new MediaPlayer();
             cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
             cf.mediaPlayer.prepare();
@@ -197,6 +200,9 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
+                btnAudio1.setState(PlayPauseView.STATE_PAUSE);
+                btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                btnAudio2.setState(PlayPauseView.STATE_PLAY);
                 cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionName.setText(questions.get(1).getWord());
@@ -207,6 +213,9 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                     cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
+                        btnAudio2.setState(PlayPauseView.STATE_PAUSE);
+                        btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                        btnAudio3.setState(PlayPauseView.STATE_PLAY);
                         cf.mediaPlayer = new MediaPlayer();
                         try {
                             tvQuestionName.setText(questions.get(2).getWord());
@@ -217,6 +226,9 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                             cf.mediaPlayer.setOnCompletionListener(mp11 -> {
                                 mp11.stop();
                                 mp11.release();
+                                btnAudio3.setState(PlayPauseView.STATE_PAUSE);
+                                btnAudio3.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                                btnAudio4.setState(PlayPauseView.STATE_PLAY);
                                 cf.mediaPlayer = new MediaPlayer();
                                 try {
                                     tvQuestionName.setText(questions.get(3).getWord());
@@ -227,6 +239,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                                     cf.mediaPlayer.setOnCompletionListener(mp111 -> {
                                         mp111.stop();
                                         mp111.release();
+                                        btnAudio4.setState(PlayPauseView.STATE_PAUSE);
+                                        btnAudio4.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                                         setClickableButton(true);
                                         imgBtnNext.setVisibility(View.VISIBLE);
                                     });
@@ -263,22 +277,22 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                 break;
             case R.id.btnAudio1:
-                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath(),btnAudio1);
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath(),btnAudio2);
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudio3:
-                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath(),btnAudio3);
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);
                 break;
             case R.id.btnAudio4:
-                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath(),btnAudio4);
                 tvQuestionName.setText(questions.get(3).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
                 break;

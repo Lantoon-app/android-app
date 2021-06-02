@@ -111,10 +111,12 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void removeLoading() {
         isLoaderVisible = false;
         int position = mChapterList.size() - 1;
-        Chapter item = getItem(position);
-        if (item != null) {
-            mChapterList.remove(position);
-            notifyItemRemoved(position);
+        if(mChapterList.size()>0) {
+            Chapter item = getItem(position);
+            if (item != null) {
+                mChapterList.remove(position);
+                notifyItemRemoved(position);
+            }
         }
     }
 

@@ -102,17 +102,15 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
+            <com.bazinga.lantoon.PlayPauseView
                 android:id="@+id/btnAudio"
-                style="@style/QuestionButtonStyle"
                 android:layout_width="@dimen/_55sdp"
                 android:layout_height="@dimen/_55sdp"
                 android:layout_marginRight="@dimen/_20sdp"
-                app:backgroundTint="@null"
-                app:icon="@drawable/ic_question_audio"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp"
-                app:iconSize="@dimen/_40sdp" />
+                android:background="@drawable/button_bg"
+                android:padding="5dp"
+                app:srcCompat="@drawable/anim_vector_play"
+                app:tint="@color/white" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAudioSlow"

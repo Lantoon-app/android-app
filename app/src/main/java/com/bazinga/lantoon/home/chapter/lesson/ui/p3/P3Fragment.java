@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.PlayPauseView;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
@@ -42,7 +43,8 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     ImageButton imgBtnHome, imgBtnHelp;
     ImageView imbBtnQuestionImg;
     ProgressBar pbTop;
-    Button btnAudio, btnAudioSlow, btnMic;
+    Button  btnAudioSlow, btnMic;
+    PlayPauseView btnAudio;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
 
@@ -128,7 +130,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         cf.shakeAnimation(imbBtnQuestionImg, 1000);
-        audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio);
         cf.mikeAnimation(btnMic, 2000);
     }
 
@@ -151,7 +153,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btnAudio:
-                audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio);
                 break;
             case R.id.btnAudioSlow:
                 audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getAudioPath());

@@ -15,6 +15,7 @@ import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
 import com.bazinga.lantoon.registration.langselection.model.Language;
+import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -47,7 +48,7 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         // Populate the data into the template view using the data object
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(getContext()).load("https://www.lantoon.net/Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
+        Glide.with(getContext()).load(ApiClient.BASE_URL +"Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
         tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
         if (Integer.valueOf(getItem(position).getLanguageID())==referLang){
             llItem.setBackground(getContext().getDrawable(R.drawable.right_corner_radius));
