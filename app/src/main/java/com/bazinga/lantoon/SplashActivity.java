@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // chapterCompletedPopup.showPopupWindow(v,SplashActivity.this,null,0,"0");
+               //chapterCompletedPopup.showPopupWindow(v,SplashActivity.this,null,0,"0");
             }
         });
 

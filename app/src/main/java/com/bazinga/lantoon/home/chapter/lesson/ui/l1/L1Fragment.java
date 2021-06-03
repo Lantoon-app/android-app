@@ -46,8 +46,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     ImageButton imgBtnHome, imgBtnHelp, imgBtnNext;
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
-    Button  btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
-    PlayPauseView btnAudio1,btnAudio2, btnAudio3, btnAudio4;
+    Button btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
+    PlayPauseView btnAudio1, btnAudio2, btnAudio3, btnAudio4;
     CommonFunction cf;
     //MediaPlayer cf.mediaPlayer;
 
@@ -277,22 +277,22 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                 break;
             case R.id.btnAudio1:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath(),btnAudio1);
+                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath(), btnAudio1);
                 tvQuestionName.setText(questions.get(0).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg1, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath(),btnAudio2);
+                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath(), btnAudio2);
                 tvQuestionName.setText(questions.get(1).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg2, 1000);
                 break;
             case R.id.btnAudio3:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath(),btnAudio3);
+                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath(), btnAudio3);
                 tvQuestionName.setText(questions.get(2).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg3, 1000);
                 break;
             case R.id.btnAudio4:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath(),btnAudio4);
+                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath(), btnAudio4);
                 tvQuestionName.setText(questions.get(3).getWord());
                 cf.shakeAnimation(imbBtnQuestionImg4, 1000);
                 break;
@@ -321,16 +321,4 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-           }
-
-   }
+}
