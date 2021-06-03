@@ -42,12 +42,17 @@ public class LessonCompletedPopup {
         //Set the location of the window on the screen
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-
+        TextView tvTitleMsg = popupView.findViewById(R.id.tvTitleMsg);
+        if(postLessonResponse != null) {
+            if (postLessonResponse.getContinuenext().getLessonno() == 1)
+                tvTitleMsg.setText(activity.getResources().getString(R.string.successfully_completed_the_chapter));
+            else
+                tvTitleMsg.setText(activity.getResources().getString(R.string.successfully_completed_the_lesson));
+        }
         TextView tvTotalTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvTotalTimeSpendPopupLessonCompleted);
 
 
-
-        tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + strTimeSpent+")");
+        tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + strTimeSpent + ")");
 
 
         Button btnExitPopupLessonCompleted = popupView.findViewById(R.id.btnExitPopupLessonCompleted);
@@ -89,7 +94,7 @@ public class LessonCompletedPopup {
 
         //Handler for clicking on the inactive zone of the window
 
-        popupView.setOnTouchListener(new View.OnTouchListener() {
+       /* popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -97,6 +102,6 @@ public class LessonCompletedPopup {
                 //popupWindow.dismiss();
                 return true;
             }
-        });
+        });*/
     }
 }

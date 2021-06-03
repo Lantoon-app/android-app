@@ -72,6 +72,7 @@
     <string name="tab_text_1">L1</string>
     <string name="tab_text_2">P1</string>
     <string name="successfully_completed_the_lesson">You have successfully completed the Lesson</string>
+    <string name="successfully_completed_the_chapter">You have successfully completed the Chapter</string>
     <string name="enter_email_id_msg">Enter the Email id Registered with your account</string>
     <string name="enter_your_email_id">Enter your email id</string>
     <string name="send_otp">SEND OTP</string>

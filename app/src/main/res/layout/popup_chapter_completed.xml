@@ -1,42 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/fui_transparent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <ProgressBar
-        android:id="@+id/pbChapter"
-        style="@style/CircularDeterminateProgressBar"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        android:progress="10"
+    android:gravity="center"
+    android:background="@drawable/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvChapterNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/pbChapter"
-        app:layout_constraintEnd_toEndOf="@+id/pbChapter"
-        app:layout_constraintStart_toStartOf="@+id/pbChapter"
-        app:layout_constraintTop_toTopOf="@+id/pbChapter"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp"
-        tools:text="CHAPTER 1" />
+        <FrameLayout
+            android:id="@+id/frame1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_50sdp">
 
-    <ImageView
-        android:id="@+id/ivGif"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/pbChapter"
-        app:layout_constraintEnd_toEndOf="@+id/pbChapter"
-        app:layout_constraintStart_toStartOf="@+id/pbChapter"
-        app:layout_constraintTop_toTopOf="@+id/pbChapter" />
+            <ProgressBar
+                android:id="@+id/pbChapter"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:secondaryProgress="0" />
 
+            <TextView
+                android:id="@+id/tvChapterNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                tools:text="CHAPTER 1" />
 
+            <ImageView
+                android:id="@+id/ivGif"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/frame2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/pbChapterNew"
+                style="@style/CircularDeterminateProgressBar"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:secondaryProgress="0"/>
+
+            <TextView
+                android:id="@+id/tvChapterNumberNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                tools:text="CHAPTER 1" />
+
+            <ImageView
+                android:id="@+id/ivDisabled"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle"
+                android:backgroundTint="@color/chapter_disabled_bg"
+                android:gravity="center"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/ivLock"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@drawable/ic_lock"
+                android:visibility="visible" />
+
+        </FrameLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

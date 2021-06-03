@@ -1,13 +1,15 @@
 package com.bazinga.lantoon.home.chapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -29,12 +31,14 @@ import com.bumptech.glide.request.target.Target;
 
 public class ChapterCompletedPopup {
     PopupWindow popupWindow;
-    ProgressBar progressBar;
-    TextView tvChapterNumber;
-    ImageView ivGif;
+    ProgressBar progressBar, pbChapterNew;
+    TextView tvChapterNumber, tvChapterNumberNew;
+    ImageView ivGif, ivDisabled, ivLock;
     final int[] pStatus = {0};
     Handler handler = new Handler();
+    FrameLayout frame1, frame2;
 
+    @SuppressLint("SetTextI18n")
     public void showPopupWindow(View view, Activity activity, PostLessonResponse postLessonResponse, int quesNo, String strTimeSpent) {
 
         //Create a View object yourself through inflater
@@ -55,13 +59,19 @@ public class ChapterCompletedPopup {
         //Set the location of the window on the screen
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         popupWindow.setOutsideTouchable(false);
-
+        // ViewGroup transitionsContainer = popupView.findViewById(R.id.transitions_container);
+        frame1 = popupView.findViewById(R.id.frame1);
+        frame2 = popupView.findViewById(R.id.frame2);
         progressBar = popupView.findViewById(R.id.pbChapter);
+        pbChapterNew = popupView.findViewById(R.id.pbChapterNew);
         tvChapterNumber = popupView.findViewById(R.id.tvChapterNumber);
+        tvChapterNumberNew = popupView.findViewById(R.id.tvChapterNumberNew);
         ivGif = popupView.findViewById(R.id.ivGif);
+        ivDisabled = popupView.findViewById(R.id.ivDisabled);
+        ivLock = popupView.findViewById(R.id.ivLock);
         if (postLessonResponse != null)
-            tvChapterNumber.setText("CHAPTER " +String.valueOf(postLessonResponse.getContinuenext().getChapterno() - 1));
-
+            tvChapterNumber.setText("CHAPTER " + String.valueOf(postLessonResponse.getContinuenext().getChapterno() - 1));
+        else tvChapterNumber.setText("CHAPTER 1");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -70,9 +80,9 @@ public class ChapterCompletedPopup {
                         @Override
                         public void run() {
                             progressBar.setProgress(pStatus[0]);
-                            if (progressBar.getProgress() == 100)
+                            if (progressBar.getProgress() == 100) {
                                 showCompletedGif(view, activity, postLessonResponse, quesNo, strTimeSpent);
-                            //popupWindow.dismiss();
+                            }
                         }
                     });
                     try {
@@ -112,9 +122,40 @@ public class ChapterCompletedPopup {
                         @Override
                         public void onAnimationEnd(Drawable drawable) {
                             super.onAnimationEnd(drawable);
-                            popupWindow.dismiss();
-                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                            lessonCompletedPopup.showPopupWindow(view, activity, postLessonResponse, quesNo, strTimeSpent);
+                            pbChapterNew.setProgress(0);
+                            ivDisabled.setVisibility(View.GONE);
+                            ivLock.setVisibility(View.GONE);
+                            frame1.animate()
+                                    .translationY(0)
+                                    .alpha(0.0f)
+                                    .setListener(new AnimatorListenerAdapter() {
+                                        @Override
+                                        public void onAnimationEnd(Animator animation) {
+                                            super.onAnimationEnd(animation);
+                                            frame1.setVisibility(View.GONE);
+                                            frame2.animate().translationX(Gravity.CENTER).setListener(new AnimatorListenerAdapter() {
+                                                @Override
+                                                public void onAnimationEnd(Animator animation) {
+                                                    super.onAnimationEnd(animation);
+                                                    if (postLessonResponse != null)
+                                                        tvChapterNumberNew.setText("CHAPTER " + String.valueOf(postLessonResponse.getContinuenext().getChapterno()));
+                                                    else tvChapterNumberNew.setText("CHAPTER 2");
+                                                    tvChapterNumberNew.animate().translationZ(0).setDuration(1000).setListener(new AnimatorListenerAdapter() {
+                                                        @Override
+                                                        public void onAnimationEnd(Animator animation) {
+                                                            super.onAnimationEnd(animation);
+                                                            popupWindow.dismiss();
+                                                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                                                            lessonCompletedPopup.showPopupWindow(view, activity, postLessonResponse, quesNo, strTimeSpent);
+                                                        }
+                                                    });
+
+                                                }
+                                            });
+
+                                        }
+                                    });
+
 
                         }
                     });
