@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.chapter;
+package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -51,7 +51,7 @@ public class ChapterCompletedPopup {
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
         //Make Inactive Items Outside Of PopupWindow
-        boolean focusable = true;
+        boolean focusable = false;
 
         //Create a window with our parameters
         popupWindow = new PopupWindow(popupView, width, height, focusable);

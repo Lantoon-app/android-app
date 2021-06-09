@@ -32,7 +32,7 @@ public class SessionManager {
     public static final String KEY_SP_STRING_USER = "userdata";
     public static final String KEY_SP_STRING_USERID = "userid";
     public static final String KEY_SP_STRING_USER_NAME = "username";
-    public static final String KEY_SP_STRING_USER_PICTURE = "picture";
+    public static final String KEY_SP_STRING_USER_PICTURE = "profpicture";
     public static String KEY_SP_LEARN_LANGUAGE = "learnlang";
     public static String KEY_SP_KNOWN_LANGUAGE = "knownlang";
     public static String KEY_SP_SPEAKE_CODE = "speakcode";

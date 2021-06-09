@@ -33,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
+import me.ibrahimsn.lib.CirclesLoadingView;
+
 public class P3Fragment extends Fragment implements View.OnClickListener {
 
     private P3ViewModel mViewModel;
@@ -44,6 +46,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     ImageView imbBtnQuestionImg;
     ProgressBar pbTop;
     Button  btnAudioSlow, btnMic;
+    CirclesLoadingView circlesLoadingView;
     PlayPauseView btnAudio;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
@@ -79,6 +82,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         btnAudio = view.findViewById(R.id.btnAudio);
         btnAudioSlow = view.findViewById(R.id.btnAudioSlow);
         btnMic = view.findViewById(R.id.btnMic);
+        circlesLoadingView = view.findViewById(R.id.lvLoading);
         tvRecText.setText("");
         imgBtnHome.setOnClickListener(this::onClick);
         imgBtnHelp.setOnClickListener(this::onClick);
@@ -164,9 +168,9 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
 
                 System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
                 else
-                    cf.speechToText(getContext(), tvRecText, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
 
                 break;
         }

@@ -73,7 +73,7 @@ public class QuestionsActivity extends AppCompatActivity {
         @Override
         public void run() {
             //long millis = System.currentTimeMillis() - startTime;
-            long millis = (System.currentTimeMillis() - startTime) +startLessonTime;
+            long millis = (System.currentTimeMillis() - startTime) + startLessonTime;
             int seconds = (int) (millis / 1000);
             int minutes = seconds / 60;
             seconds = seconds % 60;
@@ -116,7 +116,7 @@ public class QuestionsActivity extends AppCompatActivity {
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 if (resource instanceof GifDrawable) {
-                    ((GifDrawable)resource).registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
+                    ((GifDrawable) resource).registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
                         @Override
                         public void onAnimationEnd(Drawable drawable) {
                             super.onAnimationEnd(drawable);
@@ -137,6 +137,14 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         };
         this.getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        hideSystemUI();
+        //Toast.makeText(QuestionsActivity.this, "sssssssssssss", Toast.LENGTH_SHORT).show();
+        return super.onTouchEvent(event);
     }
 
     private void onBack() {
@@ -207,8 +215,8 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
-    private void init(int langid, int chaperno, int lessonno,String strSpentTime, boolean isNewChapter, boolean isRandomQuestion) {
-        Log.d("isRandomQuestionsss",String.valueOf(isRandomQuestion));
+    private void init(int langid, int chaperno, int lessonno, String strSpentTime, boolean isNewChapter, boolean isRandomQuestion) {
+        Log.d("isRandomQuestionsss", String.valueOf(isRandomQuestion));
         this.isNewChapter = isNewChapter;
         this.isRandomQuestion = isRandomQuestion;
         this.startLessonTime = Long.decode(strSpentTime);
@@ -250,7 +258,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
                         mPager.setAdapter(mPageAdapter);
                         mPager.setUserInputEnabled(false);
-                        mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO,1)-1);
+                        mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO, 1) - 1);
                         //mPager.setCurrentItem(5);
                         mPager.clearFocus();
 
@@ -295,8 +303,8 @@ public class QuestionsActivity extends AppCompatActivity {
                         getIntent().getIntExtra(Tags.TAG_CHAPTER_NO, 0),
                         getIntent().getIntExtra(Tags.TAG_LESSON_NO, 0),
                         getIntent().getStringExtra(Tags.TAG_SPENT_TIME),
-                        getIntent().getBooleanExtra(Tags.TAG_IS_NEW_CHAPTER,false),
-                        getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS,false));
+                        getIntent().getBooleanExtra(Tags.TAG_IS_NEW_CHAPTER, false),
+                        getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false));
             //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();

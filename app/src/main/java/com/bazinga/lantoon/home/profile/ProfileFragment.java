@@ -4,22 +4,30 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +43,7 @@ import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -43,6 +52,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 import com.hbb20.CountryCodePicker;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Calendar;
 import java.util.List;
@@ -55,6 +65,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -91,18 +102,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                         Log.d("profileData ", new GsonBuilder().setPrettyPrinting().create().toJson(profileData));
                         if (!profileData.getPicture().equals("") || profileData.getPicture() != null) {
 
-                            Glide.with(this).load(profileData.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
-                                @Override
-                                public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                    return false;
-                                }
+                            Glide.with(this).load(profileData.getPicture())
+                                    .circleCrop()
+                                    .addListener(new RequestListener<Drawable>() {
+                                        @Override
+                                        public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                            return false;
+                                        }
 
-                                @Override
-                                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                    ivProfilePhoto.setBackground(null);
-                                    return false;
-                                }
-                            }).into(ivProfilePhoto);
+                                        @Override
+                                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                            ivProfilePhoto.setBackground(null);
+                                            return false;
+                                        }
+                                    }).into(ivProfilePhoto);
 
                         }
                         durationDataList = profile.getDurationData();
@@ -168,7 +181,70 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     }
 
     private void selectImage() {
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        //Create a View object yourself through inflater
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_select_image, null);
+
+        //Specify the length and width through constants
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+        //Make Inactive Items Outside Of PopupWindow
+        boolean focusable = false;
+
+        //Create a window with our parameters
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        //Set the location of the window on the screen
+        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+
+        //Initialize the elements of our window, install the handler
+
+
+        ImageView ivCamera = popupView.findViewById(R.id.ivCamera);
+        ImageView ivGallery = popupView.findViewById(R.id.ivGallery);
+        ImageButton imgBtnClose = popupView.findViewById(R.id.imgBtnClose);
+
+        ivCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    startActivityForResult(takePictureIntent, 11);
+                } catch (ActivityNotFoundException e) {
+                    // display error state to the user
+                }
+            }
+        });
+
+        ivGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 22);
+            }
+        });
+
+        imgBtnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                popupWindow.dismiss();
+            }
+        });
+
+
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+        /*final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -178,19 +254,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     try {
-                        startActivityForResult(takePictureIntent, 1);
+                        startActivityForResult(takePictureIntent, 11);
                     } catch (ActivityNotFoundException e) {
                         // display error state to the user
                     }
                 } else if (options[item].equals("Choose from Gallery")) {
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
+                    startActivityForResult(intent, 22);
                 } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
                 }
             }
         });
-        builder.show();
+        builder.show();*/
     }
 
     @SuppressLint("LongLogTag")
@@ -198,10 +274,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == 1) {
-                Uri selectedImage = data.getData();
+            if (requestCode == 11) {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+                Uri tempUri = getImageUri(getApplicationContext(), photo);
                 String[] filePath = {MediaStore.Images.Media.DATA};
-                Cursor c = getContext().getContentResolver().query(selectedImage, filePath, null, null, null);
+                Cursor c = getContext().getContentResolver().query(tempUri, filePath, null, null, null);
                 c.moveToFirst();
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
@@ -211,7 +289,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 c.close();
 
 
-            } else if (requestCode == 2) {
+            } else if (requestCode == 22) {
                 Uri selectedImage = data.getData();
                 String[] filePath = {MediaStore.Images.Media.DATA};
                 Cursor c = getContext().getContentResolver().query(selectedImage, filePath, null, null, null);
@@ -227,12 +305,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        /*ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);*/
+        Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000, true);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), OutImage, "Title", null);
+        return Uri.parse(path);
+    }
+
 
     private void SendDetail(String strPicture) {
         System.out.println(strPicture);
         File imageFile = new File(strPicture);
         RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"), imageFile);
-        MultipartBody.Part partImage = MultipartBody.Part.createFormData("profilepic", "profilepic", reqBody);
+        MultipartBody.Part partImage = MultipartBody.Part.createFormData("profilepic", imageFile.getName(), reqBody);
         RequestBody userid = RequestBody.create(MediaType.parse("text/plain"), HomeActivity.sessionManager.getUid());
         final ProgressDialog loading = new ProgressDialog(getContext());
         loading.setMessage("Please Wait...");
@@ -245,7 +333,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             public void onResponse(Call<ProfilePicture> call, Response<ProfilePicture> response) {
                 if (response.body().getStatus().getCode() == 1028) {
                     ivProfilePhoto.setBackground(null);
-                    Glide.with(getContext()).load(response.body().getData().getProfilepic()).circleCrop().into(ivProfilePhoto);
+                    Glide.with(getContext())
+                            .load(response.body().getData().getProfilepic())
+                            .circleCrop()
+                            .into(ivProfilePhoto);
                     Log.d("profile picture data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
                     HomeActivity.sessionManager.setProfilePic(response.body().getData().getProfilepic());
                     Snackbar.make(getView(), response.body().getStatus().getMessage(), Snackbar.LENGTH_SHORT).show();

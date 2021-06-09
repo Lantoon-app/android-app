@@ -34,6 +34,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 
+import me.ibrahimsn.lib.CirclesLoadingView;
+
 public class QP3Fragment extends Fragment implements View.OnClickListener {
 
     private QP3ViewModel mViewModel;
@@ -44,6 +46,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudioSlow1, btnAudioSlow2, btnMic;
+    CirclesLoadingView circlesLoadingView;
     PlayPauseView btnAudio1, btnAudio2;
     CommonFunction cf;
     ReferencePopup referencePopup;
@@ -83,6 +86,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
         btnAudioSlow1 = view.findViewById(R.id.btnAudioSlow1);
         btnAudioSlow2 = view.findViewById(R.id.btnAudioSlow2);
         btnMic = view.findViewById(R.id.btnMic);
+        circlesLoadingView = view.findViewById(R.id.lvLoading);
         imbBtnQuestionImg = view.findViewById(R.id.imbBtnQuestionImg);
         imgBtnAnsImage = view.findViewById(R.id.imgBtnAnsImage);
         imgBtnHome.setOnClickListener(this::onClick);
@@ -228,9 +232,9 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
 
                 System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
                 else
-                    cf.speechToText(getContext(), tvRecText, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
 
                 break;
         }

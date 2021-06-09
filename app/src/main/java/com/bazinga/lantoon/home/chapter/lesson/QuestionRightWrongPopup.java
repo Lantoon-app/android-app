@@ -49,6 +49,7 @@ public class QuestionRightWrongPopup {
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_question_answer_anim, null);
 
+
         //Specify the length and width through constants
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -58,6 +59,7 @@ public class QuestionRightWrongPopup {
 
         //Create a window with our parameters
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
 
         //Set the location of the window on the screen
         popupWindow.setOutsideTouchable(false);

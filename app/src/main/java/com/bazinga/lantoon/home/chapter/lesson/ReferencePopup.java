@@ -40,7 +40,7 @@ public class ReferencePopup {
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
         //Make Inactive Items Outside Of PopupWindow
-        boolean focusable = true;
+        boolean focusable = false;
 
         //Create a window with our parameters
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
