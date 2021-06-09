@@ -209,6 +209,19 @@
                 app:iconPadding="0dp"
                 app:iconSize="@dimen/_60sdp" />
 
+            <me.ibrahimsn.lib.CirclesLoadingView
+                android:id="@+id/lvLoading"
+                android:layout_width="407dp"
+                android:layout_height="61dp"
+                android:visibility="gone"
+                app:animDelay="150"
+                app:animDistance="10dp"
+                app:animDuration="500"
+                app:animInterpolator="accelerateDecelerate"
+                app:circleRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tvRecText"
                 android:layout_width="wrap_content"

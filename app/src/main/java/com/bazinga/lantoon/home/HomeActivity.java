@@ -7,10 +7,17 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +92,65 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void onBack() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Create a View object yourself through inflater
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_app_exit, null);
+
+        //Specify the length and width through constants
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+        //Make Inactive Items Outside Of PopupWindow
+        boolean focusable = false;
+
+        //Create a window with our parameters
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        //Set the location of the window on the screen
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+        //Initialize the elements of our window, install the handler
+
+        TextView tvMessage = popupView.findViewById(R.id.tvMessage);
+        Button btnYes = popupView.findViewById(R.id.btnYes);
+        Button btnNo = popupView.findViewById(R.id.btnNo);
+        ImageButton imgBtnClose = popupView.findViewById(R.id.imgBtnClose);
+
+        tvMessage.setText(getString(R.string.ad_back_button_pressed_msg));
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                finishAffinity();
+            }
+        });
+
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+        imgBtnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                popupWindow.dismiss();
+            }
+        });
+
+
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                popupWindow.dismiss();
+                return true;
+            }
+        });
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.ad_home_button_pressed_msg))
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -104,7 +169,7 @@ public class HomeActivity extends AppCompatActivity {
 
         AlertDialog alert = builder.create();
         alert.setTitle("Alert");
-        alert.show();
+        alert.show();*/
     }
 
     private void initToolbar() {

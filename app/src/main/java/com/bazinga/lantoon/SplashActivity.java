@@ -1,31 +1,13 @@
 package com.bazinga.lantoon;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
-import com.bazinga.lantoon.home.chapter.ChapterCompletedPopup;
+import com.bazinga.lantoon.home.chapter.lesson.ChapterCompletedPopup;
 import com.bazinga.lantoon.login.SessionManager;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.gif.GifDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.DrawableImageViewTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
-
-import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
     CommonFunction cf;
