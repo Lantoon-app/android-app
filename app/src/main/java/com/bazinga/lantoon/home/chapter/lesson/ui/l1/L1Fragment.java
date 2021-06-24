@@ -1,16 +1,11 @@
 package com.bazinga.lantoon.home.chapter.lesson.ui.l1;
 
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.ViewModelProvider;
-
+import android.animation.Animator;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +13,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.PlayPauseView;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
@@ -36,20 +38,27 @@ import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
+
+import static java.lang.Thread.sleep;
 
 public class L1Fragment extends Fragment implements View.OnClickListener {
     Audio audio;
     private L1ViewModel mViewModel;
     private ArrayList<Question> questions;
+    LinearLayout linearLayout;
     TextView tvQuestionNo, tvQuestionName;
     ImageButton imgBtnHome, imgBtnHelp, imgBtnNext;
     ProgressBar pbTop;
-    ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4;
+    ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4, expandedImageView;
     Button btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
     PlayPauseView btnAudio1, btnAudio2, btnAudio3, btnAudio4;
     CommonFunction cf;
     //MediaPlayer cf.mediaPlayer;
+    private Animator currentAnimator;
+    private int shortAnimationDuration;
+    View containerView;
 
     public static L1Fragment newInstance(int questionNo, int totalQuestions, String data) {
         L1Fragment fragment = new L1Fragment();
@@ -73,7 +82,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
     private void initializeView(View view) {
 
-
+        containerView = view;
+        expandedImageView = view.findViewById(R.id.expanded_image);
         imgBtnHome = view.findViewById(R.id.imgBtnHome);
         imgBtnHelp = view.findViewById(R.id.imgBtnHelp);
         imgBtnNext = view.findViewById(R.id.imgBtnNext);
@@ -92,6 +102,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         imbBtnQuestionImg2 = view.findViewById(R.id.imbBtnQuestionImg2);
         imbBtnQuestionImg3 = view.findViewById(R.id.imbBtnQuestionImg3);
         imbBtnQuestionImg4 = view.findViewById(R.id.imbBtnQuestionImg4);
+        linearLayout = view.findViewById(R.id.linearLayout2);
+
         imgBtnHome.setOnClickListener(this::onClick);
         imgBtnHelp.setOnClickListener(this::onClick);
         imgBtnNext.setOnClickListener(this::onClick);
@@ -105,8 +117,15 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         btnAudioSlow4.setOnClickListener(this::onClick);
         imgBtnNext.setVisibility(View.GONE);
         setClickableButton(false);
-
-
+        // Retrieve and cache the system's default "short" animation time.
+        shortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
+        /*imbBtnQuestionImg1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomImageIn(imbBtnQuestionImg1);
+            }
+        });*/
     }
 
     private void setClickableButton(boolean clickable) {
@@ -147,11 +166,171 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
 
             Log.d("data l1 ", questions.get(2).getQid());
+            new Thread(play).start();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //PlayAudios(questions);
+
+    }
+
+    private Runnable play = new Runnable() {
+        int ThreadDelay = 1500;
+        int Duration;
+
+        @Override
+        public void run() {
+            try {
+                cf.mediaPlayer = new MediaPlayer();
+                cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
+                cf.mediaPlayer.prepare();
+                Duration = cf.mediaPlayer.getDuration() + ThreadDelay;
+                Log.d("duration ", String.valueOf(Duration));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                sleep(ThreadDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    tvQuestionName.setText(questions.get(0).getWord());
+                    //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+                    zoomImageIn(imbBtnQuestionImg1);
+                    btnAudio1.setState(PlayPauseView.STATE_PLAY);
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp -> {
+                        mp.stop();
+                        mp.release();
+                        zoomImageOut(imbBtnQuestionImg1);
+                        btnAudio1.setState(PlayPauseView.STATE_PAUSE);
+                        btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                    });
+                }
+
+            });
+            try {
+                sleep(Duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d("duration", "end");
+            try {
+                cf.mediaPlayer = new MediaPlayer();
+                cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
+                cf.mediaPlayer.prepare();
+                Duration = cf.mediaPlayer.getDuration() + ThreadDelay;
+                Log.d("duration ", String.valueOf(Duration));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    tvQuestionName.setText(questions.get(1).getWord());
+                    //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+                    zoomImageIn(imbBtnQuestionImg2);
+                    btnAudio2.setState(PlayPauseView.STATE_PLAY);
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp -> {
+                        mp.stop();
+                        mp.release();
+                        zoomImageOut(imbBtnQuestionImg2);
+                        btnAudio2.setState(PlayPauseView.STATE_PAUSE);
+                        btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+
+                    });
+                }
+            });
+            try {
+                sleep(Duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d("duration", "end");
+            try {
+                cf.mediaPlayer = new MediaPlayer();
+                cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
+                cf.mediaPlayer.prepare();
+                Duration = cf.mediaPlayer.getDuration() + ThreadDelay;
+                Log.d("duration ", String.valueOf(Duration));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    tvQuestionName.setText(questions.get(2).getWord());
+                    //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+                    zoomImageIn(imbBtnQuestionImg3);
+                    btnAudio3.setState(PlayPauseView.STATE_PLAY);
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp -> {
+                        mp.stop();
+                        mp.release();
+                        zoomImageOut(imbBtnQuestionImg3);
+                        btnAudio3.setState(PlayPauseView.STATE_PAUSE);
+                        btnAudio3.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+
+                    });
+                }
+            });
+            try {
+                sleep(Duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d("duration", "end");
+            try {
+                cf.mediaPlayer = new MediaPlayer();
+                cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
+                cf.mediaPlayer.prepare();
+                Duration = cf.mediaPlayer.getDuration() + ThreadDelay;
+                Log.d("duration ", String.valueOf(Duration));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    tvQuestionName.setText(questions.get(3).getWord());
+                    //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+                    zoomImageIn(imbBtnQuestionImg4);
+                    btnAudio4.setState(PlayPauseView.STATE_PLAY);
+
+                    cf.mediaPlayer.start();
+                    cf.mediaPlayer.setOnCompletionListener(mp -> {
+                        mp.stop();
+                        mp.release();
+                        zoomImageOut(imbBtnQuestionImg4);
+                        btnAudio4.setState(PlayPauseView.STATE_PAUSE);
+                        btnAudio4.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+
+                    });
+                }
+            });
+            try {
+                sleep(Duration);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d("duration", "final end");
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setClickableButton(true);
+                    imgBtnNext.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+    };
 
 
     private void setTopBarState(int quesNo, int totalQues) {
@@ -168,11 +347,6 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        PlayAudios(questions);
-    }
 
     private ArrayList<Question> jsonStringToArray(String jsonString) throws JSONException {
 
@@ -191,7 +365,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     private void PlayAudios(ArrayList<Question> questions) {
         try {
             tvQuestionName.setText(questions.get(0).getWord());
-            cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+            //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+            zoomImageIn(imbBtnQuestionImg1);
             btnAudio1.setState(PlayPauseView.STATE_PLAY);
             cf.mediaPlayer = new MediaPlayer();
             cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(0).getAudioPath());
@@ -200,45 +375,52 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
+                zoomImageOut(imbBtnQuestionImg1);
                 btnAudio1.setState(PlayPauseView.STATE_PAUSE);
                 btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                 btnAudio2.setState(PlayPauseView.STATE_PLAY);
                 cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionName.setText(questions.get(1).getWord());
-                    cf.shakeAnimation(imbBtnQuestionImg2, 1000);
+                    //cf.shakeAnimation(imbBtnQuestionImg2, 1000);
+                    zoomImageIn(imbBtnQuestionImg2);
                     cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(1).getAudioPath());
                     cf.mediaPlayer.prepare();
                     cf.mediaPlayer.start();
                     cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
+                        zoomImageOut(imbBtnQuestionImg2);
                         btnAudio2.setState(PlayPauseView.STATE_PAUSE);
                         btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                         btnAudio3.setState(PlayPauseView.STATE_PLAY);
                         cf.mediaPlayer = new MediaPlayer();
                         try {
                             tvQuestionName.setText(questions.get(2).getWord());
-                            cf.shakeAnimation(imbBtnQuestionImg3, 1000);
+                            //cf.shakeAnimation(imbBtnQuestionImg3, 1000);
+                            zoomImageIn(imbBtnQuestionImg3);
                             cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(2).getAudioPath());
                             cf.mediaPlayer.prepare();
                             cf.mediaPlayer.start();
                             cf.mediaPlayer.setOnCompletionListener(mp11 -> {
                                 mp11.stop();
                                 mp11.release();
+                                zoomImageOut(imbBtnQuestionImg3);
                                 btnAudio3.setState(PlayPauseView.STATE_PAUSE);
                                 btnAudio3.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                                 btnAudio4.setState(PlayPauseView.STATE_PLAY);
                                 cf.mediaPlayer = new MediaPlayer();
                                 try {
                                     tvQuestionName.setText(questions.get(3).getWord());
-                                    cf.shakeAnimation(imbBtnQuestionImg4, 1000);
+                                    //cf.shakeAnimation(imbBtnQuestionImg4, 1000);
+                                    zoomImageIn(imbBtnQuestionImg4);
                                     cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + File.separator + questions.get(3).getAudioPath());
                                     cf.mediaPlayer.prepare();
                                     cf.mediaPlayer.start();
                                     cf.mediaPlayer.setOnCompletionListener(mp111 -> {
                                         mp111.stop();
                                         mp111.release();
+                                        zoomImageOut(imbBtnQuestionImg4);
                                         btnAudio4.setState(PlayPauseView.STATE_PAUSE);
                                         btnAudio4.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                                         setClickableButton(true);
@@ -321,4 +503,185 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
     }
 
+    //https://developer.android.com/training/animation/zoom.html
+    private void zoomImageIn(ImageView thumbView) {
+        // If there's an animation in progress, cancel it
+        // immediately and proceed with this one.
+        if (currentAnimator != null) {
+            currentAnimator.cancel();
+        }
+
+        // Load the high-resolution "zoomed-in" image.
+
+        expandedImageView.setImageDrawable(thumbView.getDrawable());
+
+
+        // Calculate the starting and ending bounds for the zoomed-in image.
+        // This step involves lots of math. Yay, math.
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        // The start bounds are the global visible rectangle of the thumbnail,
+        // and the final bounds are the global visible rectangle of the container
+        // view. Also set the container view's offset as the origin for the
+        // bounds, since that's the origin for the positioning animation
+        // properties (X, Y).
+        thumbView.getGlobalVisibleRect(startBounds);
+        containerView
+                .getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        // Adjust the start bounds to be the same aspect ratio as the final
+        // bounds using the "center crop" technique. This prevents undesirable
+        // stretching during the animation. Also calculate the start scaling
+        // factor (the end scaling factor is always 1.0).
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height()
+                > (float) startBounds.width() / startBounds.height()) {
+            // Extend start bounds horizontally
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        // Hide the thumbnail and show the zoomed-in view. When the animation
+        // begins, it will position the zoomed-in view in the place of the
+        // thumbnail.
+        thumbView.setAlpha(0f);
+        expandedImageView.setVisibility(View.VISIBLE);
+
+        // Set the pivot point for SCALE_X and SCALE_Y transformations
+        // to the top-left corner of the zoomed-in view (the default
+        // is the center of the view).
+        expandedImageView.setPivotX(0f);
+        expandedImageView.setPivotY(0f);
+
+        // Construct and run the parallel animation of the four translation and
+        // scale properties (X, Y, SCALE_X, and SCALE_Y).
+       /* AnimatorSet set = new AnimatorSet();
+        set
+                .play(ObjectAnimator.ofFloat(expandedImageView, View.X,
+                        startBounds.left, finalBounds.left))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.Y,
+                        startBounds.top, finalBounds.top))
+                .with(ObjectAnimator.ofFloat(expandedImageView, View.SCALE_X,
+                        startScale, 1f))
+                .with(ObjectAnimator.ofFloat(expandedImageView,
+                        View.SCALE_Y, startScale, 1f));
+        set.setDuration(shortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                currentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                currentAnimator = null;
+            }
+        });
+        set.start();
+        currentAnimator = set;*/
+
+        // Upon clicking the zoomed-in image, it should zoom back down
+        // to the original bounds and show the thumbnail instead of
+        // the expanded image.
+        final float startScaleFinal = startScale;
+        expandedImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //zoomImageOut(thumbView);
+            }
+        });
+    }
+
+    private void zoomImageOut(View thumbView) {
+        if (currentAnimator != null) {
+            currentAnimator.cancel();
+        }
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        // The start bounds are the global visible rectangle of the thumbnail,
+        // and the final bounds are the global visible rectangle of the container
+        // view. Also set the container view's offset as the origin for the
+        // bounds, since that's the origin for the positioning animation
+        // properties (X, Y).
+        thumbView.getGlobalVisibleRect(startBounds);
+        containerView
+                .getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        // Adjust the start bounds to be the same aspect ratio as the final
+        // bounds using the "center crop" technique. This prevents undesirable
+        // stretching during the animation. Also calculate the start scaling
+        // factor (the end scaling factor is always 1.0).
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height()
+                > (float) startBounds.width() / startBounds.height()) {
+            // Extend start bounds horizontally
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+        // Animate the four positioning/sizing properties in parallel,
+        // back to their original values.
+        final float startScaleFinal = startScale;
+        /*AnimatorSet set = new AnimatorSet();
+        set.play(ObjectAnimator
+                .ofFloat(expandedImageView, View.X, startBounds.left))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView,
+                                View.Y, startBounds.top))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView,
+                                View.SCALE_X, startScaleFinal))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView,
+                                View.SCALE_Y, startScaleFinal));
+        set.setDuration(shortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                thumbView.setAlpha(1f);
+                expandedImageView.setVisibility(View.GONE);
+                currentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                thumbView.setAlpha(1f);
+                expandedImageView.setVisibility(View.GONE);
+                currentAnimator = null;
+            }
+        });
+        set.start();
+        currentAnimator = set;*/
+        thumbView.setAlpha(1f);
+        expandedImageView.setVisibility(View.GONE);
+    }
 }

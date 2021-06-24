@@ -2,11 +2,15 @@ package com.bazinga.lantoon;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -111,7 +115,7 @@ public class CommonFunction {
                     generated.add(next);
                     ImageView iv = view.findViewById(imageViewIds[i]);
                     RequestOptions requestOptions = new RequestOptions();
-                    requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
+                    requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(40));
                     iv.setTag(imagePaths[next]);
                     Glide.with(activity).load(imagePaths[next]).apply(requestOptions).into(iv);
                     break;
@@ -332,7 +336,34 @@ public class CommonFunction {
             activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
         }
     }
+public static void permissionNeededAlert(Context context, Activity activity, String message){
+    //Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+    //If User was asked permission before and denied
+    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
+    alertDialogBuilder.setTitle("Permission needed");
+    alertDialogBuilder.setMessage(message);
+    alertDialogBuilder.setPositiveButton("Open Setting", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", activity.getPackageName(),
+                    null);
+            intent.setData(uri);
+            activity.startActivity(intent);
+        }
+    });
+    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialogInterface, int i) {
+            Log.d("onClick: Cancelling", "onClick: Cancelling");
+        }
+    });
+
+    AlertDialog dialog = alertDialogBuilder.create();
+    dialog.show();
+}
     public static void netWorkErrorAlert(Activity activity) {
         Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
     }

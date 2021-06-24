@@ -307,7 +307,8 @@ public class QuestionsActivity extends AppCompatActivity {
                         getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false));
             //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            CommonFunction.permissionNeededAlert(context,QuestionsActivity.this,getString(R.string.ad_permission_storage_audio_msg));
         }
     }
 

@@ -104,7 +104,6 @@
                         android:gravity="center"
                         android:hint="@string/hint_mobile_number"
                         android:inputType="phone"
-                        android:text="11111111111"
                         android:textSize="@dimen/_15ssp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
