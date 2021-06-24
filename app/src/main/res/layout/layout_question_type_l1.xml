@@ -238,6 +238,15 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvQuestionName" />
     <ImageButton
         android:id="@+id/imgBtnNext"
         android:layout_width="@dimen/_30sdp"

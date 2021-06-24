@@ -40,6 +40,7 @@ import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -450,6 +451,10 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
     public static void deleteCache(Context context) {
         try {

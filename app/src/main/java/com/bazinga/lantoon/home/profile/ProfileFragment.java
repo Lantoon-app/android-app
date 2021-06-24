@@ -1,18 +1,22 @@
 package com.bazinga.lantoon.home.profile;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,9 +32,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -51,6 +57,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
 import com.hbb20.CountryCodePicker;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -81,6 +89,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     Spinner spinnerDuration;
     final Calendar myCalendar = Calendar.getInstance();
     boolean fragmentDestroyed = false;
+    private static final int MY_PERMISSION_REQUEST_CODE = 111;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -155,8 +164,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivProfilePhoto:
-                if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
-                    selectImage();
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0){
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions( //Method of Fragment
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_PERMISSION_REQUEST_CODE
+                        );
+                        Toast.makeText(getContext(),"Need Storage Permission",Toast.LENGTH_SHORT).show();
+                    } else {
+                        selectImage();
+                    }
+                }
                 else
                     CommonFunction.netWorkErrorAlert(getActivity());
                 break;
@@ -179,7 +196,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 break;
         }
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSION_REQUEST_CODE) {
+            if (permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectImage();
+            }
+        }
+    }
     private void selectImage() {
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
@@ -305,6 +330,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
+
+
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         /*ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -355,6 +382,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
 
     }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
