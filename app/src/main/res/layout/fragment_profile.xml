@@ -62,7 +62,7 @@
                     android:focusableInTouchMode="false"
                     android:gravity="center"
                     android:hint="@string/hint_date_of_birth"
-                    android:inputType="textPersonName"
+                    android:inputType="date"
                     android:textSize="@dimen/_15ssp" />
             </com.google.android.material.textfield.TextInputLayout>
 

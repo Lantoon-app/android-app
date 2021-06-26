@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -62,8 +63,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -112,7 +115,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                         if (!profileData.getPicture().equals("") || profileData.getPicture() != null) {
 
                             Glide.with(this).load(profileData.getPicture())
-                                    .circleCrop()
+                                    .circleCrop().placeholder(R.drawable.photo_upload_icon)
                                     .addListener(new RequestListener<Drawable>() {
                                         @Override
                                         public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -146,11 +149,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             });
         } else
             CommonFunction.netWorkErrorAlert(getActivity());
-        date = (view, year, monthOfYear, dayOfMonth) -> {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            etDOB.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+
+        date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel( year,  monthOfYear+1,
+                 dayOfMonth);
+            }
+
         };
         ivProfilePhoto.setOnClickListener(this::onClick);
         etDOB.setOnClickListener(this::onClick);
@@ -159,7 +171,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
         return root;
     }
-
+    private void updateLabel(int year, int monthOfYear,
+                             int dayOfMonth) {
+        String myFormat = "YYYY-MM-dd"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+        //etDOB.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+        etDOB.setText(sdf.format(myCalendar.getTime()));
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -178,8 +196,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     CommonFunction.netWorkErrorAlert(getActivity());
                 break;
             case R.id.etDOB:
-                new DatePickerDialog(getContext(), date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                new DatePickerDialog(getContext(), date,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 break;
             case R.id.btnUpdate:
@@ -269,29 +288,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 return true;
             }
         });
-        /*final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext());
-        builder.setTitle("Add Photo!");
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
 
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    try {
-                        startActivityForResult(takePictureIntent, 11);
-                    } catch (ActivityNotFoundException e) {
-                        // display error state to the user
-                    }
-                } else if (options[item].equals("Choose from Gallery")) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 22);
-                } else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();*/
     }
 
     @SuppressLint("LongLogTag")
@@ -333,10 +330,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
-        /*ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);*/
+
         Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000, true);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), OutImage, "Title", null);
         return Uri.parse(path);

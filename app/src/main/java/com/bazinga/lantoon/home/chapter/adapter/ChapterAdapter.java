@@ -111,7 +111,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public void removeLoading() {
         isLoaderVisible = false;
         int position = mChapterList.size() - 1;
-        if(mChapterList.size()>0) {
+        if (mChapterList.size() > 0) {
             Chapter item = getItem(position);
             if (item != null) {
                 mChapterList.remove(position);
@@ -177,7 +177,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             //mChapterList.get(position);
             //getPbChapter().setProgress(0);
             int progress = mChapterList.get(position).getCompletedLessons();
-            Log.d("progressss", String.valueOf(progress));
+            System.out.println("progressss" + progress);
             //if(progress > 0)
 
 
@@ -186,6 +186,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
 
                 switch (progress) {
+                    case 0:
+                        getPbChapter().setProgress(0);
                     case 25:
                         getPbChapter().setProgress(25);
                         break;
@@ -200,7 +202,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                         break;
 
                 }
-                getPbChapter().setProgress(progress);
+                //getPbChapter().setProgress(progress);
                 tvChapter.setVisibility(View.VISIBLE);
                 ivLock.setVisibility(View.INVISIBLE);
                 ivDisabled.setVisibility(View.INVISIBLE);
@@ -213,10 +215,11 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 ivDisabled.setVisibility(View.VISIBLE);
                 ratingBar.setNumStars(0);
             }
-            if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
                         //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                         if (NetworkUtil.getConnectivityStatus(activity) != 0) {
                             Intent intent = new Intent(activity, QuestionsActivity.class);
@@ -247,15 +250,16 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 intent.putExtra(Tags.TAG_SPENT_TIME, "0");
                                 intent.putExtra(Tags.TAG_START_QUESTION_NO, 0);
                             }
-
                             activity.startActivity(intent);
-                        } else {
+                        }else {
                             CommonFunction.netWorkErrorAlert(activity);
                         }
 
                     }
-                });
-            }
+
+                }
+            });
+
 
             Log.d("chapters ", "Completed " + mChapterList.get(position).getCompletedLessons() + " Active " + continueNext.getStartingquesno() + " Cno " + mChapterList.get(position).getChapterNo());
            /* if (mChapterList.get(position).getCompletedLessons() == 0) {
