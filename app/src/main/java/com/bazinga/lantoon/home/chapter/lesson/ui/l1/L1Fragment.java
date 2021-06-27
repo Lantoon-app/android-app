@@ -166,7 +166,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
 
             Log.d("data l1 ", questions.get(2).getQid());
-            new Thread(play).start();
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -178,7 +178,7 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         //PlayAudios(questions);
-
+        new Thread(play).start();
     }
 
     private Runnable play = new Runnable() {
