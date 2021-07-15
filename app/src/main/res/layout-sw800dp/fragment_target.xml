@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+   <!-- <com.bazinga.lantoon.calendar.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".home.HomeActivity"
+        tools:ignore="MissingClass" />-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp">
+    <Button
+        android:id="@+id/btnCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/completed"
+        android:textSize="@dimen/_8ssp"
+        android:layout_weight="1"
+        app:backgroundTint="@null"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/button_bg_target_selected"/>
+    <Button
+        android:id="@+id/btnOnGoing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ongoing"
+        android:textSize="@dimen/_8ssp"
+        android:layout_weight="1"
+        app:backgroundTint="@null"
+        android:layout_margin="@dimen/_5sdp"
+        android:textColor="@color/target_button_text_disabled"
+        android:background="@drawable/button_bg_target_unselected"/>
+    <Button
+        android:id="@+id/btnUpcoming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/upcoming"
+        android:textSize="@dimen/_8ssp"
+        android:layout_weight="1"
+        app:backgroundTint="@null"
+        android:layout_margin="@dimen/_5sdp"
+        android:textColor="@color/target_button_text_disabled"
+        android:background="@drawable/button_bg_target_unselected"/>
+</LinearLayout>
+
+    <ListView
+        android:id="@+id/lvTargets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:background="@drawable/bg"
+        android:divider="@color/transparent"
+        android:dividerHeight="@dimen/_20sdp"
+        android:clickable="true"
+        android:scrollIndicators="none"
+        tools:listitem="@layout/item_target"
+        />
+
+
+</LinearLayout>

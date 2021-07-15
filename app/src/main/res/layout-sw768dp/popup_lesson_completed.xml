@@ -36,16 +36,16 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:gravity="center|top">
 
-            <TextView
-                android:id="@+id/tvTotalTimeSpendPopupLessonCompleted"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:fontFamily="@font/open_sans_semibold"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp" />
+        <TextView
+            android:id="@+id/tvTotalTimeSpendPopupLessonCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
 
 
         <LinearLayout

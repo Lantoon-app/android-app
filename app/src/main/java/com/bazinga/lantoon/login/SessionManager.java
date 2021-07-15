@@ -223,8 +223,8 @@ public class SessionManager {
             // Staring Login Activity
             _context.startActivity(i);
         } else {
-            System.out.println("Login success");
-            // user is not logged in redirect him to Login Activity
+            System.out.println("Login failure");
+
             Intent i = new Intent(_context, GetStartActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
