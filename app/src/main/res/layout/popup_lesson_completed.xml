@@ -42,7 +42,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/moretextsample"
                 android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
                 android:textColor="@color/black"
