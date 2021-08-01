@@ -174,35 +174,30 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @RequiresApi(api = Build.VERSION_CODES.N)
         public void onBind(int position) {
             super.onBind(position);
-            //mChapterList.get(position);
-            //getPbChapter().setProgress(0);
-            int progress = mChapterList.get(position).getCompletedLessons();
-            System.out.println("progressss" + progress);
-            //if(progress > 0)
+
+            if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(mChapterList.get(position).getChapterNo()) <= Integer.valueOf(continueNext.getunlockedChapters())) {
 
 
-            ratingBar.setRating(mChapterList.get(position).getGemcount());
-            tvChapter.setText("CHAPTER " + mChapterList.get(position).getChapterNo());
-            if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
-
-                switch (progress) {
+                switch (mChapterList.get(position).getCompletedLessons()) {
                     case 0:
-                        getPbChapter().setProgress(0);
+                        getPbChapter().setProgress(1);
+                        break;
                     case 25:
                         getPbChapter().setProgress(25);
                         break;
                     case 50:
+                        getPbChapter().setProgress(50);
+                        break;
+                    case 75:
                         getPbChapter().setProgress(75);
                         break;
                     case 100:
                         getPbChapter().setProgress(100);
                         break;
-                    default:
-                        getPbChapter().setProgress(0);
-                        break;
-
                 }
-                //getPbChapter().setProgress(progress);
+
+                ratingBar.setRating(mChapterList.get(position).getGemcount());
+                tvChapter.setText("CHAPTER " + mChapterList.get(position).getChapterNo());
                 tvChapter.setVisibility(View.VISIBLE);
                 ivLock.setVisibility(View.INVISIBLE);
                 ivDisabled.setVisibility(View.INVISIBLE);
@@ -251,7 +246,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 intent.putExtra(Tags.TAG_START_QUESTION_NO, 0);
                             }
                             activity.startActivity(intent);
-                        }else {
+                        } else {
                             CommonFunction.netWorkErrorAlert(activity);
                         }
 

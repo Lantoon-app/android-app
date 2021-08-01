@@ -19,6 +19,9 @@ public class ContinueNext {
     @SerializedName("spenttime")
     @Expose
     private String spentTime;
+    @SerializedName("unlocked_chapters")
+    @Expose
+    private String unlockedChapters;
 
     public Integer getLangid() {
         return langid;
@@ -58,5 +61,12 @@ public class ContinueNext {
 
     public void setSpentTime(String spentTime) {
         this.spentTime = spentTime;
+    }
+    public String getunlockedChapters() {
+        return unlockedChapters;
+    }
+
+    public void setunlockedChapters(String unlockedChapters) {
+        this.unlockedChapters = unlockedChapters;
     }
 }
