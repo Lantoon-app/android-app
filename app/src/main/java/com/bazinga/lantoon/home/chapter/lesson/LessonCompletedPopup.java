@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 
+import static com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity.context;
 import static com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity.startTime;
 
 public class LessonCompletedPopup {
@@ -70,9 +72,13 @@ public class LessonCompletedPopup {
             }
         });
         Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);
+
         if (QuestionsActivity.isRandomQuestion || quesNo != QuestionsActivity.totalQues)
             btnContinuePopupLessonCompleted.setVisibility(View.GONE);
-
+        if(postLessonResponse.getContinuenext().getChapterno() > Integer.valueOf(postLessonResponse.getContinuenext().getunlockedChapters())) {
+            btnContinuePopupLessonCompleted.setEnabled(false);
+            //Toast.makeText(context,"Please contact Lantoon Support to continue more chapters...",Toast.LENGTH_LONG).show();
+        }
         btnContinuePopupLessonCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
