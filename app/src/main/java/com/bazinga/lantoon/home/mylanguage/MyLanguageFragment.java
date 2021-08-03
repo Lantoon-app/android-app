@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,17 +40,22 @@ public class MyLanguageFragment extends Fragment {
     private ListView listView;
     List<MyLanguageData> myLanguageDataList;
     boolean fragmentDestroyed = false;
+    ProgressBar progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         myLanguageViewModel = new ViewModelProvider(this).get(MyLanguageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my_language, container, false);
         listView = root.findViewById(R.id.llView);
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         listView.setDivider(null);
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            progressBar.setVisibility(View.VISIBLE);
             myLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<MyLanguageData>>() {
                 @Override
                 public void onChanged(List<MyLanguageData> languages) {
+                    progressBar.setVisibility(View.GONE);
                     Log.d("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(languages));
                     if (!fragmentDestroyed) {
                         myLanguageDataList = languages;
