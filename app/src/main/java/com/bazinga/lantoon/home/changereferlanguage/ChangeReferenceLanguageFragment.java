@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,19 +44,24 @@ public class ChangeReferenceLanguageFragment extends Fragment {
     List<Language> LanguageDataList;
     boolean fragmentDestroyed = false;
     ChangeReferenceLanguageAdapter changeReferenceLanguageAdapter;
+    ProgressBar progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_change_refer_language, container, false);
         listView = root.findViewById(R.id.llView);
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         listView.setDivider(null);
         changeReferenceLanguageViewModel = new ViewModelProvider(this).get(ChangeReferenceLanguageViewModel.class);
 
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            progressBar.setVisibility(View.VISIBLE);
             changeReferenceLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<Language>>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onChanged(List<Language> languages) {
+                    progressBar.setVisibility(View.GONE);
                     if (!fragmentDestroyed) {
                         LanguageDataList = languages;
                         LanguageDataList.removeIf(s -> s.getLanguageID().equalsIgnoreCase(String.valueOf(HomeActivity.sessionManager.getLearLang())));

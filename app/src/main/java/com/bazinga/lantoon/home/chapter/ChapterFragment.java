@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class ChapterFragment extends Fragment {
     private boolean isLoading = false;
     int itemCount = 0;
     boolean fragmentDestroyed = false;
+    ProgressBar progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +61,8 @@ public class ChapterFragment extends Fragment {
                 new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid())).get(ChapterViewModel.class);
         View root = inflater.inflate(R.layout.fragment_chapter, container, false);
         mRecyclerView = root.findViewById(R.id.rvChapter);
-
+        progressBar = root.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         mChapterAdapter = new ChapterAdapter(new ArrayList<Chapter>(), getActivity(), sessionManager.getLearLang());
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -110,10 +113,13 @@ public class ChapterFragment extends Fragment {
     private void preparedListItem() {
         System.out.println("Chapter preparedListItem page no = " + String.valueOf(currentPage));
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            if (isLoading == false)
+                progressBar.setVisibility(View.VISIBLE);
             chapterViewModel.getChapters().observe(getActivity(), new Observer<ChapterResponse>() {
 
                 @Override
                 public void onChanged(ChapterResponse chapterResponse) {
+                    progressBar.setVisibility(View.GONE);
                     if (!fragmentDestroyed) {
                         if (chapterResponse == null) {
                             mChapterAdapter.removeLoading();
