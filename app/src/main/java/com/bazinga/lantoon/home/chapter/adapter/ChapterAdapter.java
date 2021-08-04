@@ -214,7 +214,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno()) {
+                    if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(mChapterList.get(position).getChapterNo()) <= Integer.valueOf(continueNext.getunlockedChapters())) {
                         //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                         if (NetworkUtil.getConnectivityStatus(activity) != 0) {
                             Intent intent = new Intent(activity, QuestionsActivity.class);
