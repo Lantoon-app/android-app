@@ -43,7 +43,7 @@ public class GetStartActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
-        getCurrentLocation();
+        //getCurrentLocation();
         strDeviceId = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         ImageView imageView = (ImageView) findViewById(R.id.imageViewLogo);
@@ -84,7 +84,7 @@ public class GetStartActivity extends AppCompatActivity {
 
     }
 
-    @Override
+   /*  @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == locationPermissionCode) {
@@ -97,7 +97,7 @@ public class GetStartActivity extends AppCompatActivity {
         }
     }
 
-    private void getCurrentLocation() {
+   private void getCurrentLocation() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         String[] aryPermissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -121,5 +121,5 @@ public class GetStartActivity extends AppCompatActivity {
                     });
         }
 
-    }
+    }*/
 }

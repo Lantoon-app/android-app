@@ -5,10 +5,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -152,7 +159,61 @@ public class ChapterFragment extends Fragment {
     }
 
     private void appUpdateAlert(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        //Create a View object yourself through inflater
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_app_update, null);
+
+        //Specify the length and width through constants
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+        //Make Inactive Items Outside Of PopupWindow
+        boolean focusable = false;
+
+        //Create a window with our parameters
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        //Set the location of the window on the screen
+        popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+        //Initialize the elements of our window, install the handler
+
+        TextView tvMessage = popupView.findViewById(R.id.tvMessage);
+        Button btnExit = popupView.findViewById(R.id.btnExit);
+        Button btnUpdate = popupView.findViewById(R.id.btnUpdate);
+
+
+        tvMessage.setText(msg);
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                getActivity().finishAffinity();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // popupWindow.dismiss();
+                final String appPackageName = BuildConfig.APPLICATION_ID; // getPackageName() from Context or Activity object
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            }
+        });
+
+
+
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                //popupWindow.dismiss();
+                return true;
+            }
+        });
+
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         //Setting message manually and performing action on button click
         builder.setTitle("App New Version Alert !");
@@ -162,11 +223,11 @@ public class ChapterFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         final String appPackageName = BuildConfig.APPLICATION_ID; // getPackageName() from Context or Activity object
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                        /*try {
+                        *//*try {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                         } catch (android.content.ActivityNotFoundException anfe) {
                             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                        }*/
+                        }*//*
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
@@ -179,7 +240,7 @@ public class ChapterFragment extends Fragment {
         AlertDialog alert = builder.create();
         //Setting the title manually
         alert.setTitle("Alert");
-        alert.show();
+        alert.show();*/
 
     }
 
