@@ -10,7 +10,7 @@ android {
         applicationId "com.bazinga.lantoon"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 15
+        versionCode 16
         versionName "1.1.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
