@@ -208,7 +208,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 tvChapter.setVisibility(View.INVISIBLE);
                 ivLock.setVisibility(View.VISIBLE);
                 ivDisabled.setVisibility(View.VISIBLE);
-                ratingBar.setNumStars(0);
+                ratingBar.setRating(0);
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {

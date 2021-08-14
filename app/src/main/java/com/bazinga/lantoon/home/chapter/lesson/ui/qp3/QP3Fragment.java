@@ -212,7 +212,7 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio2);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAnsAudioPath(),btnAudio2);
                 tvQuestionAnswer.setText(question.getAnsWord());
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;
