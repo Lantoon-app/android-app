@@ -36,6 +36,10 @@
     <color name="chapter_disabled_bg">#3b3b3b</color>
     <color name="target_button_text_disabled">#3b3b3b</color>
 
+    <color name="app_gradient_center_colour">#47A891</color>
+    <color name="app_gradient_start_colour">#19ac9c</color>
+    <color name="app_gradient_end_colour">#286bb5</color>
+
     <color name="today">#4b82ff</color>
     <color name="greyed_out">#c7c7c7</color>
     <color name="summer">#44eebd82</color>
