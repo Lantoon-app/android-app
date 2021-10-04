@@ -96,12 +96,12 @@ public class LoginViewModel extends ViewModel {
     private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
-        }
-        if (username != null) {
+        }else return true;
+        /*if (username != null) {
             return Patterns.EMAIL_ADDRESS.matcher(username).matches();
         } else {
             return !username.trim().isEmpty();
-        }
+        }*/
     }
 
     // A placeholder password validation check
