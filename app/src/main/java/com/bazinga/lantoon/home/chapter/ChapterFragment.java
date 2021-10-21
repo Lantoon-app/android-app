@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -60,6 +61,7 @@ public class ChapterFragment extends Fragment {
     int itemCount = 0;
     boolean fragmentDestroyed = false;
     ProgressBar progressBar;
+    ImageView ivMaintenance;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +69,8 @@ public class ChapterFragment extends Fragment {
         chapterViewModel = new ViewModelProvider(this,
                 new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid())).get(ChapterViewModel.class);
         View root = inflater.inflate(R.layout.fragment_chapter, container, false);
+        ivMaintenance = root.findViewById(R.id.ivMaintenance);
+        //ivMaintenance.setVisibility(View.VISIBLE);
         mRecyclerView = root.findViewById(R.id.rvChapter);
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
@@ -134,6 +138,7 @@ public class ChapterFragment extends Fragment {
                             isLoading = false;
                         } else {
                             if (chapterResponse.getStatus().getCode() == 1032) {
+                                ivMaintenance.setVisibility(View.GONE);
                                 if (ChapterFragment.this.currentPage != PAGE_START)
                                     mChapterAdapter.removeLoading();
                                 mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
@@ -145,6 +150,12 @@ public class ChapterFragment extends Fragment {
                             } else if (chapterResponse.getStatus().getCode() == 1111) {
                                 appUpdateAlert(chapterResponse.getStatus().getMessage());
                             }
+                            else if (chapterResponse.getStatus().getCode() == 20008) {
+                                ivMaintenance.setVisibility(View.VISIBLE);
+                                //appUpdateAlert(chapterResponse.getStatus().getMessage());
+
+                            }
+
                         }
                     }
                 }
