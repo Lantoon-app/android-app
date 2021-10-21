@@ -103,6 +103,7 @@
             android:id="@+id/imbBtnQuestionImg"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
+            android:visibility="gone"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_10sdp" />
 
