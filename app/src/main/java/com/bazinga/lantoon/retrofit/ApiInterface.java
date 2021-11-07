@@ -38,7 +38,7 @@ public interface ApiInterface {
     @GET("Lantoon/public/LanguageHandler.php/languageList")
     Call<List<Language>> getLanguages();
 
-   //Chapter List
+    //Chapter List
     @GET("Lantoon/public/ChapterHandler.php/chapterlistandroid/slide/{languageid}/{slidenumber}/{uid}/{versioncode}")
     Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid, @Path("versioncode") int versioncode);
  /*//Chapter List
@@ -91,13 +91,20 @@ public interface ApiInterface {
     @Multipart
     @POST("Lantoon/public/UserHandler.php/updateprofilepic")
     Call<ProfilePicture> updateProfilePicture(@Part("userid") RequestBody userid,
-                                            @Part MultipartBody.Part file);
+                                              @Part MultipartBody.Part file);
 
     //Lesson Questions
     /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")
     Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);*/
     @GET("Lantoon/public/QuestionHandler.php/onelessonquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}/{uid}")
     Call<JsonObject> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
+    //https://lantoon.net/Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}
+
+    //Lesson Questions chapter type 2
+    /*@GET("Lantoon/public/QuestionHandler.php/onelessonquestions/{languageid}/{chapterno}/{lessonno}")
+    Call<JsonArray> getQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno);*/
+    @GET("Lantoon/public/QuestionHandler.php/onelessonrevisionquestionswithreference/{languageid}/{chapterno}/{lessonno}/{reflanguageid}/{uid}")
+    Call<JsonObject> getQuestionsType2(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
     //https://lantoon.net/Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}
 
     //Completed Lesson Questions (Not Used)

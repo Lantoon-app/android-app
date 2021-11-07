@@ -25,6 +25,7 @@ public class Tags {
     public static String TAG_QUESTION_TYPE= "qtype";
     public static String TAG_QUESTION_NO="qno";
     public static String TAG_QUESTIONS_TOTAL="total";
+    public static String TAG_CHAPTER_TYPE="chapter_type";
 
     public static String TAG_IS_NEW_CHAPTER="nechap";
     public static String TAG_LANGUAGE_ID="langid";

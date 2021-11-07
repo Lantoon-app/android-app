@@ -118,9 +118,9 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
             referencePopup = new ReferencePopup( question.getReference());
-        //audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+        //audio.playAudioFile(QuestionsActivity.strFilePath + question.getAudioPath());
         imageViewIds = new int[]{R.id.imgBtnAnsImage1, R.id.imgBtnAnsImage2, R.id.imgBtnAnsImage3, R.id.imgBtnAnsImage4};
-        imagePaths = new String[]{QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), QuestionsActivity.strFilePath + File.separator + question.getWrongImagePath1(), QuestionsActivity.strFilePath + File.separator + question.getWrongImagePath2(), QuestionsActivity.strFilePath + File.separator + question.getWrongImagePath3()};
+        imagePaths = new String[]{QuestionsActivity.strFilePath + question.getRightImagePath(), QuestionsActivity.strFilePath + question.getWrongImagePath1(), QuestionsActivity.strFilePath + question.getWrongImagePath2(), QuestionsActivity.strFilePath + question.getWrongImagePath3()};
         cf.setShuffleImages(getActivity(), imageViewIds, imagePaths, getView());
         setClickableButton(true);
 
@@ -136,7 +136,7 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio);
+        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
     }
 
     private void setTopBarState(int quesNo, int totalQues) {
@@ -158,10 +158,10 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btnAudio:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
                 break;
             case R.id.btnAudioSlow:
-                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
                 cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question.getPlusMark(),question.getMinusMark());
