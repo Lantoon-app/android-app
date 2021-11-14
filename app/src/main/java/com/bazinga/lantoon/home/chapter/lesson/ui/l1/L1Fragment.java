@@ -164,7 +164,6 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(2).getRightImagePath(), imbBtnQuestionImg3);
             cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(3).getRightImagePath(), imbBtnQuestionImg4);
 
-
             Log.d("data l1 ", questions.get(2).getQid());
 
 
