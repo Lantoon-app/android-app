@@ -44,6 +44,9 @@ public class Chapter {
     @SerializedName("activeLesson")
     @Expose
     private ActiveLesson activeLesson;
+    @SerializedName("chapter_type")
+    @Expose
+    private Integer chapter_type;
 
     public String getChapterID() {
         return chapterID;
@@ -132,6 +135,7 @@ public class Chapter {
     public void setCompletedLessons(Integer completedLessons) {
         this.completedLessons = completedLessons;
     }
+
     public Integer getGemcount() {
         return gemcount;
     }
@@ -139,6 +143,7 @@ public class Chapter {
     public void setGemcount(Integer gemcount) {
         this.gemcount = gemcount;
     }
+
     public ActiveLesson getActiveLesson() {
         return activeLesson;
     }
@@ -146,4 +151,13 @@ public class Chapter {
     public void setActiveLesson(ActiveLesson activeLesson) {
         this.activeLesson = activeLesson;
     }
+
+    public Integer getChapterType() {
+        return chapter_type;
+    }
+
+    public void setChapterType(Integer chapter_type) {
+        this.chapter_type = chapter_type;
+    }
+
 }

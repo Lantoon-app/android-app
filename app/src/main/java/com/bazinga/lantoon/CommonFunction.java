@@ -42,6 +42,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
+
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class CommonFunction {
     int attemptCount = 0;
     public static MediaPlayer mediaPlayer;
     public static boolean isCheckImageQuestion = true;
+
 
     public void fullScreen(Window window) {
         if (Build.VERSION.SDK_INT < 16) {

@@ -92,6 +92,7 @@ public class LessonCompletedPopup {
                 intent.putExtra(Tags.TAG_LESSON_NO, postLessonResponse.getContinuenext().getLessonno());
                 intent.putExtra(Tags.TAG_SPENT_TIME, "0");
                 intent.putExtra(Tags.TAG_START_QUESTION_NO, 1);
+                intent.putExtra(Tags.TAG_CHAPTER_TYPE,postLessonResponse.getContinuenext().getChapterType());
                 activity.startActivity(intent);
                 //overridePendingTransition(0, 0);
             }

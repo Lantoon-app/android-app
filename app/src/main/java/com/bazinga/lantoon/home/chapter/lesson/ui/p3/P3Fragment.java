@@ -116,8 +116,8 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
         else
             referencePopup = new ReferencePopup(question.getReference());
         tvQuestionName.setText(question.getWord());
-        cf.setImage(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getRightImagePath(), imbBtnQuestionImg);
-        //audio.playAudioFile(QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+        cf.setImage(getActivity(), QuestionsActivity.strFilePath + question.getRightImagePath(), imbBtnQuestionImg);
+        //audio.playAudioFile(QuestionsActivity.strFilePath + question.getAudioPath());
 
         setClickableButton(true);
 
@@ -134,7 +134,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         cf.shakeAnimation(imbBtnQuestionImg, 1000);
-        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio);
+        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
         cf.mikeAnimation(btnMic, 2000);
     }
 
@@ -157,10 +157,10 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btnAudio:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + File.separator + question.getAudioPath(),btnAudio);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
                 break;
             case R.id.btnAudioSlow:
-                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + File.separator + question.getAudioPath());
+                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + question.getAudioPath());
                 break;
             case R.id.btnMic:
                 //String withoutSplChar = "t.e?s!t. le.tt!er ";

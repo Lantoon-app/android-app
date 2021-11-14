@@ -57,14 +57,15 @@ public class QuestionsViewModel extends ViewModel {
     private TaskModel mTask;
     private QuestionsAsyncTask taskAsync;
     DownloadZipFileTask downloadZipFileTask;
-    int langid, chaperno, lessonno, knownLang;
+    int langid, chaperno, lessonno, knownLang, chapterType;
 
-    public QuestionsViewModel(int langid, int chaperno, int lessonno, int knownLang) {
-        Log.d("numbers",String.valueOf(langid+chaperno+lessonno+knownLang));
+    public QuestionsViewModel(int langid, int chaperno, int lessonno, int knownLang, int chapterType) {
+        Log.d("numbers", String.valueOf(langid + chaperno + lessonno + knownLang));
         this.langid = langid;
         this.chaperno = chaperno;
         this.lessonno = lessonno;
         this.knownLang = knownLang;
+        this.chapterType = chapterType;
     }
 
     private void startTask() {
@@ -105,7 +106,10 @@ public class QuestionsViewModel extends ViewModel {
             downloadZipFile(langid, chaperno, lessonno, 2);
             downloadZipFile(langid, chaperno, lessonno, 3);
             downloadZipFile(langid, chaperno, lessonno, 4);*/
-            downloadZipFile(langid, chaperno, lessonno);
+            if (chapterType == 1)
+                downloadZipFile(langid, chaperno, lessonno);
+            else
+                questionsFragmentData(langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
 
             return true;
         }
@@ -195,7 +199,7 @@ public class QuestionsViewModel extends ViewModel {
         protected String doInBackground(ResponseBody... urls) {
             //Copy you logic to calculate progress and call
             try {
-                saveToDisk(urls[0],   "1.zip", folerStruc);
+                saveToDisk(urls[0], "1.zip", folerStruc);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -303,7 +307,12 @@ public class QuestionsViewModel extends ViewModel {
         System.out.println("langid" + langid + "chaperno" + chaperno + "lessonno" + lessonno + "uid" + uid);
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<JsonObject> call = apiInterface.getQuestions(langid, chaperno, lessonno, reflanguageid, uid);
+        Call<JsonObject> call;
+        if (chapterType == 1)
+            call = apiInterface.getQuestions(langid, chaperno, lessonno, reflanguageid, uid);
+        else
+            call = apiInterface.getQuestionsType2(langid, chaperno, lessonno, reflanguageid, uid);
+
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -399,10 +408,11 @@ public class QuestionsViewModel extends ViewModel {
 
         return fragments;
     }
+
     public void unzip(String zipFilePath, String unzipAtLocation) throws Exception {
 
-        Log.d("zipFilePath",zipFilePath);
-        Log.d("unzipAtLocation",unzipAtLocation);
+        Log.d("zipFilePath", zipFilePath);
+        Log.d("unzipAtLocation", unzipAtLocation);
         File archive = new File(zipFilePath);
 
         try {

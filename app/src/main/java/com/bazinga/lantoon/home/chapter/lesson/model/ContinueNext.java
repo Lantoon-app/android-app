@@ -22,6 +22,9 @@ public class ContinueNext {
     @SerializedName("unlocked_chapters")
     @Expose
     private String unlockedChapters;
+    @SerializedName("chapter_type")
+    @Expose
+    private Integer chapter_type;
 
     public Integer getLangid() {
         return langid;
@@ -68,5 +71,12 @@ public class ContinueNext {
 
     public void setunlockedChapters(String unlockedChapters) {
         this.unlockedChapters = unlockedChapters;
+    }
+    public Integer getChapterType() {
+        return chapter_type;
+    }
+
+    public void setChapterType(Integer chapter_type) {
+        this.chapter_type = chapter_type;
     }
 }

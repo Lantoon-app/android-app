@@ -226,6 +226,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
                                 intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpentTime());
                                 intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
+                                intent.putExtra(Tags.TAG_CHAPTER_TYPE,mChapterList.get(position).getChapterType());
                             } else if (mChapterList.get(position).getActiveLesson() != null && mChapterList.get(position).getActiveLesson().getLessonno() > 0) {
                                 intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, false);
                                 intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
@@ -234,6 +235,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 intent.putExtra(Tags.TAG_LESSON_NO, mChapterList.get(position).getActiveLesson().getLessonno());
                                 intent.putExtra(Tags.TAG_SPENT_TIME, "0");
                                 intent.putExtra(Tags.TAG_START_QUESTION_NO, mChapterList.get(position).getActiveLesson().getStartingquesno());
+                                intent.putExtra(Tags.TAG_CHAPTER_TYPE,mChapterList.get(position).getChapterType());
                             } else if (mChapterList.get(position).getActiveLesson() != null && mChapterList.get(position).getActiveLesson().getLessonno() == 0) {
                                 Log.d("isRandomQuestion adap", "true");
                                 Log.d("isRandomQuestion gem", mChapterList.get(position).getGemcount().toString());
@@ -244,6 +246,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 intent.putExtra(Tags.TAG_LESSON_NO, 0);
                                 intent.putExtra(Tags.TAG_SPENT_TIME, "0");
                                 intent.putExtra(Tags.TAG_START_QUESTION_NO, 0);
+                                intent.putExtra(Tags.TAG_CHAPTER_TYPE,mChapterList.get(position).getChapterType());
                             }
                             activity.startActivity(intent);
                         } else {

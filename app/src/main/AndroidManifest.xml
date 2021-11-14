@@ -39,7 +39,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.forget.ForgetPasswordActivity"
-            tools:ignore="Instantiatable" />
+            tools:ignore="Instantiatable"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.chapter.lesson.QuestionsActivity"
             android:screenOrientation="landscape" />
