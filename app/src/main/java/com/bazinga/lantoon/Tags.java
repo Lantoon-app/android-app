@@ -35,6 +35,8 @@ public class Tags {
     public static String TAG_SPENT_TIME = "spenttime";
     public static String TAG_IS_RANDOM_QUESTIONS = "randomques";
 
+    public static String TAG_NOTIFICATION_TOKEN = "notification_token";
+
 
     public static String FILE_DESTINATION_FOLDER=File.separator +"content"+File.separator;
 

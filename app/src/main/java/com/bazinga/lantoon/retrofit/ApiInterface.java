@@ -39,8 +39,8 @@ public interface ApiInterface {
     Call<List<Language>> getLanguages();
 
     //Chapter List
-    @GET("Lantoon/public/ChapterHandler.php/chapterlistandroid/slide/{languageid}/{slidenumber}/{uid}/{versioncode}")
-    Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid, @Path("versioncode") int versioncode);
+    @GET("Lantoon/public/ChapterHandler.php/chapterlistandroid/slide/{languageid}/{slidenumber}/{uid}/{versioncode}/{deviceid}")
+    Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid, @Path("versioncode") int versioncode, @Path("deviceid") String deviceid);
  /*//Chapter List
     @GET("Lantoon/public/ChapterHandler.php/chapterlist1/slide/{languageid}/{slidenumber}/{uid}")
     Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid);*/
@@ -124,7 +124,7 @@ public interface ApiInterface {
     //Login
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/login")
-    Call<LoggedInUserResponse> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid);
+    Call<LoggedInUserResponse> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid,  @Query("notify_token") String notify_token);
 
 
     //Questions Images and Audio files

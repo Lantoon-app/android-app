@@ -46,6 +46,7 @@ public class GetStartActivity extends AppCompatActivity {
         //getCurrentLocation();
         strDeviceId = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
+        System.out.println("ga deviceid "+strDeviceId);
         ImageView imageView = (ImageView) findViewById(R.id.imageViewLogo);
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
 
@@ -76,6 +77,7 @@ public class GetStartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent loginIntent = new Intent(GetStartActivity.this, LoginActivity.class);
+                loginIntent.putExtra(Tags.TAG_NOTIFICATION_TOKEN,getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
                 loginIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
                 loginIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(loginIntent);

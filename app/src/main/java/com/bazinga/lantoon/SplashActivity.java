@@ -1,13 +1,21 @@
 package com.bazinga.lantoon;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bazinga.lantoon.home.chapter.lesson.ChapterCompletedPopup;
 import com.bazinga.lantoon.login.SessionManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SplashActivity extends AppCompatActivity {
     CommonFunction cf;
@@ -29,8 +37,26 @@ public class SplashActivity extends AppCompatActivity {
                //chapterCompletedPopup.showPopupWindow(v,SplashActivity.this,null,0,"0");
             }
         });
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
 
-        sessionManager.checkLogin();
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, msg);
+                        //Toast.makeText(SplashActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        sessionManager.checkLogin(token);
+                    }
+                });
+       // sessionManager.checkLogin();
 
         /*Glide.with(this).load(R.drawable.gif_baloons).listener(new RequestListener<Drawable>() {
             @Override

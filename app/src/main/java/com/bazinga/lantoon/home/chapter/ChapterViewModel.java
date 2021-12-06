@@ -25,17 +25,17 @@ public class ChapterViewModel extends ViewModel {
     public static final int PAGE_START = 1;
     private int currentPageNo = PAGE_START;
 
-    public ChapterViewModel(int LearnLangId, String userid) {
+    public ChapterViewModel(int LearnLangId, String userid, String deviceid) {
 
-        getData(currentPageNo, LearnLangId, userid);
+        getData(currentPageNo, LearnLangId, userid,deviceid);
     }
 
-    public void getData(int currentPageNo, int LearnLangId, String userid) {
+    public void getData(int currentPageNo, int LearnLangId, String userid, String deviceid) {
         Log.d("Chapter",currentPageNo+"learnid"+LearnLangId+"user"+userid);
 
         chapterMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE);
+        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE, deviceid);
         call.enqueue(new Callback<ChapterResponse>() {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {

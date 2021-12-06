@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
+                            passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID), "");
                 }
                 return false;
             }
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (!ValidationFunction.isEmpty(usernameEditText) || ValidationFunction.isEmpty(passwordEditText)) {
                         loadingProgressBar.setVisibility(View.VISIBLE);
                         loginViewModel.login(usernameEditText.getText().toString(),
-                                passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
+                                passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID),getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
                     } else {
                         Toast.makeText(getApplicationContext(), R.string.empty_username_password, Toast.LENGTH_SHORT).show();
                     }
