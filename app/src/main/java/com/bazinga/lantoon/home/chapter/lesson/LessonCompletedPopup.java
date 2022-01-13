@@ -45,7 +45,7 @@ public class LessonCompletedPopup {
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
         TextView tvTitleMsg = popupView.findViewById(R.id.tvTitleMsg);
-        if(postLessonResponse != null) {
+        if (postLessonResponse != null) {
             if (postLessonResponse.getContinuenext().getLessonno() == 1)
                 tvTitleMsg.setText(activity.getResources().getString(R.string.successfully_completed_the_chapter));
             else
@@ -75,9 +75,11 @@ public class LessonCompletedPopup {
 
         if (QuestionsActivity.isRandomQuestion || quesNo != QuestionsActivity.totalQues)
             btnContinuePopupLessonCompleted.setVisibility(View.GONE);
-        if(postLessonResponse.getContinuenext().getChapterno() > Integer.valueOf(postLessonResponse.getContinuenext().getunlockedChapters())) {
-            btnContinuePopupLessonCompleted.setEnabled(false);
-            //Toast.makeText(context,"Please contact Lantoon Support to continue more chapters...",Toast.LENGTH_LONG).show();
+        if (postLessonResponse != null) {
+            if (postLessonResponse.getContinuenext().getChapterno() > Integer.valueOf(postLessonResponse.getContinuenext().getunlockedChapters())) {
+                btnContinuePopupLessonCompleted.setEnabled(false);
+                //Toast.makeText(context,"Please contact Lantoon Support to continue more chapters...",Toast.LENGTH_LONG).show();
+            }
         }
         btnContinuePopupLessonCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +94,7 @@ public class LessonCompletedPopup {
                 intent.putExtra(Tags.TAG_LESSON_NO, postLessonResponse.getContinuenext().getLessonno());
                 intent.putExtra(Tags.TAG_SPENT_TIME, "0");
                 intent.putExtra(Tags.TAG_START_QUESTION_NO, 1);
-                intent.putExtra(Tags.TAG_CHAPTER_TYPE,postLessonResponse.getContinuenext().getChapterType());
+                intent.putExtra(Tags.TAG_CHAPTER_TYPE, postLessonResponse.getContinuenext().getChapterType());
                 activity.startActivity(intent);
                 //overridePendingTransition(0, 0);
             }

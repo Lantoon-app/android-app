@@ -2,7 +2,6 @@ package com.bazinga.lantoon.home.changereferlanguage;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bumptech.glide.Glide;

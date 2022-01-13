@@ -22,8 +22,6 @@ import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
-import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;

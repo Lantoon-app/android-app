@@ -36,16 +36,25 @@ public class MyFirebaseMessagingService
 			showNotification(remoteMessage.getData().get("title"),
 						remoteMessage.getData().get("message"));
 		}*/
-        Log.d("Lantoon notificatin",remoteMessage.getNotification().getBody());
+        Log.d("Lantoon notificatin", remoteMessage.getNotification().getBody());
         // Second case when notification payload is
         // received.
-        if (remoteMessage.getNotification() != null) {
-            // Since the notification is received directly from
-            // FCM, the title and the body can be fetched
-            // directly as below.
-            showNotification(
-                    remoteMessage.getNotification().getTitle(),
-                    remoteMessage.getNotification().getClickAction());
+        SessionManager sessionManager = new SessionManager(this);
+        if (sessionManager.isLoggedIn()) {
+            if (remoteMessage.getNotification() != null) {
+                // Since the notification is received directly from
+                // FCM, the title and the body can be fetched
+                // directly as below.
+                if (remoteMessage.getNotification().getClickAction() == "CHAPTER_ACTIVITY") {
+                    showNotification(
+                            remoteMessage.getNotification().getTitle(),
+                            remoteMessage.getNotification().getClickAction());
+                } else if (remoteMessage.getNotification().getClickAction() == "TARGET_ACTIVITY_1") {
+                    showNotification(
+                            remoteMessage.getNotification().getTitle(),
+                            remoteMessage.getNotification().getClickAction());
+                }
+            }
         }
     }
 

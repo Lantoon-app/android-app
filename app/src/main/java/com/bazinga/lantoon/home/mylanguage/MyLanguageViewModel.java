@@ -24,7 +24,6 @@ import retrofit2.Response;
 public class MyLanguageViewModel extends ViewModel {
 
     MutableLiveData<List<MyLanguageData>> languageLiveData;
-    MyLanguageResponse languageList;
 
     public MyLanguageViewModel() {
 

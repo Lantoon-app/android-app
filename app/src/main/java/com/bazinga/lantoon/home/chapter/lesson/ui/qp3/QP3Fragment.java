@@ -232,9 +232,9 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
 
                 System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,btnAudio1);
                 else
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,btnAudio1);
 
                 break;
         }

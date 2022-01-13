@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -44,6 +45,7 @@ import com.bazinga.lantoon.home.chapter.utils.EqualSpacingItemDecoration;
 import com.bazinga.lantoon.home.chapter.utils.PaginationScrollListener;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.login.forget.ForgetPasswordActivity;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -69,12 +71,14 @@ public class ChapterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         sessionManager = new SessionManager(getContext());
+
         @SuppressLint("HardwareIds") String deviceId = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         chapterViewModel = new ViewModelProvider(this,
-                new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid(),deviceId)).get(ChapterViewModel.class);
-        System.out.println("deviceid "+deviceId);
+                new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid(), deviceId)).get(ChapterViewModel.class);
+        System.out.println("deviceid " + deviceId);
         View root = inflater.inflate(R.layout.fragment_chapter, container, false);
+
         ivMaintenance = root.findViewById(R.id.ivMaintenance);
         //ivMaintenance.setVisibility(View.VISIBLE);
         mRecyclerView = root.findViewById(R.id.rvChapter);
@@ -144,7 +148,7 @@ public class ChapterFragment extends Fragment {
                             isLoading = false;
                         } else {
                             if (chapterResponse.getStatus().getCode() == 1032) {
-                                ivMaintenance.setVisibility(View.GONE);
+                                //ivMaintenance.setVisibility(View.GONE);
                                 if (ChapterFragment.this.currentPage != PAGE_START)
                                     mChapterAdapter.removeLoading();
                                 mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
@@ -156,10 +160,9 @@ public class ChapterFragment extends Fragment {
                             } else if (chapterResponse.getStatus().getCode() == 1111) {
                                 appUpdateAlert(chapterResponse.getStatus().getMessage());
                             } else if (chapterResponse.getStatus().getCode() == 2043) {
-                                Toast.makeText(getContext(),chapterResponse.getStatus().getMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), chapterResponse.getStatus().getMessage(), Toast.LENGTH_LONG).show();
                                 sessionManager.logoutUser();
-                            }
-                            else if (chapterResponse.getStatus().getCode() == 20008) {
+                            } else if (chapterResponse.getStatus().getCode() == 20008) {
                                 ivMaintenance.setVisibility(View.VISIBLE);
                                 //appUpdateAlert(chapterResponse.getStatus().getMessage());
                             }
@@ -215,12 +218,11 @@ public class ChapterFragment extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // popupWindow.dismiss();
+                // popupWindow.dismiss();
                 final String appPackageName = BuildConfig.APPLICATION_ID; // getPackageName() from Context or Activity object
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
             }
         });
-
 
 
         popupView.setOnTouchListener(new View.OnTouchListener() {
