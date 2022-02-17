@@ -144,7 +144,7 @@ public class ChapterFragment extends Fragment {
                             isLoading = false;
                         } else {
                             if (chapterResponse.getStatus().getCode() == 1032) {
-                                ivMaintenance.setVisibility(View.GONE);
+                                //ivMaintenance.setVisibility(View.GONE);
                                 if (ChapterFragment.this.currentPage != PAGE_START)
                                     mChapterAdapter.removeLoading();
                                 mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());

@@ -6,6 +6,7 @@ import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
 import com.bazinga.lantoon.home.leaderboard.model.LeaderResponse;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
+import com.bazinga.lantoon.home.payment.model.PaymentPackageResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
@@ -124,7 +125,7 @@ public interface ApiInterface {
     //Login
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/login")
-    Call<LoggedInUserResponse> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid,  @Query("notify_token") String notify_token);
+    Call<LoggedInUserResponse> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid,  @Query("notify_token") String notify_token,  @Query("os_type") String os_type);
 
 
     //Questions Images and Audio files
@@ -144,6 +145,10 @@ public interface ApiInterface {
     //Targets
     @GET("Lantoon/public/TargetHandler.php/mytargets/{uid}")
     Call<TargetResponse> getTargets(@Path("uid") String uid);
+
+    //Payment Packages
+    @GET("Lantoon/public/PackageHandler.php/fetchmypackages/{user_id}")
+    Call<PaymentPackageResponse> getPaymentPackages(@Path("user_id") String uid);
 
 
 }

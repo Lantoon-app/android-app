@@ -28,6 +28,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+//    // For PayU
+//    kotlinOptions {
+//        jvmTarget = '1.8'
+//    }
 
     dataBinding {
         enabled = true
@@ -72,6 +76,9 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
+
+    // PayU
+    implementation 'in.payu:payu-checkout-pro:1.8.0'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     testImplementation 'junit:junit:4.13.2'

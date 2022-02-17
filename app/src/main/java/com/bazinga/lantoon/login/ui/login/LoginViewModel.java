@@ -39,7 +39,7 @@ public class LoginViewModel extends ViewModel {
 
             System.out.println("Login input" + username + password);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<LoggedInUserResponse> call = apiInterface.userLogin(username.trim(), password.trim(), deviceId, notify_token);
+            Call<LoggedInUserResponse> call = apiInterface.userLogin(username.trim(), password.trim(), deviceId, notify_token,"Android");
             //Call<LoggedInUser> call = apiInterface.userLogin("test@test.com", "12345678", "afsdfsdfsdfsd");
             call.enqueue(new Callback<LoggedInUserResponse>() {
                 @Override
