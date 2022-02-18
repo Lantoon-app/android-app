@@ -1,10 +1,12 @@
 package com.bazinga.lantoon.home.chapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -33,6 +35,7 @@ import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.adapter.ChapterAdapter;
 import com.bazinga.lantoon.home.chapter.model.Chapter;
@@ -66,8 +69,11 @@ public class ChapterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         sessionManager = new SessionManager(getContext());
+        @SuppressLint("HardwareIds") String deviceId = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         chapterViewModel = new ViewModelProvider(this,
-                new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid())).get(ChapterViewModel.class);
+                new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid(),deviceId)).get(ChapterViewModel.class);
+        System.out.println("deviceid "+deviceId);
         View root = inflater.inflate(R.layout.fragment_chapter, container, false);
         ivMaintenance = root.findViewById(R.id.ivMaintenance);
         //ivMaintenance.setVisibility(View.VISIBLE);
@@ -91,7 +97,7 @@ public class ChapterFragment extends Fragment {
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage++;
-                chapterViewModel.getData(currentPage, sessionManager.getLearLang(), sessionManager.getUid());
+                chapterViewModel.getData(currentPage, sessionManager.getLearLang(), sessionManager.getUid(), getActivity().getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
                 preparedListItem();
 
             }
@@ -138,7 +144,7 @@ public class ChapterFragment extends Fragment {
                             isLoading = false;
                         } else {
                             if (chapterResponse.getStatus().getCode() == 1032) {
-                                ivMaintenance.setVisibility(View.GONE);
+                                //ivMaintenance.setVisibility(View.GONE);
                                 if (ChapterFragment.this.currentPage != PAGE_START)
                                     mChapterAdapter.removeLoading();
                                 mChapterAdapter.addAll(chapterResponse.getData(), chapterResponse.getContinuenext());
@@ -149,11 +155,13 @@ public class ChapterFragment extends Fragment {
                                 isLoading = false;
                             } else if (chapterResponse.getStatus().getCode() == 1111) {
                                 appUpdateAlert(chapterResponse.getStatus().getMessage());
+                            } else if (chapterResponse.getStatus().getCode() == 2043) {
+                                Toast.makeText(getContext(),chapterResponse.getStatus().getMessage(),Toast.LENGTH_LONG).show();
+                                sessionManager.logoutUser();
                             }
                             else if (chapterResponse.getStatus().getCode() == 20008) {
                                 ivMaintenance.setVisibility(View.VISIBLE);
                                 //appUpdateAlert(chapterResponse.getStatus().getMessage());
-
                             }
 
                         }

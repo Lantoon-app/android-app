@@ -36,14 +36,10 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_100sdp"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
 
@@ -52,6 +48,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_100sdp"
             android:layout_marginRight="@dimen/_20sdp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -60,25 +57,25 @@
                 android:id="@+id/etFullName"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
-                android:textSize="@dimen/_15ssp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="@string/hint_fullname"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:textSize="@dimen/_15ssp" />
 
             <EditText
                 android:id="@+id/etEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
-                android:textSize="@dimen/_15ssp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="@string/hint_email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/_15ssp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,13 +103,13 @@
                     android:id="@+id/etPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"
-                    android:textSize="@dimen/_15ssp"
                     android:layout_gravity="center"
                     android:background="@drawable/edittext_bg"
                     android:ems="10"
                     android:gravity="center"
                     android:hint="@string/hint_mobile_number"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:textSize="@dimen/_15ssp" />
             </LinearLayout>
 
 
@@ -120,25 +117,25 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
-                android:textSize="@dimen/_15ssp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:gravity="center"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
-                android:maxLength="8" />
+                android:maxLength="8"
+                android:textSize="@dimen/_15ssp" />
 
             <EditText
                 android:id="@+id/etCnfPassword"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
-                android:textSize="@dimen/_15ssp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/edittext_bg"
                 android:gravity="center"
                 android:hint="@string/hint_cnf_password"
                 android:inputType="textPassword"
-                android:maxLength="8" />
+                android:maxLength="8"
+                android:textSize="@dimen/_15ssp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignup"
@@ -161,7 +158,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp">
 
                 <com.facebook.login.widget.LoginButton

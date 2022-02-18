@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import android.util.Log;
-import android.util.Patterns;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
@@ -33,14 +32,14 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password, String deviceId) {
+    public void login(String username, String password, String deviceId, String notify_token) {
 
 
         try {
 
             System.out.println("Login input" + username + password);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<LoggedInUserResponse> call = apiInterface.userLogin(username.trim(), password.trim(), deviceId);
+            Call<LoggedInUserResponse> call = apiInterface.userLogin(username.trim(), password.trim(), deviceId, notify_token,"Android");
             //Call<LoggedInUser> call = apiInterface.userLogin("test@test.com", "12345678", "afsdfsdfsdfsd");
             call.enqueue(new Callback<LoggedInUserResponse>() {
                 @Override
