@@ -39,9 +39,14 @@ public interface ApiInterface {
     @GET("Lantoon/public/LanguageHandler.php/languageList")
     Call<List<Language>> getLanguages();
 
-    //Chapter List
+    //Chapter List with logout concept
     @GET("Lantoon/public/ChapterHandler.php/chapterlistandroid/slide/{languageid}/{slidenumber}/{uid}/{versioncode}/{deviceid}")
     Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid, @Path("versioncode") int versioncode, @Path("deviceid") String deviceid);
+     //Chapter List
+    @GET("Lantoon/public/ChapterHandler.php/chapterlistandroid/slide/{languageid}/{slidenumber}/{uid}/{versioncode}")
+    Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid, @Path("versioncode") int versioncode);
+
+
  /*//Chapter List
     @GET("Lantoon/public/ChapterHandler.php/chapterlist1/slide/{languageid}/{slidenumber}/{uid}")
     Call<ChapterResponse> getChapter(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid);*/

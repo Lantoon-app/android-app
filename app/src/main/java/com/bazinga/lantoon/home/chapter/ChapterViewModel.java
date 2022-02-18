@@ -35,7 +35,9 @@ public class ChapterViewModel extends ViewModel {
 
         chapterMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE, deviceid);
+        //with logout concept
+        //Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE, deviceid);
+        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE);
         call.enqueue(new Callback<ChapterResponse>() {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {

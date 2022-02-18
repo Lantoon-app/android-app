@@ -30,10 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:visibility="visible"
             android:background="@drawable/button_bg"
             android:text="@string/btn_create_account"
             android:textSize="@dimen/_18ssp"
+            android:visibility="gone"
             app:backgroundTint="@null" />
 
         <com.google.android.material.button.MaterialButton
