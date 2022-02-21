@@ -56,6 +56,7 @@ import java.io.File;
 public class HomeActivity extends AppCompatActivity {
 
     public static SessionManager sessionManager;
+    TextView tvLearnLanguage;
     private static final float END_SCALE = 0.85f;
     private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
@@ -176,10 +177,11 @@ public class HomeActivity extends AppCompatActivity {
     private void initToolbar() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        tvLearnLanguage = findViewById(R.id.atvHomeLearnLang);
+        tvLearnLanguage.setVisibility(View.VISIBLE);
+        tvLearnLanguage.setText(sessionManager.getSpeakCode());
         setSupportActionBar(toolbar);
-
     }
-
 
     private void initNavigation() {
 
@@ -488,4 +490,5 @@ public class HomeActivity extends AppCompatActivity {
             return false;
         }
     }
+
 }

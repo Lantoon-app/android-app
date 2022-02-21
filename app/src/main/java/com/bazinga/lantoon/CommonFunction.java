@@ -35,6 +35,7 @@ import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
+import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bumptech.glide.Glide;
@@ -45,7 +46,9 @@ import com.google.android.material.snackbar.Snackbar;
 
 import com.google.gson.GsonBuilder;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -127,23 +130,24 @@ public class CommonFunction {
 
     }
 
-    public void checkQuestion(String tag, int quesNo, int totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, int pMark, int nMark) {
-        if(isCheckImageQuestion) {
+    public void checkQuestion(String tag, int quesNo, int totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, Question question, Audio audio, PlayPauseView btnAudio) {
+        if (isCheckImageQuestion) {
             isCheckImageQuestion = false;
             attemptCount++;
             QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
             if (CheckAnswerImage(tag)) {
                 if (quesNo == totalQues) {
 
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, pMark, nMark);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question,audio,btnAudio);
 
                 } else {
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, pMark, nMark);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false,question,audio,btnAudio);
                 }
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, pMark, nMark);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question,audio,btnAudio);
                 setShuffleImages(activity, imageViewIds, imagePaths, view);
+
             }
             System.out.println("attemptCount " + attemptCount);
         }
@@ -156,7 +160,7 @@ public class CommonFunction {
         else return false;
     }
 
-    public void speechToText(Context context, TextView textView, CirclesLoadingView circlesLoadingView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo, int pMark, int nMark) {
+    public void speechToText(Context context, TextView textView, CirclesLoadingView circlesLoadingView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo,Question question, Audio audio, PlayPauseView btnAudio ) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
         Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -199,7 +203,7 @@ public class CommonFunction {
             @Override
             public void onError(int i) {
                 circlesLoadingView.setVisibility(View.GONE);
-                textView.setHint("Speak again");
+                textView.setHint("Tap & Speak again");
             }
 
             @Override
@@ -210,13 +214,31 @@ public class CommonFunction {
                 String output = data.get(0).substring(0, 1).toUpperCase() + data.get(0).substring(1).toLowerCase();
                 textView.setText(output);
                 attemptCount++;
-                if (answerWord.equals(data.get(0))) {
+                System.out.println("p3-answer " + answerWord);
+                System.out.println("p3-data " + data.get(0));
+                byte[] asciiData = data.get(0).getBytes(StandardCharsets.US_ASCII);
+                String asciiDataString = Arrays.toString(asciiData);
+                System.out.println(asciiDataString);
+
+                byte[] asciiAnswerData = answerWord.getBytes(StandardCharsets.US_ASCII);
+                String asciiAnswerDataString = Arrays.toString(asciiAnswerData);
+                System.out.println(asciiAnswerDataString);
+
+                if (asciiAnswerDataString.equals(asciiDataString)) {
+
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question,audio,btnAudio);
+
+                } else {
+                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question,audio,btnAudio);
+                }
+
+                /*if (answerWord.equals(data.get(0))) {
 
                     qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, pMark, nMark);
 
                 } else {
                     qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, pMark, nMark);
-                }
+                }*/
                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
 
             }
@@ -235,7 +257,7 @@ public class CommonFunction {
     }
 
     public void onClickHomeButton(View view, final Activity activity, int quesNo) {
-               showExitPopup(view, activity);
+        showExitPopup(view, activity);
     }
 
     public void showExitPopup(View view, Activity activity) {
@@ -316,10 +338,10 @@ public class CommonFunction {
                             QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
 
                             QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
-                            if(response.body().getContinuenext().getLessonno() == 1) {
+                            if (response.body().getContinuenext().getLessonno() == 1) {
                                 ChapterCompletedPopup chapterCompletedPopup = new ChapterCompletedPopup();
-                                chapterCompletedPopup.showPopupWindow(view,activity, response.body(), quesNo, strTimeSpent);
-                            }else {
+                                chapterCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+                            } else {
                                 LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                                 lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
                             }
@@ -338,34 +360,36 @@ public class CommonFunction {
             activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
         }
     }
-public static void permissionNeededAlert(Context context, Activity activity, String message){
-    //Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
-    //If User was asked permission before and denied
-    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-    alertDialogBuilder.setTitle("Permission needed");
-    alertDialogBuilder.setMessage(message);
-    alertDialogBuilder.setPositiveButton("Open Setting", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            Intent intent = new Intent();
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", activity.getPackageName(),
-                    null);
-            intent.setData(uri);
-            activity.startActivity(intent);
-        }
-    });
-    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            Log.d("onClick: Cancelling", "onClick: Cancelling");
-        }
-    });
+    public static void permissionNeededAlert(Context context, Activity activity, String message) {
+        //Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+        //If User was asked permission before and denied
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-    AlertDialog dialog = alertDialogBuilder.create();
-    dialog.show();
-}
+        alertDialogBuilder.setTitle("Permission needed");
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setPositiveButton("Open Setting", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", activity.getPackageName(),
+                        null);
+                intent.setData(uri);
+                activity.startActivity(intent);
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.d("onClick: Cancelling", "onClick: Cancelling");
+            }
+        });
+
+        AlertDialog dialog = alertDialogBuilder.create();
+        dialog.show();
+    }
+
     public static void netWorkErrorAlert(Activity activity) {
         Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
     }

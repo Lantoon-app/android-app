@@ -4,9 +4,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    //public static String BASE_URL ="https://www.lantoon.net/";
-    //public static String BASE_URL ="http://bazinga.ai/";
-    public static String BASE_URL ="https://www.lantoon.co.in/";
+    public static String BASE_URL ="https://www.lantoon.net/";
+    //public static String BASE_URL ="https://www.lantoon.co.in/";
         private static Retrofit retrofit;
     public static Retrofit getClient(){
         if(retrofit == null){
