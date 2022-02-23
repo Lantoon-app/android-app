@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         tvLearnLanguage = findViewById(R.id.atvHomeLearnLang);
-        tvLearnLanguage.setVisibility(View.VISIBLE);
+        tvLearnLanguage.setVisibility(View.INVISIBLE);
         tvLearnLanguage.setText(sessionManager.getSpeakCode());
         setSupportActionBar(toolbar);
     }

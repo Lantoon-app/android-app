@@ -138,14 +138,14 @@ public class CommonFunction {
             if (CheckAnswerImage(tag)) {
                 if (quesNo == totalQues) {
 
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question,audio,btnAudio);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio);
 
                 } else {
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false,question,audio,btnAudio);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio);
                 }
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question,audio,btnAudio);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio);
                 setShuffleImages(activity, imageViewIds, imagePaths, view);
 
             }
@@ -160,7 +160,7 @@ public class CommonFunction {
         else return false;
     }
 
-    public void speechToText(Context context, TextView textView, CirclesLoadingView circlesLoadingView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo,Question question, Audio audio, PlayPauseView btnAudio ) {
+    public void speechToText(Context context, TextView textView, CirclesLoadingView circlesLoadingView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo, Question question, Audio audio, PlayPauseView btnAudio) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
         Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -226,10 +226,10 @@ public class CommonFunction {
 
                 if (asciiAnswerDataString.equals(asciiDataString)) {
 
-                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question,audio,btnAudio);
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question,audio,btnAudio);
+                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio);
                 }
 
                 /*if (answerWord.equals(data.get(0))) {
@@ -325,12 +325,14 @@ public class CommonFunction {
     public void postLesson(View view, Activity activity, int quesNo, String strTimeSpent) {
 
         if (NetworkUtil.getConnectivityStatus(activity) != 0) {
+            CommonProgressPopup commonProgressPopup = new CommonProgressPopup();
+            commonProgressPopup.showPopupWindow(view, activity);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
             Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
             call.enqueue(new Callback<PostLessonResponse>() {
                 @Override
                 public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
-
+                    commonProgressPopup.dismiss();
                     if (response.body() != null) {
                         Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
