@@ -37,7 +37,7 @@ public class ChapterViewModel extends ViewModel {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ChapterResponse> call = null;
 
-        if (ApiClient.BASE_URL.contains("lantoon.net"))
+        if (ApiClient.isTest)
             //with logout concept
             call = apiInterface.getChapter(LearnLangId, currentPageNo, userid, BuildConfig.VERSION_CODE, deviceid);
         else

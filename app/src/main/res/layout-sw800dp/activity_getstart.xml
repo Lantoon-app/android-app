@@ -33,7 +33,7 @@
             android:background="@drawable/button_bg"
             android:text="@string/btn_create_account"
             android:textSize="@dimen/_18ssp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:backgroundTint="@null" />
 
         <com.google.android.material.button.MaterialButton

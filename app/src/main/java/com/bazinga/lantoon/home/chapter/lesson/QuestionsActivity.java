@@ -37,6 +37,7 @@ import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -224,8 +225,8 @@ public class QuestionsActivity extends AppCompatActivity {
         this.startLessonTime = Long.decode(strSpentTime);
         this.chapterType = chapterType;
 
-        if(chapterType == 1)
-        strFilePath = getCacheDir().getPath()+File.separator;
+        if (chapterType == 1)
+            strFilePath = getCacheDir().getPath() + File.separator;
         else strFilePath = "";
 
         /*progress.setMessage("Please wait...");
@@ -238,7 +239,7 @@ public class QuestionsActivity extends AppCompatActivity {
         strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
 
         questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getKnownLang(),chapterType)).get(QuestionsViewModel.class);
+                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getKnownLang(), chapterType)).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
@@ -264,7 +265,10 @@ public class QuestionsActivity extends AppCompatActivity {
                         MyFragmentPageAdapter mPageAdapter = new MyFragmentPageAdapter(QuestionsActivity.this, fragments);
 
                         mPager.setAdapter(mPageAdapter);
-                        mPager.setUserInputEnabled(false);
+                        if (ApiClient.isTest)
+                            mPager.setUserInputEnabled(true);
+                        else
+                            mPager.setUserInputEnabled(false);
                         mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO, 1) - 1);
                         //mPager.setCurrentItem(5);
                         mPager.clearFocus();
@@ -311,11 +315,11 @@ public class QuestionsActivity extends AppCompatActivity {
                         getIntent().getIntExtra(Tags.TAG_LESSON_NO, 0),
                         getIntent().getStringExtra(Tags.TAG_SPENT_TIME),
                         getIntent().getBooleanExtra(Tags.TAG_IS_NEW_CHAPTER, false),
-                        getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false),getIntent().getIntExtra(Tags.TAG_CHAPTER_TYPE,1));
+                        getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false), getIntent().getIntExtra(Tags.TAG_CHAPTER_TYPE, 1));
             //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
         } else {
             //Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-            CommonFunction.permissionNeededAlert(context,QuestionsActivity.this,getString(R.string.ad_permission_storage_audio_msg));
+            CommonFunction.permissionNeededAlert(context, QuestionsActivity.this, getString(R.string.ad_permission_storage_audio_msg));
         }
     }
 

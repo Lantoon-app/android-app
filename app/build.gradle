@@ -37,6 +37,7 @@ android {
         enabled = true
     }
     buildFeatures {
+        dataBinding true
         viewBinding true
     }
 
@@ -79,6 +80,10 @@ dependencies {
 
     // PayU
     implementation 'in.payu:payu-checkout-pro:1.8.0'
+    implementation 'in.payu:olamoney:1.1.0'
+    implementation 'in.payu:phonepe-intent:1.6.1'
+    implementation 'in.payu:payu-gpay:1.4.0'
+    implementation 'in.payu:native-otp-assist:1.2.0'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     testImplementation 'junit:junit:4.13.2'

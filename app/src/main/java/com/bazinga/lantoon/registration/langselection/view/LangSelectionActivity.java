@@ -95,6 +95,7 @@ public class LangSelectionActivity extends AppCompatActivity {
                     intent.putExtra(Tags.TAG_LEARN_LANGUAGE, learnLangId);
                     intent.putExtra(Tags.TAG_DEVICE_ID, getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
                     intent.putExtra(Tags.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Tags.TAG_CURRENT_LOCATION));
+                    intent.putExtra(Tags.TAG_NOTIFICATION_TOKEN, getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
                     startActivity(intent);
                 }else {
                     Toast.makeText(LangSelectionActivity.this,"Both Languages are equal",Toast.LENGTH_SHORT).show();

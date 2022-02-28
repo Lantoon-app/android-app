@@ -119,7 +119,7 @@ public interface ApiInterface {
 
     //Signup
     @Headers("Content-Type: application/json")
-    @POST("Lantoon/public/UserHandler.php/adduser")
+    @POST("Lantoon/public/UserHandler.php/registeruser")
     Call<User> createUser(@Body User user);
 
     //Score Update

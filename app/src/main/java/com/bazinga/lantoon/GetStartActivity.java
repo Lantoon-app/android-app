@@ -46,18 +46,18 @@ public class GetStartActivity extends AppCompatActivity {
         //getCurrentLocation();
         strDeviceId = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        System.out.println("ga deviceid "+strDeviceId);
+        System.out.println("ga deviceid " + strDeviceId);
         ImageView imageView = (ImageView) findViewById(R.id.imageViewLogo);
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View v) {
-                if (ApiClient.BASE_URL.equals("http://bazinga.ai/"))
+              /*  if (ApiClient.BASE_URL.equals("http://bazinga.ai/"))
                     ApiClient.BASE_URL = "https://www.lantoon.net/";
                 else if (ApiClient.BASE_URL.equals("https://www.lantoon.net/"))
                     ApiClient.BASE_URL = "http://bazinga.ai/";
 
-                Toast.makeText(GetStartActivity.this, "Server Changed to "+ApiClient.BASE_URL, Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetStartActivity.this, "Server Changed to "+ApiClient.BASE_URL, Toast.LENGTH_SHORT).show();*/
                 return false;
             }
         });
@@ -68,6 +68,7 @@ public class GetStartActivity extends AppCompatActivity {
                 Intent langSelectionIntent = new Intent(GetStartActivity.this, LangSelectionActivity.class);
                 langSelectionIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
                 langSelectionIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
+                langSelectionIntent.putExtra(Tags.TAG_NOTIFICATION_TOKEN, getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
                 startActivity(langSelectionIntent);
             }
         });
@@ -77,7 +78,7 @@ public class GetStartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent loginIntent = new Intent(GetStartActivity.this, LoginActivity.class);
-                loginIntent.putExtra(Tags.TAG_NOTIFICATION_TOKEN,getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
+                loginIntent.putExtra(Tags.TAG_NOTIFICATION_TOKEN, getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
                 loginIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
                 loginIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(loginIntent);

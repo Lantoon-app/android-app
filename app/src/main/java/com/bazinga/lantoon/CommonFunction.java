@@ -215,12 +215,12 @@ public class CommonFunction {
                 textView.setText(output);
                 attemptCount++;
                 System.out.println("p3-answer " + answerWord);
-                System.out.println("p3-data " + data.get(0));
-                byte[] asciiData = data.get(0).getBytes(StandardCharsets.US_ASCII);
+                System.out.println("p3-data " + output.toLowerCase());
+                byte[] asciiData = output.toLowerCase().getBytes(StandardCharsets.US_ASCII);
                 String asciiDataString = Arrays.toString(asciiData);
                 System.out.println(asciiDataString);
 
-                byte[] asciiAnswerData = answerWord.getBytes(StandardCharsets.US_ASCII);
+                byte[] asciiAnswerData = answerWord.toLowerCase().getBytes(StandardCharsets.US_ASCII);
                 String asciiAnswerDataString = Arrays.toString(asciiAnswerData);
                 System.out.println(asciiAnswerDataString);
 

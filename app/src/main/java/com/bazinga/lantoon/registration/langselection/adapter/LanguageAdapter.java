@@ -47,7 +47,10 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHo
         holder.languageName.setText(languageList.get(position).getLanguageName() + " / " + languageList.get(position).getNativeName());
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(context).load(ApiClient.BASE_URL +"Lantoon/" + languageList.get(position).getImagePath()).apply(requestOptions).into(holder.languageImage);
+        if (ApiClient.isTest)
+        Glide.with(context).load(ApiClient.BASE_TEST_URL +"Lantoon/" + languageList.get(position).getImagePath()).apply(requestOptions).into(holder.languageImage);
+        else
+        Glide.with(context).load(ApiClient.BASE_PROD_URL +"Lantoon/" + languageList.get(position).getImagePath()).apply(requestOptions).into(holder.languageImage);
     }
 
     @Override

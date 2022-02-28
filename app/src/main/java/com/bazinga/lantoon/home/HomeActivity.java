@@ -38,6 +38,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.bazinga.lantoon.BuildConfig;
 import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.SplashActivity;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.retrofit.ApiClient;
@@ -224,7 +225,7 @@ public class HomeActivity extends AppCompatActivity {
                                 deleteDir(new File(getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER));
                                 Toast.makeText(getApplicationContext(), "Sign out Successfully",
                                         Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(HomeActivity.this, GetStartActivity.class);
+                                Intent intent = new Intent(HomeActivity.this, SplashActivity.class);
                                 startActivity(intent);
                             }
                         })

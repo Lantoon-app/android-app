@@ -1,6 +1,7 @@
 package com.bazinga.lantoon.registration;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -95,7 +96,9 @@ public class DurationSelectionActivity extends AppCompatActivity implements View
                 getIntent().getIntExtra(Tags.TAG_USER_ROLE,0),
                 getIntent().getStringExtra(Tags.TAG_CURRENT_LOCATION),
                 intMinsPerDay,
-                getIntent().getIntExtra(Tags.TAG_REGISTRATION_TYPE,0));
+                getIntent().getIntExtra(Tags.TAG_REGISTRATION_TYPE,0),
+                getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN),
+                "Android", Build.MODEL);
         System.out.println("user data " + new Gson().toJson(user));
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<User> call = apiInterface.createUser(user);

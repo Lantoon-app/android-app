@@ -57,6 +57,7 @@ public class LevelSlectionActivity extends AppCompatActivity {
         intentDuration.putExtra(Tags.TAG_USER_ROLE, rollId);
         intentDuration.putExtra(Tags.TAG_CURRENT_LOCATION, getIntent().getStringExtra(Tags.TAG_CURRENT_LOCATION));
         intentDuration.putExtra(Tags.TAG_REGISTRATION_TYPE,getIntent().getIntExtra(Tags.TAG_REGISTRATION_TYPE,0));
+        intentDuration.putExtra(Tags.TAG_NOTIFICATION_TOKEN, getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
         startActivity(intentDuration);
 
     }

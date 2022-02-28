@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.Key;
 import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.home.HomeActivity;
@@ -88,9 +89,9 @@ public class PaymentFragment extends Fragment {
                     builder.setAmount("100.0")
                             .setIsProduction(false)
                             .setProductInfo(paymentPackageList.get(position).getPackageName())
-                            .setKey("gnB96B")
-                            .setPhone("")
-                            .setTransactionId("test12345")
+                            .setKey(Key.payUtestKey)
+                            .setPhone("9999999999")
+                            .setTransactionId(String.valueOf(System.currentTimeMillis()))
                             .setFirstName(sessionManager.getUserName())
                             .setEmail("nizamcseb@gmail.com")
                             .setSurl("https://www.lantoon.net/")
@@ -98,55 +99,7 @@ public class PaymentFragment extends Fragment {
                             .setUserCredential("")
                             .setAdditionalParams(new HashMap<>()); //Optional, can contain any additional PG params
                     PayUPaymentParams payUPaymentParams = builder.build();
-                   /* PayUCheckoutPro.open(
-                            this,
-                            payUPaymentParams,
-                            new PayUCheckoutProListener() {
 
-                                @Override
-                                public void onPaymentSuccess(Object response) {
-                                    //Cast response object to HashMap
-                                    HashMap<String,Object> result = (HashMap<String, Object>) response;
-                                    String payuResponse = (String)result.get(PayUCheckoutProConstants.CP_PAYU_RESPONSE);
-                                    String merchantResponse = (String) result.get(PayUCheckoutProConstants.CP_MERCHANT_RESPONSE);
-                                }
-
-                                @Override
-                                public void onPaymentFailure(Object response) {
-                                    //Cast response object to HashMap
-                                    HashMap<String,Object> result = (HashMap<String, Object>) response;
-                                    String payuResponse = (String)result.get(PayUCheckoutProConstants.CP_PAYU_RESPONSE);
-                                    String merchantResponse = (String) result.get(PayUCheckoutProConstants.CP_MERCHANT_RESPONSE);
-                                }
-
-                                @Override
-                                public void onPaymentCancel(boolean isTxnInitiated) {
-                                }
-
-                                @Override
-                                public void onError(ErrorResponse errorResponse) {
-                                    String errorMessage = errorResponse.getErrorMessage();
-                                }
-
-                                @Override
-                                public void setWebViewProperties(@Nullable WebView webView, @Nullable Object o) {
-                                    //For setting webview properties, if any. Check Customized Integration section for more details on this
-                                }
-
-                                @Override
-                                public void generateHash(HashMap<String, String> valueMap, PayUHashGenerationListener hashGenerationListener) {
-                                    String hashName = valueMap.get(PayUCheckoutProConstants.CP_HASH_NAME);
-                                    String hashData = valueMap.get(PayUCheckoutProConstants.CP_HASH_STRING);
-                                    if (!TextUtils.isEmpty(hashName) && !TextUtils.isEmpty(hashData)) {
-                                        //Do not generate hash from local, it needs to be calculated from server side only. Here, hashString contains hash created from your server side.
-                                        String hash = hashString;
-                                        HashMap<String, String> dataMap = new HashMap<>();
-                                        dataMap.put(hashName, hash);
-                                        hashGenerationListener.onHashGenerated(dataMap);
-                                    }
-                                }
-                            }
-                    );*/
                 } else {
                     CommonFunction.netWorkErrorAlert(getActivity());
                 }
