@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -28,19 +30,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-//    // For PayU
-//    kotlinOptions {
-//        jvmTarget = '1.8'
-//    }
+
 
     dataBinding {
         enabled = true
     }
     buildFeatures {
-        dataBinding true
         viewBinding true
     }
-
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -79,7 +79,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     // PayU
-    implementation 'in.payu:payu-checkout-pro:1.8.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.0"
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'in.payu:payu-checkout-pro:1.8.1'
     implementation 'in.payu:olamoney:1.1.0'
     implementation 'in.payu:phonepe-intent:1.6.1'
     implementation 'in.payu:payu-gpay:1.4.0'

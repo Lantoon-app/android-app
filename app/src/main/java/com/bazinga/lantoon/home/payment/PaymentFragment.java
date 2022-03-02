@@ -1,5 +1,6 @@
 package com.bazinga.lantoon.home.payment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,6 +30,7 @@ import com.bazinga.lantoon.home.changereferlanguage.ChangeReferenceLanguageViewM
 import com.bazinga.lantoon.home.chapter.ChapterViewModel;
 import com.bazinga.lantoon.home.chapter.ChapterViewModelFactory;
 import com.bazinga.lantoon.home.payment.model.PaymentPackage;
+import com.bazinga.lantoon.home.payment.test.PayUActivity;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.payu.base.models.ErrorResponse;
@@ -85,7 +87,7 @@ public class PaymentFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-                    PayUPaymentParams.Builder builder = new PayUPaymentParams.Builder();
+                   /* PayUPaymentParams.Builder builder = new PayUPaymentParams.Builder();
                     builder.setAmount("100.0")
                             .setIsProduction(false)
                             .setProductInfo(paymentPackageList.get(position).getPackageName())
@@ -98,7 +100,8 @@ public class PaymentFragment extends Fragment {
                             .setFurl("https://www.lantoon.net/")
                             .setUserCredential("")
                             .setAdditionalParams(new HashMap<>()); //Optional, can contain any additional PG params
-                    PayUPaymentParams payUPaymentParams = builder.build();
+                    PayUPaymentParams payUPaymentParams = builder.build();*/
+                    getActivity().startActivity(new Intent(getContext(), PayUActivity.class));
 
                 } else {
                     CommonFunction.netWorkErrorAlert(getActivity());
