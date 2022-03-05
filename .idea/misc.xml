@@ -36,6 +36,7 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw768dp/app_bar_home.xml" value="0.30517578125" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw768dp/fragment_payment.xml" value="0.29931640625" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw768dp/layout_question_type_p3.xml" value="0.32470703125" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw768dp/layout_si_details.xml" value="0.18359375" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw800dp/activity_duration_selection.xml" value="0.290625" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw800dp/activity_getstart.xml" value="0.290625" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw800dp/activity_lang_selection.xml" value="0.290625" />
@@ -50,6 +51,8 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/activity_home.xml" value="0.371875" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/activity_lang_selection.xml" value="0.371875" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/activity_level_selction.xml" value="0.22" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/activity_login.xml" value="0.3875" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/activity_payu.xml" value="0.5" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/activity_signup.xml" value="0.2" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/activity_splash.xml" value="0.3875" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/app_bar_home.xml" value="0.3875" />
@@ -66,6 +69,7 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/layout_question_type_p3.xml" value="0.2841880341880342" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/layout_question_type_qp2.xml" value="0.31794871794871793" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/layout_question_type_qp3.xml" value="0.31794871794871793" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/notification.xml" value="0.3875" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/popup_common_popup.xml" value="0.25" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/popup_common_progress.xml" value="0.371875" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/menu/activity_home_drawer.xml" value="0.3875" />

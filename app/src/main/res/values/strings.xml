@@ -122,23 +122,9 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="tap_to_speak">Tap to Speak</string>
 
-    <!--payU-->
+    <!--PayU-->
     <string name="some_error_occurred">Some error occurred...</string>
     <string name="transaction_cancelled_by_user">Transaction cancelled by user</string>
-    <string name="pay_via_si">Pay using SI</string>
-    <string name="billingCycle">billingCycle</string>
-    <string name="api_version">api_version</string>
-    <string name="si">si</string>
-    <string name="billingInterval">billingInterval</string>
-    <string name="billingAmount">billingAmount</string>
-    <string name="billingCurrency">billingCurrency</string>
-    <string name="paymentStartDate">paymentStartDate</string>
-    <string name="paymentEndDate">paymentEndDate</string>
-    <string name="remarks">remarks</string>
-    <string name="si_date_hint">YYYY-MM-DD</string>
-    <string name="free_trial">Free Trial</string>
-    <string name="billingRule">billingRule</string>
-    <string name="billingLimit">billingLimit</string>
-    <string name="custom_note">Custom Note</string>
-    <string name="custom_note_category">Note Category</string>
+    <string name="package_details">PACKAGE DETAILS</string>
+    <string name="pay_now">PAY NOW</string>
 </resources>

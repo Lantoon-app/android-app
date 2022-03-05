@@ -1,4 +1,4 @@
-package com.bazinga.lantoon.home.payment.test
+package com.bazinga.lantoon.home.payment.payu
 
 import java.security.MessageDigest
 import javax.crypto.Mac
