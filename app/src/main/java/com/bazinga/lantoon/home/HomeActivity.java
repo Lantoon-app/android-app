@@ -275,6 +275,15 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+        navigationView.getMenu().findItem(R.id.nav_payment).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                bottomNavView.setItemBackground(null);
+                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+                return false;
+            }
+        });
 
         navigationView.getMenu().findItem(R.id.nav_share).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override

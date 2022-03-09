@@ -49,7 +49,7 @@
     <string name="menu_profile">PROFILE</string>
     <string name="menu_change_password">CHANGE PASSWORD</string>
     <string name="menu_new_language">MY LANGUAGES</string>
-    <string name="menu_payment">PAYMENT</string>
+    <string name="menu_packages">PACKAGES</string>
     <string name="menu_share">SHARE</string>
     <string name="menu_signout">SIGN OUT</string>
 

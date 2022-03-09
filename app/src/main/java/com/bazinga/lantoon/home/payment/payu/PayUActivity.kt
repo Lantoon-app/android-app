@@ -1,6 +1,6 @@
 package com.bazinga.lantoon.home.payment.payu
 
-import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.TextUtils
@@ -8,15 +8,18 @@ import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.widget.RadioGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bazinga.lantoon.Key
 import com.bazinga.lantoon.R
 import com.bazinga.lantoon.Tags
 import com.bazinga.lantoon.databinding.ActivityPayuBinding
+import com.bazinga.lantoon.home.HomeActivity
 import com.google.android.material.snackbar.Snackbar
-import com.payu.base.models.*
+import com.payu.base.models.BaseApiLayerConstants
+import com.payu.base.models.ErrorResponse
+import com.payu.base.models.PayUPaymentParams
 import com.payu.checkoutpro.PayUCheckoutPro
 import com.payu.checkoutpro.utils.PayUCheckoutProConstants
 import com.payu.checkoutpro.utils.PayUCheckoutProConstants.CP_HASH_NAME
@@ -26,7 +29,7 @@ import com.payu.ui.model.listeners.PayUHashGenerationListener
 
 class PayUActivity : AppCompatActivity() {
 
-    private var userName= ""
+    private var userName = ""
     private var phoneNumber = ""
     private var emailId = ""
 
@@ -76,6 +79,7 @@ class PayUActivity : AppCompatActivity() {
     private fun initUI() {
         val price = pdPrice.toDouble().toString()
         binding.pdPackageName.setText(pdPackageName)
+        binding.pdPackageLanguage.setText("")
         binding.pdChaptersUnlocked.setText(pdChaptersUnlocked)
         binding.pdTotalDuration.setText(pdTotalDuration + " Days")
         binding.pdPrice.setText(price + " " + intent.getStringExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL).toString())
@@ -142,11 +146,11 @@ class PayUActivity : AppCompatActivity() {
                 object : PayUCheckoutProListener {
 
                     override fun onPaymentSuccess(response: Any) {
-                        processResponse(response)
+                        processSuccessResponse(response)
                     }
 
                     override fun onPaymentFailure(response: Any) {
-                        processResponse(response)
+                        processFailureResponse(response)
                     }
 
                     override fun onPaymentCancel(isTxnInitiated: Boolean) {
@@ -211,7 +215,18 @@ class PayUActivity : AppCompatActivity() {
         Snackbar.make(binding.clMain, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun processResponse(response: Any) {
+    private fun processSuccessResponse(response: Any) {
+        response as HashMap<*, *>
+        Log.d(
+                BaseApiLayerConstants.SDK_TAG,
+                "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
+                        + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
+        )
+        alertbox("Payment Successfull", "You have unlocked the new chapters")
+
+    }
+
+    private fun processFailureResponse(response: Any) {
         response as HashMap<*, *>
         Log.d(
                 BaseApiLayerConstants.SDK_TAG,
@@ -219,18 +234,27 @@ class PayUActivity : AppCompatActivity() {
                         + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
 
+        alertbox("Payment Failure", "Try after sometime")
 
-        AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert)
-                .setCancelable(true)
-                .setMessage(
-                        "Payu's Data : " + response.get(PayUCheckoutProConstants.CP_PAYU_RESPONSE) + "\n\n\n Merchant's Data: " + response.get(
-                                PayUCheckoutProConstants.CP_MERCHANT_RESPONSE
-                        )
-                )
-                .setPositiveButton(
-                        android.R.string.ok
-                ) { dialog, cancelButton -> dialog.dismiss() }.show()
     }
 
+    private fun alertbox(title: String, message: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+
+        builder.setPositiveButton(android.R.string.ok) { dialog, which ->
+            startHomeActivity()
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
+
+    private fun startHomeActivity() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+
+    }
 
 }

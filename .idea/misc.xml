@@ -4,13 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/BM_GD/.gradle/caches/transforms-2/files-2.1/6fb4dcd760f86607066cced0405cc117/jetified-payu-custom-browser-7.10.1/res/drawable/cb_rectangle_round.xml" value="0.29583333333333334" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable-anydpi/ic_packages.xml" value="0.36822916666666666" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/answer_right_anim.xml" value="0.291015625" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/answer_wrong_anim.xml" value="0.291015625" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/button_bg.xml" value="0.38177083333333334" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/circle.xml" value="0.29583333333333334" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/curve_bg.xml" value="0.29583333333333334" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/edittext_bg.xml" value="0.29583333333333334" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/learnlang_bg.xml" value="0.29583333333333334" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/nav_drawer_menu_item_bg.xml" value="0.4036458333333333" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/package_name_bg.xml" value="0.36822916666666666" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/price_bg.xml" value="0.38177083333333334" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw600dp/activity_duration_selection.xml" value="0.25" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw600dp/activity_getstart.xml" value="0.3875" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout-sw600dp/activity_lang_selection.xml" value="0.25" />
@@ -62,7 +66,10 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/fragment_payment.xml" value="0.3875" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/fragment_profile.xml" value="0.24473684210526317" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/item_change_language.xml" value="0.261965811965812" />
-        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/item_payment_package.xml" value="0.31927083333333334" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/item_chapter.xml" value="0.365625" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/item_language_selection.xml" value="0.365625" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/item_leader.xml" value="0.365625" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/item_payment_package.xml" value="0.22" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/item_payment_packages.xml" value="0.31927083333333334" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/layout_question_type_p1.xml" value="0.2709401709401709" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/layout/layout_question_type_p2.xml" value="0.2709401709401709" />

@@ -38,9 +38,15 @@ public class PaymentPackageAdapter extends ArrayAdapter<PaymentPackage> {
 
         }
 
-        TextView tvName = convertView.findViewById(R.id.textView);
+        TextView tvPackageName = convertView.findViewById(R.id.tvPackageName);
+        TextView tvChapterUnlocked = convertView.findViewById(R.id.tvChapterUnlocked);
+        TextView tvValidityInDays = convertView.findViewById(R.id.tvValidityInDays);
+        TextView tvPrice = convertView.findViewById(R.id.tvPrice);
 
-        tvName.setText(getItem(position).getPackageName());
+        tvPackageName.setText(getItem(position).getPackageName());
+        tvChapterUnlocked.setText(getItem(position).getChaptersUnlocked());
+        tvValidityInDays.setText(getItem(position).getDurationInDays()+"\n"+"Days");
+        tvPrice.setText(getItem(position).getPrice()+" "+ getItem(position).getCurrencySymbol());
 
 
         // Return the completed view to render on screen

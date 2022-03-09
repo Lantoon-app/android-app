@@ -130,6 +130,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:elevation="@dimen/_10sdp"
                         android:padding="@dimen/_10sdp"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_3sdp"
@@ -138,8 +139,7 @@
                         app:contentPaddingBottom="@dimen/_5sdp"
                         app:contentPaddingLeft="@dimen/_15sdp"
                         app:contentPaddingRight="@dimen/_15sdp"
-                        app:contentPaddingTop="@dimen/_5sdp"
-                    android:elevation="@dimen/_10sdp">
+                        app:contentPaddingTop="@dimen/_5sdp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -169,6 +169,33 @@
                                     android:layout_weight="1"
                                     android:gravity="end"
                                     android:text="Test Pack"
+                                    android:textColor="@color/app_gradient_end_colour"
+                                    android:textSize="@dimen/_15ssp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="start"
+                                    android:text="Language"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_15ssp" />
+
+                                <TextView
+                                    android:id="@+id/pd_package_language"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="end"
+                                    android:text="English"
                                     android:textColor="@color/app_gradient_end_colour"
                                     android:textSize="@dimen/_15ssp" />
                             </LinearLayout>
@@ -226,6 +253,7 @@
                                     android:textColor="@color/app_gradient_end_colour"
                                     android:textSize="@dimen/_15ssp" />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -258,6 +286,7 @@
 
                 </LinearLayout>
             </ScrollView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -285,6 +314,7 @@
                     android:textColor="@color/greyed_out"
                     android:textSize="@dimen/_15ssp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -308,20 +338,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textStyle="bold"
                     android:text="118.00 INR"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/_15ssp" />
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pay_now_button"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_10sdp"
                 android:background="@drawable/button_bg"
+                android:onClick="startPayment"
                 android:text="@string/pay_now"
                 android:textSize="@dimen/_18ssp"
-                android:onClick="startPayment"
                 app:backgroundTint="@null" />
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
