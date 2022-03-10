@@ -3,6 +3,7 @@ package com.bazinga.lantoon.home.payment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,21 @@ import com.bazinga.lantoon.NetworkUtil;
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.payment.model.PaymentPackage;
+import com.bazinga.lantoon.home.payment.model.TransactionResponse;
 import com.bazinga.lantoon.home.payment.payu.PayUActivity;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bazinga.lantoon.retrofit.ApiClient;
+import com.bazinga.lantoon.retrofit.ApiInterface;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.GsonBuilder;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PaymentFragment extends Fragment {
 
@@ -72,27 +82,29 @@ public class PaymentFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-                    Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
-                    paymentIntent.putExtra(Tags.TAG_USERNAME,sessionManager.getUserName());
-                    paymentIntent.putExtra(Tags.TAG_PHONE_NUMBER,"9999999999");
-                    paymentIntent.putExtra(Tags.TAG_EMAILID,"nizamcseb@gmail.com");
+                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+                    Call<TransactionResponse> call = apiInterface.getPaymentTxnId();
+                    call.enqueue(new Callback<TransactionResponse>() {
+                        @Override
+                        public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
+                           CommonFunction.printServerResponse("TransactionResponse",response.body());
+                            if (response.body().getTrasactionData() != null || response.body().getTrasactionData().getTransactinId() != null || response.body().getTrasactionData().getTransactinId() != "")
+                                    startPayment(response.body().getTrasactionData().getTransactinId(), "9999999999", "nizamcseb@gmail.com", position);
+                            else
+                                Snackbar.make(getContext(), listView, getActivity().getString(R.string.some_error_occurred), Snackbar.LENGTH_LONG).show();
+                        }
 
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_ID, paymentPackageList.get(position).getPackageId());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_NAME, paymentPackageList.get(position).getPackageName());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_CHAPTERS_UNLOCKED, paymentPackageList.get(position).getChaptersUnlocked());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_TOTAL_DURATION, paymentPackageList.get(position).getDurationInDays());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_PRICE, paymentPackageList.get(position).getPrice());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY, paymentPackageList.get(position).getCurrency());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_CODE, paymentPackageList.get(position).getCurrencyCode());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL, paymentPackageList.get(position).getCurrencySymbol());
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_REGION_CODE, paymentPackageList.get(position).getRegionCode());
+                        @Override
+                        public void onFailure(Call<TransactionResponse> call, Throwable t) {
+                            Snackbar.make(getContext(), listView, t.getMessage(), Snackbar.LENGTH_LONG).show();
+                        }
+                    });
 
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
-                    paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
-                    getActivity().startActivity(paymentIntent);
+
                 } else {
                     CommonFunction.netWorkErrorAlert(getActivity());
                 }
+
                 /*  if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
                  *//* HashMap<String,Object> additionalParamsMap = new HashMap<>();
                     additionalParamsMap.put(PayUCheckoutProConstants.CP_UDF1, "udf1");
@@ -215,6 +227,32 @@ public class PaymentFragment extends Fragment {
 
 
         return root;
+    }
+
+    private void startPayment(String txnId, String phnNumber, String emailID, int position) {
+        if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
+            Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
+            paymentIntent.putExtra(Tags.TAG_USERNAME, sessionManager.getUserName());
+            paymentIntent.putExtra(Tags.TAG_PHONE_NUMBER, phnNumber);
+            paymentIntent.putExtra(Tags.TAG_EMAILID, emailID);
+            paymentIntent.putExtra(Tags.TAG_PAYMENT_TXN_ID, txnId);
+
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_ID, paymentPackageList.get(position).getPackageId());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_NAME, paymentPackageList.get(position).getPackageName());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_CHAPTERS_UNLOCKED, paymentPackageList.get(position).getChaptersUnlocked());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_TOTAL_DURATION, paymentPackageList.get(position).getDurationInDays());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_PRICE, paymentPackageList.get(position).getPrice());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY, paymentPackageList.get(position).getCurrency());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_CODE, paymentPackageList.get(position).getCurrencyCode());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL, paymentPackageList.get(position).getCurrencySymbol());
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_REGION_CODE, paymentPackageList.get(position).getRegionCode());
+
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
+            paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
+            getActivity().startActivity(paymentIntent);
+        } else {
+            CommonFunction.netWorkErrorAlert(getActivity());
+        }
     }
 
     public static String hashCal(String type, String str) {

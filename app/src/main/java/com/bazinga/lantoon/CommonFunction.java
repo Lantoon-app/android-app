@@ -412,4 +412,8 @@ public class CommonFunction {
             Audio.mediaPlayer = null;
         }
     }
+
+    public static void printServerResponse(String tag, Object obj){
+        Log.d(tag, new GsonBuilder().setPrettyPrinting().create().toJson(obj));
+    }
 }

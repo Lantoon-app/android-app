@@ -17,6 +17,8 @@ import com.bazinga.lantoon.Tags
 import com.bazinga.lantoon.databinding.ActivityPayuBinding
 import com.bazinga.lantoon.home.HomeActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.payu.base.models.BaseApiLayerConstants
 import com.payu.base.models.ErrorResponse
 import com.payu.base.models.PayUPaymentParams
@@ -32,6 +34,7 @@ class PayUActivity : AppCompatActivity() {
     private var userName = ""
     private var phoneNumber = ""
     private var emailId = ""
+    private var txnId = ""
 
     private var pdPackageId = ""
     private var pdPackageName = ""
@@ -64,13 +67,14 @@ class PayUActivity : AppCompatActivity() {
         userName = intent.getStringExtra(Tags.TAG_USERNAME).toString()
         phoneNumber = intent.getStringExtra(Tags.TAG_PHONE_NUMBER).toString()
         emailId = intent.getStringExtra(Tags.TAG_EMAILID).toString()
+        txnId = intent.getStringExtra(Tags.TAG_PAYMENT_TXN_ID).toString()
 
         pdPackageId = intent.getStringExtra(Tags.TAG_PACKAGE_ID).toString()
         pdPackageName = intent.getStringExtra(Tags.TAG_PACKAGE_NAME).toString()
         pdChaptersUnlocked = intent.getStringExtra(Tags.TAG_PACKAGE_CHAPTERS_UNLOCKED).toString()
         pdTotalDuration = intent.getStringExtra(Tags.TAG_PACKAGE_TOTAL_DURATION).toString()
         pdPrice = intent.getStringExtra(Tags.TAG_PACKAGE_PRICE).toString()
-        pdTax = pdTax
+        //pdTax = pdTax
         pdTotalAmount = intent.getStringExtra(Tags.TAG_PACKAGE_PRICE).toString()
         pdSurl = intent.getStringExtra(Tags.TAG_PACKAGE_S_URL).toString()
         pdFurl = intent.getStringExtra(Tags.TAG_PACKAGE_F_URL).toString()
@@ -131,7 +135,7 @@ class PayUActivity : AppCompatActivity() {
                 .setKey(key)
                 .setProductInfo(pdPackageName)
                 .setPhone(phoneNumber)
-                .setTransactionId(System.currentTimeMillis().toString())
+                .setTransactionId(txnId)
                 .setFirstName(userName)
                 .setEmail(emailId)
                 .setSurl(pdSurl)
@@ -222,6 +226,7 @@ class PayUActivity : AppCompatActivity() {
                 "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
                         + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
+
         alertbox("Payment Successfull", "You have unlocked the new chapters")
 
     }
@@ -233,7 +238,6 @@ class PayUActivity : AppCompatActivity() {
                 "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
                         + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
-
         alertbox("Payment Failure", "Try after sometime")
 
     }

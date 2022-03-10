@@ -87,6 +87,8 @@ dependencies {
     implementation 'in.payu:phonepe-intent:1.6.1'
     implementation 'in.payu:payu-gpay:1.4.0'
     implementation 'in.payu:native-otp-assist:1.2.0'
+    //extra for payment kotlin responsejh
+    implementation 'com.beust:klaxon:5.5'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     testImplementation 'junit:junit:4.13.2'

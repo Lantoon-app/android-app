@@ -8,6 +8,7 @@ import com.bazinga.lantoon.home.leaderboard.model.LeaderResponse;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
 import com.bazinga.lantoon.home.payment.hash.HashCodeResponse;
 import com.bazinga.lantoon.home.payment.model.PaymentPackageResponse;
+import com.bazinga.lantoon.home.payment.model.TransactionResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
 import com.bazinga.lantoon.home.profile.ProfilePicture;
@@ -156,6 +157,10 @@ public interface ApiInterface {
     //Payment Packages
     @GET("Lantoon/public/PackageHandler.php/fetchmypackages/{user_id}")
     Call<PaymentPackageResponse> getPaymentPackages(@Path("user_id") String uid);
+
+    //Payment Get Transactionid
+    @GET("Lantoon/public/PackageHandler.php/gettransactionid")
+    Call<TransactionResponse> getPaymentTxnId();
 
     //Payment convert to hashcode
     @Headers("Content-Type: application/json")

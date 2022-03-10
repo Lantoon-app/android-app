@@ -50,8 +50,9 @@ public class Tags {
     public static String TAG_PACKAGE_CURRENCY_CODE = "packcurrcode";
     public static String TAG_PACKAGE_CURRENCY_SYMBOL = "packcurrsymb";
     public static String TAG_PACKAGE_REGION_CODE = "packregioncode";
-
     public static String TAG_PACKAGE_S_URL = "surl";
     public static String TAG_PACKAGE_F_URL = "furl";
+
+    public static String TAG_PAYMENT_TXN_ID = "txnid";
 
 }
