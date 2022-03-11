@@ -8,6 +8,7 @@ import com.bazinga.lantoon.home.leaderboard.model.LeaderResponse;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
 import com.bazinga.lantoon.home.payment.hash.HashCodeResponse;
 import com.bazinga.lantoon.home.payment.model.PaymentPackageResponse;
+import com.bazinga.lantoon.home.payment.model.PurchaseResponse;
 import com.bazinga.lantoon.home.payment.model.TransactionResponse;
 import com.bazinga.lantoon.home.profile.Profile;
 import com.bazinga.lantoon.home.profile.ProfileData;
@@ -166,6 +167,19 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/PackageHandler.php/converttohashcode")
     Call<HashCodeResponse> getPaymentHashCode(@Query("hash_data") String hash_data);
+
+    //Payment after success
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/PackageHandler.php/purchasesuccess")
+    Call<PurchaseResponse> getPaymentHashCode(@Query("transaction_id") String transaction_id,
+                                              @Query("package_id") String package_id ,
+                                              @Query("user_id") String user_id,
+                                              @Query("language") String language,
+                                              @Query("total_amount") String total_amount,
+                                              @Query("paid_amount") String paid_amount,
+                                              @Query("payment_type") String payment_type,
+                                              @Query("chapters_unlocked") String chapters_unlocked,
+                                              @Query("duration_in_days") String duration_in_days);
 
 
 }

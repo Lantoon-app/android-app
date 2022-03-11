@@ -62,13 +62,14 @@
                     android:paddingBottom="5dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/pd_CardView_Env"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:padding="10dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:cardBackgroundColor="#fcfcfc"
                         app:cardCornerRadius="3dp"
                         app:cardElevation="5dp"

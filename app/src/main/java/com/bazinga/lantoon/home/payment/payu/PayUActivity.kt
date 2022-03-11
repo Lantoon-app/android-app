@@ -10,15 +10,19 @@ import android.webkit.WebView
 import android.widget.RadioGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bazinga.lantoon.Key
 import com.bazinga.lantoon.R
 import com.bazinga.lantoon.Tags
 import com.bazinga.lantoon.databinding.ActivityPayuBinding
 import com.bazinga.lantoon.home.HomeActivity
+import com.bazinga.lantoon.retrofit.ApiClient
+import com.beust.klaxon.Klaxon
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
 import com.payu.base.models.BaseApiLayerConstants
 import com.payu.base.models.ErrorResponse
 import com.payu.base.models.PayUPaymentParams
@@ -89,6 +93,9 @@ class PayUActivity : AppCompatActivity() {
         binding.pdPrice.setText(price + " " + intent.getStringExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL).toString())
         binding.pdTax.setText(pdTax)
         binding.pdTotalAmount.setText(price + " " + intent.getStringExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL).toString())
+
+        if (ApiClient.isTest)
+            binding.pdCardViewEnv.isVisible = true
     }
 
 
@@ -131,7 +138,8 @@ class PayUActivity : AppCompatActivity() {
     fun preparePayUBizParams(): PayUPaymentParams {
 
         return PayUPaymentParams.Builder().setAmount("1.0")
-                .setIsProduction(binding.radioBtnProduction.isChecked)
+                //.setIsProduction(binding.radioBtnProduction.isChecked)
+                .setIsProduction(true)
                 .setKey(key)
                 .setProductInfo(pdPackageName)
                 .setPhone(phoneNumber)
@@ -226,18 +234,20 @@ class PayUActivity : AppCompatActivity() {
                 "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
                         + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
-
+        val s = response[PayUCheckoutProConstants.CP_PAYU_RESPONSE] as JsonObject
         alertbox("Payment Successfull", "You have unlocked the new chapters")
 
     }
 
     private fun processFailureResponse(response: Any) {
+        // 5434021016824014	12	29	123
         response as HashMap<*, *>
         Log.d(
                 BaseApiLayerConstants.SDK_TAG,
                 "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
                         + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
+
         alertbox("Payment Failure", "Try after sometime")
 
     }
