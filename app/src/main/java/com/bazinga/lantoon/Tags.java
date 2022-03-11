@@ -7,6 +7,7 @@ import java.io.File;
 public class Tags {
 
 
+    public static String TAG_USER_ID = "uid";
     public static String TAG_EMAILID = "email";
     public static String TAG_USERNAME = "uname";
     public static String TAG_PASSWORD = "password";

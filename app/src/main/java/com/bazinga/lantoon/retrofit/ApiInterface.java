@@ -171,7 +171,7 @@ public interface ApiInterface {
     //Payment after success
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/PackageHandler.php/purchasesuccess")
-    Call<PurchaseResponse> getPaymentHashCode(@Query("transaction_id") String transaction_id,
+    Call<PurchaseResponse> postPaymentPurchaseDetails(@Query("transaction_id") String transaction_id,
                                               @Query("package_id") String package_id ,
                                               @Query("user_id") String user_id,
                                               @Query("language") String language,

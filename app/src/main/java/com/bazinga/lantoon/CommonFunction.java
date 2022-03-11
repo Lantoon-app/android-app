@@ -36,6 +36,8 @@ import com.bazinga.lantoon.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
+import com.bazinga.lantoon.home.payment.model.PurchaseResponse;
+import com.bazinga.lantoon.home.payment.payu.PayUActivity;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bumptech.glide.Glide;
@@ -56,6 +58,7 @@ import me.ibrahimsn.lib.CirclesLoadingView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 public class CommonFunction {
 
@@ -413,7 +416,47 @@ public class CommonFunction {
         }
     }
 
-    public static void printServerResponse(String tag, Object obj){
+    public static void printServerResponse(String tag, Object obj) {
         Log.d(tag, new GsonBuilder().setPrettyPrinting().create().toJson(obj));
+    }
+
+    public static void postPaymentPurchaseDetails(Context context, Activity activity, String title, String message,String status, String transaction_id, String package_id, String user_id, String language, String total_amount, String paid_amount, String payment_type, String chapters_unlocked, String duration_in_days) {
+        if (NetworkUtil.getConnectivityStatus(context) != 0) {
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+            Call<PurchaseResponse> call = apiInterface.postPaymentPurchaseDetails(transaction_id, package_id, user_id, language, total_amount, paid_amount, payment_type, chapters_unlocked, duration_in_days);
+            call.enqueue(new Callback<PurchaseResponse>() {
+                @Override
+                public void onResponse(Call<PurchaseResponse> call, Response<PurchaseResponse> response) {
+                   printServerResponse("Purchase response",response.body());
+                    if (response.body().getStatus().getCode() == 1059)
+                        paymentAlert(context, activity, title, message + "\n Transation Id - "+transaction_id);
+                }
+
+                @Override
+                public void onFailure(Call<PurchaseResponse> call, Throwable t) {
+                    paymentAlert(context, activity, "Alert", t.getMessage());
+                }
+            });
+        } else
+            netWorkErrorAlert(activity);
+    }
+
+    public static void paymentAlert(Context context, Activity activity, String titile, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        //Setting message manually and performing action on button click
+        builder.setTitle(titile);
+        builder.setMessage(msg)
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                       //PayUActivity.startHomeActivity();
+                        activity.startActivity(new Intent(context,HomeActivity.class));
+                        dialog.cancel();
+                    }
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
