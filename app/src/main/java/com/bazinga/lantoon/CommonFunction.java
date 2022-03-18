@@ -38,6 +38,8 @@ import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bazinga.lantoon.home.payment.model.PurchaseResponse;
 import com.bazinga.lantoon.home.payment.payu.PayUActivity;
+import com.bazinga.lantoon.login.SessionManager;
+import com.bazinga.lantoon.login.ui.login.LoggedInUserView;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bumptech.glide.Glide;
@@ -458,5 +460,27 @@ public class CommonFunction {
         //Creating dialog box
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public static void storeUserData(SessionManager sessionManager,LoggedInUserView model) {
+        //loadingProgressBar.setVisibility(View.GONE);
+        String user = new GsonBuilder().create().toJson(model.getloginData());
+        String picture = model.getloginData().getPhoto();
+
+        sessionManager.createLoginSession(user);
+        sessionManager.setProfilePic(picture);
+        sessionManager.setUid(model.getloginData().getUid());
+        sessionManager.setUserName(model.getloginData().getUname());
+        sessionManager.setRegionCode(model.getloginData().getRegionCode());
+
+        sessionManager.setLearnLangId(model.getloginData().getLearnlangId());
+        sessionManager.setLearnLangName(model.getloginData().getLearnlangObj().getLanguageName());
+        sessionManager.setLearnLangNativeName(model.getloginData().getLearnlangObj().getNativeName());
+
+        sessionManager.setKnownLangId(model.getloginData().getKnownlangId());
+        sessionManager.setKnownLangName(model.getloginData().getKnownlangObj().getLanguageName());
+        sessionManager.setKnownLangNativeName(model.getloginData().getKnownlangObj().getNativeName());
+
+        sessionManager.setSpeakCode(model.getloginData().getSpeakCode());
     }
 }

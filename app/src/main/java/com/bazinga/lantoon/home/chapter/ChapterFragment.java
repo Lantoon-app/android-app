@@ -75,7 +75,7 @@ public class ChapterFragment extends Fragment {
         @SuppressLint("HardwareIds") String deviceId = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         chapterViewModel = new ViewModelProvider(this,
-                new ChapterViewModelFactory(sessionManager.getLearLang(), sessionManager.getUid(), deviceId)).get(ChapterViewModel.class);
+                new ChapterViewModelFactory(sessionManager.getLearnLangId(), sessionManager.getUid(), deviceId)).get(ChapterViewModel.class);
         System.out.println("deviceid " + deviceId);
         View root = inflater.inflate(R.layout.fragment_chapter, container, false);
 
@@ -84,7 +84,7 @@ public class ChapterFragment extends Fragment {
         mRecyclerView = root.findViewById(R.id.rvChapter);
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        mChapterAdapter = new ChapterAdapter(new ArrayList<Chapter>(), getActivity(), sessionManager.getLearLang());
+        mChapterAdapter = new ChapterAdapter(new ArrayList<Chapter>(), getActivity(), sessionManager.getLearnLangId());
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new GridLayoutManager(getContext(), 2);
         //mLayoutManager.checkLayoutParams(new GridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -101,7 +101,7 @@ public class ChapterFragment extends Fragment {
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage++;
-                chapterViewModel.getData(currentPage, sessionManager.getLearLang(), sessionManager.getUid(), getActivity().getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
+                chapterViewModel.getData(currentPage, sessionManager.getLearnLangId(), sessionManager.getUid(), getActivity().getIntent().getStringExtra(Tags.TAG_DEVICE_ID));
                 preparedListItem();
 
             }

@@ -42,7 +42,7 @@ public class GetStartActivity extends AppCompatActivity {
     CommonFunction cf;
     private FusedLocationProviderClient fusedLocationClient;
     private int locationPermissionCode = 2;
-    String strDeviceId = "", strCurrentLoaction = "";
+    String strDeviceId = "", strCurrentLoaction = "", strRegionCode = "";
     SessionManager sessionManager;
     List<Address> addresses;
     Geocoder geocoder;
@@ -56,6 +56,7 @@ public class GetStartActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
+
         getCurrentLocation();
         geocoder = new Geocoder(this);
         strDeviceId = Settings.Secure.getString(getContentResolver(),
@@ -77,12 +78,17 @@ public class GetStartActivity extends AppCompatActivity {
             }
         });
         getstartCreateAccBtn = findViewById(R.id.getstartCreateAccBtn);
+        if (ApiClient.isTest) {
+            getstartCreateAccBtn.setVisibility(View.VISIBLE);
+            strRegionCode = "569";
+        }
         getstartCreateAccBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent langSelectionIntent = new Intent(GetStartActivity.this, LangSelectionActivity.class);
                 langSelectionIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
                 langSelectionIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
+                langSelectionIntent.putExtra(Tags.TAG_REGION_CODE, strRegionCode);
                 langSelectionIntent.putExtra(Tags.TAG_NOTIFICATION_TOKEN, getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
                 startActivity(langSelectionIntent);
             }
@@ -138,8 +144,13 @@ public class GetStartActivity extends AppCompatActivity {
                                     //addresses = geocoder.getFromLocation(48.76,33.78, 1);
                                     Address address = addresses.get(0);
                                     System.out.println("Location Address " + address.getCountryCode());
-                                    if(address.getCountryCode().equals("IN") || address.getCountryCode().equals("TR"))
+                                    if (address.getCountryCode().equals("IN") || address.getCountryCode().equals("TR")) {
+                                        if (address.getCountryCode().equals("IN"))
+                                            strRegionCode = "569";
+                                        if (address.getCountryCode().equals("TR"))
+                                            strRegionCode = "896";
                                         getstartCreateAccBtn.setVisibility(View.VISIBLE);
+                                    }
 
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -152,6 +163,7 @@ public class GetStartActivity extends AppCompatActivity {
         }
 
     }
+
     public static String getCountryCode(@Nullable Context context) {
         if (context != null) {
             TelephonyManager telephonyManager =

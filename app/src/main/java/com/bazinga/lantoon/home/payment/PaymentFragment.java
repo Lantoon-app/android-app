@@ -233,7 +233,7 @@ public class PaymentFragment extends Fragment {
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
             Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
             paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
-            paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE, sessionManager.getLearLang().toString());
+            paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE, sessionManager.getLearnLangId().toString());
             paymentIntent.putExtra(Tags.TAG_USERNAME, sessionManager.getUserName());
             paymentIntent.putExtra(Tags.TAG_PHONE_NUMBER, phnNumber);
             paymentIntent.putExtra(Tags.TAG_EMAILID, emailID);

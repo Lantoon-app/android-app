@@ -97,7 +97,7 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/updateprofilepic")
     Call<ProfilePicture> updateProfilePicture(@Body ProfilePictureData profilePictureData);*/
-//Update Profile Picture
+    //Update Profile Picture
     @Multipart
     @POST("Lantoon/public/UserHandler.php/updateprofilepic")
     Call<ProfilePicture> updateProfilePicture(@Part("userid") RequestBody userid,
@@ -124,7 +124,7 @@ public interface ApiInterface {
     //Signup
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/registeruser")
-    Call<User> createUser(@Body User user);
+    Call<LoggedInUserResponse> createUser(@Body User user);
 
     //Score Update
     @Headers("Content-Type: application/json")
@@ -135,6 +135,11 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/UserHandler.php/login")
     Call<LoggedInUserResponse> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid, @Query("notify_token") String notify_token, @Query("os_type") String os_type);
+
+    //Login test
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/UserHandler.php/login")
+    Call<LoggedInUserResponse> userLogin(@Query("email") String email, @Query("pass") String password, @Query("deviceid") String deviceid, @Query("notify_token") String notify_token, @Query("os_type") String os_type, @Query("device_modal") String device_modal, @Query("login_type") Integer login_type);
 
 
     //Questions Images and Audio files

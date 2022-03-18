@@ -34,9 +34,14 @@ public class SessionManager {
     public static final String KEY_SP_STRING_USERID = "userid";
     public static final String KEY_SP_STRING_USER_NAME = "username";
     public static final String KEY_SP_STRING_USER_PICTURE = "profpicture";
-    public static String KEY_SP_LEARN_LANGUAGE = "learnlang";
-    public static String KEY_SP_KNOWN_LANGUAGE = "knownlang";
+    public static String KEY_SP_LEARN_LANGUAGE_ID = "learnlang";
+    public static String KEY_SP_LEARN_LANGUAGE_NAME = "learnlangname";
+    public static String KEY_SP_LEARN_LANGUAGE_NATIVE_NAME = "learnlangnativename";
+    public static String KEY_SP_KNOWN_LANGUAGE_ID = "knownlang";
+    public static String KEY_SP_KNOWN_LANGUAGE_NAME = "knownlangname";
+    public static String KEY_SP_KNOWN_LANGUAGE_NATIVE_NAME = "knownlangnativename";
     public static String KEY_SP_SPEAKE_CODE = "speakcode";
+    public static String KEY_SP_REGION_CODE = "regioncode";
 
     public static String KEY_SP_BASEURL = "baseurl";
 
@@ -57,141 +62,136 @@ public class SessionManager {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
+
         editor.putString(KEY_SP_STRING_USER, user);
 
-
-        // commit changes
         editor.commit();
     }
 
     public void setProfilePic(String strPicture) {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
         editor.putString(KEY_SP_STRING_USER_PICTURE, strPicture);
 
-
-        // commit changes
         editor.commit();
     }
 
     public void setUid(String strUserId) {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
         editor.putString(KEY_SP_STRING_USERID, strUserId);
 
-
-        // commit changes
         editor.commit();
     }
 
     public String getUid() {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
-        String strUserId = pref.getString(KEY_SP_STRING_USERID, null);
-
-
-        return strUserId;
+        return pref.getString(KEY_SP_STRING_USERID, null);
     }
 
     public void setUserName(String strName) {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
         editor.putString(KEY_SP_STRING_USER_NAME, strName);
 
-
-        // commit changes
         editor.commit();
     }
 
     public String getUserName() {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
-        String name = pref.getString(KEY_SP_STRING_USER_NAME, null);
-
-
-        return name;
+        return pref.getString(KEY_SP_STRING_USER_NAME, null);
     }
 
     public void setSpeakCode(String speakCode) {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
         editor.putString(KEY_SP_SPEAKE_CODE, speakCode);
 
-
-        // commit changes
         editor.commit();
     }
 
     public String getSpeakCode() {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
-        String speakCode = pref.getString(KEY_SP_SPEAKE_CODE, null);
-
-
-        return speakCode;
+        return pref.getString(KEY_SP_SPEAKE_CODE, null);
     }
 
-    public void setLearnLang(Integer learnLang) {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
+    public void setLearnLangId(Integer learnLangId) {
 
-        // Storing user in pref
-        editor.putInt(KEY_SP_LEARN_LANGUAGE, learnLang);
+        editor.putInt(KEY_SP_LEARN_LANGUAGE_ID, learnLangId);
 
-
-        // commit changes
         editor.commit();
     }
 
-    public Integer getLearLang() {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
+    public Integer getLearnLangId() {
 
-        // Storing user in pref
-        Integer learnlang = pref.getInt(KEY_SP_LEARN_LANGUAGE, 0);
-
-
-        return learnlang;
+        return pref.getInt(KEY_SP_LEARN_LANGUAGE_ID, 0);
     }
 
-    public void setKnownLang(Integer knownLang) {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
+    public void setLearnLangName(String learnLangName) {
 
-        // Storing user in pref
-        editor.putInt(KEY_SP_KNOWN_LANGUAGE, knownLang);
+        editor.putString(KEY_SP_LEARN_LANGUAGE_NAME, learnLangName);
 
-
-        // commit changes
         editor.commit();
     }
 
-    public Integer getKnownLang() {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
+    public String getLearnLangName() {
 
-        // Storing user in pref
-        Integer knownLang = pref.getInt(KEY_SP_KNOWN_LANGUAGE, 0);
-
-
-        return knownLang;
+        return pref.getString(KEY_SP_LEARN_LANGUAGE_NAME, null);
     }
 
+    public void setLearnLangNativeName(String learnLangNativeName) {
+
+        editor.putString(KEY_SP_LEARN_LANGUAGE_NATIVE_NAME, learnLangNativeName);
+
+        editor.commit();
+    }
+
+    public String getLearnLangNativeName() {
+
+        return pref.getString(KEY_SP_LEARN_LANGUAGE_NATIVE_NAME, null);
+    }
+
+    public void setKnownLangId(Integer knownLangId) {
+
+        editor.putInt(KEY_SP_KNOWN_LANGUAGE_ID, knownLangId);
+
+        editor.commit();
+    }
+
+    public Integer getKnownLangId() {
+
+        return pref.getInt(KEY_SP_KNOWN_LANGUAGE_ID, 0);
+    }
+    public void setKnownLangName(String knownLangName) {
+
+        editor.putString(KEY_SP_KNOWN_LANGUAGE_NAME, knownLangName);
+
+        editor.commit();
+    }
+
+    public String getKnownLangName() {
+
+        return pref.getString(KEY_SP_KNOWN_LANGUAGE_NAME, null);
+    }
+
+    public void setKnownLangNativeName(String knownLangNativeName) {
+
+        editor.putString(KEY_SP_KNOWN_LANGUAGE_NATIVE_NAME, knownLangNativeName);
+
+        editor.commit();
+    }
+
+    public String getKnownLangNativeName() {
+
+        return pref.getString(KEY_SP_KNOWN_LANGUAGE_NATIVE_NAME, null);
+    }
+    public void setRegionCode(String regionCode) {
+
+        editor.putString(KEY_SP_REGION_CODE, regionCode);
+
+        editor.commit();
+    }
+
+    public String getRegionCode() {
+
+        return pref.getString(KEY_SP_REGION_CODE, null);
+    }
     public String getProfilePic() {
         // Storing login value as TRUE
         // editor.putBoolean(IS_LOGIN, true);
@@ -208,6 +208,7 @@ public class SessionManager {
      * Check login method wil check user login status
      * If false it will redirect user to login page
      * Else won't do anything
+     *
      * @param token
      */
     public void checkLogin(String token) {
@@ -228,7 +229,7 @@ public class SessionManager {
             System.out.println("Login failure");
 
             Intent i = new Intent(_context, GetStartActivity.class);
-            i.putExtra(Tags.TAG_NOTIFICATION_TOKEN,token);
+            i.putExtra(Tags.TAG_NOTIFICATION_TOKEN, token);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -284,26 +285,5 @@ public class SessionManager {
         return pref.getBoolean(IS_LOGIN, false);
     }
 
-   /* public void setBaseUrl(String baseUrl) {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
 
-        // Storing user in pref
-        editor.putString(KEY_SP_BASEURL, baseUrl);
-
-
-        // commit changes
-        editor.commit();
-    }
-
-    public String getBaseUrl() {
-        // Storing login value as TRUE
-        // editor.putBoolean(IS_LOGIN, true);
-
-        // Storing user in pref
-        String baseUrl = pref.getString(KEY_SP_BASEURL,"https://www.lantoon.net/");
-
-
-        return baseUrl;
-    }*/
 }

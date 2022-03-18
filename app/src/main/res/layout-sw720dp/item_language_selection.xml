@@ -17,11 +17,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/txtViewLanguageName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="English"
         android:textColor="@color/white"
         android:textSize="@dimen/_15ssp"
@@ -30,5 +32,4 @@
         app:layout_anchorGravity="bottom|center"
         tools:layout_editor_absoluteX="@dimen/_70sdp"
         tools:layout_editor_absoluteY="@dimen/_165sdp" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

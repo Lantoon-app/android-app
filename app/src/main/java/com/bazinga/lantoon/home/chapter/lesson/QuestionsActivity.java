@@ -239,7 +239,7 @@ public class QuestionsActivity extends AppCompatActivity {
         strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
 
         questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getKnownLang(), chapterType)).get(QuestionsViewModel.class);
+                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getKnownLangId(), chapterType)).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());

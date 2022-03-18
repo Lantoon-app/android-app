@@ -13,7 +13,7 @@ public class Tags {
     public static String TAG_PASSWORD = "password";
     public static String TAG_COUNTRY_CODE = "countrycode";
     public static String TAG_PHONE_NUMBER = "phone";
-    public static String TAG_REGION = "";
+    public static String TAG_REGION_CODE = "rcode";
     public static String TAG_INSTITUTE = "";
     public static String TAG_GROUP_CODE = "";
     public static String TAG_LEARN_LANGUAGE = "learnlang";

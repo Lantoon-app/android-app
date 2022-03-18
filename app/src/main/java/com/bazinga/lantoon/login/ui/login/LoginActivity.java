@@ -1,5 +1,7 @@
 package com.bazinga.lantoon.login.ui.login;
 
+import static com.bazinga.lantoon.CommonFunction.storeUserData;
+
 import android.app.Activity;
 
 import androidx.activity.OnBackPressedCallback;
@@ -9,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -40,17 +43,22 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     SessionManager sessionManager;
-     EditText usernameEditText, passwordEditText;
-     Button loginButton;
-     ProgressBar loadingProgressBar;
-     TextView tvForgetPassword;
-     LinearLayout lllogin;
+    EditText usernameEditText, passwordEditText;
+    Button loginButton;
+    ProgressBar loadingProgressBar;
+    TextView tvForgetPassword;
+    LinearLayout lllogin;
+    String deiveId, notificationToken, deviceModel;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         sessionManager = new SessionManager(this);
-        lllogin= findViewById(R.id.lllogin);
+        deiveId = getIntent().getStringExtra(Tags.TAG_DEVICE_ID);
+        notificationToken = getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN);
+        deviceModel = Build.MODEL;
+        lllogin = findViewById(R.id.lllogin);
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login);
@@ -126,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID), "");
+                            passwordEditText.getText().toString(), deiveId, notificationToken, deviceModel, 1);
                 }
                 return false;
             }
@@ -140,11 +148,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (!ValidationFunction.isEmpty(usernameEditText) || ValidationFunction.isEmpty(passwordEditText)) {
                         loadingProgressBar.setVisibility(View.VISIBLE);
                         loginViewModel.login(usernameEditText.getText().toString(),
-                                passwordEditText.getText().toString(), getIntent().getStringExtra(Tags.TAG_DEVICE_ID),getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
+                                passwordEditText.getText().toString(), deiveId, notificationToken, deviceModel, 1);
                     } else {
                         Toast.makeText(getApplicationContext(), R.string.empty_username_password, Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     CommonFunction.netWorkErrorAlert(LoginActivity.this);
                 }
             }
@@ -183,20 +191,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUserView model) {
         loadingProgressBar.setVisibility(View.GONE);
-        String user = new GsonBuilder().create().toJson(model.getloginData());
-        String picture = model.getloginData().getPhoto();
-
-        sessionManager.createLoginSession(user);
-        sessionManager.setProfilePic(picture);
-        sessionManager.setUid(model.getloginData().getUid());
-        sessionManager.setUserName(model.getloginData().getUname());
-        sessionManager.setLearnLang(model.getloginData().getLearnlang());
-        sessionManager.setKnownLang(model.getloginData().getKnownlang());
-        sessionManager.setSpeakCode(model.getloginData().getSpeakCode());
-        /*String welcome = getString(R.string.welcome) + model.getloginData().getUname();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(this, welcome, Toast.LENGTH_LONG).show();*/
-        System.out.println("Login username "+sessionManager.getUserName());
+        storeUserData(sessionManager, model);
         startActivity(new Intent(this, HomeActivity.class));
     }
 
