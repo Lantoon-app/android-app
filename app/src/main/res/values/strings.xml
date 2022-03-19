@@ -35,7 +35,6 @@
 
     <string name="facebook_app_id">2469067720054810</string>
     <string name="fb_login_protocol_scheme">fb2469067720054810</string>
-    <string name="server_client_id">1043113693911-5hptj4dndtdvhruks8o828f0nmmh9fad.apps.googleusercontent.com</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

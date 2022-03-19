@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.github.ibrahimsn98:CirclesLoadingView:1.0'
 
     // Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+    implementation platform('com.google.firebase:firebase-bom:29.2.1')
 
     // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies

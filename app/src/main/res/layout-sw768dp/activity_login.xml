@@ -100,6 +100,42 @@
             android:textColor="@color/blue"
             android:textSize="@dimen/_12ssp"
             android:textStyle="italic" />
+        <FrameLayout
+            android:id="@+id/flFacebookLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/btnFb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                android:visibility="gone" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFbLogin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/fb_color"
+                android:drawableLeft="@drawable/ic_fb"
+                android:text="@string/btn_login_with_facebook"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_15ssp"
+                app:backgroundTint="@null" />
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGoogleLogin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/google_color"
+            android:drawableLeft="@drawable/ic_google"
+            android:text="@string/btn_login_with_google"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_15ssp"
+            app:backgroundTint="@null" />
     </LinearLayout>
 
     <ProgressBar
