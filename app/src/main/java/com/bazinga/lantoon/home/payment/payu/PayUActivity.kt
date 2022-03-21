@@ -39,6 +39,7 @@ class PayUActivity : AppCompatActivity() {
 
     private var userId = ""
     private var learLangId = ""
+    private var learLangName = ""
     private var userName = ""
     private var phoneNumber = ""
     private var emailId = ""
@@ -73,7 +74,8 @@ class PayUActivity : AppCompatActivity() {
 
     private fun initDatas() {
         userId = intent.getStringExtra(Tags.TAG_USER_ID).toString()
-        learLangId = intent.getStringExtra(Tags.TAG_LEARN_LANGUAGE).toString()
+        learLangId = intent.getStringExtra(Tags.TAG_LEARN_LANGUAGE_ID).toString()
+        learLangName = intent.getStringExtra(Tags.TAG_LEARN_LANGUAGE_NAME).toString()
         userName = intent.getStringExtra(Tags.TAG_USERNAME).toString()
         phoneNumber = intent.getStringExtra(Tags.TAG_PHONE_NUMBER).toString()
         emailId = intent.getStringExtra(Tags.TAG_EMAILID).toString()
@@ -93,7 +95,7 @@ class PayUActivity : AppCompatActivity() {
     private fun initUI() {
         val price = pdPrice.toDouble().toString()
         binding.pdPackageName.setText(pdPackageName)
-        binding.pdPackageLanguage.setText("")
+        binding.pdPackageLanguage.setText(learLangName)
         binding.pdChaptersUnlocked.setText(pdChaptersUnlocked)
         binding.pdTotalDuration.setText(pdTotalDuration + " Days")
         binding.pdPrice.setText(price + " " + intent.getStringExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL).toString())
@@ -144,6 +146,7 @@ class PayUActivity : AppCompatActivity() {
     fun preparePayUBizParams(): PayUPaymentParams {
 
         return PayUPaymentParams.Builder().setAmount("1.0")
+               //.setAmount(pdPrice.toDouble().toString())
                 //.setIsProduction(binding.radioBtnProduction.isChecked)
                 .setIsProduction(true)
                 .setKey(key)

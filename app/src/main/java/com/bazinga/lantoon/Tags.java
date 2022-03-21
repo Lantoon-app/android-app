@@ -16,6 +16,8 @@ public class Tags {
     public static String TAG_REGION_CODE = "rcode";
     public static String TAG_INSTITUTE = "";
     public static String TAG_GROUP_CODE = "";
+    public static String TAG_LEARN_LANGUAGE_ID = "learnlangid";
+    public static String TAG_LEARN_LANGUAGE_NAME = "learnlangname";
     public static String TAG_LEARN_LANGUAGE = "learnlang";
     public static String TAG_KNOWN_LANGUAGE = "knownlang";
     public static String TAG_DEVICE_ID = "deviceId";

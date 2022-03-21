@@ -1,5 +1,8 @@
 package com.bazinga.lantoon.home.payment;
 
+import static com.bazinga.lantoon.Key.paymentWallProjectKey;
+import static com.bazinga.lantoon.Key.paymentWallSecretKey;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +32,9 @@ import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.GsonBuilder;
+import com.paymentwall.pwunifiedsdk.core.PaymentSelectionActivity;
+import com.paymentwall.pwunifiedsdk.core.UnifiedRequest;
+import com.paymentwall.pwunifiedsdk.util.Key;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -89,7 +95,7 @@ public class PaymentFragment extends Fragment {
                         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
                            CommonFunction.printServerResponse("TransactionResponse",response.body());
                             if (response.body().getTrasactionData() != null || response.body().getTrasactionData().getTransactinId() != null || response.body().getTrasactionData().getTransactinId() != "")
-                                    startPayment(response.body().getTrasactionData().getTransactinId(), "9999999999", "nizamcseb@gmail.com", position);
+                                    startPayment(sessionManager.getRegionCode(),response.body().getTrasactionData().getTransactinId(), "9999999999", sessionManager.getEmailId(), position);
                             else
                                 Snackbar.make(getContext(), listView, getActivity().getString(R.string.some_error_occurred), Snackbar.LENGTH_LONG).show();
                         }
@@ -105,117 +111,6 @@ public class PaymentFragment extends Fragment {
                     CommonFunction.netWorkErrorAlert(getActivity());
                 }
 
-                /*  if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-                 *//* HashMap<String,Object> additionalParamsMap = new HashMap<>();
-                    additionalParamsMap.put(PayUCheckoutProConstants.CP_UDF1, "udf1");
-                    additionalParamsMap.put(PayUCheckoutProConstants.CP_UDF2, "udf2");
-                    additionalParamsMap.put(PayUCheckoutProConstants.CP_UDF3, "udf3");
-                    additionalParamsMap.put(PayUCheckoutProConstants.CP_UDF4, "udf4");
-                    additionalParamsMap.put(PayUCheckoutProConstants.CP_UDF5, "udf5");*//*
-
-                    PayUPaymentParams.Builder builder = new PayUPaymentParams.Builder();
-                    builder.setAmount("1.0")
-                            .setIsProduction(false)
-                            .setProductInfo(paymentPackageList.get(position).getPackageName())
-                            .setKey(Key.payUtestKey)
-                            .setPhone("9999999999")
-                            .setTransactionId(String.valueOf(System.currentTimeMillis()))
-                            .setFirstName(sessionManager.getUserName())
-                            .setEmail("nizamcseb@gmail.com")
-                            .setSurl("https://www.lantoon.net/")
-                            .setFurl("https://www.lantoon.net/");
-                            //.setUserCredential("")
-                            //.setAdditionalParams(additionalParamsMap); //Optional, can contain any additional PG params
-                    PayUPaymentParams payUPaymentParams = builder.build();
-                    PayUCheckoutPro.open(
-                            getActivity(),
-                            payUPaymentParams,
-                            new PayUCheckoutProListener() {
-
-                                @Override
-                                public void onPaymentSuccess(Object response) {
-                                    //Cast response object to HashMap
-                                    HashMap<String, Object> result = (HashMap<String, Object>) response;
-                                    Log.d("payuResponse success body= ", new GsonBuilder().setPrettyPrinting().create().toJson(response));
-                                    String payuResponse = (String) result.get(PayUCheckoutProConstants.CP_PAYU_RESPONSE);
-                                    String merchantResponse = (String) result.get(PayUCheckoutProConstants.CP_MERCHANT_RESPONSE);
-
-                                    Log.d("payuResponse success", payuResponse);
-                                    Log.d("merchantResponse success", merchantResponse);
-                                }
-
-                                @Override
-                                public void onPaymentFailure(Object response) {
-                                    //Cast response object to HashMap
-                                    HashMap<String, Object> result = (HashMap<String, Object>) response;
-                                    Log.d("payuResponse faliure body= ", new GsonBuilder().setPrettyPrinting().create().toJson(response));
-                                    String payuResponse = (String) result.get(PayUCheckoutProConstants.CP_PAYU_RESPONSE);
-                                    String merchantResponse = (String) result.get(PayUCheckoutProConstants.CP_MERCHANT_RESPONSE);
-
-                                    Log.d("payuResponse faliure", payuResponse);
-                                    Log.d("merchantResponse faliure", merchantResponse);
-                                }
-
-                                @Override
-                                public void onPaymentCancel(boolean isTxnInitiated) {
-                                }
-
-                                @Override
-                                public void onError(ErrorResponse errorResponse) {
-                                    String errorMessage = errorResponse.getErrorMessage();
-                                    Log.d("payuResponse errorMessage", errorMessage);
-                                }
-
-                                @Override
-                                public void setWebViewProperties(@Nullable WebView webView, @Nullable Object o) {
-                                    //For setting webview properties, if any. Check Customized Integration section for more details on this
-                                }
-
-                                @Override
-                                public void generateHash(HashMap<String, String> valueMap, PayUHashGenerationListener hashGenerationListener) {
-                                    String hashName = valueMap.get(PayUCheckoutProConstants.CP_HASH_NAME);
-                                    String hashData = valueMap.get(PayUCheckoutProConstants.CP_HASH_STRING);
-                                    System.out.println("hashData" + hashData);
-
-                                    if (!TextUtils.isEmpty(hashName) && !TextUtils.isEmpty(hashData)) {
-
-                                        //Do not generate hash from local, it needs to be calculated from server side only. Here, hashString contains hash created from your server side.
-                                        String hash = "";
-                                        //String hash = "f5601c723fdd79552c8cbe2ba1840629bc1cd00c8a7b865afbe35929169e6375e261c76b1040c0d4d446d33f571285353f58793278692ea8b132330eba5c07d6";
-                                        hash = hashCal("SHA-512",hashData+Key.payUtestSalt);
-                                        Log.d("hashData",hashData+Key.payUtestSalt);
-                                        Log.d("hash",hash);
-                                        Log.d("hashname",hashName);
-                                        if (hash != "") {
-                                            HashMap<String, String> dataMap = new HashMap<>();
-                                            dataMap.put(hashName, hash);
-                                            hashGenerationListener.onHashGenerated(dataMap);
-                                        }
-                                       *//* HashCodeGenerateViewModel hashCodeGenerateViewModel = new ViewModelProvider(getActivity(), new HashCodeViewModelFactory(hashData)).get(HashCodeGenerateViewModel.class);
-
-                                        if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-                                            hashCodeGenerateViewModel.getHashCodeFromServerMutableLiveData().observe(getActivity(), new Observer<String>() {
-                                                @Override
-                                                public void onChanged(String s) {
-                                                    Log.d("hashCode", s);
-                                                    HashMap<String, String> dataMap = new HashMap<>();
-                                                    dataMap.put(hashName, s);
-                                                    hashGenerationListener.onHashGenerated(dataMap);
-                                                }
-                                            });
-
-                                        } else {
-                                            CommonFunction.netWorkErrorAlert(getActivity());
-                                        }*//*
-                                    }
-                                }
-                            }
-                    );
-
-                } else {
-                    CommonFunction.netWorkErrorAlert(getActivity());
-                }*/
-
             }
         });
         listView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
@@ -229,29 +124,49 @@ public class PaymentFragment extends Fragment {
         return root;
     }
 
-    private void startPayment(String txnId, String phnNumber, String emailID, int position) {
+    private void startPayment(String regionCode, String txnId, String phnNumber, String emailID, int position) {
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-            Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
-            paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
-            paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE, sessionManager.getLearnLangId().toString());
-            paymentIntent.putExtra(Tags.TAG_USERNAME, sessionManager.getUserName());
-            paymentIntent.putExtra(Tags.TAG_PHONE_NUMBER, phnNumber);
-            paymentIntent.putExtra(Tags.TAG_EMAILID, emailID);
-            paymentIntent.putExtra(Tags.TAG_PAYMENT_TXN_ID, txnId);
+            if(regionCode.equals("569")) {
+                Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
+                paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
+                paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());
+                paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_NAME, sessionManager.getLearnLangName());
+                paymentIntent.putExtra(Tags.TAG_USERNAME, sessionManager.getUserName());
+                paymentIntent.putExtra(Tags.TAG_PHONE_NUMBER, phnNumber);
+                paymentIntent.putExtra(Tags.TAG_EMAILID, emailID);
+                paymentIntent.putExtra(Tags.TAG_PAYMENT_TXN_ID, txnId);
 
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_ID, paymentPackageList.get(position).getPackageId());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_NAME, paymentPackageList.get(position).getPackageName());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_CHAPTERS_UNLOCKED, paymentPackageList.get(position).getChaptersUnlocked());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_TOTAL_DURATION, paymentPackageList.get(position).getDurationInDays());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_PRICE, paymentPackageList.get(position).getPrice());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY, paymentPackageList.get(position).getCurrency());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_CODE, paymentPackageList.get(position).getCurrencyCode());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL, paymentPackageList.get(position).getCurrencySymbol());
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_REGION_CODE, paymentPackageList.get(position).getRegionCode());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_ID, paymentPackageList.get(position).getPackageId());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_NAME, paymentPackageList.get(position).getPackageName());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CHAPTERS_UNLOCKED, paymentPackageList.get(position).getChaptersUnlocked());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_TOTAL_DURATION, paymentPackageList.get(position).getDurationInDays());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_PRICE, paymentPackageList.get(position).getPrice());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY, paymentPackageList.get(position).getCurrency());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_CODE, paymentPackageList.get(position).getCurrencyCode());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL, paymentPackageList.get(position).getCurrencySymbol());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_REGION_CODE, paymentPackageList.get(position).getRegionCode());
 
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
-            paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
-            getActivity().startActivity(paymentIntent);
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
+                getActivity().startActivity(paymentIntent);
+            }else if (regionCode.equals("896")){
+                UnifiedRequest request = new UnifiedRequest();
+                request.setPwProjectKey(paymentWallProjectKey);
+                request.setPwSecretKey(paymentWallSecretKey);
+                request.setAmount(Double.parseDouble(paymentPackageList.get(position).getPrice()));
+                request.setCurrency(paymentPackageList.get(position).getCurrencyCode());
+                request.setItemName(paymentPackageList.get(position).getPackageName());
+                request.setItemId(paymentPackageList.get(position).getPackageId());
+                request.setUserId(sessionManager.getUid());
+                request.setSignVersion(3);
+                request.setItemResID(R.drawable.logo);
+                request.setTimeout(30000);
+                request.addCustomParam("own_transactin_id", txnId);
+                Intent intent = new Intent( getActivity(), PaymentSelectionActivity.class);
+                intent.putExtra(Key.REQUEST_MESSAGE, request);
+                getActivity().startActivityForResult(intent, PaymentSelectionActivity.REQUEST_CODE);
+            }
+
         } else {
             CommonFunction.netWorkErrorAlert(getActivity());
         }

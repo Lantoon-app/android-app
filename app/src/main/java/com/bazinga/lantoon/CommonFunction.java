@@ -471,7 +471,9 @@ public class CommonFunction {
         sessionManager.setProfilePic(picture);
         sessionManager.setUid(model.getloginData().getUid());
         sessionManager.setUserName(model.getloginData().getUname());
+        sessionManager.setEmailId(model.getloginData().getEmail());
         sessionManager.setRegionCode(model.getloginData().getRegionCode());
+        sessionManager.setRegistrationType(model.getloginData().getRegistrationtype());
 
         sessionManager.setLearnLangId(model.getloginData().getLearnlangId());
         sessionManager.setLearnLangName(model.getloginData().getLearnlangObj().getLanguageName());

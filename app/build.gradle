@@ -94,6 +94,10 @@ dependencies {
     //extra for payment kotlin responsejh
     implementation 'com.beust:klaxon:5.5'
 
+
+    //paymentwall
+    implementation project(path: ':paymentwall-android-sdk')
+    
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

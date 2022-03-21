@@ -78,10 +78,10 @@ public class GetStartActivity extends AppCompatActivity {
             }
         });
         getstartCreateAccBtn = findViewById(R.id.getstartCreateAccBtn);
-        if (ApiClient.isTest) {
+       /* if (ApiClient.isTest) {
             getstartCreateAccBtn.setVisibility(View.VISIBLE);
             strRegionCode = "569";
-        }
+        }*/
         getstartCreateAccBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

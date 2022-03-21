@@ -257,6 +257,8 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if (sessionManager.getRegistrationType() != 1)
+            navigationView.getMenu().findItem(R.id.nav_change_password).setVisible(false);
         navigationView.getMenu().findItem(R.id.nav_change_password).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -289,12 +291,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 navigationView.setItemBackground(null);
-               /* Intent intent =new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Lantoon");
-                intent.putExtra(Intent.EXTRA_TEXT,"Learn any language from your native language https://play.google.com/store/apps/details?id=io.gonative.android.lbpbqe ");
-                intent.setType("text/plain");
-                startActivity(intent);*/
                 try {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
@@ -376,15 +372,6 @@ public class HomeActivity extends AppCompatActivity {
             tvNavHeaderUsername.setText(sessionManager.getUserName());
             tvNavHeaderUserId.setText(sessionManager.getUid());
             if (sessionManager.getProfilePic() != null) {
-           /* byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            //decodedByte = Bitmap.createScaledBitmap(decodedByte, ivNavHeaderUserImage.getWidth(), ivNavHeaderUserImage.getHeight(), true);
-            RoundedBitmapDrawable dr =
-                    RoundedBitmapDrawableFactory.create(getApplicationContext().getResources(), decodedByte);
-            dr.setGravity(Gravity.CENTER);
-            dr.setCircular(true);
-            ivNavHeaderUserImage.setBackground(null);
-            ivNavHeaderUserImage.setImageDrawable(dr);*/
 
                 Glide.with(this).load(sessionManager.getProfilePic()).circleCrop().addListener(new RequestListener<Drawable>() {
                     @Override

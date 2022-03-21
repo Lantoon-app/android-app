@@ -34,6 +34,7 @@ public class SessionManager {
     public static final String KEY_SP_STRING_USERID = "userid";
     public static final String KEY_SP_STRING_USER_NAME = "username";
     public static final String KEY_SP_STRING_USER_PICTURE = "profpicture";
+    public static final String KEY_SP_STRING_EMAIL_ID = "emailid";
     public static String KEY_SP_LEARN_LANGUAGE_ID = "learnlang";
     public static String KEY_SP_LEARN_LANGUAGE_NAME = "learnlangname";
     public static String KEY_SP_LEARN_LANGUAGE_NATIVE_NAME = "learnlangnativename";
@@ -42,6 +43,7 @@ public class SessionManager {
     public static String KEY_SP_KNOWN_LANGUAGE_NATIVE_NAME = "knownlangnativename";
     public static String KEY_SP_SPEAKE_CODE = "speakcode";
     public static String KEY_SP_REGION_CODE = "regioncode";
+    public static String KEY_SP_REGISTRATION_TYPE = "regtype";
 
     public static String KEY_SP_BASEURL = "baseurl";
 
@@ -97,6 +99,18 @@ public class SessionManager {
     public String getUserName() {
 
         return pref.getString(KEY_SP_STRING_USER_NAME, null);
+    }
+
+    public void setEmailId(String emailId) {
+
+        editor.putString(KEY_SP_STRING_EMAIL_ID, emailId);
+
+        editor.commit();
+    }
+
+    public String getEmailId() {
+
+        return pref.getString(KEY_SP_STRING_EMAIL_ID, null);
     }
 
     public void setSpeakCode(String speakCode) {
@@ -158,6 +172,7 @@ public class SessionManager {
 
         return pref.getInt(KEY_SP_KNOWN_LANGUAGE_ID, 0);
     }
+
     public void setKnownLangName(String knownLangName) {
 
         editor.putString(KEY_SP_KNOWN_LANGUAGE_NAME, knownLangName);
@@ -181,6 +196,7 @@ public class SessionManager {
 
         return pref.getString(KEY_SP_KNOWN_LANGUAGE_NATIVE_NAME, null);
     }
+
     public void setRegionCode(String regionCode) {
 
         editor.putString(KEY_SP_REGION_CODE, regionCode);
@@ -192,6 +208,19 @@ public class SessionManager {
 
         return pref.getString(KEY_SP_REGION_CODE, null);
     }
+
+    public void setRegistrationType(Integer registrationType) {
+
+        editor.putInt(KEY_SP_REGISTRATION_TYPE, registrationType);
+
+        editor.commit();
+    }
+
+    public Integer getRegistrationType() {
+
+        return pref.getInt(KEY_SP_REGISTRATION_TYPE, 0);
+    }
+
     public String getProfilePic() {
         // Storing login value as TRUE
         // editor.putBoolean(IS_LOGIN, true);

@@ -83,13 +83,13 @@ public class DurationSelectionActivity extends AppCompatActivity implements View
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.llCasual:
-                signup(5);
+                signup(1);
                 break;
             case R.id.llRegular:
-                signup(10);
+                signup(2);
                 break;
             case R.id.llIntense:
-                signup(15);
+                signup(3);
                 break;
         }
 
