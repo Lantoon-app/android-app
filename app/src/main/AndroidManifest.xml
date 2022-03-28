@@ -16,6 +16,15 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <!--<permission
+        android:name="${applicationId}.mobiamo.PAYMENT_BROADCAST_PERMISSION"
+        android:label="Request for sending mobiamobroadcast to Mobiamo"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="${applicationId}.mobiamo.PAYMENT_BROADCAST_PERMISSION" />-->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -75,10 +84,9 @@
             android:name=".home.payment.payu.PayUActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.paymentwall.pwunifiedsdk.core.PaymentSelectionActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@style/PaymentwallSDKTheme"
-            android:windowSoftInputMode="stateVisible|adjustResize|adjustPan" />
+            android:name=".home.payment.paymentwall.PaymentWallActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -105,6 +113,38 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name="com.paymentwall.pwunifiedsdk.core.PaymentSelectionActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateVisible|adjustResize|adjustPan" />
+
+        <activity
+            android:name="com.paymentwall.sdk.pwlocal.ui.PwLocalActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <!--<activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />-->
+
+      <!--  <receiver
+            android:name="com.paymentwall.pwunifiedsdk.mobiamo.core.MobiamoBroadcastReceiver"
+            android:exported="false"
+            android:permission="${applicationId}.mobiamo.PAYMENT_BROADCAST_PERMISSION">
+            <intent-filter>
+                <action android:name="com.paymentwall.mobiamosdk.SENT_SMS_ACTION"></action>
+            </intent-filter>
+        </receiver>-->
+
     </application>
 
 </manifest>

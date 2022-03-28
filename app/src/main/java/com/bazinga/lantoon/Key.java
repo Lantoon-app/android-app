@@ -10,8 +10,8 @@ public class Key {
     //Private Key = ba8d69f994df8b57e5405ab70b2e1016
     public static String paymentWallProjectKey = "5587d361cf36753e57228843db624c29";//
     public static String paymentWallSecretKey = "ba8d69f994df8b57e5405ab70b2e1016";
-    public static String paymentWallTestProjectKey = "3TnMpV";
-    public static String paymentWallTestSecretKey = "g0nGFe03";
+    public static String paymentWallTestProjectKey = "";
+    public static String paymentWallTestSecretKey = "";
 
 
 }

@@ -96,8 +96,12 @@ dependencies {
 
 
     //paymentwall
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.okhttp:okhttp:2.2.0'
+    //implementation project(path: ':alipaySdk-15.6.5-20190718211148')
+    //implementation project(path: ':alipayadapter-release')
     implementation project(path: ':paymentwall-android-sdk')
-    
+
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

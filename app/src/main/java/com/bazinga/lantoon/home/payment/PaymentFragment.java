@@ -26,16 +26,12 @@ import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.payment.model.PaymentPackage;
 import com.bazinga.lantoon.home.payment.model.TransactionResponse;
+import com.bazinga.lantoon.home.payment.paymentwall.PaymentWallActivity;
 import com.bazinga.lantoon.home.payment.payu.PayUActivity;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.GsonBuilder;
-import com.paymentwall.pwunifiedsdk.core.PaymentSelectionActivity;
-import com.paymentwall.pwunifiedsdk.core.UnifiedRequest;
-import com.paymentwall.pwunifiedsdk.util.Key;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -126,7 +122,8 @@ public class PaymentFragment extends Fragment {
 
     private void startPayment(String regionCode, String txnId, String phnNumber, String emailID, int position) {
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-            if(regionCode.equals("569")) {
+
+            /*if(regionCode.equals("569")) {
                 Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
                 paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
                 paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());
@@ -150,7 +147,7 @@ public class PaymentFragment extends Fragment {
                 paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
                 getActivity().startActivity(paymentIntent);
             }else if (regionCode.equals("896")){
-                UnifiedRequest request = new UnifiedRequest();
+                *//*UnifiedRequest request = new UnifiedRequest();
                 request.setPwProjectKey(paymentWallProjectKey);
                 request.setPwSecretKey(paymentWallSecretKey);
                 request.setAmount(Double.parseDouble(paymentPackageList.get(position).getPrice()));
@@ -164,9 +161,10 @@ public class PaymentFragment extends Fragment {
                 request.addCustomParam("own_transactin_id", txnId);
                 Intent intent = new Intent( getActivity(), PaymentSelectionActivity.class);
                 intent.putExtra(Key.REQUEST_MESSAGE, request);
-                getActivity().startActivityForResult(intent, PaymentSelectionActivity.REQUEST_CODE);
-            }
+                getActivity().startActivityForResult(intent, PaymentSelectionActivity.REQUEST_CODE);*//*
 
+            }*/
+            getActivity().startActivity(new Intent(getActivity(), PaymentWallActivity.class));
         } else {
             CommonFunction.netWorkErrorAlert(getActivity());
         }
