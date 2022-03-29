@@ -123,7 +123,8 @@ public class PaymentFragment extends Fragment {
     private void startPayment(String regionCode, String txnId, String phnNumber, String emailID, int position) {
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
 
-            /*if(regionCode.equals("569")) {
+            //if(regionCode.equals("569")) {
+            if(regionCode.equals("896")) {
                 Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
                 paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
                 paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());
@@ -146,25 +147,33 @@ public class PaymentFragment extends Fragment {
                 paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
                 paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
                 getActivity().startActivity(paymentIntent);
-            }else if (regionCode.equals("896")){
-                *//*UnifiedRequest request = new UnifiedRequest();
-                request.setPwProjectKey(paymentWallProjectKey);
-                request.setPwSecretKey(paymentWallSecretKey);
-                request.setAmount(Double.parseDouble(paymentPackageList.get(position).getPrice()));
-                request.setCurrency(paymentPackageList.get(position).getCurrencyCode());
-                request.setItemName(paymentPackageList.get(position).getPackageName());
-                request.setItemId(paymentPackageList.get(position).getPackageId());
-                request.setUserId(sessionManager.getUid());
-                request.setSignVersion(3);
-                request.setItemResID(R.drawable.logo);
-                request.setTimeout(30000);
-                request.addCustomParam("own_transactin_id", txnId);
-                Intent intent = new Intent( getActivity(), PaymentSelectionActivity.class);
-                intent.putExtra(Key.REQUEST_MESSAGE, request);
-                getActivity().startActivityForResult(intent, PaymentSelectionActivity.REQUEST_CODE);*//*
+            //}else if (regionCode.equals("896")){
+            }else if (regionCode.equals("569")){
+                Intent paymentIntent = new Intent(getActivity(), PaymentWallActivity.class);
+                paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
+                paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());
+                paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_NAME, sessionManager.getLearnLangName());
+                paymentIntent.putExtra(Tags.TAG_USERNAME, sessionManager.getUserName());
+                paymentIntent.putExtra(Tags.TAG_PHONE_NUMBER, phnNumber);
+                paymentIntent.putExtra(Tags.TAG_EMAILID, emailID);
+                paymentIntent.putExtra(Tags.TAG_PAYMENT_TXN_ID, txnId);
 
-            }*/
-            getActivity().startActivity(new Intent(getActivity(), PaymentWallActivity.class));
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_ID, paymentPackageList.get(position).getPackageId());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_NAME, paymentPackageList.get(position).getPackageName());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CHAPTERS_UNLOCKED, paymentPackageList.get(position).getChaptersUnlocked());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_TOTAL_DURATION, paymentPackageList.get(position).getDurationInDays());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_PRICE, paymentPackageList.get(position).getPrice());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY, paymentPackageList.get(position).getCurrency());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_CODE, paymentPackageList.get(position).getCurrencyCode());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_CURRENCY_SYMBOL, paymentPackageList.get(position).getCurrencySymbol());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_REGION_CODE, paymentPackageList.get(position).getRegionCode());
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
+                paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
+                getActivity().startActivity(paymentIntent);
+
+
+            }
+
         } else {
             CommonFunction.netWorkErrorAlert(getActivity());
         }
