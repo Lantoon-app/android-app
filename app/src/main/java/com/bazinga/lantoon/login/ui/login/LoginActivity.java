@@ -227,6 +227,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         loadingProgressBar.setVisibility(View.GONE);
         storeUserData(sessionManager, model);
+        finish();
         startActivity(new Intent(this, HomeActivity.class));
     }
 

@@ -123,8 +123,8 @@ public class PaymentFragment extends Fragment {
     private void startPayment(String regionCode, String txnId, String phnNumber, String emailID, int position) {
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
 
-            //if(regionCode.equals("569")) {
-            if(regionCode.equals("896")) {
+            if(regionCode.equals("569")) {
+            //if(regionCode.equals("896")) {
                 Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
                 paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
                 paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());
@@ -147,8 +147,8 @@ public class PaymentFragment extends Fragment {
                 paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
                 paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
                 getActivity().startActivity(paymentIntent);
-            //}else if (regionCode.equals("896")){
-            }else if (regionCode.equals("569")){
+            }else if (regionCode.equals("896")){
+           // }else if (regionCode.equals("569")){
                 Intent paymentIntent = new Intent(getActivity(), PaymentWallActivity.class);
                 paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
                 paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());

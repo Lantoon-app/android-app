@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -438,13 +439,12 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("code result" , String.valueOf(resultCode));
+        Log.d("code req" , String.valueOf(requestCode));
         if (requestCode == 2) {
-            System.out.println("result code " + String.valueOf(resultCode));
-            System.out.println("req code " + String.valueOf(requestCode));
             navController.navigate(R.id.bottom_lesson);
         }
 
@@ -453,6 +453,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+      //  Log.d("code result" , String.valueOf(resultCode));
+        Log.d("code req" , String.valueOf(requestCode));
     }
 
     public static void deleteCache(Context context) {

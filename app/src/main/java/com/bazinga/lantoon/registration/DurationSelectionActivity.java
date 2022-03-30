@@ -129,6 +129,7 @@ public class DurationSelectionActivity extends AppCompatActivity implements View
 
     private void updateUiWithUser(LoggedInUserView model) {
         storeUserData(sessionManager, model);
+        finish();
         startActivity(new Intent(this, HomeActivity.class));
     }
 

@@ -243,7 +243,7 @@ class PayUActivity : AppCompatActivity() {
                 "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
                         + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
-        CommonFunction.postPaymentPurchaseDetails(this, Activity(),
+        CommonFunction.postPaymentPurchaseDetails(this, this,
                 "Payment Successfull",
                 "You have unlocked the new chapters",
                 "success", txnId, pdPackageId,
@@ -265,7 +265,7 @@ class PayUActivity : AppCompatActivity() {
                 "payuResponse ; > " + response[PayUCheckoutProConstants.CP_PAYU_RESPONSE]
                         + ", merchantResponse : > " + response[PayUCheckoutProConstants.CP_MERCHANT_RESPONSE]
         )
-        CommonFunction.postPaymentPurchaseDetails(this, Activity(),
+        CommonFunction.postPaymentPurchaseDetails(this, this,
                 "Payment Failure",
                 "Try after sometime",
                 "failure", txnId, pdPackageId,

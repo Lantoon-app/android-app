@@ -91,6 +91,7 @@ public class GetStartActivity extends AppCompatActivity {
                 langSelectionIntent.putExtra(Tags.TAG_REGION_CODE, strRegionCode);
                 langSelectionIntent.putExtra(Tags.TAG_NOTIFICATION_TOKEN, getIntent().getStringExtra(Tags.TAG_NOTIFICATION_TOKEN));
                 startActivity(langSelectionIntent);
+                finish();
             }
         });
 
@@ -103,6 +104,7 @@ public class GetStartActivity extends AppCompatActivity {
                 loginIntent.putExtra(Tags.TAG_DEVICE_ID, strDeviceId);
                 loginIntent.putExtra(Tags.TAG_CURRENT_LOCATION, strCurrentLoaction);
                 startActivity(loginIntent);
+                finish();
             }
         });
 

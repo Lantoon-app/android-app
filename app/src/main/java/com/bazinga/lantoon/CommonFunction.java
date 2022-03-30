@@ -453,6 +453,8 @@ public class CommonFunction {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                        //PayUActivity.startHomeActivity();
+                        activity.finish();
+                        //activity.startActivityForResult(new Intent(context,HomeActivity.class),2);
                         activity.startActivity(new Intent(context,HomeActivity.class));
                         dialog.cancel();
                     }
