@@ -157,6 +157,7 @@
                 android:textSize="@dimen/_15ssp" />
 
             <FrameLayout
+                android:id="@+id/flFacebookLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp">

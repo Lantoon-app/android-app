@@ -1,5 +1,7 @@
 package com.bazinga.lantoon.login.data.model;
 
+import com.bazinga.lantoon.home.mylanguage.model.KnownLanguage;
+import com.bazinga.lantoon.home.mylanguage.model.LearnLanguage;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,12 +15,22 @@ public class LoginData {
     @SerializedName("uname")
     @Expose
     private String uname;
+    @SerializedName("region_code")
+    @Expose
+    public String region_code;
     @SerializedName("learnlang")
     @Expose
-    private Integer learnlang;
+    private Integer learnlangId;
+    @SerializedName("learnlang_obj")
+    @Expose
+    private LearnLanguage learnlang_obj;
+
     @SerializedName("knownlang")
     @Expose
-    private Integer knownlang;
+    private Integer knownlangId;
+    @SerializedName("knownlang_obj")
+    @Expose
+    private KnownLanguage knownlang_obj;
     @SerializedName("userrole")
     @Expose
     private Integer userrole;
@@ -58,21 +70,44 @@ public class LoginData {
     public void setUname(String uname) {
         this.uname = uname;
     }
-
-    public Integer getLearnlang() {
-        return learnlang;
+ public String getRegionCode() {
+        return region_code;
     }
 
-    public void setLearnlang(Integer learnlang) {
-        this.learnlang = learnlang;
+    public void setRegionCode(String region_code) {
+        this.region_code = region_code;
     }
 
-    public Integer getKnownlang() {
-        return knownlang;
+    public Integer getLearnlangId() {
+        return learnlangId;
     }
 
-    public void setKnownlang(Integer knownlang) {
-        this.knownlang = knownlang;
+    public void setLearnlangId(Integer learnlangId) {
+        this.learnlangId = learnlangId;
+    }
+
+    public LearnLanguage getLearnlangObj() {
+        return learnlang_obj;
+    }
+
+    public void setLearnlangObj(LearnLanguage learnlang_obj) {
+        this.learnlang_obj = learnlang_obj;
+    }
+
+    public Integer getKnownlangId() {
+        return knownlangId;
+    }
+
+    public void setKnownlangId(Integer knownlangId) {
+        this.knownlangId = knownlangId;
+    }
+
+    public KnownLanguage getKnownlangObj() {
+        return knownlang_obj;
+    }
+
+    public void setKnownlangObj(KnownLanguage knownlang_obj) {
+        this.knownlang_obj = knownlang_obj;
     }
 
     public Integer getUserrole() {

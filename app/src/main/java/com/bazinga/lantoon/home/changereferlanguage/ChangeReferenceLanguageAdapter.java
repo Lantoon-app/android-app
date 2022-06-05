@@ -22,7 +22,8 @@ import java.util.List;
 
 public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
     int referLang;
-    public ChangeReferenceLanguageAdapter(Context context, List<Language> languageArrayList,int referLang) {
+
+    public ChangeReferenceLanguageAdapter(Context context, List<Language> languageArrayList, int referLang) {
         super(context, 0, languageArrayList);
         this.referLang = referLang;
     }
@@ -45,12 +46,15 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         // Populate the data into the template view using the data object
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(getContext()).load(ApiClient.BASE_URL +"Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
+        if (ApiClient.isTest)
+            Glide.with(getContext()).load(ApiClient.BASE_TEST_URL + "Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
+        else
+            Glide.with(getContext()).load(ApiClient.BASE_PROD_URL + "Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
         tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
-        if (Integer.valueOf(getItem(position).getLanguageID())==referLang){
+        if (Integer.valueOf(getItem(position).getLanguageID()) == referLang) {
             llItem.setBackground(getContext().getDrawable(R.drawable.right_corner_radius));
             tvName.setTextColor(getContext().getColor(R.color.white));
-        }else {
+        } else {
             llItem.setBackground(getContext().getDrawable(R.drawable.change_language_item_bg));
             tvName.setTextColor(getContext().getColor(R.color.black));
         }

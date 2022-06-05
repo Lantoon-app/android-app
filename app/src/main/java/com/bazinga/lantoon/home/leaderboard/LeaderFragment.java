@@ -56,7 +56,7 @@ public class LeaderFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         sessionManager = new SessionManager(getContext());
         leaderViewModel = new ViewModelProvider(getActivity(),
-                new LeaderViewModelProvider(sessionManager.getUid(), sessionManager.getLearLang())).get(LeaderViewModel.class);
+                new LeaderViewModelProvider(sessionManager.getUid(), sessionManager.getLearnLangId())).get(LeaderViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         progressBar = root.findViewById(R.id.pbLeader);
@@ -157,7 +157,7 @@ public class LeaderFragment extends Fragment {
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage++;
-                leaderViewModel.getData(currentPage, sessionManager.getUid(), sessionManager.getLearLang());
+                leaderViewModel.getData(currentPage, sessionManager.getUid(), sessionManager.getLearnLangId());
                 preparedListItem();
 
             }

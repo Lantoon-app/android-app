@@ -20,8 +20,11 @@ import androidx.annotation.RequiresApi;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
+import com.bazinga.lantoon.Audio;
 import com.bazinga.lantoon.CommonFunction;
+import com.bazinga.lantoon.PlayPauseView;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.home.chapter.lesson.model.Question;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -41,7 +44,7 @@ public class QuestionRightWrongPopup {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void showPopup(Activity activity, final View view, boolean right, boolean isLast, int quesNo, int attemptCount, boolean isSpeech, int pMark, int nMark) {
+    public void showPopup(Activity activity, final View view, boolean right, boolean isLast, int quesNo, int attemptCount, boolean isSpeech, Question question, Audio audio, PlayPauseView btnAudio) {
 
         CommonFunction cf = new CommonFunction();
         LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
@@ -80,21 +83,21 @@ public class QuestionRightWrongPopup {
                     public void onAnimationEnd(Drawable drawable) {
                         super.onAnimationEnd(drawable);
 
-                        QuestionsActivity.CalculateMarks(pMark, 0, pMark);
+                        QuestionsActivity.CalculateMarks(question.getPlusMark(), 0, question.getPlusMark());
                         if (isLast) {
                             if (!QuestionsActivity.isRandomQuestion) {
                                 QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
                                 QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
                                 QuestionsActivity.score.setCompletedques(String.valueOf(quesNo));
                                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
-                            //LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                            //lessonCompletedPopup.showPopupWindow(view, activity);
+                                //LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                                //lessonCompletedPopup.showPopupWindow(view, activity);
                                 QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                 System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                             } else {
 
-                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo, QuestionsActivity.tvTimer.getText().toString());
                             }
 
                         } else {
@@ -117,21 +120,21 @@ public class QuestionRightWrongPopup {
                     public void onAnimationEnd(Drawable drawable) {
                         super.onAnimationEnd(drawable);
 
-                        QuestionsActivity.CalculateMarks(pMark, 0, pMark);
+                        QuestionsActivity.CalculateMarks(question.getPlusMark(), 0, question.getPlusMark());
                         if (isLast) {
                             if (!QuestionsActivity.isRandomQuestion) {
                                 QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
                                 QuestionsActivity.score.setAttemptcount(QuestionsActivity.countMap);
                                 QuestionsActivity.score.setCompletedques(String.valueOf(quesNo));
                                 Log.d("attemptCount", QuestionsActivity.countMap.toString());
-                            //LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                            //lessonCompletedPopup.showPopupWindow(view, activity);
+                                //LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                                //lessonCompletedPopup.showPopupWindow(view, activity);
                                 QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                 System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                             } else {
 
-                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo, QuestionsActivity.tvTimer.getText().toString());
                             }
                         } else {
                             QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
@@ -147,9 +150,18 @@ public class QuestionRightWrongPopup {
                 animatedVectorDrawable.start();
             }
         } else {
-            Log.d("checkerror ", "attemptCount"+attemptCount+isSpeech+isLast);
+            Log.d("checkerror ", "attemptCount" + attemptCount + isSpeech + isLast);
             mediaPlayer = MediaPlayer.create(activity, R.raw.wrong_answer);
             mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    if (attemptCount == 2 && isSpeech) {
+
+                    }else
+                        audio.playAudioFileAnim(activity, QuestionsActivity.strFilePath + question.getAudioPath(), btnAudio);
+                }
+            });
             ImageView imageViewWrong = popupView.findViewById(R.id.imageViewWrong);
             imageViewWrong.setVisibility(View.VISIBLE);
             Drawable drawable1 = imageViewWrong.getDrawable();
@@ -162,7 +174,7 @@ public class QuestionRightWrongPopup {
 
 
                         if (attemptCount == 2 && isSpeech) {
-                            QuestionsActivity.CalculateMarks(0, nMark, pMark);
+                            QuestionsActivity.CalculateMarks(0, question.getMinusMark(), question.getPlusMark());
                             if (isLast) {
                                 if (!QuestionsActivity.isRandomQuestion) {
                                     QuestionsActivity.countMap.put(String.valueOf(quesNo), "n");
@@ -172,10 +184,10 @@ public class QuestionRightWrongPopup {
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
                                     QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                    cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                    cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                     System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                 } else {
-                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                 }
                             } else {
 
@@ -185,7 +197,7 @@ public class QuestionRightWrongPopup {
 
                             }
                         } else {
-                            QuestionsActivity.CalculateMarks(0, nMark, 0);
+                            QuestionsActivity.CalculateMarks(0, question.getMinusMark(), 0);
                         }
                         System.out.println("Pmark " + QuestionsActivity.Pmark + "Nmark " + QuestionsActivity.Nmark + "OutOfTotal " + QuestionsActivity.OutOfTotal);
                         mediaPlayer.release();
@@ -202,9 +214,9 @@ public class QuestionRightWrongPopup {
                     public void onAnimationEnd(Drawable drawable1) {
                         super.onAnimationEnd(drawable1);
 
-                        QuestionsActivity.CalculateMarks(0, nMark, 0);
+                        QuestionsActivity.CalculateMarks(0, question.getMinusMark(), 0);
                         if (attemptCount == 2 && isSpeech) {
-                            QuestionsActivity.CalculateMarks(0, nMark, pMark);
+                            QuestionsActivity.CalculateMarks(0, question.getMinusMark(), question.getPlusMark());
                             if (isLast) {
                                 if (!QuestionsActivity.isRandomQuestion) {
                                     QuestionsActivity.countMap.put(String.valueOf(quesNo), "n");
@@ -214,10 +226,10 @@ public class QuestionRightWrongPopup {
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
                                     QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                    cf.postLesson(view, activity, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                    cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                     System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                 } else {
-                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo,QuestionsActivity.tvTimer.getText().toString());
+                                    lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                 }
                             } else {
 
@@ -227,7 +239,7 @@ public class QuestionRightWrongPopup {
 
                             }
                         } else {
-                            QuestionsActivity.CalculateMarks(0, nMark, 0);
+                            QuestionsActivity.CalculateMarks(0, question.getMinusMark(), 0);
                         }
                         System.out.println("Pmark " + QuestionsActivity.Pmark + "Nmark " + QuestionsActivity.Nmark + "OutOfTotal " + QuestionsActivity.OutOfTotal);
                         mediaPlayer.release();

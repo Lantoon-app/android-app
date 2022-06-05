@@ -164,13 +164,14 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btnMic:
                 //String withoutSplChar = "t.e?s!t. le.tt!er ";
-                String ansWrd =question.getAnsWord().replaceAll("[^ .,a-zA-Z0-9]", "").replace(".","").trim();
+                //String ansWrd =question.getAnsWord().replaceAll("[^ .,a-zA-Z0-9]", "").replace(".","").trim();
+                String ansWrd =question.getAnsWord().replace("?","").replace("!","").replace(".","").trim();
 
                 System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,btnAudio);
                 else
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question.getPlusMark(), question.getMinusMark());
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,btnAudio);
 
                 break;
         }

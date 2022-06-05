@@ -30,7 +30,7 @@ public class ProfileViewModel extends ViewModel {
             public void onResponse(Call<Profile> call, Response<Profile> response) {
 
                 mUser.setValue(response.body());
-                //Log.d("profile data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                Log.d("profile data ", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
             }
 
             @Override

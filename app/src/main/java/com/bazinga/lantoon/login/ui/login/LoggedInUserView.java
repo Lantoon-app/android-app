@@ -5,7 +5,7 @@ import com.bazinga.lantoon.login.data.model.LoginData;
 /**
  * Class exposing authenticated user details to the UI.
  */
-class LoggedInUserView {
+public class LoggedInUserView {
     private LoginData loginData;
     //... other data fields that may be accessible to the UI
 
@@ -13,7 +13,7 @@ class LoggedInUserView {
         this.loginData = loginData;
     }
 
-    LoginData getloginData() {
+    public LoginData getloginData() {
         return loginData;
     }
 }

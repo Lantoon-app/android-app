@@ -20,8 +20,11 @@
 
     <TextView
         android:id="@+id/txtViewLanguageName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="English"
         android:textColor="@color/white"
         android:textSize="@dimen/_15ssp"

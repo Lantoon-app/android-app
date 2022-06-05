@@ -18,16 +18,23 @@
             android:layout_height="match_parent"
             android:background="@drawable/top_bg"
             app:titleTextAppearance="@style/Toolbar.TitleText"
-            app:popupTheme="@style/AppTheme.PopupOverlay"><!--
+            app:popupTheme="@style/AppTheme.PopupOverlay">
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/titleHome"
-                android:layout_width="match_parent"
+                android:id="@+id/atvHomeLearnLang"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="left|center"
-                android:text="@string/welcome_user"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/learnlang_bg"
+                android:text="ENGLISH"
                 android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />-->
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
 
 

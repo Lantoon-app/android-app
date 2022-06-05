@@ -62,9 +62,9 @@ public class ChangeReferenceLanguageFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                     if (!fragmentDestroyed) {
                         LanguageDataList = languages;
-                        LanguageDataList.removeIf(s -> s.getLanguageID().equalsIgnoreCase(String.valueOf(HomeActivity.sessionManager.getLearLang())));
+                        LanguageDataList.removeIf(s -> s.getLanguageID().equalsIgnoreCase(String.valueOf(HomeActivity.sessionManager.getLearnLangId())));
 
-                        changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList,HomeActivity.sessionManager.getKnownLang());
+                        changeReferenceLanguageAdapter = new ChangeReferenceLanguageAdapter(getContext(), LanguageDataList,HomeActivity.sessionManager.getKnownLangId());
                         listView.setAdapter(changeReferenceLanguageAdapter);
                     }
                 }
@@ -77,7 +77,7 @@ public class ChangeReferenceLanguageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-                    updateReferenceLanguage(HomeActivity.sessionManager.getUid(), HomeActivity.sessionManager.getLearLang(), LanguageDataList.get(position).getLanguageID());
+                    updateReferenceLanguage(HomeActivity.sessionManager.getUid(), HomeActivity.sessionManager.getLearnLangId(), LanguageDataList.get(position).getLanguageID());
                 } else {
                     CommonFunction.netWorkErrorAlert(getActivity());
                 }
@@ -106,7 +106,13 @@ public class ChangeReferenceLanguageFragment extends Fragment {
                     Log.d("response updateLanguage", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
                     if (response.body().getStatus().getCode() == 1047) {
-                        HomeActivity.sessionManager.setKnownLang(response.body().getLoginData().getKnownlang());
+                        /*HomeActivity.sessionManager.setLearnLangId(response.body().getLoginData().getLearnlangId());
+                        HomeActivity.sessionManager.setLearnLangName(response.body().getLoginData().getLearnlangObj().getLanguageName());
+                        HomeActivity.sessionManager.setLearnLangNativeName(response.body().getLoginData().getLearnlangObj().getNativeName());*/
+
+                        HomeActivity.sessionManager.setKnownLangId(response.body().getLoginData().getKnownlangId());
+                        HomeActivity.sessionManager.setKnownLangName(response.body().getLoginData().getKnownlangObj().getLanguageName());
+                        HomeActivity.sessionManager.setKnownLangNativeName(response.body().getLoginData().getKnownlangObj().getNativeName());
                         Toast.makeText(getActivity(), "Reference Language updated successfully", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(getView()).navigate(R.id.bottom_lesson);
                     }

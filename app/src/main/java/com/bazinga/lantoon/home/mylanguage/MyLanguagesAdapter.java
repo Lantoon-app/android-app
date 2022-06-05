@@ -47,7 +47,7 @@ public class MyLanguagesAdapter extends ArrayAdapter<MyLanguageData> {
         Glide.with(getContext()).load("https://www.lantoon.net/Lantoon%20Admin%20Panel/" + myLanguageData.getLearnLanguage().getImagePath()).apply(requestOptions).into(imageView);*/
 
         tvName.setText(myLanguageData.getLearnLanguage().getLanguageName() + " / " + myLanguageData.getLearnLanguage().getNativeName());
-        if (HomeActivity.sessionManager.getLearLang() == Integer.valueOf(myLanguageData.getLearnLanguage().getLanguageID())) {
+        if (HomeActivity.sessionManager.getLearnLangId() == Integer.valueOf(myLanguageData.getLearnLanguage().getLanguageID())) {
             linearLayout11.setBackground(getContext().getDrawable(R.drawable.my_language_item_selected_bg));
             tvName.setTextColor(getContext().getColor(R.color.white));
             ivLang.setImageResource(R.drawable.my_language_item_empty);

@@ -35,6 +35,13 @@ public class User {
     @SerializedName("registrationtype")
     public int registrationtype;
 
+    @SerializedName("notify_token")
+    public String notify_token;
+    @SerializedName("os_type")
+    public String os_type;
+    @SerializedName("device_model")
+    public String device_model;
+
     public User(String email,
                 String uname,
                 String pass,
@@ -49,7 +56,10 @@ public class User {
                 int userrole,
                 String currentlocation,
                 int minsperday,
-                int registrationtype) {
+                int registrationtype,
+                String notify_token,
+                String os_type,
+                String device_model) {
         this.email = email;
         this.uname = uname;
         this.pass = pass;
@@ -65,6 +75,9 @@ public class User {
         this.currentlocation = currentlocation;
         this.minsperday = minsperday;
         this.registrationtype = registrationtype;
+        this.notify_token = notify_token;
+        this.os_type = os_type;
+        this.device_model = device_model;
     }
 }
 //email,uname,pass,countryCode,phone,region,learnLanguage,knownLanguage,deviceId,currentLocation,userRole,timeDurationPerDay,[register]

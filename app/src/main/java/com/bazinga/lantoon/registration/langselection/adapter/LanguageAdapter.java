@@ -1,5 +1,6 @@
 package com.bazinga.lantoon.registration.langselection.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,13 +42,17 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.ViewHo
 
     }
 
+    @SuppressLint({"UseCompatLoadingForDrawables", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //if(languageList.get(position).getLanguageName().equals(languageList.get(position).getNativeName()))
         holder.languageName.setText(languageList.get(position).getLanguageName() + " / " + languageList.get(position).getNativeName());
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(context).load(ApiClient.BASE_URL +"Lantoon/" + languageList.get(position).getImagePath()).apply(requestOptions).into(holder.languageImage);
+        if (ApiClient.isTest)
+        Glide.with(context).load(ApiClient.BASE_TEST_URL +"Lantoon/" + languageList.get(position).getImagePath()).placeholder(context.getDrawable(R.drawable.image_placeholder)).apply(requestOptions).into(holder.languageImage);
+        else
+        Glide.with(context).load(ApiClient.BASE_PROD_URL +"Lantoon/" + languageList.get(position).getImagePath()).placeholder(context.getDrawable(R.drawable.image_placeholder)).apply(requestOptions).into(holder.languageImage);
     }
 
     @Override

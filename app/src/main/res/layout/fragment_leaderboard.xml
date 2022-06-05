@@ -33,12 +33,13 @@
             layout="@layout/item_leader_header_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvLeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/header"
             android:layout_above="@+id/footer"
+            android:layout_below="@+id/header"
             tools:listitem="@layout/item_leader" />
 
         <include

@@ -72,7 +72,7 @@ public class MyLanguageFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("selected ", myLanguageDataList.get(position).getLearnLanguage().getImagePath());
                 if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
-                    updateLanguage(HomeActivity.sessionManager.getUid(), myLanguageDataList.get(position).getLearnLanguage().getLanguageID(), HomeActivity.sessionManager.getKnownLang());
+                    updateLanguage(HomeActivity.sessionManager.getUid(), myLanguageDataList.get(position).getLearnLanguage().getLanguageID(), HomeActivity.sessionManager.getKnownLangId());
                 else CommonFunction.netWorkErrorAlert(getActivity());
             }
         });
@@ -92,8 +92,13 @@ public class MyLanguageFragment extends Fragment {
 
                     if (response.body().getStatus().getCode() == 1035) {
                         HomeActivity.sessionManager.setSpeakCode(response.body().getLoginData().getSpeakCode());
-                        HomeActivity.sessionManager.setLearnLang(response.body().getLoginData().getLearnlang());
-                        HomeActivity.sessionManager.setKnownLang(response.body().getLoginData().getKnownlang());
+                        HomeActivity.sessionManager.setLearnLangId(response.body().getLoginData().getLearnlangId());
+                        HomeActivity.sessionManager.setLearnLangName(response.body().getLoginData().getLearnlangObj().getLanguageName());
+                        HomeActivity.sessionManager.setLearnLangNativeName(response.body().getLoginData().getLearnlangObj().getNativeName());
+
+                        HomeActivity.sessionManager.setKnownLangId(response.body().getLoginData().getKnownlangId());
+                        HomeActivity.sessionManager.setKnownLangName(response.body().getLoginData().getKnownlangObj().getLanguageName());
+                        HomeActivity.sessionManager.setKnownLangNativeName(response.body().getLoginData().getKnownlangObj().getNativeName());
                         Toast.makeText(getActivity(), "Language updated successfully", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(getView()).navigate(R.id.bottom_lesson);
                     }

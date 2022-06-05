@@ -27,24 +27,29 @@ public class ChapterViewModel extends ViewModel {
 
     public ChapterViewModel(int LearnLangId, String userid, String deviceid) {
 
-        getData(currentPageNo, LearnLangId, userid,deviceid);
+        getData(currentPageNo, LearnLangId, userid, deviceid);
     }
 
     public void getData(int currentPageNo, int LearnLangId, String userid, String deviceid) {
-        Log.d("Chapter",currentPageNo+"learnid"+LearnLangId+"user"+userid);
+        Log.d("Chapter", currentPageNo + "learnid" + LearnLangId + "user" + userid);
 
         chapterMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        //with logout concept
-        //Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE, deviceid);
-        Call<ChapterResponse> call = apiInterface.getChapter(LearnLangId, currentPageNo, userid,BuildConfig.VERSION_CODE);
+        Call<ChapterResponse> call = null;
+
+        if (ApiClient.isTest)
+            //with logout concept
+            call = apiInterface.getChapter(LearnLangId, currentPageNo, userid, BuildConfig.VERSION_CODE, deviceid);
+        else
+            call = apiInterface.getChapter(LearnLangId, currentPageNo, userid, BuildConfig.VERSION_CODE);
+
         call.enqueue(new Callback<ChapterResponse>() {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {
                 if (response.isSuccessful()) {
                     //if (response.body().getStatus().getCode() == 1032) {
-                        Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
-                        chapterMutableLiveData.setValue(response.body());
+                    Log.d("Chapter list success", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
+                    chapterMutableLiveData.setValue(response.body());
                     //}
                 } else
                     chapterMutableLiveData.setValue(null);

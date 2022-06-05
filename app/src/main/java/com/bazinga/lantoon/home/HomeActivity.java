@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +39,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.bazinga.lantoon.BuildConfig;
 import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.R;
+import com.bazinga.lantoon.SplashActivity;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.retrofit.ApiClient;
@@ -56,6 +58,7 @@ import java.io.File;
 public class HomeActivity extends AppCompatActivity {
 
     public static SessionManager sessionManager;
+    TextView tvLearnLanguage;
     private static final float END_SCALE = 0.85f;
     private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
@@ -176,10 +179,11 @@ public class HomeActivity extends AppCompatActivity {
     private void initToolbar() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        tvLearnLanguage = findViewById(R.id.atvHomeLearnLang);
+        tvLearnLanguage.setVisibility(View.INVISIBLE);
+        tvLearnLanguage.setText(sessionManager.getSpeakCode());
         setSupportActionBar(toolbar);
-
     }
-
 
     private void initNavigation() {
 
@@ -222,7 +226,7 @@ public class HomeActivity extends AppCompatActivity {
                                 deleteDir(new File(getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER));
                                 Toast.makeText(getApplicationContext(), "Sign out Successfully",
                                         Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(HomeActivity.this, GetStartActivity.class);
+                                Intent intent = new Intent(HomeActivity.this, SplashActivity.class);
                                 startActivity(intent);
                             }
                         })
@@ -254,6 +258,8 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if (sessionManager.getRegistrationType() != 1)
+            navigationView.getMenu().findItem(R.id.nav_change_password).setVisible(false);
         navigationView.getMenu().findItem(R.id.nav_change_password).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -272,17 +278,20 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+        navigationView.getMenu().findItem(R.id.nav_payment).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                bottomNavView.setItemBackground(null);
+                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+                return false;
+            }
+        });
 
         navigationView.getMenu().findItem(R.id.nav_share).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 navigationView.setItemBackground(null);
-               /* Intent intent =new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Lantoon");
-                intent.putExtra(Intent.EXTRA_TEXT,"Learn any language from your native language https://play.google.com/store/apps/details?id=io.gonative.android.lbpbqe ");
-                intent.setType("text/plain");
-                startActivity(intent);*/
                 try {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
@@ -364,15 +373,6 @@ public class HomeActivity extends AppCompatActivity {
             tvNavHeaderUsername.setText(sessionManager.getUserName());
             tvNavHeaderUserId.setText(sessionManager.getUid());
             if (sessionManager.getProfilePic() != null) {
-           /* byte[] decodedString = Base64.decode(sessionManager.getProfilePic(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            //decodedByte = Bitmap.createScaledBitmap(decodedByte, ivNavHeaderUserImage.getWidth(), ivNavHeaderUserImage.getHeight(), true);
-            RoundedBitmapDrawable dr =
-                    RoundedBitmapDrawableFactory.create(getApplicationContext().getResources(), decodedByte);
-            dr.setGravity(Gravity.CENTER);
-            dr.setCircular(true);
-            ivNavHeaderUserImage.setBackground(null);
-            ivNavHeaderUserImage.setImageDrawable(dr);*/
 
                 Glide.with(this).load(sessionManager.getProfilePic()).circleCrop().addListener(new RequestListener<Drawable>() {
                     @Override
@@ -439,13 +439,12 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("code result" , String.valueOf(resultCode));
+        Log.d("code req" , String.valueOf(requestCode));
         if (requestCode == 2) {
-            System.out.println("result code " + String.valueOf(resultCode));
-            System.out.println("req code " + String.valueOf(requestCode));
             navController.navigate(R.id.bottom_lesson);
         }
 
@@ -454,6 +453,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+      //  Log.d("code result" , String.valueOf(resultCode));
+        Log.d("code req" , String.valueOf(requestCode));
     }
 
     public static void deleteCache(Context context) {
@@ -488,4 +489,5 @@ public class HomeActivity extends AppCompatActivity {
             return false;
         }
     }
+
 }
