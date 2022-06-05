@@ -57,7 +57,7 @@ public class GetStartActivity extends AppCompatActivity {
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
 
-        getCurrentLocation();
+        //getCurrentLocation();
         geocoder = new Geocoder(this);
         strDeviceId = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);
@@ -78,6 +78,7 @@ public class GetStartActivity extends AppCompatActivity {
             }
         });
         getstartCreateAccBtn = findViewById(R.id.getstartCreateAccBtn);
+        getstartCreateAccBtn.setVisibility(View.GONE);
        /* if (ApiClient.isTest) {
             getstartCreateAccBtn.setVisibility(View.VISIBLE);
             strRegionCode = "569";
@@ -115,7 +116,7 @@ public class GetStartActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == locationPermissionCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
+                //getCurrentLocation();
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();

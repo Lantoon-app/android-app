@@ -13,8 +13,8 @@ android {
         applicationId "com.bazinga.lantoon"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 20
-        versionName "2.0.0"
+        versionCode 22
+        versionName "2.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true;

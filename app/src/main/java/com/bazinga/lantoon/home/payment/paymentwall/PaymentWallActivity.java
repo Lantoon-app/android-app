@@ -6,6 +6,7 @@ import static com.bazinga.lantoon.Key.paymentWallSecretKey;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
 //import com.paymentwall.alipayadapter.PsAlipay;
 import com.bazinga.lantoon.Tags;
+import com.google.gson.GsonBuilder;
 import com.paymentwall.pwunifiedsdk.core.PaymentSelectionActivity;
 import com.paymentwall.pwunifiedsdk.core.UnifiedRequest;
 import com.paymentwall.pwunifiedsdk.object.ExternalPs;
@@ -95,21 +97,39 @@ public class PaymentWallActivity extends Activity {
                 request.setTimeout(30000);
                 request.addCustomParam("own_transactin_id", txnId);*/
         UnifiedRequest request = new UnifiedRequest();
-        request.setPwProjectKey(paymentWallProjectKey);
+       /* request.setPwProjectKey(paymentWallProjectKey);
         request.setPwSecretKey(paymentWallSecretKey);
-        request.setAmount(Double.parseDouble(getIntent().getStringExtra(Tags.TAG_PACKAGE_PRICE)));
-        request.setCurrency(getIntent().getStringExtra(Tags.TAG_PACKAGE_CURRENCY_CODE));
-        request.setItemName(pdPackageName);
-        request.setItemId(pdPackageId);
-        request.setUserId(userId);
+        //request.setAmount(Double.parseDouble(getIntent().getStringExtra(Tags.TAG_PACKAGE_PRICE)));
+        request.setAmount(1.0);
+        //request.setCurrency(getIntent().getStringExtra(Tags.TAG_PACKAGE_CURRENCY_CODE));
+        request.setCurrency("USD");
+        request.setItemName("pdPackageName");
+        request.setItemId("1234565");
+        request.setUserId("userId123");
         request.setItemResID(R.drawable.logo);
         request.setTimeout(30000);
         request.setSignVersion(3);
 
-        request.setTestMode(false);
+        request.setTestMode(false);*/
 
-        request.addBrick();
-        request.addMint();
+        //request.addBrick();
+        //request.addMint();
+        request.setPwProjectKey(paymentWallProjectKey);
+        request.setPwSecretKey(paymentWallSecretKey); //optional, if you add your secret key here, signature will generate from SDK but we highly recommend don't expose secret key to front end. You can use your server calculate it.
+        request.setAmount(1.0);
+        request.setCurrency("USD");
+        request.setItemName("pdPackageName");
+        request.setItemId("1234565");
+        request.setUserId("userId123");
+        request.setSignVersion(3);
+        request.setItemResID(R.drawable.logo);
+        request.setTimeout(30000);
+
+        request.addCustomParam("timeStamp", System.currentTimeMillis() / 1000 + "");
+        request.addCustomParam("own_order_id", "o123456");
+        request.addCustomParam("shopname", "ecopark");
+
+        Log.d("PaymentWallActivity", new GsonBuilder().setPrettyPrinting().create().toJson(request));
         //request.addMobiamo();
 
         // request.addPwLocal();

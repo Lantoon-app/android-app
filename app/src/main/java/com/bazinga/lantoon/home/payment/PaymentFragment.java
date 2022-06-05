@@ -32,6 +32,7 @@ import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.android.material.snackbar.Snackbar;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -89,9 +90,9 @@ public class PaymentFragment extends Fragment {
                     call.enqueue(new Callback<TransactionResponse>() {
                         @Override
                         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
-                           CommonFunction.printServerResponse("TransactionResponse",response.body());
+                            CommonFunction.printServerResponse("TransactionResponse", response.body());
                             if (response.body().getTrasactionData() != null || response.body().getTrasactionData().getTransactinId() != null || response.body().getTrasactionData().getTransactinId() != "")
-                                    startPayment(sessionManager.getRegionCode(),response.body().getTrasactionData().getTransactinId(), "9999999999", sessionManager.getEmailId(), position);
+                                startPayment(sessionManager.getRegionCode(), response.body().getTrasactionData().getTransactinId(), "9999999999", sessionManager.getEmailId(), position);
                             else
                                 Snackbar.make(getContext(), listView, getActivity().getString(R.string.some_error_occurred), Snackbar.LENGTH_LONG).show();
                         }
@@ -123,8 +124,9 @@ public class PaymentFragment extends Fragment {
     private void startPayment(String regionCode, String txnId, String phnNumber, String emailID, int position) {
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
 
-            if(regionCode.equals("569")) {
-            //if(regionCode.equals("896")) {
+            if (regionCode.equals("569")) {
+                //if(regionCode.equals("896")) {
+                Log.d("test payment", "India");
                 Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);
                 paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
                 paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());
@@ -147,8 +149,9 @@ public class PaymentFragment extends Fragment {
                 paymentIntent.putExtra(Tags.TAG_PACKAGE_S_URL, "https://payuresponse.firebaseapp.com/success");
                 paymentIntent.putExtra(Tags.TAG_PACKAGE_F_URL, "https://payuresponse.firebaseapp.com/failure");
                 getActivity().startActivity(paymentIntent);
-            }else if (regionCode.equals("896")){
-           // }else if (regionCode.equals("569")){
+            } else if (regionCode.equals("822")) {
+                // }else if (regionCode.equals("569")){
+                Log.d("test payment", "Turkey");
                 Intent paymentIntent = new Intent(getActivity(), PaymentWallActivity.class);
                 paymentIntent.putExtra(Tags.TAG_USER_ID, sessionManager.getUid());
                 paymentIntent.putExtra(Tags.TAG_LEARN_LANGUAGE_ID, sessionManager.getLearnLangId().toString());
