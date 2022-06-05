@@ -104,7 +104,6 @@
             android:id="@+id/flFacebookLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/_5sdp">
 
             <com.facebook.login.widget.LoginButton
@@ -131,7 +130,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:visibility="gone"
             android:background="@color/google_color"
             android:drawableLeft="@drawable/ic_google"
             android:text="@string/btn_login_with_google"
