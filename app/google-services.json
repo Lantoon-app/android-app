@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "1043113693911-cf06gdcv7s04d7k6kl4i7r5hugfi9f9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bazinga.lantoon",
+            "certificate_hash": "162187f83994b20a86b4d859fab7548cb1ce4efb"
+          }
+        },
+        {
+          "client_id": "1043113693911-njsv231ev6qfdk2e9fd035btn98f3nh8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bazinga.lantoon",
+            "certificate_hash": "4f65d596ea8c2d95e9a9762a83c1c10665e7b4d3"
+          }
+        },
+        {
           "client_id": "1043113693911-3aovb3dg1und3l28q3hoiijsg2cfs5r8.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -22,6 +38,48 @@
       "api_key": [
         {
           "current_key": "AIzaSyC6Gb5TIktecvvptGEe0phyG909z775D0c"
+        },
+        {
+          "current_key": "AIzaSyCTsgLJb9X4ibUfGYvU8g6PUTGjhAWhsxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043113693911-31104ub9dbshnl71nba6nle1srejqbt1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1043113693911-357h35e866khu13qarba0ku2td9a81pu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Bazinga.Lantoon.Learning"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043113693911:android:682fa6e1f2a328d7d0d692",
+        "android_client_info": {
+          "package_name": "com.bazinga.lantoonnew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043113693911-3aovb3dg1und3l28q3hoiijsg2cfs5r8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Gb5TIktecvvptGEe0phyG909z775D0c"
+        },
+        {
+          "current_key": "AIzaSyCTsgLJb9X4ibUfGYvU8g6PUTGjhAWhsxA"
         }
       ],
       "services": {

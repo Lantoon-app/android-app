@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_landscape">
 
-    <com.bazinga.lantoon.SlantView
+    <com.bazinga.lantoonnew.SlantView
         android:id="@+id/slantView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -72,7 +72,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
-                    <com.bazinga.lantoon.PlayPauseView
+                    <com.bazinga.lantoonnew.PlayPauseView
                         android:id="@+id/btnAudio1"
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"
@@ -143,7 +143,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.bazinga.lantoon.PlayPauseView
+                    <com.bazinga.lantoonnew.PlayPauseView
                         android:id="@+id/btnAudio2"
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"

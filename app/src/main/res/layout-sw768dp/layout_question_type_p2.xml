@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_landscape">
 
-    <com.bazinga.lantoon.SlantView
+    <com.bazinga.lantoonnew.SlantView
         android:id="@+id/slantView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,7 +48,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.bazinga.lantoon.PlayPauseView
+            <com.bazinga.lantoonnew.PlayPauseView
                 android:id="@+id/btnAudio"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
