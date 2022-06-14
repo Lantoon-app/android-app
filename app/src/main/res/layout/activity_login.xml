@@ -7,105 +7,106 @@
     android:background="@drawable/bg"
     tools:context=".login.ui.login.LoginActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:background="@drawable/top_bg"
-        android:gravity="top"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"
-            android:gravity="center">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/welcome_user"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_20ssp"
-                android:textStyle="bold" />
-        </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
 
     <LinearLayout
         android:id="@+id/lllogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:gravity="center_horizontal"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:gravity="center"
         android:orientation="vertical"
-        android:layout_margin="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="@dimen/_120sdp"
-            android:layout_height="@dimen/_120sdp"
-            android:src="@drawable/login_icon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_180sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:src="@drawable/globe_art" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_75sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_40sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:src="@drawable/logo" />
+        </LinearLayout>
+
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/username"
+            style="@style/AppEditTextStyle"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/edittext_bg"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/hint_username"
-            android:textSize="@dimen/_15ssp"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_16ssp" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:background="@drawable/edittext_bg"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/hint_password"
-            android:textSize="@dimen/_15ssp"
-            android:inputType="textPassword" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/login"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/button_bg"
-            android:text="@string/btn_login"
-            android:textSize="@dimen/_18ssp"
-            android:enabled="false"
-            app:backgroundTint="@null" />
+            android:inputType="textPassword"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_16ssp" />
 
         <TextView
             android:id="@+id/tvForgetPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:gravity="center"
             android:text="@string/btn_forgot_password"
             android:textColor="@color/blue"
-            android:textSize="@dimen/_12ssp"
-            android:textStyle="italic" />
+            android:textSize="@dimen/_10ssp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_33sdp"
+            android:layout_marginStart="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_80sdp"
+            android:background="@drawable/button_bg"
+            android:enabled="false"
+            android:text="@string/btn_login"
+            android:textSize="@dimen/_15ssp"
+            app:backgroundTint="@null" />
+
+
         <FrameLayout
             android:id="@+id/flFacebookLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:visibility="gone">
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btnFb"
@@ -131,12 +132,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:visibility="gone"
             android:background="@color/google_color"
             android:drawableLeft="@drawable/ic_google"
             android:text="@string/btn_login_with_google"
             android:textAllCaps="false"
             android:textSize="@dimen/_15ssp"
+            android:visibility="gone"
             app:backgroundTint="@null" />
     </LinearLayout>
 

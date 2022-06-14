@@ -6,6 +6,12 @@
     <corners
         android:radius="10dp"
         />
+    <gradient
+        android:angle="135"
+        android:startColor="@color/edittext_gradient_start_colour"
+        android:endColor="@color/edittext_gradient_end_colour"
+        android:type="linear"
+        />
     <padding
         android:left="0dp"
         android:top="0dp"

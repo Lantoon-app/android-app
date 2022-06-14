@@ -7,53 +7,24 @@
     android:background="@drawable/bg"
     tools:context=".login.ui.login.LoginActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
-        android:background="@drawable/top_bg"
-        android:gravity="top"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="top"
-            android:gravity="center">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/welcome_user"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_20ssp"
-                android:textStyle="bold" />
-        </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
 
     <LinearLayout
         android:id="@+id/lllogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/_20sdp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_margin="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
-            android:src="@drawable/login_icon" />
+            android:src="@drawable/logo" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/username"
@@ -64,8 +35,8 @@
             android:ems="10"
             android:gravity="center"
             android:hint="@string/hint_username"
-            android:textSize="@dimen/_15ssp"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textSize="@dimen/_15ssp" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/password"
@@ -76,8 +47,8 @@
             android:ems="10"
             android:gravity="center"
             android:hint="@string/hint_password"
-            android:textSize="@dimen/_15ssp"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="@dimen/_15ssp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login"
@@ -85,9 +56,9 @@
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/button_bg"
+            android:enabled="false"
             android:text="@string/btn_login"
             android:textSize="@dimen/_18ssp"
-            android:enabled="false"
             app:backgroundTint="@null" />
 
         <TextView
@@ -100,12 +71,13 @@
             android:textColor="@color/blue"
             android:textSize="@dimen/_12ssp"
             android:textStyle="italic" />
+
         <FrameLayout
             android:id="@+id/flFacebookLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:visibility="visible">
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btnFb"
@@ -131,12 +103,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:visibility="gone"
             android:background="@color/google_color"
             android:drawableLeft="@drawable/ic_google"
             android:text="@string/btn_login_with_google"
             android:textAllCaps="false"
             android:textSize="@dimen/_15ssp"
+            android:visibility="visible"
             app:backgroundTint="@null" />
     </LinearLayout>
 
