@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,21 +24,18 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.bazinga.lantoonnew.BuildConfig;
 import com.bazinga.lantoonnew.R;
 import com.bazinga.lantoonnew.SplashActivity;
 import com.bazinga.lantoonnew.Tags;
+import com.bazinga.lantoonnew.databinding.ActivityHomeBinding;
 import com.bazinga.lantoonnew.login.SessionManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -47,7 +43,6 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -56,34 +51,28 @@ import java.io.File;
 public class HomeActivity extends AppCompatActivity {
 
     public static SessionManager sessionManager;
-    TextView tvLearnLanguage;
+    //TextView tvLearnLanguage;
     private static final float END_SCALE = 0.85f;
     private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
+    //private DrawerLayout drawer;
+    //private NavigationView navigationView, navigationViewEnd;
     private BottomNavigationView bottomNavView;
-    private CoordinatorLayout contentView;
+    //private CoordinatorLayout contentView;
+    ActivityHomeBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         System.out.println("Lantoon cache " + getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER);
         deleteDir(new File(getCacheDir().getPath() + File.separator + "1.zip"));
         deleteDir(new File(getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER));
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         sessionManager = new SessionManager(this);
-        setContentView(R.layout.activity_home);
-        /*Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorAccent));*/
-
-
-        //Log.d("Loged in user ", new GsonBuilder().setPrettyPrinting().create().toJson(sessionManager.getUserDetails()));
+        //setContentView(R.layout.activity_home);
         initToolbar();
         initNavigation();
-        //showBottomNavigation(false);
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -177,18 +166,19 @@ public class HomeActivity extends AppCompatActivity {
     private void initToolbar() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        tvLearnLanguage = findViewById(R.id.atvHomeLearnLang);
-        tvLearnLanguage.setVisibility(View.INVISIBLE);
-        tvLearnLanguage.setText(sessionManager.getSpeakCode());
+        //tvLearnLanguage = findViewById(R.id.atvHomeLearnLang);
+       //tvLearnLanguage.setVisibility(View.INVISIBLE);
+        //tvLearnLanguage.setText(sessionManager.getSpeakCode());
         setSupportActionBar(toolbar);
     }
 
     private void initNavigation() {
 
-        drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        //drawer = findViewById(R.id.drawer_layout);
+        //navigationView = findViewById(R.id.nav_view);
+        //navigationViewEnd = findViewById(R.id.nav_view_end);
         bottomNavView = findViewById(R.id.bottom_nav_view);
-        contentView = findViewById(R.id.content_view);
+        //contentView = findViewById(R.id.content_view);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -196,15 +186,16 @@ public class HomeActivity extends AppCompatActivity {
                 R.id.nav_profile, R.id.nav_change_password, R.id.nav_new_language,
                 R.id.nav_payment, R.id.nav_share, R.id.nav_signout,
                 R.id.bottom_lesson, R.id.bottom_target, R.id.bottom_leader, R.id.bottom_setting)
-                .setDrawerLayout(drawer)
+                .setDrawerLayout(binding.drawerLayout)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavigationUI.setupWithNavController(binding.navViewEnd, navController);
         NavigationUI.setupWithNavController(bottomNavView, navController);
-        navigationView.getMenu().findItem(R.id.nav_signout).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        binding.llSignout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            public void onClick(View view) {
                 bottomNavView.setItemBackground(null);
                 //Uncomment the below code to Set the message and title from the strings.xml file
                 AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
@@ -217,9 +208,9 @@ public class HomeActivity extends AppCompatActivity {
                                 SessionManager sessionManager = new SessionManager(getApplicationContext());
                                 sessionManager.logoutUser();
                                 //This is for maintaining the behavior of the Navigation view
-                                NavigationUI.onNavDestinationSelected(item, navController);
+                                //NavigationUI.onNavDestinationSelected(item, navController);
                                 //This is for closing the drawer after acting on it
-                                drawer.closeDrawer(GravityCompat.START);
+                                binding.drawerLayout.closeDrawer(GravityCompat.END);
                                 deleteDir(new File(getCacheDir().getPath() + File.separator + "1.zip"));
                                 deleteDir(new File(getCacheDir().getPath() + Tags.FILE_DESTINATION_FOLDER));
                                 Toast.makeText(getApplicationContext(), "Sign out Successfully",
@@ -233,7 +224,7 @@ public class HomeActivity extends AppCompatActivity {
                                 //  Action for 'NO' Button
                                 dialog.cancel();
 
-                                drawer.closeDrawer(GravityCompat.START);
+                                binding.drawerLayout.closeDrawer(GravityCompat.START);
 
                             }
                         });
@@ -242,54 +233,61 @@ public class HomeActivity extends AppCompatActivity {
                 //Setting the title manually
                 alert.setTitle("Alert");
                 alert.show();
-
-
-                return true;
             }
         });
-        navigationView.getMenu().findItem(R.id.nav_profile).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
+        binding.llProfileInformation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            public void onClick(View view) {
+                binding.drawerLayout.closeDrawer(GravityCompat.END);
+                navController.navigate(R.id.nav_profile);
                 bottomNavView.setItemBackground(null);
-                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
-                return false;
-            }
-        });
-        if (sessionManager.getRegistrationType() != 1)
-            navigationView.getMenu().findItem(R.id.nav_change_password).setVisible(false);
-        navigationView.getMenu().findItem(R.id.nav_change_password).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                bottomNavView.setItemBackground(null);
-                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
-                return false;
-            }
-        });
-        navigationView.getMenu().findItem(R.id.nav_new_language).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                bottomNavView.setItemBackground(null);
-                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
-                return false;
-            }
-        });
-        navigationView.getMenu().findItem(R.id.nav_payment).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                bottomNavView.setItemBackground(null);
-                navigationView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
-                return false;
+                //binding.navView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
             }
         });
 
-        navigationView.getMenu().findItem(R.id.nav_share).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+       /* if (sessionManager.getRegistrationType() != 1)
+            binding.navView.getMenu().findItem(R.id.nav_change_password).setVisible(false);
+        binding.navView.getMenu().findItem(R.id.nav_change_password).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                navigationView.setItemBackground(null);
+                bottomNavView.setItemBackground(null);
+                binding.navView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+                return false;
+            }
+        });*/
+        binding.llMyLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                 navController.navigate(R.id.nav_new_language);
+                bottomNavView.setItemBackground(null);
+                //binding.navView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+            }
+        });
+        binding.llReferenceLanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+                navController.navigate(R.id.bottom_setting);
+                bottomNavView.setItemBackground(null);
+                //binding.navView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+            }
+        });
+       /* binding.navView.getMenu().findItem(R.id.nav_payment).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                bottomNavView.setItemBackground(null);
+                binding.navView.setItemBackground(getDrawable(R.drawable.nav_drawer_menu_item_bg));
+                return false;
+            }
+        });*/
+
+        /*binding.navView.getMenu().findItem(R.id.nav_share).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                binding.navView.setItemBackground(null);
                 try {
                     Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     shareIntent.setType("text/plain");
@@ -303,11 +301,11 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
         bottomNavView.getMenu().findItem(R.id.bottom_lesson).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                navigationView.setItemBackground(null);
+                binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
             }
@@ -315,7 +313,7 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavView.getMenu().findItem(R.id.bottom_target).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                navigationView.setItemBackground(null);
+                binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
             }
@@ -323,7 +321,7 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavView.getMenu().findItem(R.id.bottom_leader).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                navigationView.setItemBackground(null);
+                binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
             }
@@ -331,13 +329,13 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavView.getMenu().findItem(R.id.bottom_setting).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                navigationView.setItemBackground(null);
+                binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
             }
         });
 
-        drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+        /*binding.drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(@NonNull @NotNull View drawerView, float slideOffset) {
 
@@ -357,13 +355,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onDrawerStateChanged(int newState) {
                 setHeader();
             }
-        });
+        });*/
         //animateNavigationDrawer();
-        setHeader();
+        // setHeader();
     }
 
     private void setHeader() {
-        View view = navigationView.getHeaderView(0);
+        View view = binding.navView.getHeaderView(0);
         ImageView ivNavHeaderUserImage = view.findViewById(R.id.ivNavHeaderUserImage);
         TextView tvNavHeaderUsername = view.findViewById(R.id.tvNavHeaderUsername);
         TextView tvNavHeaderUserId = view.findViewById(R.id.tvNavHeaderUserId);
@@ -390,9 +388,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    private void animateNavigationDrawer() {
+    /*private void animateNavigationDrawer() {
 //        drawerLayout.setScrimColor(getResources().getColor(R.color.text_brown));
-        drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+        binding.drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
 
@@ -409,7 +407,7 @@ public class HomeActivity extends AppCompatActivity {
                 contentView.setTranslationX(xTranslation);
             }
         });
-    }
+    }*/
 
 
     @Override
@@ -429,8 +427,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -440,8 +438,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("code result" , String.valueOf(resultCode));
-        Log.d("code req" , String.valueOf(requestCode));
+        Log.d("code result", String.valueOf(resultCode));
+        Log.d("code req", String.valueOf(requestCode));
         if (requestCode == 2) {
             navController.navigate(R.id.bottom_lesson);
         }
@@ -451,8 +449,8 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-      //  Log.d("code result" , String.valueOf(resultCode));
-        Log.d("code req" , String.valueOf(requestCode));
+        //  Log.d("code result" , String.valueOf(resultCode));
+        Log.d("code req", String.valueOf(requestCode));
     }
 
     public static void deleteCache(Context context) {
