@@ -49,33 +49,18 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/username"
             style="@style/AppEditTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_40sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@drawable/edittext_bg"
             android:ems="10"
-            android:gravity="center"
             android:hint="@string/hint_username"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/_16ssp" />
+            android:inputType="textPersonName" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/_10sdp"
+            style="@style/AppEditTextStyle"
             android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:background="@drawable/edittext_bg"
             android:ems="10"
-            android:gravity="center"
             android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/_16ssp" />
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/tvForgetPassword"
