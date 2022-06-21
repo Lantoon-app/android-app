@@ -17,7 +17,7 @@
     <string name="hint_mobile_number">Mobile Number</string>
     <string name="login">Login</string>
     <string name="title_create_account">CREATE ACCOUNT</string>
-    <string name="title_profile">PROFILE</string>
+    <string name="title_profile">Profile</string>
     <string name="welcome_user">WELCOME USER</string>
     <string name="title_forget_password">Foget Password?</string>
     <string name="user_login">USER LOGIN</string>
@@ -91,6 +91,8 @@
 
     <string name="change_language">CHANGE LANGUAGE</string>
     <string name="change_password">CHANGE PASSWORD</string>
+    <string name="tv_txt_forgot_password"><u>Forgot Password?</u></string>
+    <string name="tv_txt_change_password"><u>Change Password?</u></string>
     <string name="btn_change">CHANGE</string>
     <string name="validate">VALIDATE</string>
     <string name="submit">SUBMIT</string>

@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_landscape">
 
-    <com.bazinga.lantoonnew.SlantView
-        android:id="@+id/slantView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:rotation="180"
-        android:rotationX="0"
-        android:rotationY="0"
-        android:scaleX="-10"
-        android:scaleY="100"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <include
         android:id="@+id/header"
@@ -39,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/slantView"
+        app:layout_constraintTop_toTopOf="@+id/header"
         app:layout_constraintVertical_bias="0.64" />
 
     <LinearLayout
@@ -75,7 +63,7 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
+                    android:background="@drawable/bg_button"
                     android:padding="0dp"
                     app:tint="@color/white"
                     app:srcCompat="@drawable/anim_vector_play" />
@@ -121,7 +109,7 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
+                    android:background="@drawable/bg_button"
                     android:padding="0dp"
                     app:tint="@color/white"
                     app:srcCompat="@drawable/anim_vector_play" />
@@ -166,7 +154,7 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
+                    android:background="@drawable/bg_button"
                     android:padding="0dp"
                     app:tint="@color/white"
                     app:srcCompat="@drawable/anim_vector_play" />
@@ -211,7 +199,7 @@
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
+                    android:background="@drawable/bg_button"
                     android:padding="0dp"
                     app:tint="@color/white"
                     app:srcCompat="@drawable/anim_vector_play" />

@@ -60,7 +60,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 android:layout_gravity="center"
-                android:background="@drawable/button_bg"
+                android:background="@drawable/bg_button"
                 android:gravity="center"
                 android:src="@drawable/ic_casual" />
 
@@ -106,7 +106,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 android:layout_gravity="center"
-                android:background="@drawable/button_bg"
+                android:background="@drawable/bg_button"
                 android:gravity="center"
                 android:src="@drawable/ic_regular" />
 
@@ -151,7 +151,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 android:layout_gravity="center"
-                android:background="@drawable/button_bg"
+                android:background="@drawable/bg_button"
                 android:gravity="center"
                 android:src="@drawable/ic_intense" />
 

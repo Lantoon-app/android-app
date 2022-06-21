@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     private ProfileData profileData;
     private List<DurationData> durationDataList;
     EditText etFullName, etDOB, etPhoneNumber;
+    TextView tv_change_password;
     CountryCodePicker countryCodePicker;
     DatePickerDialog.OnDateSetListener date;
     Button btnUpdate;
@@ -88,6 +90,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        HomeActivity.ll_toolbar.setVisibility(View.GONE);
+        HomeActivity.toolbar.setVisibility(View.VISIBLE);
+        HomeActivity.tv_title.setText(getString(R.string.title_profile));
+        tv_change_password = root.findViewById(R.id.tv_change_password);
         ivProfilePhoto = root.findViewById(R.id.ivProfilePhoto);
         etFullName = root.findViewById(R.id.etFullName);
         etDOB = root.findViewById(R.id.etDOB);
@@ -157,7 +163,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         ivProfilePhoto.setOnClickListener(this::onClick);
         etDOB.setOnClickListener(this::onClick);
         btnUpdate.setOnClickListener(this::onClick);
-
 
         return root;
     }

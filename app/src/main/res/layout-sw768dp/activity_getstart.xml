@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/button_bg"
+            android:background="@drawable/bg_button"
             android:text="@string/btn_create_account"
             android:textSize="@dimen/_18ssp"
             android:visibility="gone"
@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/button_bg"
+            android:background="@drawable/bg_button"
             android:text="@string/btn_signin"
             android:textSize="@dimen/_18ssp"
             app:backgroundTint="@null" />

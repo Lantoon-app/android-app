@@ -57,7 +57,7 @@ public class MyLanguageFragment extends Fragment {
                     Log.d("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(languages));
                     if (!fragmentDestroyed) {
                         myLanguageDataList = languages;
-                        MyLanguagesAdapter adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList);
+                        MyLanguagesAdapter adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList,HomeActivity.sessionManager.getKnownLangId());
                         listView.setAdapter(adapter);
                     }
                 }

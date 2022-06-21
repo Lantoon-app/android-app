@@ -74,16 +74,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_33sdp"
+            style="@style/AppButtonStyle"
             android:layout_marginStart="@dimen/_80sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_80sdp"
-            android:background="@drawable/button_bg"
             android:enabled="false"
-            android:text="@string/btn_login"
-            android:textSize="@dimen/_15ssp"
-            app:backgroundTint="@null" />
+            android:text="@string/btn_login" />
 
 
         <FrameLayout

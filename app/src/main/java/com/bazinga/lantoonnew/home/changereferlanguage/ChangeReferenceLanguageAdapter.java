@@ -40,7 +40,7 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         }
 
         ImageView imageView = convertView.findViewById(R.id.imgView);
-        LinearLayout llItem = convertView.findViewById(R.id.llItem);
+        //LinearLayout llItem = convertView.findViewById(R.id.llItem);
         TextView tvName = convertView.findViewById(R.id.textView);
 
         // Populate the data into the template view using the data object
@@ -50,13 +50,14 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
             Glide.with(getContext()).load(ApiClient.BASE_TEST_URL + "Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
         else
             Glide.with(getContext()).load(ApiClient.BASE_PROD_URL + "Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
-        tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
+        //tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
+        tvName.setText(getItem(position).getNativeName());
         if (Integer.valueOf(getItem(position).getLanguageID()) == referLang) {
-            llItem.setBackground(getContext().getDrawable(R.drawable.right_corner_radius));
-            tvName.setTextColor(getContext().getColor(R.color.white));
-        } else {
-            llItem.setBackground(getContext().getDrawable(R.drawable.change_language_item_bg));
+            tvName.setBackground(getContext().getDrawable(R.drawable.bg_tv_laguage_selected));
             tvName.setTextColor(getContext().getColor(R.color.black));
+        } else {
+            tvName.setBackground(getContext().getDrawable(R.drawable.bg_tv_laguage));
+            tvName.setTextColor(getContext().getColor(R.color.white));
         }
 
 

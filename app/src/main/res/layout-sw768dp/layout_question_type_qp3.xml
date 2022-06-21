@@ -81,7 +81,7 @@
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="@drawable/button_bg"
+                        android:background="@drawable/bg_button"
                         android:padding="0dp"
                         app:srcCompat="@drawable/anim_vector_play"
                         app:tint="@color/white" />
@@ -155,7 +155,7 @@
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        android:background="@drawable/button_bg"
+                        android:background="@drawable/bg_button"
                         android:padding="0dp"
                         app:srcCompat="@drawable/anim_vector_play"
                         app:tint="@color/white" />

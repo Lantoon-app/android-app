@@ -127,15 +127,15 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         Leader leader = mItemList.get(position);
         if (leader.getRank() == 1) {
-            viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_first_rank);
+            //viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_first_rank);
             viewHolder.tvUserNameLeaderItem.setTextColor(Color.WHITE);
-            viewHolder.tvRankLeaderItem.setTextColor(Color.WHITE);
+            //viewHolder.tvRankLeaderItem.setTextColor(Color.WHITE);
             viewHolder.tvGemCountLeaderItem.setTextColor(Color.WHITE);
         } else {
-            viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_all_rank);
-            viewHolder.tvUserNameLeaderItem.setTextColor(Color.GRAY);
-            viewHolder.tvRankLeaderItem.setTextColor(Color.GRAY);
-            viewHolder.tvGemCountLeaderItem.setTextColor(Color.GRAY);
+            //viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_all_rank);
+            //viewHolder.tvUserNameLeaderItem.setTextColor(Color.GRAY);
+            //viewHolder.tvRankLeaderItem.setTextColor(Color.GRAY);
+            //viewHolder.tvGemCountLeaderItem.setTextColor(Color.GRAY);
             if (leader.getPicture() != null) {
            /* byte[] decodedString = Base64.decode(leader.getPicture(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/button_bg"
+            android:background="@drawable/bg_button"
             android:text="@string/btn_next"
             android:textSize="@dimen/_18ssp"
             app:backgroundTint="@null" />
