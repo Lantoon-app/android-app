@@ -24,6 +24,7 @@ import com.bazinga.lantoon.ValidationFunction;
 import com.bazinga.lantoon.home.mylanguage.MyLanguageViewModel;
 import com.bazinga.lantoon.login.ui.login.LoginActivity;
 import com.bazinga.lantoon.retrofit.Status;
+import com.google.android.material.snackbar.Snackbar;
 
 public class ForgetPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -109,7 +110,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
                         @Override
                         public void onChanged(OtpResponse otpResponse) {
                             if (otpResponse != null) {
-                                Toast.makeText(ForgetPasswordActivity.this, otpResponse.getStatus().getMessage(), Toast.LENGTH_SHORT).show();
+                                Snackbar.make(btnSendOtp, otpResponse.getStatus().getMessage(), Snackbar.LENGTH_SHORT).show();
                                 if (otpResponse.getStatus().getCode() == 1045) {
                                     userID = otpResponse.getOTPdata().getUid();
                                     otp = otpResponse.getOTPdata().getOtp();
@@ -119,6 +120,8 @@ public class ForgetPasswordActivity extends AppCompatActivity implements View.On
                                     btnSendOtp.setVisibility(View.GONE);
                                     btnValidate.setVisibility(View.VISIBLE);
                                 }
+                            }else {
+                                Snackbar.make(btnSendOtp,getString(R.string.some_error_occurred), Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     });

@@ -91,6 +91,7 @@ public class PaymentFragment extends Fragment {
                         @Override
                         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
                             CommonFunction.printServerResponse("TransactionResponse", response.body());
+                           Log.d("region code",sessionManager.getRegionCode());
                             if (response.body().getTrasactionData() != null || response.body().getTrasactionData().getTransactinId() != null || response.body().getTrasactionData().getTransactinId() != "")
                                 startPayment(sessionManager.getRegionCode(), response.body().getTrasactionData().getTransactinId(), "9999999999", sessionManager.getEmailId(), position);
                             else
@@ -124,7 +125,7 @@ public class PaymentFragment extends Fragment {
     private void startPayment(String regionCode, String txnId, String phnNumber, String emailID, int position) {
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
 
-            if (regionCode.equals("569")) {
+            if (regionCode.equals("569") || ApiClient.isTest) {
                 //if(regionCode.equals("896")) {
                 Log.d("test payment", "India");
                 Intent paymentIntent = new Intent(getActivity(), PayUActivity.class);

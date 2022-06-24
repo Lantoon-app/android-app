@@ -128,7 +128,10 @@ public class PaymentWallActivity extends Activity {
         request.addCustomParam("timeStamp", System.currentTimeMillis() / 1000 + "");
         request.addCustomParam("own_order_id", "o123456");
         request.addCustomParam("shopname", "ecopark");
+        request.setTestMode(true);
 
+        request.addBrick();
+        request.addMint();
         Log.d("PaymentWallActivity", new GsonBuilder().setPrettyPrinting().create().toJson(request));
         //request.addMobiamo();
 
