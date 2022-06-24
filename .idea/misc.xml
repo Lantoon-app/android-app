@@ -27,6 +27,7 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/ic_menu_profile.xml" value="0.219" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/ic_my_language.xml" value="0.219" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/ic_my_language_new.xml" value="0.1845" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/ic_search.xml" value="0.1415" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/ic_support_language_new.xml" value="0.219" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/nav_bottom_bg_change_color.xml" value="0.1805" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/nav_bottom_icon_change_color.xml" value="0.3185" />
@@ -66,7 +67,7 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_change_password.xml" value="0.2747863247863248" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_change_refer_language.xml" value="0.2264957264957265" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_leaderboard.xml" value="0.30512820512820515" />
-        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_my_language.xml" value="0.2264957264957265" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_my_language.xml" value="0.22" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_profile.xml" value="0.30512820512820515" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/item_change_language.xml" value="0.25" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/item_change_my_language.xml" value="0.2264957264957265" />

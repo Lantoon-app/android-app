@@ -1,5 +1,9 @@
 package com.bazinga.lantoonnew.home.profile;
 
+import static android.app.Activity.RESULT_OK;
+import static com.bazinga.lantoonnew.home.HomeActivity.setToolbar;
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -66,9 +70,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.app.Activity.RESULT_OK;
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 
 public class ProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -90,9 +91,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        HomeActivity.ll_toolbar.setVisibility(View.GONE);
-        HomeActivity.toolbar.setVisibility(View.VISIBLE);
-        HomeActivity.tv_title.setText(getString(R.string.title_profile));
+        setToolbar(true, getString(R.string.title_profile));
         tv_change_password = root.findViewById(R.id.tv_change_password);
         ivProfilePhoto = root.findViewById(R.id.ivProfilePhoto);
         etFullName = root.findViewById(R.id.etFullName);
@@ -155,17 +154,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel( year,  monthOfYear+1,
-                 dayOfMonth);
+                updateLabel(year, monthOfYear + 1,
+                        dayOfMonth);
             }
 
         };
         ivProfilePhoto.setOnClickListener(this::onClick);
         etDOB.setOnClickListener(this::onClick);
         btnUpdate.setOnClickListener(this::onClick);
-
+        tv_change_password.setOnClickListener(this::onClick);
         return root;
     }
+
     private void updateLabel(int year, int monthOfYear,
                              int dayOfMonth) {
         String myFormat = "YYYY-MM-dd"; //In which you need put here
@@ -173,21 +173,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         //etDOB.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
         etDOB.setText(sdf.format(myCalendar.getTime()));
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ivProfilePhoto:
-                if (NetworkUtil.getConnectivityStatus(getContext()) != 0){
+                if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         requestPermissions( //Method of Fragment
-                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},MY_PERMISSION_REQUEST_CODE
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST_CODE
                         );
-                        Toast.makeText(getContext(),"Need Storage Permission",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Need Storage Permission", Toast.LENGTH_SHORT).show();
                     } else {
                         selectImage();
                     }
-                }
-                else
+                } else
                     CommonFunction.netWorkErrorAlert(getActivity());
                 break;
             case R.id.etDOB:
@@ -208,8 +208,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     CommonFunction.netWorkErrorAlert(getActivity());
 
                 break;
+            case R.id.tv_change_password:
+                HomeActivity.navController.navigate(R.id.nav_change_password);
+                break;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSION_REQUEST_CODE) {
@@ -219,6 +223,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             }
         }
     }
+
     private void selectImage() {
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(getContext().LAYOUT_INFLATER_SERVICE);
@@ -323,7 +328,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-
     public Uri getImageUri(Context inContext, Bitmap inImage) {
 
         Bitmap OutImage = Bitmap.createScaledBitmap(inImage, 1000, 1000, true);
@@ -371,7 +375,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
 
     }
-
 
 
     @Override

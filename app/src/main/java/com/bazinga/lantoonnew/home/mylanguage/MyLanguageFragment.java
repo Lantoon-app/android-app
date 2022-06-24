@@ -1,5 +1,7 @@
 package com.bazinga.lantoonnew.home.mylanguage;
 
+import static com.bazinga.lantoonnew.home.HomeActivity.setToolbar;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +46,7 @@ public class MyLanguageFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         myLanguageViewModel = new ViewModelProvider(this).get(MyLanguageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my_language, container, false);
+        setToolbar(true, getString(R.string.my_languages));
         listView = root.findViewById(R.id.llView);
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);

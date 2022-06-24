@@ -128,4 +128,6 @@
     <string name="transaction_cancelled_by_user">Transaction cancelled by user</string>
     <string name="package_details">PACKAGE DETAILS</string>
     <string name="pay_now">PAY NOW</string>
+    <string name="my_languages">My Languages</string>
+    <string name="support_language">Support Language</string>
 </resources>
