@@ -61,7 +61,7 @@ public class TargetListAdapter extends BaseAdapter implements Filterable {
             convertView = inflater.inflate(R.layout.item_target, null);
         }
 
-        DiagonalLayout diagonalLayout = convertView.findViewById(R.id.slantView);
+        //DiagonalLayout diagonalLayout = convertView.findViewById(R.id.slantView);
         ImageView imgView = convertView.findViewById(R.id.ivSlant);
         TextView tvLesson = convertView.findViewById(R.id.tvLesson);
         TextView tvDates = convertView.findViewById(R.id.tvDates);

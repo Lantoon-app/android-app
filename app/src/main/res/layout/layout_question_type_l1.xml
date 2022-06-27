@@ -60,15 +60,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.bazinga.lantoonnew.PlayPauseView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio1"
                     android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_height="33dp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/bg_button"
+                    android:background="@drawable/btn_question_speaker_blue"
                     android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
+                    app:backgroundTint="@null" />
 
 
                 <com.google.android.material.button.MaterialButton
@@ -77,11 +76,8 @@
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
+                    android:background="@drawable/btn_question_slow_speaker_blue"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
             <ImageView
@@ -106,15 +102,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.bazinga.lantoonnew.PlayPauseView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio2"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/bg_button"
+                    android:background="@drawable/btn_question_speaker_blue"
                     android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
+                    app:backgroundTint="@null" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlow2"
@@ -122,11 +117,8 @@
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
+                    android:background="@drawable/btn_question_slow_speaker_blue"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
             <ImageView
@@ -151,15 +143,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.bazinga.lantoonnew.PlayPauseView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio3"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/bg_button"
+                    android:background="@drawable/btn_question_speaker_blue"
                     android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
+                    app:backgroundTint="@null" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlow3"
@@ -167,11 +158,8 @@
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
+                    android:background="@drawable/btn_question_slow_speaker_blue"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
             <ImageView
@@ -196,15 +184,14 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.bazinga.lantoonnew.PlayPauseView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudio4"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/bg_button"
+                    android:background="@drawable/btn_question_speaker_blue"
                     android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
+                    app:backgroundTint="@null" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlow4"
@@ -212,11 +199,8 @@
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
+                    android:background="@drawable/btn_question_slow_speaker_blue"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
             <ImageView
@@ -244,7 +228,7 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/question_next"
+        android:background="@drawable/img_question_next_normal"
         android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

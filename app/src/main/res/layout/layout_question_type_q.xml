@@ -6,20 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_landscape">
 
-    <com.bazinga.lantoonnew.SlantView
-        android:id="@+id/slantView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:rotation="180"
-        android:rotationX="0"
-        android:rotationY="0"
-        android:scaleX="-10"
-        android:scaleY="100"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+   
     <include
         android:id="@+id/header"
         layout="@layout/layout_question_header"
@@ -32,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/slantView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,7 +176,7 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/question_next"
+        android:background="@drawable/img_question_next_normal"
         android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

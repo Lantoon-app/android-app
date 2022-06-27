@@ -51,14 +51,14 @@ public class Audio {
             mediaPlayer.setDataSource(path);
             mediaPlayer.prepare();
             mediaPlayer.start();
-            playPauseView.setState(PlayPauseView.STATE_PLAY);
-            pV = playPauseView;
+            //playPauseView.setState(PlayPauseView.STATE_PLAY);
+            //pV = playPauseView;
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     mp.release();
-                    playPauseView.setState(PlayPauseView.STATE_PAUSE);
-                    pV.setImageDrawable(activity.getDrawable(R.drawable.anim_vector_play));
+                    //playPauseView.setState(PlayPauseView.STATE_PAUSE);
+                    //pV.setImageDrawable(activity.getDrawable(R.drawable.anim_vector_play));
                 }
             });
         } catch (IOException e) {
