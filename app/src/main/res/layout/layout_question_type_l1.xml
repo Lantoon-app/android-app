@@ -66,7 +66,6 @@
                     android:layout_height="33dp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/btn_question_speaker_blue"
-                    android:padding="0dp"
                     app:backgroundTint="@null" />
 
 
@@ -108,7 +107,6 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/btn_question_speaker_blue"
-                    android:padding="0dp"
                     app:backgroundTint="@null" />
 
                 <com.google.android.material.button.MaterialButton
@@ -149,7 +147,6 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/btn_question_speaker_blue"
-                    android:padding="0dp"
                     app:backgroundTint="@null" />
 
                 <com.google.android.material.button.MaterialButton
@@ -190,7 +187,6 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/btn_question_speaker_blue"
-                    android:padding="0dp"
                     app:backgroundTint="@null" />
 
                 <com.google.android.material.button.MaterialButton
@@ -223,12 +219,12 @@
         app:layout_constraintTop_toTopOf="@id/tvQuestionName" />
     <ImageButton
         android:id="@+id/imgBtnNext"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/img_question_next_normal"
+        android:background="@drawable/btn_question_next"
         android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

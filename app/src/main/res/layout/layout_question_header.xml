@@ -8,11 +8,11 @@
 
     <ImageButton
         android:id="@+id/imgBtnHome"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:background="@drawable/btn_question_home"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:background="@drawable/btn_question_home_blue"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/pbTop"
@@ -48,13 +48,14 @@
 
     <ImageButton
         android:id="@+id/imgBtnHelp"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_gravity="center"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:background="@drawable/img_question_help_normal"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn_question_help_blue"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

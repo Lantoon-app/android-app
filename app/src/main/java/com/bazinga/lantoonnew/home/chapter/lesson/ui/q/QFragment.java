@@ -43,7 +43,7 @@ public class QFragment extends Fragment implements View.OnClickListener {
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg, imgBtnAnsImage;
     Button btnAudioSlow1, btnAudioSlow2;
-    PlayPauseView btnAudio1, btnAudio2;
+    Button btnAudio1, btnAudio2;
     CommonFunction cf;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
@@ -151,7 +151,7 @@ public class QFragment extends Fragment implements View.OnClickListener {
         try {
             tvQuestionName.setText(question.getWord());
             cf.shakeAnimation(imbBtnQuestionImg, 1000);
-            btnAudio1.setState(PlayPauseView.STATE_PLAY);
+            //btnAudio1.setState(PlayPauseView.STATE_PLAY);
             cf.mediaPlayer = new MediaPlayer();
             cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + question.getAudioPath());
             cf.mediaPlayer.prepare();
@@ -159,9 +159,9 @@ public class QFragment extends Fragment implements View.OnClickListener {
             cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                btnAudio1.setState(PlayPauseView.STATE_PAUSE);
-                btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
-                btnAudio2.setState(PlayPauseView.STATE_PLAY);
+                //btnAudio1.setState(PlayPauseView.STATE_PAUSE);
+                //btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                //btnAudio2.setState(PlayPauseView.STATE_PLAY);
                 cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionAnswer.setText(question.getAnsWord());
@@ -172,8 +172,8 @@ public class QFragment extends Fragment implements View.OnClickListener {
                     cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
-                        btnAudio2.setState(PlayPauseView.STATE_PAUSE);
-                        btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                        //btnAudio2.setState(PlayPauseView.STATE_PAUSE);
+                        //btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                         setClickableButton(true);
                         imgBtnNext.setVisibility(View.VISIBLE);
                     });
@@ -206,12 +206,12 @@ public class QFragment extends Fragment implements View.OnClickListener {
                 QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem()+1);
                 break;
             case R.id.btnAudio1:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio1);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),null);
                 tvQuestionName.setText(question.getWord());
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAnsAudioPath(),btnAudio2);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAnsAudioPath(),null);
                 tvQuestionAnswer.setText(question.getAnsWord());
                 cf.shakeAnimation(imgBtnAnsImage, 1000);
                 break;

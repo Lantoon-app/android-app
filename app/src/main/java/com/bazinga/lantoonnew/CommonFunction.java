@@ -125,7 +125,8 @@ public class CommonFunction {
                     RequestOptions requestOptions = new RequestOptions();
                     requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(40));
                     iv.setTag(imagePaths[next]);
-                    Glide.with(activity).load(imagePaths[next]).apply(requestOptions).into(iv);
+                    //Glide.with(activity).load(imagePaths[next]).apply(requestOptions).into(iv);
+                    Glide.with(activity).load(imagePaths[next]).into(iv);
                     break;
                 }
             }
@@ -133,23 +134,24 @@ public class CommonFunction {
 
     }
 
-    public void checkQuestion(String tag, int quesNo, int totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, Question question, Audio audio, PlayPauseView btnAudio) {
+    public void checkQuestion(ImageView ansImageView, int quesNo, int totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, Question question, Audio audio, PlayPauseView btnAudio) {
         if (isCheckImageQuestion) {
+            String tag = ansImageView.getTag().toString();
             isCheckImageQuestion = false;
             attemptCount++;
             QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
             if (CheckAnswerImage(tag)) {
                 if (quesNo == totalQues) {
 
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio,ansImageView,imageViewIds, imagePaths, view);
 
                 } else {
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio,ansImageView,imageViewIds, imagePaths, view);
                 }
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio);
-                setShuffleImages(activity, imageViewIds, imagePaths, view);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio,ansImageView,imageViewIds, imagePaths, view);
+                //setShuffleImages(activity, imageViewIds, imagePaths, view);
 
             }
             System.out.println("attemptCount " + attemptCount);
@@ -229,10 +231,10 @@ public class CommonFunction {
 
                 if (asciiAnswerDataString.equals(asciiDataString)) {
 
-                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio);
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio,null, null, null, view);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio);
+                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio,null, null, null, view);
                 }
 
                 /*if (answerWord.equals(data.get(0))) {

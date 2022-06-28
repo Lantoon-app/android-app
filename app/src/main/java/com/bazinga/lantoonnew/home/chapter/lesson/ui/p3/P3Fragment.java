@@ -45,7 +45,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     ProgressBar pbTop;
     Button  btnAudioSlow, btnMic;
     CirclesLoadingView circlesLoadingView;
-    PlayPauseView btnAudio;
+    Button btnAudio;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
 
@@ -132,7 +132,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         cf.shakeAnimation(imbBtnQuestionImg, 1000);
-        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
+        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),null);
         cf.mikeAnimation(btnMic, 2000);
     }
 
@@ -155,7 +155,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btnAudio:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),null);
                 break;
             case R.id.btnAudioSlow:
                 audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + question.getAudioPath());
@@ -167,9 +167,9 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
 
                 System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,btnAudio);
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,null);
                 else
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,btnAudio);
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,null);
 
                 break;
         }

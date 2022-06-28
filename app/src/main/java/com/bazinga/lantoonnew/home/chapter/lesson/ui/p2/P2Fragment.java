@@ -43,7 +43,7 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
     ImageView imgBtnAnsImage1, imgBtnAnsImage2, imgBtnAnsImage3, imgBtnAnsImage4;
     ProgressBar pbTop;
     Button btnAudioSlow;
-    PlayPauseView btnAudio;
+    Button btnAudio;
     int[] imageViewIds;
     String[] imagePaths;
     ReferencePopup referencePopup;
@@ -134,7 +134,7 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
+        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),null);
     }
 
     private void setTopBarState(int quesNo, int totalQues) {
@@ -156,22 +156,22 @@ public class P2Fragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btnAudio:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),null);
                 break;
             case R.id.btnAudioSlow:
                 audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
-                cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio);
+                cf.checkQuestion(imgBtnAnsImage1,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
             case R.id.imgBtnAnsImage2:
-                cf.checkQuestion(imgBtnAnsImage2.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio);
+                cf.checkQuestion(imgBtnAnsImage2,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
             case R.id.imgBtnAnsImage3:
-                cf.checkQuestion(imgBtnAnsImage3.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio);
+                cf.checkQuestion(imgBtnAnsImage3,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
             case R.id.imgBtnAnsImage4:
-                cf.checkQuestion(imgBtnAnsImage4.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio);
+                cf.checkQuestion(imgBtnAnsImage4,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
         }
     }

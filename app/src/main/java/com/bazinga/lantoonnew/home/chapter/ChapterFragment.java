@@ -222,34 +222,6 @@ public class ChapterFragment extends Fragment {
             }
         });
 
-        /*AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
-        //Setting message manually and performing action on button click
-        builder.setTitle("App New Version Alert !");
-        builder.setMessage(msg)
-                .setCancelable(false)
-                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        final String appPackageName = BuildConfig.APPLICATION_ID; // getPackageName() from Context or Activity object
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                        *//*try {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                        } catch (android.content.ActivityNotFoundException anfe) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                        }*//*
-                    }
-                })
-                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().finishAffinity();
-                        dialog.cancel();
-                    }
-                });
-        //Creating dialog box
-        AlertDialog alert = builder.create();
-        //Setting the title manually
-        alert.setTitle("Alert");
-        alert.show();*/
 
     }
 

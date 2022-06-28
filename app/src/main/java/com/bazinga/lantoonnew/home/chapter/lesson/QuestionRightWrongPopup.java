@@ -36,7 +36,7 @@ public class QuestionRightWrongPopup {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void showPopup(Activity activity, final View view, boolean right, boolean isLast, int quesNo, int attemptCount, boolean isSpeech, Question question, Audio audio, PlayPauseView btnAudio) {
+    public void showPopup(Activity activity, final View view, boolean right, boolean isLast, int quesNo, int attemptCount, boolean isSpeech, Question question, Audio audio, PlayPauseView btnAudio, ImageView ansImageView, int[] imageViewIds, String[] imagePaths, View view1) {
 
         CommonFunction cf = new CommonFunction();
         LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
@@ -62,6 +62,10 @@ public class QuestionRightWrongPopup {
 
         //Initialize the elements of our window, install the handler
         if (right) {
+            if (ansImageView != null) {
+                ansImageView.setBackground(activity.getDrawable(R.drawable.bg_all_answer_imgs_right));
+                ansImageView.setPadding(20, 20, 20, 20);
+            }
             mediaPlayer = MediaPlayer.create(activity, R.raw.right_answer);
             mediaPlayer.start();
 
@@ -74,7 +78,7 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable) {
                         super.onAnimationEnd(drawable);
-
+                        ansImageView.setPadding(0, 0, 0, 0);
                         QuestionsActivity.CalculateMarks(question.getPlusMark(), 0, question.getPlusMark());
                         if (isLast) {
                             if (!QuestionsActivity.isRandomQuestion) {
@@ -111,7 +115,7 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable) {
                         super.onAnimationEnd(drawable);
-
+                        ansImageView.setPadding(0, 0, 0, 0);
                         QuestionsActivity.CalculateMarks(question.getPlusMark(), 0, question.getPlusMark());
                         if (isLast) {
                             if (!QuestionsActivity.isRandomQuestion) {
@@ -142,6 +146,10 @@ public class QuestionRightWrongPopup {
                 animatedVectorDrawable.start();
             }
         } else {
+            if (ansImageView != null) {
+                ansImageView.setBackground(activity.getDrawable(R.drawable.bg_all_answer_imgs_wrong));
+                ansImageView.setPadding(20, 20, 20, 20);
+            }
             Log.d("checkerror ", "attemptCount" + attemptCount + isSpeech + isLast);
             mediaPlayer = MediaPlayer.create(activity, R.raw.wrong_answer);
             mediaPlayer.start();
@@ -150,7 +158,7 @@ public class QuestionRightWrongPopup {
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     if (attemptCount == 2 && isSpeech) {
 
-                    }else
+                    } else
                         audio.playAudioFileAnim(activity, QuestionsActivity.strFilePath + question.getAudioPath(), btnAudio);
                 }
             });
@@ -163,8 +171,10 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable1) {
                         super.onAnimationEnd(drawable1);
-
-
+                        if(ansImageView != null) {
+                            cf.setShuffleImages(activity, imageViewIds, imagePaths, view);
+                            ansImageView.setPadding(0, 0, 0, 0);
+                        }
                         if (attemptCount == 2 && isSpeech) {
                             QuestionsActivity.CalculateMarks(0, question.getMinusMark(), question.getPlusMark());
                             if (isLast) {
@@ -205,7 +215,10 @@ public class QuestionRightWrongPopup {
                     @Override
                     public void onAnimationEnd(Drawable drawable1) {
                         super.onAnimationEnd(drawable1);
-
+                        if(ansImageView != null) {
+                            cf.setShuffleImages(activity, imageViewIds, imagePaths, view);
+                            ansImageView.setPadding(0, 0, 0, 0);
+                        }
                         QuestionsActivity.CalculateMarks(0, question.getMinusMark(), 0);
                         if (attemptCount == 2 && isSpeech) {
                             QuestionsActivity.CalculateMarks(0, question.getMinusMark(), question.getPlusMark());

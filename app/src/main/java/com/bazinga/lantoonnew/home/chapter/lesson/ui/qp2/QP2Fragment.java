@@ -220,17 +220,17 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + question.getAnsAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
-                cf.checkQuestion(imgBtnAnsImage1.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
+                cf.checkQuestion(imgBtnAnsImage1,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
 
                 break;
             case R.id.imgBtnAnsImage2:
-                cf.checkQuestion(imgBtnAnsImage2.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
+                cf.checkQuestion(imgBtnAnsImage2,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
                 break;
             case R.id.imgBtnAnsImage3:
-                cf.checkQuestion(imgBtnAnsImage3.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
+                cf.checkQuestion(imgBtnAnsImage3,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
                 break;
             case R.id.imgBtnAnsImage4:
-                cf.checkQuestion(imgBtnAnsImage4.getTag().toString(),quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
+                cf.checkQuestion(imgBtnAnsImage4,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
                 break;
         }
     }

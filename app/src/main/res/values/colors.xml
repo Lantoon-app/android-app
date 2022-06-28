@@ -57,5 +57,6 @@
     <color name="target_ongoing">#286bb5</color>
     <color name="target_upcoming">#FF9800</color>
     <color name="nav_drawer_selected_color">#115095</color>
+    <color name="p3_text_view">#8633A5</color>
 
-   </resources>
+</resources>
