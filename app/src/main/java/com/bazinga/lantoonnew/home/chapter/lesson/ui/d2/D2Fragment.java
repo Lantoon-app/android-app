@@ -75,6 +75,7 @@ public class D2Fragment extends Fragment implements View.OnClickListener {
         btnAudio = view.findViewById(R.id.btnAudio);
         btnAudioSlow = view.findViewById(R.id.btnAudioSlow);
 
+        imgBtnHome.setOnClickListener(this::onClick);
         btnAudio.setOnClickListener(this::onClick);
         btnAudioSlow.setOnClickListener(this::onClick);
     }
@@ -120,7 +121,14 @@ public class D2Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
+            case R.id.imgBtnHome:
+                cf.onClickHomeButton(getView(),getActivity(),getArguments().getInt(Tags.TAG_QUESTION_NO));
+                break;
+            case R.id.imgBtnHelp:
+                if(question.getReference() != null) {
+                    referencePopup.showPopupWindow(getView());
+                }
+                break;
             case R.id.btnAudio:
                 audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + question.getAudioPath(), null);
                 break;

@@ -139,6 +139,8 @@
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/Lantoon/app/src/main/res/layout/notification.xml" value="0.11979166666666667" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/Lantoon/app/src/main/res/layout/popup_common_progress.xml" value="0.18469431380932022" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/Lantoon/app/src/main/res/menu/activity_home_drawer.xml" value="0.225" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/answer_right_anim.xml" value="0.1585" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/answer_wrong_anim.xml" value="0.1585" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/bg_all_answer_imgs.xml" value="0.206" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/bg_all_answer_imgs_right.xml" value="0.1845" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/bg_all_answer_imgs_wrong.xml" value="0.1845" />
@@ -182,6 +184,7 @@
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_qp2.xml" value="0.225" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_qp3.xml" value="0.225" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_seekbar.xml" value="0.17307692307692307" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/popup_question_answer_anim.xml" value="0.14102564102564102" />
       </map>
     </option>
   </component>
