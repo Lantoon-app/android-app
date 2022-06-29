@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,12 +23,32 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
+public class ChangeReferenceLanguageAdapter extends BaseAdapter implements Filterable {
     int referLang;
+    List<Language> languageList, filterList;
+    Context context;
+    ChangeLanguageFilter filter;
 
     public ChangeReferenceLanguageAdapter(Context context, List<Language> languageArrayList, int referLang) {
-        super(context, 0, languageArrayList);
+        this.context = context;
+        this.languageList = languageArrayList;
+        this.filterList = languageArrayList;
         this.referLang = referLang;
+    }
+
+    @Override
+    public int getCount() {
+        return languageList.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return languageList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
     }
 
     @Override
@@ -35,7 +58,7 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_language, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_change_language, parent, false);
 
         }
 
@@ -47,21 +70,29 @@ public class ChangeReferenceLanguageAdapter extends ArrayAdapter<Language> {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
         if (ApiClient.isTest)
-            Glide.with(getContext()).load(ApiClient.BASE_TEST_URL + "Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
+            Glide.with(context).load(ApiClient.BASE_TEST_URL + "Lantoon/" + languageList.get(position).getImagePath()).apply(requestOptions).into(imageView);
         else
-            Glide.with(getContext()).load(ApiClient.BASE_PROD_URL + "Lantoon/" + getItem(position).getImagePath()).apply(requestOptions).into(imageView);
-        //tvName.setText(getItem(position).getLanguageName() + " / " + getItem(position).getNativeName());
-        tvName.setText(getItem(position).getNativeName());
-        if (Integer.valueOf(getItem(position).getLanguageID()) == referLang) {
-            tvName.setBackground(getContext().getDrawable(R.drawable.bg_tv_laguage_selected));
-            tvName.setTextColor(getContext().getColor(R.color.black));
+            Glide.with(context).load(ApiClient.BASE_PROD_URL + "Lantoon/" + languageList.get(position).getImagePath()).apply(requestOptions).into(imageView);
+        //tvName.setText(languageList.get(position).getLanguageName() + " / " + languageList.get(position).getNativeName());
+        tvName.setText(languageList.get(position).getNativeName());
+        if (Integer.valueOf(languageList.get(position).getLanguageID()) == referLang) {
+            tvName.setBackground(context.getDrawable(R.drawable.bg_tv_laguage_selected));
+            tvName.setTextColor(context.getColor(R.color.black));
         } else {
-            tvName.setBackground(getContext().getDrawable(R.drawable.bg_tv_laguage));
-            tvName.setTextColor(getContext().getColor(R.color.white));
+            tvName.setBackground(context.getDrawable(R.drawable.bg_tv_laguage));
+            tvName.setTextColor(context.getColor(R.color.white));
         }
 
 
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(filter == null){
+            filter = new ChangeLanguageFilter(filterList, this);
+        }
+        return filter;
     }
 }

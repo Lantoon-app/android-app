@@ -23,14 +23,18 @@
             android:drawableStart="@drawable/ic_search"
             android:inputType="text" />
 
-        <ListView
+        <GridView
             android:id="@+id/llView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_10sdp"
             android:clickable="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:horizontalSpacing="6dp"
+            android:numColumns="2"
+            android:verticalSpacing="6dp"
             android:scrollIndicators="none"
-            tools:listitem="@layout/item_change_my_language" />
+            tools:listitem="@layout/item_change_my_language"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ProgressBar

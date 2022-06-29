@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,21 +24,41 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
-public class MyLanguagesAdapter extends ArrayAdapter<MyLanguageData> {
+public class MyLanguagesAdapter extends BaseAdapter implements Filterable {
     int knwnLang;
+    Context context;
+    List<MyLanguageData>  myLanguageDataList,filterList;
+    MyLanguageFilter filter;
     public MyLanguagesAdapter(Context context, List<MyLanguageData> languageArrayList, int knwnLang) {
-        super(context, 0, languageArrayList);
+        this.context = context;
+        this.myLanguageDataList = languageArrayList;
+        this.filterList = languageArrayList;
         this.knwnLang = knwnLang;
+    }
+
+    @Override
+    public int getCount() {
+        return myLanguageDataList.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return myLanguageDataList.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
     }
 
     @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        MyLanguageData myLanguageData = getItem(position);
+        //MyLanguageData myLanguageData = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_change_my_language, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_change_my_language, parent, false);
         }
 
         ImageView imageView = convertView.findViewById(R.id.imgView);
@@ -46,17 +69,17 @@ public class MyLanguagesAdapter extends ArrayAdapter<MyLanguageData> {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
         if (ApiClient.isTest)
-            Glide.with(getContext()).load(ApiClient.BASE_TEST_URL + "Lantoon/" + myLanguageData.getKnownLanguage().getImagePath()).apply(requestOptions).into(imageView);
+            Glide.with(context).load(ApiClient.BASE_TEST_URL + "Lantoon/" + myLanguageDataList.get(position).getLearnLanguage().getImagePath()).apply(requestOptions).into(imageView);
         else
-            Glide.with(getContext()).load(ApiClient.BASE_PROD_URL + "Lantoon/" + myLanguageData.getKnownLanguage().getImagePath()).apply(requestOptions).into(imageView);
+            Glide.with(context).load(ApiClient.BASE_PROD_URL + "Lantoon/" + myLanguageDataList.get(position).getLearnLanguage().getImagePath()).apply(requestOptions).into(imageView);
 
-        tvName.setText(myLanguageData.getKnownLanguage().getNativeName());
-        if (Integer.valueOf(myLanguageData.getKnownLanguage().getLanguageID()) == knwnLang) {
-            tvName.setBackground(getContext().getDrawable(R.drawable.bg_tv_laguage_selected));
-            tvName.setTextColor(getContext().getColor(R.color.black));
+        tvName.setText(myLanguageDataList.get(position).getLearnLanguage().getNativeName());
+        if (Integer.valueOf(myLanguageDataList.get(position).getLearnLanguage().getLanguageID()) == knwnLang) {
+            tvName.setBackground(context.getDrawable(R.drawable.bg_tv_laguage_selected));
+            tvName.setTextColor(context.getColor(R.color.black));
         } else {
-            tvName.setBackground(getContext().getDrawable(R.drawable.bg_tv_laguage));
-            tvName.setTextColor(getContext().getColor(R.color.white));
+            tvName.setBackground(context.getDrawable(R.drawable.bg_tv_laguage));
+            tvName.setTextColor(context.getColor(R.color.white));
         }
 
         /*tvName.setText(myLanguageData.getLearnLanguage().getLanguageName() + " / " + myLanguageData.getLearnLanguage().getNativeName());
@@ -68,5 +91,12 @@ public class MyLanguagesAdapter extends ArrayAdapter<MyLanguageData> {
        */ // Return the completed view to render on screen
         return convertView;
     }
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new MyLanguageFilter(filterList, this);
+        }
 
+        return filter;
+    }
 }

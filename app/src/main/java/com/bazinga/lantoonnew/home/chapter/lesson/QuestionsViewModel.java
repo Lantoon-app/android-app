@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.bazinga.lantoonnew.Tags;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.Question;
+import com.bazinga.lantoonnew.home.chapter.lesson.ui.d2.D2Fragment;
 import com.bazinga.lantoonnew.home.chapter.lesson.ui.l1.L1Fragment;
 import com.bazinga.lantoonnew.home.chapter.lesson.ui.p1.P1Fragment;
 import com.bazinga.lantoonnew.home.chapter.lesson.ui.p2.P2Fragment;
@@ -409,6 +410,10 @@ public class QuestionsViewModel extends ViewModel {
             if (qtype.contains("\"qp3\"")) {
 
                 fragments.add(f, QP3Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
+            if (qtype.contains("\"d2\"")) {
+
+                fragments.add(f, D2Fragment.newInstance(i, totalQuestions, j.toString()));
             }
             f++;
         }

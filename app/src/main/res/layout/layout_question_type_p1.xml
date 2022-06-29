@@ -33,8 +33,7 @@
             android:id="@+id/imgBtnAnsImage1"
             android:layout_width="@dimen/_135sdp"
             android:layout_height="@dimen/_135sdp"
-            android:layout_margin="@dimen/_5sdp"
-            android:background="@drawable/bg_all_answer_imgs"/>
+            android:layout_margin="@dimen/_5sdp"/>
 
         <ImageView
             android:id="@+id/imgBtnAnsImage2"

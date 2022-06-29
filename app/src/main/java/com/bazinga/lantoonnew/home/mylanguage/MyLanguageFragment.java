@@ -3,11 +3,15 @@ package com.bazinga.lantoonnew.home.mylanguage;
 import static com.bazinga.lantoonnew.home.HomeActivity.setToolbar;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -37,10 +41,12 @@ import retrofit2.Response;
 public class MyLanguageFragment extends Fragment {
 
     private MyLanguageViewModel myLanguageViewModel;
-    private ListView listView;
+    private GridView listView;
     List<MyLanguageData> myLanguageDataList;
+    MyLanguagesAdapter adapter;
     boolean fragmentDestroyed = false;
     ProgressBar progressBar;
+    EditText et_search;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,9 +54,10 @@ public class MyLanguageFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_language, container, false);
         setToolbar(true, getString(R.string.my_languages));
         listView = root.findViewById(R.id.llView);
+        et_search = root.findViewById(R.id.et_search);
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        listView.setDivider(null);
+        //listView.setDivider(null);
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
             progressBar.setVisibility(View.VISIBLE);
             myLanguageViewModel.getLanguageMutableLiveData().observe(getActivity(), new Observer<List<MyLanguageData>>() {
@@ -60,20 +67,39 @@ public class MyLanguageFragment extends Fragment {
                     Log.d("response body= ", new GsonBuilder().setPrettyPrinting().create().toJson(languages));
                     if (!fragmentDestroyed) {
                         myLanguageDataList = languages;
-                        MyLanguagesAdapter adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList,HomeActivity.sessionManager.getKnownLangId());
+                        adapter = new MyLanguagesAdapter(getContext(), myLanguageDataList, HomeActivity.sessionManager.getLearnLangId());
                         listView.setAdapter(adapter);
+
                     }
                 }
             });
         } else {
             CommonFunction.netWorkErrorAlert(getActivity());
         }
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("charSequence",charSequence.toString());
+                adapter.getFilter().filter(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("selected ", myLanguageDataList.get(position).getLearnLanguage().getImagePath());
+                MyLanguageData myLanguageData = (MyLanguageData) parent.getItemAtPosition(position);
+                Log.d("selected ", myLanguageData.getLearnLanguage().getImagePath());
                 if (NetworkUtil.getConnectivityStatus(getContext()) != 0)
-                    updateLanguage(HomeActivity.sessionManager.getUid(), myLanguageDataList.get(position).getLearnLanguage().getLanguageID(), HomeActivity.sessionManager.getKnownLangId());
+                    updateLanguage(HomeActivity.sessionManager.getUid(), myLanguageData.getLearnLanguage().getLanguageID(), HomeActivity.sessionManager.getKnownLangId());
                 else CommonFunction.netWorkErrorAlert(getActivity());
             }
         });
@@ -82,6 +108,9 @@ public class MyLanguageFragment extends Fragment {
     }
 
     private void updateLanguage(String uid, String learnlanguageID, int knownLanguageID) {
+        Log.d("updateLanguage uid",uid);
+        Log.d("updateLanguage learnlanguageID",learnlanguageID);
+        Log.d("updateLanguage knownLanguageID",String.valueOf(knownLanguageID));
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<LoggedInUserResponse> call = apiInterface.updateLanguage(uid, learnlanguageID, knownLanguageID);
         call.enqueue(new Callback<LoggedInUserResponse>() {
