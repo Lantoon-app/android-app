@@ -8,6 +8,7 @@
     <item
         android:id="@+id/bottom_target"
         android:icon="@drawable/ic_bottom_nav_target"
+        android:visible="false"
         android:title="@string/btm_nav_title_target" />
     <item
         android:id="@+id/bottom_leader"

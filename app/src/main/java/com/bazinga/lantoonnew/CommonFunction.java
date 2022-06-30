@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -108,8 +109,16 @@ public class CommonFunction {
     public void setImage(Activity activity, String filePath, ImageView imageView) {
 
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
+        //requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
         Glide.with(activity).load(filePath).apply(requestOptions).into(imageView);
+
+    }
+
+    public void setImageBorder(ImageView imageView, int padding, Drawable drawable) {
+        if (drawable != null)
+        imageView.setBackground(drawable);
+        imageView.setPadding(padding, padding, padding, padding);
+
 
     }
 
@@ -143,14 +152,14 @@ public class CommonFunction {
             if (CheckAnswerImage(tag)) {
                 if (quesNo == totalQues) {
 
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio,ansImageView,imageViewIds, imagePaths, view);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, view);
 
                 } else {
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio,ansImageView,imageViewIds, imagePaths, view);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, view);
                 }
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio,ansImageView,imageViewIds, imagePaths, view);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, view);
                 //setShuffleImages(activity, imageViewIds, imagePaths, view);
 
             }
@@ -231,10 +240,10 @@ public class CommonFunction {
 
                 if (asciiAnswerDataString.equals(asciiDataString)) {
 
-                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio,null, null, null, view);
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null, view);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio,null, null, null, view);
+                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null, view);
                 }
 
                 /*if (answerWord.equals(data.get(0))) {
@@ -422,16 +431,16 @@ public class CommonFunction {
         Log.d(tag, new GsonBuilder().setPrettyPrinting().create().toJson(obj));
     }
 
-    public static void postPaymentPurchaseDetails(Context context, Activity activity, String title, String message,String status, String transaction_id, String package_id, String user_id, String language, String total_amount, String paid_amount, String payment_type, String chapters_unlocked, String duration_in_days) {
+    public static void postPaymentPurchaseDetails(Context context, Activity activity, String title, String message, String status, String transaction_id, String package_id, String user_id, String language, String total_amount, String paid_amount, String payment_type, String chapters_unlocked, String duration_in_days) {
         if (NetworkUtil.getConnectivityStatus(context) != 0) {
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
             Call<PurchaseResponse> call = apiInterface.postPaymentPurchaseDetails(transaction_id, package_id, user_id, language, total_amount, paid_amount, payment_type, chapters_unlocked, duration_in_days);
             call.enqueue(new Callback<PurchaseResponse>() {
                 @Override
                 public void onResponse(Call<PurchaseResponse> call, Response<PurchaseResponse> response) {
-                   printServerResponse("Purchase response",response.body());
+                    printServerResponse("Purchase response", response.body());
                     if (response.body().getStatus().getCode() == 1059)
-                        paymentAlert(context, activity, title, message + "\n Transation Id - "+transaction_id);
+                        paymentAlert(context, activity, title, message + "\n Transation Id - " + transaction_id);
                 }
 
                 @Override
@@ -452,10 +461,10 @@ public class CommonFunction {
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                       //PayUActivity.startHomeActivity();
+                        //PayUActivity.startHomeActivity();
                         activity.finish();
                         //activity.startActivityForResult(new Intent(context,HomeActivity.class),2);
-                        activity.startActivity(new Intent(context,HomeActivity.class));
+                        activity.startActivity(new Intent(context, HomeActivity.class));
                         dialog.cancel();
                     }
                 });
@@ -464,7 +473,7 @@ public class CommonFunction {
         alert.show();
     }
 
-    public static void storeUserData(SessionManager sessionManager,LoggedInUserView model) {
+    public static void storeUserData(SessionManager sessionManager, LoggedInUserView model) {
         //loadingProgressBar.setVisibility(View.GONE);
         String user = new GsonBuilder().create().toJson(model.getloginData());
         String picture = model.getloginData().getPhoto();

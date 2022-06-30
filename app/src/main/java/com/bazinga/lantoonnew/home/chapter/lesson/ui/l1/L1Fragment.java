@@ -1,8 +1,10 @@
 package com.bazinga.lantoonnew.home.chapter.lesson.ui.l1;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -45,15 +46,14 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     Audio audio;
     private L1ViewModel mViewModel;
     private ArrayList<Question> questions;
-    LinearLayout linearLayout;
     TextView tvQuestionNo, tvQuestionName;
     ImageButton imgBtnHome, imgBtnHelp, imgBtnNext;
     ProgressBar pbTop;
-    ImageView imbBtnQuestionImg1, imbBtnQuestionImg2, imbBtnQuestionImg3, imbBtnQuestionImg4, expandedImageView;
-    Button btnAudioSlow1, btnAudioSlow2, btnAudioSlow3, btnAudioSlow4;
-    Button btnAudio1, btnAudio2, btnAudio3, btnAudio4;
+    ImageView imgBtnAnsImage1, imgBtnAnsImage2, imgBtnAnsImage3, imgBtnAnsImage4, expandedImageView;
+    Button btnAudioSlow;
+    Button btnAudio;
     CommonFunction cf;
-    //MediaPlayer cf.mediaPlayer;
+    Drawable bgAllImages;
     private Animator currentAnimator;
     private int shortAnimationDuration;
     View containerView;
@@ -88,36 +88,28 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
         pbTop = view.findViewById(R.id.pbTop);
         tvQuestionNo = view.findViewById(R.id.tvQuestionNo);
         tvQuestionName = view.findViewById(R.id.tvQuestionName);
-        btnAudio1 = view.findViewById(R.id.btnAudio1);
-        btnAudio2 = view.findViewById(R.id.btnAudio2);
-        btnAudio3 = view.findViewById(R.id.btnAudio3);
-        btnAudio4 = view.findViewById(R.id.btnAudio4);
-        btnAudioSlow1 = view.findViewById(R.id.btnAudioSlow1);
-        btnAudioSlow2 = view.findViewById(R.id.btnAudioSlow2);
-        btnAudioSlow3 = view.findViewById(R.id.btnAudioSlow3);
-        btnAudioSlow4 = view.findViewById(R.id.btnAudioSlow4);
-        imbBtnQuestionImg1 = view.findViewById(R.id.imbBtnQuestionImg1);
-        imbBtnQuestionImg2 = view.findViewById(R.id.imbBtnQuestionImg2);
-        imbBtnQuestionImg3 = view.findViewById(R.id.imbBtnQuestionImg3);
-        imbBtnQuestionImg4 = view.findViewById(R.id.imbBtnQuestionImg4);
-        linearLayout = view.findViewById(R.id.linearLayout2);
+        btnAudio = view.findViewById(R.id.btnAudio);
+        btnAudioSlow = view.findViewById(R.id.btnAudioSlow);
+        imgBtnAnsImage1 = view.findViewById(R.id.imgBtnAnsImage1);
+        imgBtnAnsImage2 = view.findViewById(R.id.imgBtnAnsImage2);
+        imgBtnAnsImage3 = view.findViewById(R.id.imgBtnAnsImage3);
+        imgBtnAnsImage4 = view.findViewById(R.id.imgBtnAnsImage4);
 
         imgBtnHome.setOnClickListener(this::onClick);
         imgBtnHelp.setOnClickListener(this::onClick);
+        imgBtnAnsImage1.setOnClickListener(this::onClick);
+        imgBtnAnsImage2.setOnClickListener(this::onClick);
+        imgBtnAnsImage3.setOnClickListener(this::onClick);
+        imgBtnAnsImage4.setOnClickListener(this::onClick);
+        btnAudio.setOnClickListener(this::onClick);
+        btnAudioSlow.setOnClickListener(this::onClick);
         imgBtnNext.setOnClickListener(this::onClick);
-        btnAudio1.setOnClickListener(this::onClick);
-        btnAudio2.setOnClickListener(this::onClick);
-        btnAudio3.setOnClickListener(this::onClick);
-        btnAudio4.setOnClickListener(this::onClick);
-        btnAudioSlow1.setOnClickListener(this::onClick);
-        btnAudioSlow2.setOnClickListener(this::onClick);
-        btnAudioSlow3.setOnClickListener(this::onClick);
-        btnAudioSlow4.setOnClickListener(this::onClick);
         imgBtnNext.setVisibility(View.GONE);
         setClickableButton(false);
         // Retrieve and cache the system's default "short" animation time.
         shortAnimationDuration = getResources().getInteger(
                 android.R.integer.config_shortAnimTime);
+        bgAllImages = getActivity().getDrawable(R.drawable.bg_all_answer_imgs);
         /*imbBtnQuestionImg1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,14 +119,12 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
     }
 
     private void setClickableButton(boolean clickable) {
-        btnAudio1.setClickable(clickable);
-        btnAudio2.setClickable(clickable);
-        btnAudio3.setClickable(clickable);
-        btnAudio4.setClickable(clickable);
-        btnAudioSlow1.setClickable(clickable);
-        btnAudioSlow2.setClickable(clickable);
-        btnAudioSlow3.setClickable(clickable);
-        btnAudioSlow4.setClickable(clickable);
+        imgBtnAnsImage1.setClickable(clickable);
+        imgBtnAnsImage2.setClickable(clickable);
+        imgBtnAnsImage3.setClickable(clickable);
+        imgBtnAnsImage4.setClickable(clickable);
+        btnAudio.setClickable(clickable);
+        btnAudioSlow.setClickable(clickable);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -157,10 +147,10 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
             String imgFile = QuestionsActivity.strFilePath + questions.get(0).getRightImagePath() + questions.get(0).getCellValue() + ".jpg";
             Log.d("Imagefile", imgFile);
 
-            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(0).getRightImagePath(), imbBtnQuestionImg1);
-            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(1).getRightImagePath(), imbBtnQuestionImg2);
-            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(2).getRightImagePath(), imbBtnQuestionImg3);
-            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(3).getRightImagePath(), imbBtnQuestionImg4);
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(0).getRightImagePath(), imgBtnAnsImage1);
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(1).getRightImagePath(), imgBtnAnsImage2);
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(2).getRightImagePath(), imgBtnAnsImage3);
+            cf.setImage(getActivity(), QuestionsActivity.strFilePath + questions.get(3).getRightImagePath(), imgBtnAnsImage4);
 
             Log.d("data l1 ", questions.get(2).getQid());
 
@@ -203,13 +193,15 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 public void run() {
                     tvQuestionName.setText(questions.get(0).getWord());
                     //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
-                    zoomImageIn(imbBtnQuestionImg1);
+                    //zoomImageIn(imbBtnQuestionImg1);
+                    cf.setImageBorder(imgBtnAnsImage1,20,bgAllImages);
                     //btnAudio1.setState(PlayPauseView.STATE_PLAY);
                     cf.mediaPlayer.start();
                     cf.mediaPlayer.setOnCompletionListener(mp -> {
                         mp.stop();
                         mp.release();
-                        zoomImageOut(imbBtnQuestionImg1);
+                        //zoomImageOut(imbBtnQuestionImg1);
+                        cf.setImageBorder(imgBtnAnsImage1,0,null);
                         //btnAudio1.setState(PlayPauseView.STATE_PAUSE);
                         //btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                     });
@@ -235,13 +227,15 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 public void run() {
                     tvQuestionName.setText(questions.get(1).getWord());
                     //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
-                    zoomImageIn(imbBtnQuestionImg2);
+                    //zoomImageIn(imbBtnQuestionImg2);
+                    cf.setImageBorder(imgBtnAnsImage2,20,bgAllImages);
                     //btnAudio2.setState(PlayPauseView.STATE_PLAY);
                     cf.mediaPlayer.start();
                     cf.mediaPlayer.setOnCompletionListener(mp -> {
                         mp.stop();
                         mp.release();
-                        zoomImageOut(imbBtnQuestionImg2);
+                        //zoomImageOut(imbBtnQuestionImg2);
+                        cf.setImageBorder(imgBtnAnsImage2,0,null);
                         //btnAudio2.setState(PlayPauseView.STATE_PAUSE);
                         //btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
 
@@ -267,13 +261,15 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 public void run() {
                     tvQuestionName.setText(questions.get(2).getWord());
                     //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
-                    zoomImageIn(imbBtnQuestionImg3);
+                    //zoomImageIn(imbBtnQuestionImg3);
+                    cf.setImageBorder(imgBtnAnsImage3,20,bgAllImages);
                     //btnAudio3.setState(PlayPauseView.STATE_PLAY);
                     cf.mediaPlayer.start();
                     cf.mediaPlayer.setOnCompletionListener(mp -> {
                         mp.stop();
                         mp.release();
-                        zoomImageOut(imbBtnQuestionImg3);
+                        //zoomImageOut(imbBtnQuestionImg3);
+                        cf.setImageBorder(imgBtnAnsImage3,0,null);
                         //btnAudio3.setState(PlayPauseView.STATE_PAUSE);
                         //btnAudio3.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
 
@@ -299,14 +295,16 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 public void run() {
                     tvQuestionName.setText(questions.get(3).getWord());
                     //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
-                    zoomImageIn(imbBtnQuestionImg4);
+                    //zoomImageIn(imbBtnQuestionImg4);
+                    cf.setImageBorder(imgBtnAnsImage4,20,bgAllImages);
                     //btnAudio4.setState(PlayPauseView.STATE_PLAY);
 
                     cf.mediaPlayer.start();
                     cf.mediaPlayer.setOnCompletionListener(mp -> {
                         mp.stop();
                         mp.release();
-                        zoomImageOut(imbBtnQuestionImg4);
+                        //zoomImageOut(imbBtnQuestionImg4);
+                        cf.setImageBorder(imgBtnAnsImage4,0,null);
                         //btnAudio4.setState(PlayPauseView.STATE_PAUSE);
                         //btnAudio4.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
 
@@ -358,91 +356,8 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
 
         return stringArray;
     }
-
-    private void PlayAudios(ArrayList<Question> questions) {
-        try {
-            tvQuestionName.setText(questions.get(0).getWord());
-            //cf.shakeAnimation(imbBtnQuestionImg1, 1000);
-            zoomImageIn(imbBtnQuestionImg1);
-            //btnAudio1.setState(PlayPauseView.STATE_PLAY);
-            cf.mediaPlayer = new MediaPlayer();
-            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + questions.get(0).getAudioPath());
-            cf.mediaPlayer.prepare();
-            cf.mediaPlayer.start();
-            cf.mediaPlayer.setOnCompletionListener(mp -> {
-                mp.stop();
-                mp.release();
-                zoomImageOut(imbBtnQuestionImg1);
-                //btnAudio1.setState(PlayPauseView.STATE_PAUSE);
-                //btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
-                //btnAudio2.setState(PlayPauseView.STATE_PLAY);
-                cf.mediaPlayer = new MediaPlayer();
-                try {
-                    tvQuestionName.setText(questions.get(1).getWord());
-                    //cf.shakeAnimation(imbBtnQuestionImg2, 1000);
-                    zoomImageIn(imbBtnQuestionImg2);
-                    cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + questions.get(1).getAudioPath());
-                    cf.mediaPlayer.prepare();
-                    cf.mediaPlayer.start();
-                    cf.mediaPlayer.setOnCompletionListener(mp1 -> {
-                        mp1.stop();
-                        mp1.release();
-                        zoomImageOut(imbBtnQuestionImg2);
-                        //btnAudio2.setState(PlayPauseView.STATE_PAUSE);
-                        //btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
-                        //btnAudio3.setState(PlayPauseView.STATE_PLAY);
-                        cf.mediaPlayer = new MediaPlayer();
-                        try {
-                            tvQuestionName.setText(questions.get(2).getWord());
-                            //cf.shakeAnimation(imbBtnQuestionImg3, 1000);
-                            zoomImageIn(imbBtnQuestionImg3);
-                            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + questions.get(2).getAudioPath());
-                            cf.mediaPlayer.prepare();
-                            cf.mediaPlayer.start();
-                            cf.mediaPlayer.setOnCompletionListener(mp11 -> {
-                                mp11.stop();
-                                mp11.release();
-                                zoomImageOut(imbBtnQuestionImg3);
-                                //btnAudio3.setState(PlayPauseView.STATE_PAUSE);
-                                //btnAudio3.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
-                                //btnAudio4.setState(PlayPauseView.STATE_PLAY);
-                                cf.mediaPlayer = new MediaPlayer();
-                                try {
-                                    tvQuestionName.setText(questions.get(3).getWord());
-                                    //cf.shakeAnimation(imbBtnQuestionImg4, 1000);
-                                    zoomImageIn(imbBtnQuestionImg4);
-                                    cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + questions.get(3).getAudioPath());
-                                    cf.mediaPlayer.prepare();
-                                    cf.mediaPlayer.start();
-                                    cf.mediaPlayer.setOnCompletionListener(mp111 -> {
-                                        mp111.stop();
-                                        mp111.release();
-                                        zoomImageOut(imbBtnQuestionImg4);
-                                        //btnAudio4.setState(PlayPauseView.STATE_PAUSE);
-                                        //btnAudio4.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
-                                        setClickableButton(true);
-                                        imgBtnNext.setVisibility(View.VISIBLE);
-                                    });
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
+    int audioPosition = 0;
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -455,51 +370,50 @@ public class L1Fragment extends Fragment implements View.OnClickListener {
                 QuestionsActivity.countMap.put(String.valueOf(getArguments().getInt(Tags.TAG_QUESTION_NO)), "0");
                 QuestionsActivity.mPager.setCurrentItem(QuestionsActivity.mPager.getCurrentItem() + 1);
                 break;
-            case R.id.btnAudio1:
-                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + questions.get(0).getAudioPath(), null);
-                tvQuestionName.setText(questions.get(0).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+            case R.id.imgBtnAnsImage1:
+                setPadding0();
+                audioPosition = 0;
+                cf.setImageBorder(imgBtnAnsImage1,20,getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
                 break;
-            case R.id.btnAudio2:
-                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + questions.get(1).getAudioPath(), null);
-                tvQuestionName.setText(questions.get(1).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg2, 1000);
+            case R.id.imgBtnAnsImage2:
+                setPadding0();
+                audioPosition = 1;
+                cf.setImageBorder(imgBtnAnsImage2,20,getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
                 break;
-            case R.id.btnAudio3:
-                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + questions.get(2).getAudioPath(), null);
-                tvQuestionName.setText(questions.get(2).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg3, 1000);
+            case R.id.imgBtnAnsImage3:
+                setPadding0();
+                audioPosition = 2;
+                cf.setImageBorder(imgBtnAnsImage3,20,getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
                 break;
-            case R.id.btnAudio4:
-                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + questions.get(3).getAudioPath(), null);
-                tvQuestionName.setText(questions.get(3).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg4, 1000);
+            case R.id.imgBtnAnsImage4:
+                setPadding0();
+                audioPosition = 3;
+                cf.setImageBorder(imgBtnAnsImage4,20,getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
                 break;
-            case R.id.btnAudioSlow1:
-                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + questions.get(0).getAudioPath());
-                tvQuestionName.setText(questions.get(0).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg1, 1000);
+            case R.id.btnAudio:
+                audio.playAudioFileAnim(getActivity(), QuestionsActivity.strFilePath + questions.get(audioPosition).getAudioPath(), null);
+                tvQuestionName.setText(questions.get(audioPosition).getWord());
+                //cf.shakeAnimation(imgBtnAnsImage1, 1000);
                 break;
-            case R.id.btnAudioSlow2:
-                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + questions.get(1).getAudioPath());
-                tvQuestionName.setText(questions.get(1).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg2, 1000);
-                break;
-            case R.id.btnAudioSlow3:
-                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + questions.get(2).getAudioPath());
-                tvQuestionName.setText(questions.get(2).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg3, 1000);
-                break;
-            case R.id.btnAudioSlow4:
-                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + questions.get(3).getAudioPath());
-                tvQuestionName.setText(questions.get(3).getWord());
-                cf.shakeAnimation(imbBtnQuestionImg4, 1000);
-
+            case R.id.btnAudioSlow:
+                audio.playAudioSlow(getActivity(), QuestionsActivity.strFilePath + questions.get(audioPosition).getAudioPath());
+                tvQuestionName.setText(questions.get(audioPosition).getWord());
+                //cf.shakeAnimation(imgBtnAnsImage1, 1000);
                 break;
         }
 
     }
+private void setPadding0(){
+        if(imgBtnAnsImage1.getPaddingTop() == 20)
+            cf.setImageBorder(imgBtnAnsImage1,0,null);
+        if(imgBtnAnsImage2.getPaddingTop() == 20)
+            cf.setImageBorder(imgBtnAnsImage2,0,null);
+        if(imgBtnAnsImage3.getPaddingTop() == 20)
+            cf.setImageBorder(imgBtnAnsImage3,0,null);
+        if(imgBtnAnsImage4.getPaddingTop() == 20)
+            cf.setImageBorder(imgBtnAnsImage4,0,null);
 
+}
     //https://developer.android.com/training/animation/zoom.html
     private void zoomImageIn(ImageView thumbView) {
         // If there's an animation in progress, cancel it
