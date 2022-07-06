@@ -52,7 +52,7 @@ public class MyLanguageFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         myLanguageViewModel = new ViewModelProvider(this).get(MyLanguageViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my_language, container, false);
-        setToolbar(true, getString(R.string.my_languages));
+        setToolbar(false, getString(R.string.my_languages));
         listView = root.findViewById(R.id.llView);
         et_search = root.findViewById(R.id.et_search);
         progressBar = root.findViewById(R.id.progressBar);

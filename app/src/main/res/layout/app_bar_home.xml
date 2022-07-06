@@ -25,7 +25,7 @@
 
         </androidx.appcompat.widget.Toolbar>
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/ll_toolbar_bottom"
+            android:id="@+id/ll_toolbar_side"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_80sdp"
             android:background="@drawable/bg_toolbar"

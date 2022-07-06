@@ -90,7 +90,11 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             add(response);
         }
     }
-
+    public void clear() {
+        int size = mItemList.size();
+        mItemList.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 

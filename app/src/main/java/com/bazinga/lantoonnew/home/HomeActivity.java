@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private BottomNavigationView bottomNavView;
     ActivityHomeBinding binding;
 
-    public static LinearLayoutCompat ll_toolbar,ll_toolbar_bottom;
+    public static LinearLayoutCompat ll_toolbar,ll_toolbar_side;
     public static ImageView iv_back;
     public static TextView tv_title;
 
@@ -166,14 +166,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         ll_toolbar = findViewById(R.id.ll_toolbar);
-        ll_toolbar_bottom = findViewById(R.id.ll_toolbar_bottom);
+        ll_toolbar_side = findViewById(R.id.ll_toolbar_side);
         setSupportActionBar(toolbar);
-        ll_toolbar_bottom.setVisibility(View.GONE);
+        ll_toolbar_side.setVisibility(View.GONE);
         ll_toolbar.setVisibility(View.VISIBLE);
         ImageView iv_nav_menu_open = findViewById(R.id.iv_nav_menu_open);
         ImageView iv_nav_menu_profile_open = findViewById(R.id.iv_nav_menu_profile_open);
         iv_back = findViewById(R.id.iv_back);
         tv_title = findViewById(R.id.tv_title);
+        iv_back.setOnClickListener(this::onClick);
         iv_nav_menu_open.setOnClickListener(this::onClick);
         iv_nav_menu_profile_open.setOnClickListener(this::onClick);
     }
@@ -240,7 +241,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         bottomNavView.getMenu().findItem(R.id.bottom_lesson).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                setToolbar(false,null);
+                setToolbar(true,null);
                 binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
@@ -249,7 +250,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         bottomNavView.getMenu().findItem(R.id.bottom_target).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                 setToolbar(false,null);
+                 setToolbar(true,null);
                 binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
@@ -258,7 +259,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         bottomNavView.getMenu().findItem(R.id.bottom_leader).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                 setToolbar(false,null);
+                 setToolbar(true,null);
                 binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
@@ -267,7 +268,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         bottomNavView.getMenu().findItem(R.id.bottom_setting).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                 setToolbar(false,null);
+                 setToolbar(true,null);
                 binding.navView.setItemBackground(null);
                 bottomNavView.setItemBackground(getDrawable(R.drawable.nav_bottom_bg_change_color));
                 return false;
@@ -278,12 +279,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     public static void setToolbar(boolean isBottom,String title) {
         if(isBottom){
-            ll_toolbar.setVisibility(View.GONE);
-            ll_toolbar_bottom.setVisibility(View.VISIBLE);
-            tv_title.setText(title);
-        }else {
             ll_toolbar.setVisibility(View.VISIBLE);
-            ll_toolbar_bottom.setVisibility(View.GONE);
+            ll_toolbar_side.setVisibility(View.GONE);
+
+        }else {
+            ll_toolbar.setVisibility(View.GONE);
+            ll_toolbar_side.setVisibility(View.VISIBLE);
+            tv_title.setText(title);
         }
     }
 
@@ -365,6 +367,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_back:
+                setToolbar(true,"");
+                navController.navigate(R.id.bottom_lesson);
+                break;
             case R.id.iv_nav_menu_open:
                 binding.drawerLayout.openDrawer(GravityCompat.START);
                 break;

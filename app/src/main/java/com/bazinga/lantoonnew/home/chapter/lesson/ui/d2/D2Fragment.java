@@ -40,7 +40,7 @@ public class D2Fragment extends Fragment implements View.OnClickListener {
     Question question;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
-    TextView tvQuestionNo, tvQuestionName;
+    TextView tvQuestionNo, tvFibQuestion;
     ImageButton imgBtnHome, imgBtnHelp;
     ImageView imbBtnQuestionImg;
     ProgressBar pbTop;
@@ -70,7 +70,7 @@ public class D2Fragment extends Fragment implements View.OnClickListener {
         imgBtnHelp = view.findViewById(R.id.imgBtnHelp);
         pbTop = view.findViewById(R.id.pbTop);
         tvQuestionNo = view.findViewById(R.id.tvQuestionNo);
-        tvQuestionName = view.findViewById(R.id.tvQuestionName);
+        tvFibQuestion = view.findViewById(R.id.tvFibQuestion);
         imbBtnQuestionImg = view.findViewById(R.id.imbBtnQuestionImg);
         btnAudio = view.findViewById(R.id.btnAudio);
         btnAudioSlow = view.findViewById(R.id.btnAudioSlow);
@@ -95,7 +95,7 @@ public class D2Fragment extends Fragment implements View.OnClickListener {
             imgBtnHelp.setVisibility(View.INVISIBLE);
         else
             referencePopup = new ReferencePopup( question.getReference());
-        tvQuestionName.setText(question.getWord());
+        tvFibQuestion.setText(question.getFibQues());
         cf.setImage(getActivity(), QuestionsActivity.strFilePath + question.getRightImagePath(), imbBtnQuestionImg);
         Log.d("data d2 ", new GsonBuilder().setPrettyPrinting().create().toJson(question));
     }

@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        setToolbar(true, getString(R.string.title_profile));
+        setToolbar(false, getString(R.string.title_profile));
         tv_change_password = root.findViewById(R.id.tv_change_password);
         ivProfilePhoto = root.findViewById(R.id.ivProfilePhoto);
         etFullName = root.findViewById(R.id.etFullName);

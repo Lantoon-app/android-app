@@ -114,12 +114,10 @@ public class CommonFunction {
 
     }
 
-    public void setImageBorder(ImageView imageView, int padding, Drawable drawable) {
-        if (drawable != null)
+    public void setImageBorder(View imageView, int padding, Drawable drawable) {
+       // if (drawable != null)
         imageView.setBackground(drawable);
         imageView.setPadding(padding, padding, padding, padding);
-
-
     }
 
     public void setShuffleImages(Activity activity, int[] imageViewIds, String[] imagePaths, View view) {

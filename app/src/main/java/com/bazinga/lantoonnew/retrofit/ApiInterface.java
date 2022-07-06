@@ -152,9 +152,19 @@ public interface ApiInterface {
     @GET("Lantoon/public/QuestionHandler.php/zipfilenew/{languageid}/{chapterno}/{lessonno}")
     Call<ResponseBody> downloadFileByUrlNew(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno);
 
-    //Leaderboard
+    //Leaderboard old
     @GET("Lantoon/public/ScoreHandler.php/leaderboard/{slideno}/{uid}/{langid}")
     Call<LeaderResponse> getLeaders(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
+
+   //Leaderboard global
+    @GET("Lantoon/public/ScoreHandler.php/leaderboardglobal/{slideno}/{uid}/{langid}")
+    Call<LeaderResponse> getLeadersGlobal(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
+
+   //Leaderboard institutional
+    @GET("Lantoon/public/ScoreHandler.php/leaderboardinstitutional/{slideno}/{uid}/{langid}")
+    Call<LeaderResponse> getLeadersInstitutional(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
+
+
 
     //Targets
     @GET("Lantoon/public/TargetHandler.php/mytargets/{uid}")

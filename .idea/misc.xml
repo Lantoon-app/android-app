@@ -147,6 +147,7 @@
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/bg_button.xml" value="0.195" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/bg_ref.xml" value="0.195" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/bg_tv_ref.xml" value="0.195" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/bg_tv_ref_inner.xml" value="0.192" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/btn_question_help_blue.xml" value="0.2065" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/btn_question_home.xml" value="0.187" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/btn_question_home_blue.xml" value="0.2065" />
@@ -154,6 +155,7 @@
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/btn_question_next.xml" value="0.202" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/btn_question_slow_speaker_blue.xml" value="0.112" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/btn_question_speaker_blue.xml" value="0.141" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/custom_question_pb.xml" value="0.207" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/ic_menu.xml" value="0.136" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/ic_menu_profile.xml" value="0.136" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/drawable/ic_mic_blue_pressed.xml" value="0.157" />
@@ -166,23 +168,27 @@
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout-sw720dp/layout_question_type_l1.xml" value="0.16875" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/activity_home.xml" value="0.1765625" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/activity_login.xml" value="0.1765625" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/activity_questions.xml" value="0.15384615384615385" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/app_bar_home.xml" value="0.1" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/d2_fragment.xml" value="0.16495726495726495" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/fragment_change_refer_language.xml" value="0.15085470085470085" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/fragment_chapter.xml" value="0.15085470085470085" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/fragment_leaderboard.xml" value="0.18" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/fragment_my_language.xml" value="0.18461538461538463" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/item_change_language.xml" value="0.15085470085470085" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/item_change_my_language.xml" value="0.2" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/item_target.xml" value="0.209375" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_header.xml" value="0.225" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type.xml" value="0.15256410256410258" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_d2.xml" value="0.14" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_l1.xml" value="0.1" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_p1.xml" value="0.16" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_p2.xml" value="0.2" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_p3.xml" value="0.18" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_q.xml" value="0.16" />
-        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_qp1.xml" value="0.225" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_qp1.xml" value="0.17" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_qp2.xml" value="0.225" />
-        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_qp3.xml" value="0.225" />
+        <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_question_type_qp3.xml" value="0.16" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/layout_seekbar.xml" value="0.17307692307692307" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/layout/popup_question_answer_anim.xml" value="0.14102564102564102" />
         <entry key="..\:/Users/nizam/OneDrive/Desktop/Nizam/Bazinga/Apps/New/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1717948717948718" />

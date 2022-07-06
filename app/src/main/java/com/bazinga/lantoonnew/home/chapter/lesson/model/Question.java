@@ -3,6 +3,8 @@ package com.bazinga.lantoonnew.home.chapter.lesson.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Question {
     @SerializedName("qid")
     @Expose
@@ -34,6 +36,12 @@ public class Question {
     @SerializedName("ans_word")
     @Expose
     private String ansWord;
+    @SerializedName("fib_ques")
+    @Expose
+    private String fibQues;
+    @SerializedName("fib_opt")
+    @Expose
+    private List<String> fibOpt = null;
     @SerializedName("plus_mark")
     @Expose
     private Integer plusMark;
@@ -137,6 +145,22 @@ public class Question {
 
     public void setAnsWord(String ansWord) {
         this.ansWord = ansWord;
+    }
+
+    public String getFibQues() {
+        return fibQues;
+    }
+
+    public void setFibQues(String fibQues) {
+        this.fibQues = fibQues;
+    }
+
+    public List<String> getFibOpt() {
+        return fibOpt;
+    }
+
+    public void setFibOpt(List<String> fibOpt) {
+        this.fibOpt = fibOpt;
     }
 
     public Integer getPlusMark() {

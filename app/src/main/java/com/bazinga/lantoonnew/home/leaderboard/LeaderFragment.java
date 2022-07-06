@@ -29,6 +29,8 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,7 @@ public class LeaderFragment extends Fragment {
     RecyclerView recyclerView;
     LeaderAdapter leaderAdapter;
     LinearLayoutManager mLayoutManager;
+    TabLayout tablayout_leaderbord;
     public static final int PAGE_START = 1;
     private int currentPage = PAGE_START;
     boolean isLoading = false;
@@ -55,13 +58,13 @@ public class LeaderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         sessionManager = new SessionManager(getContext());
-        leaderViewModel = new ViewModelProvider(getActivity(),
-                new LeaderViewModelProvider(sessionManager.getUid(), sessionManager.getLearnLangId())).get(LeaderViewModel.class);
+        leaderViewModel = new ViewModelProvider(this).get(LeaderViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         progressBar = root.findViewById(R.id.pbLeader);
+        tablayout_leaderbord = root.findViewById(R.id.tablayout_leaderbord);
         rlFull = root.findViewById(R.id.rlFull);
-        rlFull.setVisibility(View.GONE);
+        //rlFull.setVisibility(View.GONE);
         recyclerView = root.findViewById(R.id.rvLeader);
         initFooter(root);
         leaderAdapter = new LeaderAdapter(new ArrayList<Leader>(), getContext());
@@ -69,9 +72,27 @@ public class LeaderFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(leaderAdapter);
         isLoading = true;
-        preparedListItem();
+        preparedListItem(0);
         //initScrollListener();
+        tablayout_leaderbord.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0)
+                    preparedListItem(0);
+                if (tab.getPosition() == 1)
+                    preparedListItem(1);
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         return root;
     }
 
@@ -84,20 +105,23 @@ public class LeaderFragment extends Fragment {
     }
 
 
-    private void preparedListItem() {
+    private void preparedListItem(int type) {
+        if(leaderAdapter.getItemCount() > 0){
+            leaderAdapter.clear();
+        }
+        leaderViewModel.getLeaderData(type, 1, sessionManager.getUid(), sessionManager.getLearnLangId());
+        progressBar.setVisibility(View.VISIBLE);
+        leaderViewModel.getLeaders().observe(getViewLifecycleOwner(), new Observer<LeaderResponse>() {
 
-            progressBar.setVisibility(View.VISIBLE);
-            leaderViewModel.getLeaders().observe(getActivity(), new Observer<LeaderResponse>() {
+            @Override
+            public void onChanged(LeaderResponse leaderResponse) {
 
-                @Override
-                public void onChanged(LeaderResponse leaderResponse) {
-
-                    if (leaderResponse != null) {
-                        if (!fragmentDestroyed) {
-                            isLoading = false;
-                            leaderAdapter.addAll(leaderResponse.getData());
-                            if (leaderResponse.getMyLeaderData() != null)
-                                setFooter(leaderResponse.getMyLeaderData());
+                if (leaderResponse != null) {
+                    if (!fragmentDestroyed) {
+                        isLoading = false;
+                        leaderAdapter.addAll(leaderResponse.getData());
+                        if (leaderResponse.getMyLeaderData() != null)
+                            setFooter(leaderResponse.getMyLeaderData());
                     /*else {
                         MyLeaderData myLeaderData = new MyLeaderData();
                         myLeaderData.setGemcount(0);
@@ -106,14 +130,14 @@ public class LeaderFragment extends Fragment {
                         myLeaderData.setUname(sessionManager.getUserDetails().getUname());
                         setFooter(myLeaderData);
                     }*/
-                            progressBar.setVisibility(View.INVISIBLE);
-                            rlFull.setVisibility(View.VISIBLE);
-                        }
-                    }else {
-                        //CommonFunction.netWorkErrorAlert(getActivity());
+                        progressBar.setVisibility(View.INVISIBLE);
+                        rlFull.setVisibility(View.VISIBLE);
                     }
+                } else {
+                    //CommonFunction.netWorkErrorAlert(getActivity());
                 }
-            });
+            }
+        });
 
     }
 
@@ -151,14 +175,14 @@ public class LeaderFragment extends Fragment {
     }
 
 
-    private void initScrollListener() {
+    private void initScrollListener(int type) {
         recyclerView.addOnScrollListener(new PaginationScrollListener(mLayoutManager) {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
                 currentPage++;
-                leaderViewModel.getData(currentPage, sessionManager.getUid(), sessionManager.getLearnLangId());
-                preparedListItem();
+                leaderViewModel.getLeaderData(type, currentPage, sessionManager.getUid(), sessionManager.getLearnLangId());
+                preparedListItem(type);
 
             }
 

@@ -150,7 +150,8 @@ public class QFragment extends Fragment implements View.OnClickListener {
     private void PlayAudios(Question question) {
         try {
             tvQuestionName.setText(question.getWord());
-            cf.shakeAnimation(imbBtnQuestionImg, 1000);
+            cf.setImageBorder(imbBtnQuestionImg, 20, getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
+            //cf.shakeAnimation(imbBtnQuestionImg, 1000);
             //btnAudio1.setState(PlayPauseView.STATE_PLAY);
             cf.mediaPlayer = new MediaPlayer();
             cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + question.getAudioPath());
@@ -159,19 +160,22 @@ public class QFragment extends Fragment implements View.OnClickListener {
             cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
+                cf.setImageBorder(imbBtnQuestionImg, 0, null);
                 //btnAudio1.setState(PlayPauseView.STATE_PAUSE);
                 //btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                 //btnAudio2.setState(PlayPauseView.STATE_PLAY);
                 cf.mediaPlayer = new MediaPlayer();
                 try {
                     tvQuestionAnswer.setText(question.getAnsWord());
-                    cf.shakeAnimation(imgBtnAnsImage, 1000);
+                    cf.setImageBorder(imgBtnAnsImage, 20, getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
+                    // cf.shakeAnimation(imgBtnAnsImage, 1000);
                     cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + question.getAnsAudioPath());
                     cf.mediaPlayer.prepare();
                     cf.mediaPlayer.start();
                     cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
+                        cf.setImageBorder(imgBtnAnsImage, 0, null);
                         //btnAudio2.setState(PlayPauseView.STATE_PAUSE);
                         //btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                         setClickableButton(true);

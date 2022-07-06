@@ -40,7 +40,7 @@ public class ChangePasswordFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_change_password, container, false);
-        setToolbar(true, getString(R.string.change_password));
+        setToolbar(false, getString(R.string.change_password));
         etChangePasswordOldPassword = root.findViewById(R.id.etChangePasswordOldPassword);
         etChangePasswordNewPassword = root.findViewById(R.id.etChangePasswordNewPassword);
         etChangePasswordCnfPassword = root.findViewById(R.id.etChangePasswordCnfPassword);

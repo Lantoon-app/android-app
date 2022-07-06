@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import com.bazinga.lantoonnew.Tags;
 import com.bazinga.lantoonnew.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoonnew.home.chapter.lesson.ReferencePopup;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.Question;
+import com.bazinga.lantoonnew.home.chapter.lesson.ui.qp1.QP1ViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,13 +46,13 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
     ProgressBar pbTop;
     ImageView imbBtnQuestionImg, imgBtnAnsImage1,imgBtnAnsImage2,imgBtnAnsImage3,imgBtnAnsImage4;
     Button  btnAudioSlow1, btnAudioSlow2;
-    PlayPauseView btnAudio1, btnAudio2;
+    Button btnAudio1, btnAudio2;
+    LinearLayout llAnsImgs;
     int[] imageViewIds;
     String[] imagePaths;
     CommonFunction cf;
     ReferencePopup referencePopup;
     int quesNo, totalQues;
-    //MediaPlayer cf.mediaPlayer;
 
     public static QP2Fragment newInstance(int questionNo, int totalQuestions, String data) {
         QP2Fragment fragment = new QP2Fragment();
@@ -88,6 +90,7 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
         imgBtnAnsImage2 = view.findViewById(R.id.imgBtnAnsImage2);
         imgBtnAnsImage3 = view.findViewById(R.id.imgBtnAnsImage3);
         imgBtnAnsImage4 = view.findViewById(R.id.imgBtnAnsImage4);
+        llAnsImgs = view.findViewById(R.id.llAnsImgs);
         imgBtnHome.setOnClickListener(this::onClick);
         imgBtnHelp.setOnClickListener(this::onClick);
         btnAudio1.setOnClickListener(this::onClick);
@@ -144,8 +147,9 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
     private void PlayAudios(Question question) {
         try {
             tvQuestionName.setText(question.getWord());
-            cf.shakeAnimation(imbBtnQuestionImg, 1000);
-            btnAudio1.setState(PlayPauseView.STATE_PLAY);
+            cf.setImageBorder(imbBtnQuestionImg, 20, getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
+            //cf.shakeAnimation(imbBtnQuestionImg, 1000);
+            //btnAudio1.setState(PlayPauseView.STATE_PLAY);
             cf.mediaPlayer = new MediaPlayer();
             cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + question.getAudioPath());
             cf.mediaPlayer.prepare();
@@ -153,19 +157,22 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
             cf.mediaPlayer.setOnCompletionListener(mp -> {
                 mp.stop();
                 mp.release();
-                btnAudio1.setState(PlayPauseView.STATE_PAUSE);
-                btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
-                btnAudio2.setState(PlayPauseView.STATE_PLAY);
+                cf.setImageBorder(imbBtnQuestionImg, 0, null);
+                //btnAudio1.setState(PlayPauseView.STATE_PAUSE);
+                //btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                //btnAudio2.setState(PlayPauseView.STATE_PLAY);
                 cf.mediaPlayer = new MediaPlayer();
                 try {
+                    cf.setImageBorder(llAnsImgs, 20, getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
                     cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + question.getAnsAudioPath());
                     cf.mediaPlayer.prepare();
                     cf.mediaPlayer.start();
                     cf.mediaPlayer.setOnCompletionListener(mp1 -> {
                         mp1.stop();
                         mp1.release();
-                        btnAudio2.setState(PlayPauseView.STATE_PAUSE);
-                        btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                        cf.setImageBorder(llAnsImgs, 0, null);
+                        //btnAudio2.setState(PlayPauseView.STATE_PAUSE);
+                        //btnAudio2.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
                         setClickableButton(true);
                     });
                 } catch (IOException e) {
@@ -178,11 +185,6 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
@@ -202,15 +204,13 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
                     referencePopup.showPopupWindow(getView());
                 }
                 break;
-            case R.id.imgBtnNext:
-                break;
             case R.id.btnAudio1:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),btnAudio1);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),null);
                 tvQuestionName.setText(question.getWord());
                 cf.shakeAnimation(imbBtnQuestionImg, 1000);
                 break;
             case R.id.btnAudio2:
-                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAnsAudioPath(),btnAudio2);
+                audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAnsAudioPath(),null);
                 break;
             case R.id.btnAudioSlow1:
                 audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath());
@@ -220,17 +220,16 @@ public class QP2Fragment extends Fragment implements View.OnClickListener {
                 audio.playAudioSlow(getActivity(),QuestionsActivity.strFilePath + question.getAnsAudioPath());
                 break;
             case R.id.imgBtnAnsImage1:
-                cf.checkQuestion(imgBtnAnsImage1,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
-
+                cf.checkQuestion(imgBtnAnsImage1,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
             case R.id.imgBtnAnsImage2:
-                cf.checkQuestion(imgBtnAnsImage2,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
+                cf.checkQuestion(imgBtnAnsImage2,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
             case R.id.imgBtnAnsImage3:
-                cf.checkQuestion(imgBtnAnsImage3,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
+                cf.checkQuestion(imgBtnAnsImage3,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
             case R.id.imgBtnAnsImage4:
-                cf.checkQuestion(imgBtnAnsImage4,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,btnAudio1);
+                cf.checkQuestion(imgBtnAnsImage4,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
                 break;
         }
     }

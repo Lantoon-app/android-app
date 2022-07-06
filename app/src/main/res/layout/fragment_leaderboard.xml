@@ -38,8 +38,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvLeader"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="665dp"
             android:layout_above="@+id/footer"
+            android:layout_below="@+id/tablayout_leaderbord"
+            android:layout_marginTop="0dp"
             tools:listitem="@layout/item_leader" />
 
         <include
@@ -47,9 +49,29 @@
             layout="@layout/item_leader_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_alignParentBottom="true" />
+            android:layout_marginEnd="@dimen/_20sdp" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout_leaderbord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorHeight="@dimen/_5sdp">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_global"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Global" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab_insti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Institutional" />
+
+        </com.google.android.material.tabs.TabLayout>
     </RelativeLayout>
 
 

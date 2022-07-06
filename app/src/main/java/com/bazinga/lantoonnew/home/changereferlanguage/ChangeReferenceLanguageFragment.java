@@ -54,7 +54,7 @@ public class ChangeReferenceLanguageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_change_refer_language, container, false);
-        setToolbar(true, getString(R.string.support_language));
+        setToolbar(false, getString(R.string.support_language));
         listView = root.findViewById(R.id.llView);
         et_search = root.findViewById(R.id.et_search);
         progressBar = root.findViewById(R.id.progressBar);

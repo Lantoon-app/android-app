@@ -2,6 +2,7 @@ package com.bazinga.lantoonnew.home.chapter.lesson.ui.p3;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 import me.ibrahimsn.lib.CirclesLoadingView;
 
@@ -131,9 +134,7 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        cf.shakeAnimation(imbBtnQuestionImg, 1000);
-        audio.playAudioFileAnim(getActivity(),QuestionsActivity.strFilePath + question.getAudioPath(),null);
-        cf.mikeAnimation(btnMic, 2000);
+        PlayAudios(question);
     }
 
     private void setTopBarState(int quesNo, int totalQues) {
@@ -174,7 +175,30 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+    private void PlayAudios(Question question) {
+        try {
+            tvQuestionName.setText(question.getWord());
+            cf.setImageBorder(imbBtnQuestionImg, 20, getActivity().getDrawable(R.drawable.bg_all_answer_imgs));
+            //cf.shakeAnimation(imbBtnQuestionImg, 1000);
+            //btnAudio1.setState(PlayPauseView.STATE_PLAY);
+            cf.mediaPlayer = new MediaPlayer();
+            cf.mediaPlayer.setDataSource(QuestionsActivity.strFilePath + question.getAudioPath());
+            cf.mediaPlayer.prepare();
+            cf.mediaPlayer.start();
+            cf.mediaPlayer.setOnCompletionListener(mp -> {
+                mp.stop();
+                mp.release();
+                cf.setImageBorder(imbBtnQuestionImg, 0, null);
+                cf.mikeAnimation(btnMic, 2000);
+                //btnAudio1.setState(PlayPauseView.STATE_PAUSE);
+                //btnAudio1.setImageDrawable(getActivity().getDrawable(R.drawable.anim_vector_play));
+                //btnAudio2.setState(PlayPauseView.STATE_PLAY);
+            });
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
