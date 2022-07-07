@@ -43,9 +43,9 @@
 
     <fragment
         android:id="@+id/bottom_lesson"
-        android:name="com.bazinga.lantoonnew.home.chapter.ChapterFragment"
+        android:name="com.bazinga.lantoonnew.home.chapter.ChapterFragmentNew"
         android:label="@string/title_lesson"
-        tools:layout="@layout/fragment_chapter" />
+        tools:layout="@layout/fragment_chapter_new" />
 
     <fragment
         android:id="@+id/bottom_target"

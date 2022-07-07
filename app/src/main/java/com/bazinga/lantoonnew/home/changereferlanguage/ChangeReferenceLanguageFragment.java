@@ -141,6 +141,7 @@ public class ChangeReferenceLanguageFragment extends Fragment {
                         HomeActivity.sessionManager.setKnownLangNativeName(response.body().getLoginData().getKnownlangObj().getNativeName());
                         Toast.makeText(getActivity(), "Reference Language updated successfully", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(getView()).navigate(R.id.bottom_lesson);
+                        HomeActivity.setToolbar(true,null);
                     }
                 }
             }

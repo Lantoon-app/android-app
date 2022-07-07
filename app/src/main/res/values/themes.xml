@@ -78,6 +78,15 @@
         <item name="android:numStars">5</item>
         <item name="android:max">5</item>
     </style>
+    <style name="CustomStarRatingBarStyle" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/chapter_star_rating</item>
+        <item name="android:minHeight">@dimen/_15sdp</item>
+        <item name="android:maxHeight">@dimen/_55sdp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:numStars">5</item>
+        <item name="android:max">5</item>
+    </style>
     <style name="QuestionButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/bg_button</item>
     </style>

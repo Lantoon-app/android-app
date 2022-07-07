@@ -4,16 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#00FFFFFF">
+    android:background="@drawable/bg_questions">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/_30sdp"
-        android:background="@drawable/border_bg_reference"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/imgBtnClose"
@@ -23,130 +22,94 @@
             android:layout_marginTop="@dimen/_25sdp"
             android:layout_marginEnd="@dimen/_25sdp"
             android:background="@drawable/close_icon"
-            android:gravity="top" />
+            android:gravity="top"
+            android:visibility="gone" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/bg_tv_ref"
             android:gravity="center"
-            android:visibility="visible"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvQuestionNameHelpPopup"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/open_sans_bold"
+                android:background="@drawable/bg_ref_inner"
                 android:gravity="center"
-                android:layout_margin="@dimen/_25sdp"
-                android:text="@string/moretextsample"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioHelpPopup"
-                    style="@style/QuestionButtonStyle"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:layout_marginRight="10dp"
+                    android:background="@drawable/btn_question_speaker_blue"
+                    app:backgroundTint="@null" />
+
+                <TextView
+                    android:id="@+id/tvQuestionNameHelpPopup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_audio"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_40sdp" />
+                    android:text="@string/moretextsample"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlowHelpPopup"
-                    style="@style/QuestionButtonStyle"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_40sdp" />
+                    android:background="@drawable/btn_question_slow_speaker_blue"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llQtypes"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvQuestionNameHelpPopup2"
+            <LinearLayout
+                android:id="@+id/llQtypes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/open_sans_bold"
+                android:background="@drawable/bg_ref_inner"
                 android:gravity="center"
-                android:layout_margin="@dimen/_25sdp"
-                android:text="@string/moretextsample"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_13ssp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_margin="@dimen/_5sdp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioHelpPopup2"
-                    style="@style/QuestionButtonStyle"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@drawable/btn_question_speaker_blue"
+                    app:backgroundTint="@null" />
+
+                <TextView
+                    android:id="@+id/tvQuestionNameHelpPopup2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:fontFamily="@font/open_sans_bold"
                     android:gravity="center"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_audio"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_40sdp" />
+                    android:text="@string/moretextsample"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAudioSlowHelpPopup2"
-                    style="@style/QuestionButtonStyle"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_40sdp" />
+                    android:background="@drawable/btn_question_slow_speaker_blue"
+                    app:backgroundTint="@null" />
             </LinearLayout>
 
 
         </LinearLayout>
-
-    </LinearLayout>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

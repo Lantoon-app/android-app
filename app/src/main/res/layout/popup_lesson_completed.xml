@@ -11,7 +11,7 @@
     android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
-    android:background="@drawable/border_bg_chapter_completed">
+    android:background="@drawable/bg_popup_completed">
 <ImageView
     android:layout_width="@dimen/_80sdp"
     android:layout_height="@dimen/_80sdp"
@@ -57,24 +57,14 @@
             android:orientation="horizontal">
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnExitPopupLessonCompleted"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:background="@drawable/bg_button"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="@string/btn_exit"
-                android:textSize="@dimen/_15ssp"
-                app:backgroundTint="@null" />
+                style="@style/AppButtonStyle"
+                android:layout_margin="@dimen/_10sdp"
+                android:text="@string/btn_exit"/>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinuePopupLessonCompleted"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:background="@drawable/bg_button"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="@string/btn_continue"
-                android:textSize="@dimen/_15ssp"
-                app:backgroundTint="@null" />
+                style="@style/AppButtonStyle"
+                android:layout_margin="@dimen/_10sdp"
+                android:text="@string/btn_continue" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
