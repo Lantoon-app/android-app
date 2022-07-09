@@ -10,7 +10,10 @@ import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -75,6 +78,7 @@ public class ChapterFragmentNew extends Fragment {
     boolean fragmentDestroyed = false;
     ProgressBar progressBar;
     ImageView ivMaintenance;
+    Vibrator v;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -100,6 +104,9 @@ public class ChapterFragmentNew extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // get the VIBRATOR_SERVICE system service
+        v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+
         wheelView.setOnWheelItemClickListener(new WheelView.OnWheelItemClickListener() {
             @Override
             public void onWheelItemClick(WheelView parent, int position, boolean isSelected) {
@@ -151,6 +158,28 @@ public class ChapterFragmentNew extends Fragment {
 
             }
         });
+        wheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectListener() {
+            @Override
+            public void onWheelItemSelected(WheelView parent, Drawable itemDrawable, int position) {
+                Log.d("onWheelItemSelected",String.valueOf(position));
+
+                assert v != null;
+                // Vibrate for 500 milliseconds
+                if (Build.VERSION. SDK_INT >= Build.VERSION_CODES. O ) {
+                    v.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK) ;
+                } else {
+                    //deprecated in API 26
+                    v.vibrate( 2000 ) ;
+                }
+            }
+        });
+        wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
+            @Override
+            public void onWheelAngleChange(float angle) {
+                //the new angle of the wheel
+                //Log.d("onWheelAngleChange",String.valueOf(angle));
+            }
+        });
     }
 
     private void preparedListItem() {
@@ -185,8 +214,6 @@ public class ChapterFragmentNew extends Fragment {
                 }
             });
         } else {
-
-
             //CommonFunction.netWorkErrorAlert(getActivity());
             // Snackbar.make(activity.getCurrentFocus().getRootView(), activity.getString(R.string.msg_network_failed), Snackbar.LENGTH_SHORT).show();
         }
