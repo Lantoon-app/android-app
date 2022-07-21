@@ -108,12 +108,22 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18ssp" />
 
-                <ImageView
-                    android:id="@+id/imgBtnAnsImage"
-                    android:layout_width="@dimen/_180sdp"
-                    android:layout_height="@dimen/_180sdp"
+                <LinearLayout
+                    android:id="@+id/ll_D2_Ans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_gravity="center"
-                    android:layout_margin="@dimen/_10sdp" />
+                    android:gravity="center"
+                    android:orientation="vertical">
+                  <!--  <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/tvStyleD2answer"
+                        android:background="@drawable/bg_tv_ref_inner"
+                        android:text="text"/>-->
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

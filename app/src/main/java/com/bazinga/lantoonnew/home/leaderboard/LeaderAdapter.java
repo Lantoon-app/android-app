@@ -90,6 +90,7 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             add(response);
         }
     }
+
     public void clear() {
         int size = mItemList.size();
         mItemList.clear();
@@ -131,24 +132,13 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         Leader leader = mItemList.get(position);
         if (leader.getRank() == 1) {
-            //viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_first_rank);
+
             viewHolder.tvUserNameLeaderItem.setTextColor(Color.WHITE);
-            //viewHolder.tvRankLeaderItem.setTextColor(Color.WHITE);
             viewHolder.tvGemCountLeaderItem.setTextColor(Color.WHITE);
         } else {
-            //viewHolder.view.setBackgroundResource(R.drawable.bg_item_leader_all_rank);
-            //viewHolder.tvUserNameLeaderItem.setTextColor(Color.GRAY);
-            //viewHolder.tvRankLeaderItem.setTextColor(Color.GRAY);
-            //viewHolder.tvGemCountLeaderItem.setTextColor(Color.GRAY);
+
             if (leader.getPicture() != null) {
-           /* byte[] decodedString = Base64.decode(leader.getPicture(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            RoundedBitmapDrawable dr =
-                    RoundedBitmapDrawableFactory.create(viewHolder.itemView.getResources(), decodedByte);
-            dr.setGravity(Gravity.CENTER);
-            dr.setCircular(true);
-            viewHolder.ivLeaderItem.setBackground(null);
-            viewHolder.ivLeaderItem.setImageDrawable(dr);*/
+
                 Glide.with(context).load(leader.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -158,7 +148,7 @@ public class LeaderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-
+                        viewHolder.ivLeaderItem.setPadding(20, 20, 20, 20);
                         return false;
                     }
                 }).into(viewHolder.ivLeaderItem);

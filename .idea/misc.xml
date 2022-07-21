@@ -4,6 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/BM_GD/.gradle/caches/transforms-2/files-2.1/6fb4dcd760f86607066cced0405cc117/jetified-payu-custom-browser-7.10.1/res/drawable/cb_rectangle_round.xml" value="0.29583333333333334" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/chapter_lession1_completed_circle.xml" value="0.128" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/chapter_lession2_completed_circle.xml" value="0.1" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/chapter_lession3_completed_circle.xml" value="0.1" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/chapter_lession4_completed_circle.xml" value="0.1" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/horizontal_dotted_line.xml" value="0.1945" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout-sw720dp/fragment_chapter_new.xml" value="0.262109375" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_chapter.xml" value="0.22072368421052632" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_chapter_new.xml" value="0.21856677524429968" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_leaderboard.xml" value="0.22105263157894736" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/item_leader.xml" value="0.22072368421052632" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/item_leader_footer.xml" value="0.22105263157894736" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/layout_question_type_d2.xml" value="0.1825657894736842" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/layout_question_type_p3.xml" value="0.18980263157894736" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable-anydpi/ic_packages.xml" value="0.36822916666666666" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable-xhdpi/ic_launcher_background.xml" value="0.4036458333333333" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/android-app/app/src/main/res/drawable/answer_right_anim.xml" value="0.291015625" />

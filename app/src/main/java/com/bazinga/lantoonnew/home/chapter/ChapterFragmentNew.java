@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,7 +78,8 @@ public class ChapterFragmentNew extends Fragment {
     int itemCount = 0;
     boolean fragmentDestroyed = false;
     ProgressBar progressBar;
-    ImageView ivMaintenance;
+    RatingBar ratingBar;
+    ImageView iv_chapter,ivMaintenance;
     Vibrator v;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -91,6 +93,8 @@ public class ChapterFragmentNew extends Fragment {
         System.out.println("deviceid " + deviceId);
         View root = inflater.inflate(R.layout.fragment_chapter_new, container, false);
         wheelView = root.findViewById(R.id.wheelview);
+        ratingBar = root.findViewById(R.id.ratingBar);
+        iv_chapter = root.findViewById(R.id.iv_chapter);
         ivMaintenance = root.findViewById(R.id.ivMaintenance);
 
         progressBar = root.findViewById(R.id.progressBar);
@@ -162,7 +166,8 @@ public class ChapterFragmentNew extends Fragment {
             @Override
             public void onWheelItemSelected(WheelView parent, Drawable itemDrawable, int position) {
                 Log.d("onWheelItemSelected",String.valueOf(position));
-
+                Chapter chapter = cAdapter.getItem(position);
+                Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
                 assert v != null;
                 // Vibrate for 500 milliseconds
                 if (Build.VERSION. SDK_INT >= Build.VERSION_CODES. O ) {
@@ -171,6 +176,24 @@ public class ChapterFragmentNew extends Fragment {
                     //deprecated in API 26
                     v.vibrate( 2000 ) ;
                 }
+                switch (chapter.getCompletedLessons()) {
+                    case 0:
+                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession1_completed_circle));
+                        break;
+                    case 25:
+                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession1_completed_circle));
+                        break;
+                    case 50:
+                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession2_completed_circle));
+                        break;
+                    case 75:
+                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession3_completed_circle));
+                        break;
+                    case 100:
+                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession4_completed_circle));
+                        break;
+                }
+                ratingBar.setRating(chapter.getGemcount());
             }
         });
         wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
@@ -197,6 +220,15 @@ public class ChapterFragmentNew extends Fragment {
 
                         } else {
                             if (chapterResponse.getStatus().getCode() == 1032) {
+                               /* chapterResponse.getData().get(1).setGemcount(1);
+                                chapterResponse.getData().get(2).setGemcount(2);
+                                chapterResponse.getData().get(3).setGemcount(3);
+                                chapterResponse.getData().get(4).setGemcount(4);
+                                chapterResponse.getData().get(5).setGemcount(5);
+                                chapterResponse.getData().get(1).setCompletedLessons(25);
+                                chapterResponse.getData().get(2).setCompletedLessons(50);
+                                chapterResponse.getData().get(3).setCompletedLessons(75);
+                                chapterResponse.getData().get(4).setCompletedLessons(100);*/
                                 cAdapter = new CAdapter(chapterResponse.getData(), chapterResponse.getContinuenext(), getContext());
                                 wheelView.setAdapter(cAdapter);
                             } else if (chapterResponse.getStatus().getCode() == 1111) {

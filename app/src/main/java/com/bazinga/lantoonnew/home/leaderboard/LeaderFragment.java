@@ -29,7 +29,6 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ public class LeaderFragment extends Fragment {
     LeaderAdapter leaderAdapter;
     LinearLayoutManager mLayoutManager;
     TabLayout tablayout_leaderbord;
+    View footerView;
     public static final int PAGE_START = 1;
     private int currentPage = PAGE_START;
     boolean isLoading = false;
@@ -97,16 +97,17 @@ public class LeaderFragment extends Fragment {
     }
 
     private void initFooter(View root) {
-
+        footerView = root.findViewById(R.id.footer);
         ivLeaderItemFooter = root.findViewById(R.id.ivLeaderItemFooter);
         tvUserNameLeaderItemFooter = root.findViewById(R.id.tvUserNameLeaderItemFooter);
         tvRankLeaderItemFooter = root.findViewById(R.id.tvRankLeaderItemFooter);
         tvGemCountLeaderItemFooter = root.findViewById(R.id.tvGemCountLeaderItemFooter);
+        footerView.setVisibility(View.GONE);
     }
 
 
     private void preparedListItem(int type) {
-        if(leaderAdapter.getItemCount() > 0){
+        if (leaderAdapter.getItemCount() > 0) {
             leaderAdapter.clear();
         }
         leaderViewModel.getLeaderData(type, 1, sessionManager.getUid(), sessionManager.getLearnLangId());
@@ -144,14 +145,7 @@ public class LeaderFragment extends Fragment {
 
     private void setFooter(@NonNull MyLeaderData myLeaderData) {
         if (myLeaderData.getPicture() != null) {
-           /* byte[] decodedString = Base64.decode(myLeaderData.getPicture(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            RoundedBitmapDrawable dr =
-                    RoundedBitmapDrawableFactory.create(getResources(), decodedByte);
-            dr.setGravity(Gravity.CENTER);
-            dr.setCircular(true);
-            ivLeaderItemFooter.setBackground(null);
-            ivLeaderItemFooter.setImageDrawable(dr);*/
+            footerView.setVisibility(View.VISIBLE);
             Glide.with(this).load(myLeaderData.getPicture()).circleCrop().addListener(new RequestListener<Drawable>() {
                 @Override
                 public boolean onLoadFailed(@Nullable @org.jetbrains.annotations.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -161,6 +155,7 @@ public class LeaderFragment extends Fragment {
 
                 @Override
                 public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                    ivLeaderItemFooter.setPadding(20, 20, 20, 20);
                     return false;
                 }
             }).into(ivLeaderItemFooter);
