@@ -122,6 +122,11 @@ public interface ApiInterface {
     Call<JsonObject> getQuestionsType2(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
     //https://lantoon.net/Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}
 
+    //Lesson Questions Evaluation chapter type 2
+    @GET("Lantoon/public/EvaluationHandler.php/evaluationquestions/{language_id}/{evaluation_id}")
+    Call<JsonObject> getEvaluationQuestions(@Path("language_id") int language_id, @Path("evaluation_id") int evaluation_id);
+
+
     //Completed Lesson Questions (Not Used)
     @GET("Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}")
     Call<JsonObject> getCompletedQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);

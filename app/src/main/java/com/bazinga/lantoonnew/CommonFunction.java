@@ -150,14 +150,14 @@ public class CommonFunction {
             if (CheckAnswerImage(tag)) {
                 if (quesNo == totalQues) {
 
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, view);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths);
 
                 } else {
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, view);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths);
                 }
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, view);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths);
                 //setShuffleImages(activity, imageViewIds, imagePaths, view);
 
             }
@@ -238,10 +238,10 @@ public class CommonFunction {
 
                 if (asciiAnswerDataString.equals(asciiDataString)) {
 
-                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null, view);
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null, view);
+                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null);
                 }
 
                 /*if (answerWord.equals(data.get(0))) {

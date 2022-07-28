@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 import org.jetbrains.annotations.NotNull;
 
 public class QuestionsViewModelFactory implements ViewModelProvider.Factory {
+    boolean isEvaluation;
     int langid, chaperno, lessonno, knownLang, chapterType;
 
-    public QuestionsViewModelFactory(int langid, int chaperno, int lessonno, int knownLang,int chapterType) {
+    public QuestionsViewModelFactory(boolean isEvaluation,int langid, int chaperno, int lessonno, int knownLang,int chapterType) {
+        this.isEvaluation = isEvaluation;
         this.langid = langid;
         this.chaperno = chaperno;
         this.lessonno = lessonno;
@@ -21,6 +23,6 @@ public class QuestionsViewModelFactory implements ViewModelProvider.Factory {
     @NotNull
     @Override
     public <T extends ViewModel> T create(@NonNull @NotNull Class<T> modelClass) {
-        return (T) new QuestionsViewModel(langid,chaperno,lessonno,knownLang,chapterType);
+        return (T) new QuestionsViewModel(isEvaluation,langid,chaperno,lessonno,knownLang,chapterType);
     }
 }

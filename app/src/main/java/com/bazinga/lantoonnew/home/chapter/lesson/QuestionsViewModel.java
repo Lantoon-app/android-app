@@ -58,17 +58,22 @@ public class QuestionsViewModel extends ViewModel {
     private TaskModel mTask;
     private QuestionsAsyncTask taskAsync;
     DownloadZipFileTask downloadZipFileTask;
+    boolean isEvaluation;
     int langid, chaperno, lessonno, knownLang, chapterType;
 
-    public QuestionsViewModel(int langid, int chaperno, int lessonno, int knownLang, int chapterType) {
+    public QuestionsViewModel(boolean isEvaluation, int langid, int chaperno, int lessonno, int knownLang, int chapterType) {
         Log.d("numbers", String.valueOf(langid + chaperno + lessonno + knownLang));
         if(ApiClient.isTest){
-            this.langid = 100;
+            this.isEvaluation = isEvaluation;
+            if(isEvaluation)
+            this.langid = 1;
+            else this.langid = 100;
             this.chaperno = 1;
             this.lessonno = 1;
             this.knownLang = 1;
-            this.chapterType = 1;
+            this.chapterType = chapterType;
         }else {
+            this.isEvaluation = isEvaluation;
             this.langid = langid;
             this.chaperno = chaperno;
             this.lessonno = lessonno;
@@ -118,7 +123,7 @@ public class QuestionsViewModel extends ViewModel {
             if (chapterType == 1)
                 downloadZipFile(langid, chaperno, lessonno);
             else
-                questionsFragmentData(langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
+                questionsFragmentData(isEvaluation,langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
 
             return true;
         }
@@ -312,13 +317,15 @@ public class QuestionsViewModel extends ViewModel {
         }
     }
 
-    private void questionsFragmentData(int langid, int chaperno, int lessonno, int reflanguageid, String uid) {
+    private void questionsFragmentData(boolean isEvaluation, int langid, int chaperno, int lessonno, int reflanguageid, String uid) {
         System.out.println("langid" + langid + "chaperno" + chaperno + "lessonno" + lessonno + "uid" + uid);
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<JsonObject> call;
         if (chapterType == 1)
             call = apiInterface.getQuestions(langid, chaperno, lessonno, reflanguageid, uid);
+        else if(chapterType == 2 && isEvaluation)
+            call = apiInterface.getEvaluationQuestions(langid, chaperno);
         else
             call = apiInterface.getQuestionsType2(langid, chaperno, lessonno, reflanguageid, uid);
 
@@ -438,7 +445,7 @@ public class QuestionsViewModel extends ViewModel {
 
                 unzipEntry(zipfile, entry, unzipAtLocation);
             }
-            questionsFragmentData(langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
+            questionsFragmentData(isEvaluation, langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
             Log.d("unzip", "done");
         } catch (Exception e) {
 

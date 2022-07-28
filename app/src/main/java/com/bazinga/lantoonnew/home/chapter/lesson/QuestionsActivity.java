@@ -51,7 +51,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 1001;
     public static Context context;
     CommonFunction cf;
-    public static boolean isNewChapter, isRandomQuestion;
+    public static boolean isEvaluation, isNewChapter, isRandomQuestion;
     public static QuestionsViewModel questionViewModel;
     public static SessionManager sessionManager;
     public static ViewPager2 mPager;
@@ -215,9 +215,11 @@ public class QuestionsActivity extends AppCompatActivity {
         });
     }
 
-    private void init(int langid, int chaperno, int lessonno, String strSpentTime, boolean isNewChapter, boolean isRandomQuestion, int chapterType) {
+    private void init(boolean isEvaluation, int langid, int chaperno, int lessonno, String strSpentTime, boolean isNewChapter, boolean isRandomQuestion, int chapterType) {
         Log.d("isRandomQuestionsss", String.valueOf(isRandomQuestion));
         Log.d("chapterType = ", String.valueOf(chapterType));
+        Log.d("isEvaluation = ", String.valueOf(isEvaluation));
+        this.isEvaluation = isEvaluation;
         this.isNewChapter = isNewChapter;
         this.isRandomQuestion = isRandomQuestion;
         this.startLessonTime = Long.decode(strSpentTime);
@@ -227,17 +229,10 @@ public class QuestionsActivity extends AppCompatActivity {
             strFilePath = getCacheDir().getPath() + File.separator;
         else strFilePath = "";
 
-        /*progress.setMessage("Please wait...");
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progress.setIndeterminate(false);*/
 
-        /*strUserId = sessionManager.getUserDetails().getUid();
-        strLanguageId = String.valueOf(getIntent().getIntExtra(Utils.TAG_LANGUAGE_ID,0));
-        strChapterNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_CHAPTER_NO,0));
-        strLessonNo = String.valueOf(getIntent().getIntExtra(Utils.TAG_LESSON_NO,0));*/
 
         questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(langid, chaperno, lessonno, sessionManager.getKnownLangId(), chapterType)).get(QuestionsViewModel.class);
+                new QuestionsViewModelFactory(isEvaluation,langid, chaperno, lessonno, sessionManager.getKnownLangId(), chapterType)).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
@@ -308,7 +303,7 @@ public class QuestionsActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
 
             if (requestCode == MY_PERMISSION_REQUEST_CODE)
-                init(getIntent().getIntExtra(Tags.TAG_LANGUAGE_ID, 0),
+                init(getIntent().getBooleanExtra(Tags.TAG_IS_EVALUATION_QUESTIONS,false),getIntent().getIntExtra(Tags.TAG_LANGUAGE_ID, 0),
                         getIntent().getIntExtra(Tags.TAG_CHAPTER_NO, 0),
                         getIntent().getIntExtra(Tags.TAG_LESSON_NO, 0),
                         getIntent().getStringExtra(Tags.TAG_SPENT_TIME),

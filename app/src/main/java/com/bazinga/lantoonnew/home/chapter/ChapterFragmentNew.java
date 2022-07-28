@@ -50,7 +50,7 @@ import com.lukedeighton.wheelview.adapter.WheelArrayAdapter;
 import java.util.List;
 
 
-public class ChapterFragmentNew extends Fragment {
+public class ChapterFragmentNew extends Fragment implements View.OnClickListener {
 
     private ChapterViewModel chapterViewModel;
     //ChapterAdapter mChapterAdapter;
@@ -88,6 +88,7 @@ public class ChapterFragmentNew extends Fragment {
 
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
+        iv_chapter.setOnClickListener(this);
 
         preparedListItem();
 
@@ -103,12 +104,61 @@ public class ChapterFragmentNew extends Fragment {
         wheelView.setOnWheelItemClickListener(new WheelView.OnWheelItemClickListener() {
             @Override
             public void onWheelItemClick(WheelView parent, int position, boolean isSelected) {
-                Chapter chapter = cAdapter.getItem(position);
-                ContinueNext continueNext = cAdapter.continueNext;
-                Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
+                onClickChapter(position);
+            }
+        });
+        wheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectListener() {
+            @Override
+            public void onWheelItemSelected(WheelView parent, Drawable itemDrawable, int position) {
+                selectWheel(position);
+                iv_chapter.setTag(position);
+            }
+        });
+        wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
+            @Override
+            public void onWheelAngleChange(float angle) {
+                //the new angle of the wheel
+                //Log.d("onWheelAngleChange",String.valueOf(angle));
+            }
+        });
 
-                if (Integer.valueOf(chapter.getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(chapter.getChapterNo()) <= Integer.valueOf(continueNext.getUnlockedChapters())) {
-                    //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
+    }
+
+    private void onClickChapter(int position) {
+        Chapter chapter = cAdapter.getItem(position);
+        ContinueNext continueNext = cAdapter.continueNext;
+        Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
+/*
+                continueNext.setTargetType("evaluation");
+                chapter.setEvaluationId("1");
+                chapter.setPosition(1);*/
+
+        if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
+            if (chapter.getPosition() == 1) {
+                Intent intent = new Intent(getActivity(), QuestionsActivity.class);
+                if (continueNext.getTargetType().equals("chapter")) {
+                    intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, false);
+                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, chapter.getChapterType());
+                    intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
+                } else if (continueNext.getTargetType().equals("evaluation")) {
+                    intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, true);
+                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, 2);
+                    intent.putExtra(Tags.TAG_CHAPTER_NO, chapter.getEvaluationId());
+                }
+                intent.putExtra(Tags.TAG_TARGET_TYPE, continueNext.getTargetType());
+                intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, true);
+                intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
+                intent.putExtra(Tags.TAG_LANGUAGE_ID, continueNext.getLangid());
+                intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
+                intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpenttime());
+                intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
+                getActivity().startActivity(intent);
+            }
+        } else {
+            CommonFunction.netWorkErrorAlert(getActivity());
+        }
+                /*if (Integer.valueOf(chapter.getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(chapter.getChapterNo()) <= Integer.valueOf(continueNext.getUnlockedChapters())) {
+
                     if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
                         Intent intent = new Intent(getActivity(), QuestionsActivity.class);
                         if (Integer.valueOf(chapter.getChapterNo()) == continueNext.getChapterno()) {
@@ -146,87 +196,74 @@ public class ChapterFragmentNew extends Fragment {
                         CommonFunction.netWorkErrorAlert(getActivity());
                     }
 
-                }
+                }*/
 
+    }
+
+    private void selectWheel(int position) {
+        Log.d("onWheelItemSelected", String.valueOf(position));
+        Chapter chapter = cAdapter.getItem(position);
+        Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
+        assert v != null;
+        // Vibrate for 500 milliseconds
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
+        } else {
+            //deprecated in API 26
+            v.vibrate(2000);
+        }
+        if (chapter.getChapterID() != null) {
+
+
+            switch (chapter.getCompletedLessons()) {
+                case 0:
+                    iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_not_started));
+                    break;
+                case 25:
+                    iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession1_completed_circle));
+                    break;
+                case 50:
+                    iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession2_completed_circle));
+                    break;
+                case 75:
+                    iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession3_completed_circle));
+                    break;
+                case 100:
+                    iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_completed));
+                    break;
+            }
+            switch (Integer.parseInt(chapter.getChapterLevel())) {
+                case 1:
+                    iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_1));
+                    break;
+                case 2:
+                    iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_2));
+                    break;
+                case 3:
+                    iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_3));
+                    break;
+                case 4:
+                    iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_4));
+                    break;
+                case 5:
+                    iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_5));
+                    break;
 
             }
-        });
-        wheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectListener() {
-            @Override
-            public void onWheelItemSelected(WheelView parent, Drawable itemDrawable, int position) {
-                Log.d("onWheelItemSelected", String.valueOf(position));
-                Chapter chapter = cAdapter.getItem(position);
-                Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
-                assert v != null;
-                // Vibrate for 500 milliseconds
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    v.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
-                } else {
-                    //deprecated in API 26
-                    v.vibrate(2000);
-                }
-                if (chapter.getChapterID() != null) {
-
-
-                    switch (chapter.getCompletedLessons()) {
-                        case 0:
-                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_not_started));
-                            break;
-                        case 25:
-                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession1_completed_circle));
-                            break;
-                        case 50:
-                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession2_completed_circle));
-                            break;
-                        case 75:
-                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession3_completed_circle));
-                            break;
-                        case 100:
-                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_completed));
-                            break;
-                    }
-                    switch (Integer.parseInt(chapter.getChapterLevel())) {
-                        case 1:
-                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_1));
-                            break;
-                         case 2:
-                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_2));
-                            break;
-                         case 3:
-                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_3));
-                            break;
-                         case 4:
-                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_4));
-                            break;
-                         case 5:
-                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_5));
-                            break;
-
-                    }
-                    ratingBar.setRating(chapter.getGemcount());
-                }
-                if (chapter.getEvaluationId() != null) {
-                    switch (chapter.getCompleted()) {
-                        case 0:
-                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_not_started));
-                            iv_chapter.setImageDrawable(null);
-                            break;
-                        case 100:
-                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.evaluation_completed));
-                            iv_chapter.setImageDrawable(null);
-                            break;
-                    }
-                }
+            ratingBar.setRating(chapter.getGemcount());
+        }
+        if (chapter.getEvaluationId() != null) {
+            switch (chapter.getCompleted()) {
+                case 0:
+                    iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_not_started));
+                    iv_chapter.setImageDrawable(null);
+                    break;
+                case 100:
+                    iv_chapter.setBackground(getActivity().getDrawable(R.drawable.evaluation_completed));
+                    iv_chapter.setImageDrawable(null);
+                    break;
             }
-        });
-        wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
-            @Override
-            public void onWheelAngleChange(float angle) {
-                //the new angle of the wheel
-                //Log.d("onWheelAngleChange",String.valueOf(angle));
-            }
-        });
-
+        }
     }
 
     private void preparedListItem() {
@@ -256,7 +293,15 @@ public class ChapterFragmentNew extends Fragment {
 
                                 cAdapter = new CAdapter(chapterResponse.getData(), chapterResponse.getContinuenext(), getContext());
                                 wheelView.setAdapter(cAdapter);
-                                wheelView.setSelected(5);
+                                for (int i = 0; i < chapterResponse.getData().size(); i++) {
+                                    System.out.println(chapterResponse.getData().get(i));
+                                    if (chapterResponse.getData().get(i).getPosition() == 1) {
+                                        wheelView.setSelected(i);
+                                        selectWheel(i);
+                                        iv_chapter.setTag(i);
+                                    }
+
+                                }
                             } else if (chapterResponse.getStatus().getCode() == 1111) {
                                 appUpdateAlert(chapterResponse.getStatus().getMessage());
                             } else if (chapterResponse.getStatus().getCode() == 2043) {
@@ -339,6 +384,16 @@ public class ChapterFragmentNew extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         fragmentDestroyed = true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.iv_chapter:
+
+                onClickChapter(Integer.parseInt(iv_chapter.getTag().toString()));
+                break;
+        }
     }
 
     static class CAdapter extends WheelArrayAdapter<Chapter> {
