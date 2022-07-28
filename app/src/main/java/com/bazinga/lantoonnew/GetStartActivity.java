@@ -55,7 +55,7 @@ public class GetStartActivity extends AppCompatActivity {
         cf = new CommonFunction();
         cf.fullScreen(getWindow());
 
-        getCurrentLocation();
+        //getCurrentLocation();
         geocoder = new Geocoder(this);
         strDeviceId = Settings.Secure.getString(getContentResolver(),
                 Settings.Secure.ANDROID_ID);

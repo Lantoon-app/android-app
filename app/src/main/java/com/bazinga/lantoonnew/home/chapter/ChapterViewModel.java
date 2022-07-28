@@ -34,12 +34,16 @@ public class ChapterViewModel extends ViewModel {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<ChapterResponse> call = null;
 
-        if (ApiClient.isTest)
+        /*if (ApiClient.isTest)
+            call = apiInterface.getChapterV2(1, 1, "RET2021983451", 17, "789542632FDaa");
+        else*/
+            call = apiInterface.getChapterV2(LearnLangId, currentPageNo, userid, BuildConfig.VERSION_CODE, deviceid);
+       /* if (ApiClient.isTest)
             //with logout concept
             call = apiInterface.getChapter(LearnLangId, currentPageNo, userid, BuildConfig.VERSION_CODE, deviceid);
         else
             call = apiInterface.getChapter(LearnLangId, currentPageNo, userid, BuildConfig.VERSION_CODE);
-
+*/
         call.enqueue(new Callback<ChapterResponse>() {
             @Override
             public void onResponse(Call<ChapterResponse> call, Response<ChapterResponse> response) {

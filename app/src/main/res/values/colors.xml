@@ -59,13 +59,16 @@
     <color name="nav_drawer_selected_color">#115095</color>
     <color name="p3_text_view">#8633A5</color>
 
-    <color name="chapter_in_progress_inner">#f9c449</color>
+    <color name="chapter_in_progress_inner">#F9C449</color>
     <color name="chapter_in_progress_outer">#FFF0CC</color>
+
     <color name="chapter_disabled">#AAB1DB</color>
     <color name="chapter_progress_completed">#673AB7</color>
-    <color name="chapter_evaluation_in_progress_inner">#f9c449</color>
+
+    <color name="chapter_evaluation_in_progress_inner">#F9C449</color>
     <color name="chapter_evaluation_in_progress_outer">#FFF0CC</color>
-    <color name="chapter_evaluation_disabled">#F1CCE6</color>
-    <color name="chapter_evaluation_progress_completed">#F4ABDF</color>
+
+    <color name="chapter_evaluation_disabled">#F4ABDF</color>
+    <color name="chapter_evaluation_progress_completed">#E857BF</color>
 
 </resources>

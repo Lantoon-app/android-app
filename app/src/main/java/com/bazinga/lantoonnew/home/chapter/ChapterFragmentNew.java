@@ -3,12 +3,9 @@ package com.bazinga.lantoonnew.home.chapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,30 +32,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bazinga.lantoonnew.BuildConfig;
 import com.bazinga.lantoonnew.CommonFunction;
 import com.bazinga.lantoonnew.NetworkUtil;
 import com.bazinga.lantoonnew.R;
 import com.bazinga.lantoonnew.Tags;
-import com.bazinga.lantoonnew.home.chapter.adapter.ChapterAdapter;
 import com.bazinga.lantoonnew.home.chapter.lesson.QuestionsActivity;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.ContinueNext;
 import com.bazinga.lantoonnew.home.chapter.model.Chapter;
 import com.bazinga.lantoonnew.home.chapter.model.ChapterResponse;
-import com.bazinga.lantoonnew.home.chapter.utils.EqualSpacingItemDecoration;
-import com.bazinga.lantoonnew.home.chapter.utils.PaginationScrollListener;
 import com.bazinga.lantoonnew.login.SessionManager;
 import com.google.gson.GsonBuilder;
 import com.lukedeighton.wheelview.WheelView;
-import com.lukedeighton.wheelview.adapter.WheelAdapter;
 import com.lukedeighton.wheelview.adapter.WheelArrayAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class ChapterFragmentNew extends Fragment {
@@ -79,7 +68,7 @@ public class ChapterFragmentNew extends Fragment {
     boolean fragmentDestroyed = false;
     ProgressBar progressBar;
     RatingBar ratingBar;
-    ImageView iv_chapter,ivMaintenance;
+    ImageView iv_chapter, ivMaintenance;
     Vibrator v;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -118,7 +107,7 @@ public class ChapterFragmentNew extends Fragment {
                 ContinueNext continueNext = cAdapter.continueNext;
                 Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
 
-                if (Integer.valueOf(chapter.getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(chapter.getChapterNo()) <= Integer.valueOf(continueNext.getunlockedChapters())) {
+                if (Integer.valueOf(chapter.getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(chapter.getChapterNo()) <= Integer.valueOf(continueNext.getUnlockedChapters())) {
                     //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                     if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
                         Intent intent = new Intent(getActivity(), QuestionsActivity.class);
@@ -128,7 +117,7 @@ public class ChapterFragmentNew extends Fragment {
                             intent.putExtra(Tags.TAG_LANGUAGE_ID, continueNext.getLangid());
                             intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
                             intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
-                            intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpentTime());
+                            intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpenttime());
                             intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
                             intent.putExtra(Tags.TAG_CHAPTER_TYPE, chapter.getChapterType());
                         } else if (chapter.getActiveLesson() != null && chapter.getActiveLesson().getLessonno() > 0) {
@@ -165,35 +154,69 @@ public class ChapterFragmentNew extends Fragment {
         wheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectListener() {
             @Override
             public void onWheelItemSelected(WheelView parent, Drawable itemDrawable, int position) {
-                Log.d("onWheelItemSelected",String.valueOf(position));
+                Log.d("onWheelItemSelected", String.valueOf(position));
                 Chapter chapter = cAdapter.getItem(position);
                 Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
                 assert v != null;
                 // Vibrate for 500 milliseconds
-                if (Build.VERSION. SDK_INT >= Build.VERSION_CODES. O ) {
-                    v.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK) ;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    v.vibrate(VibrationEffect.EFFECT_HEAVY_CLICK);
                 } else {
                     //deprecated in API 26
-                    v.vibrate( 2000 ) ;
+                    v.vibrate(2000);
                 }
-                switch (chapter.getCompletedLessons()) {
-                    case 0:
-                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession1_completed_circle));
-                        break;
-                    case 25:
-                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession1_completed_circle));
-                        break;
-                    case 50:
-                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession2_completed_circle));
-                        break;
-                    case 75:
-                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession3_completed_circle));
-                        break;
-                    case 100:
-                        iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession4_completed_circle));
-                        break;
+                if (chapter.getChapterID() != null) {
+
+
+                    switch (chapter.getCompletedLessons()) {
+                        case 0:
+                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_not_started));
+                            break;
+                        case 25:
+                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession1_completed_circle));
+                            break;
+                        case 50:
+                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession2_completed_circle));
+                            break;
+                        case 75:
+                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_lession3_completed_circle));
+                            break;
+                        case 100:
+                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_completed));
+                            break;
+                    }
+                    switch (Integer.parseInt(chapter.getChapterLevel())) {
+                        case 1:
+                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_1));
+                            break;
+                         case 2:
+                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_2));
+                            break;
+                         case 3:
+                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_3));
+                            break;
+                         case 4:
+                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_4));
+                            break;
+                         case 5:
+                            iv_chapter.setImageDrawable(getActivity().getDrawable(R.drawable.chapter_level_5));
+                            break;
+
+                    }
+                    ratingBar.setRating(chapter.getGemcount());
                 }
-                ratingBar.setRating(chapter.getGemcount());
+                if (chapter.getEvaluationId() != null) {
+                    switch (chapter.getCompleted()) {
+                        case 0:
+                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.chapter_not_started));
+                            iv_chapter.setImageDrawable(null);
+                            break;
+                        case 100:
+                            iv_chapter.setBackground(getActivity().getDrawable(R.drawable.evaluation_completed));
+                            iv_chapter.setImageDrawable(null);
+                            break;
+                    }
+                }
             }
         });
         wheelView.setOnWheelAngleChangeListener(new WheelView.OnWheelAngleChangeListener() {
@@ -203,6 +226,7 @@ public class ChapterFragmentNew extends Fragment {
                 //Log.d("onWheelAngleChange",String.valueOf(angle));
             }
         });
+
     }
 
     private void preparedListItem() {
@@ -229,8 +253,10 @@ public class ChapterFragmentNew extends Fragment {
                                 chapterResponse.getData().get(2).setCompletedLessons(50);
                                 chapterResponse.getData().get(3).setCompletedLessons(75);
                                 chapterResponse.getData().get(4).setCompletedLessons(100);*/
+
                                 cAdapter = new CAdapter(chapterResponse.getData(), chapterResponse.getContinuenext(), getContext());
                                 wheelView.setAdapter(cAdapter);
+                                wheelView.setSelected(5);
                             } else if (chapterResponse.getStatus().getCode() == 1111) {
                                 appUpdateAlert(chapterResponse.getStatus().getMessage());
                             } else if (chapterResponse.getStatus().getCode() == 2043) {
@@ -327,8 +353,45 @@ public class ChapterFragmentNew extends Fragment {
 
         @Override
         public Drawable getDrawable(int position) {
-            //getItem(3).setCompletedLessons(100);
-            if (Integer.parseInt(getItem(position).getChapterNo()) <= continueNext.getChapterno() && Integer.parseInt(getItem(position).getChapterNo()) <= Integer.parseInt(continueNext.getunlockedChapters())) {
+            //getItem(3).setCompleted(100);
+            if (getItem(position).getChapterID() != null) {
+                if (getItem(position).getPosition() == 1) {
+                    return new LayerDrawable(new Drawable[]{
+                            createOvalDrawable(context.getColor(R.color.chapter_in_progress_inner), context.getColor(R.color.chapter_in_progress_outer)),
+                            new TextDrawable(getItem(position).getChapterNo(), context.getColor(R.color.black))
+                    });
+                } else if (getItem(position).getCompletedLessons() == 100)
+                    return new LayerDrawable(new Drawable[]{
+                            createOvalDrawable(context.getColor(R.color.chapter_progress_completed), 0),
+                            new TextDrawable(getItem(position).getChapterNo(), context.getColor(R.color.white))
+                    });
+                else
+                    return new LayerDrawable(new Drawable[]{
+                            createOvalDrawable(context.getColor(R.color.chapter_disabled), 0),
+                            new TextDrawable(getItem(position).getChapterNo(), context.getColor(R.color.white))
+                    });
+            }
+            if (getItem(position).getEvaluationId() != null) {
+                if (getItem(position).getPosition() == 1) {
+                    return new LayerDrawable(new Drawable[]{
+                            createOvalDrawable(context.getColor(R.color.chapter_in_progress_inner), context.getColor(R.color.chapter_in_progress_outer)),
+                            new TextDrawable(getItem(position).getChapterNo(), context.getColor(R.color.black))
+                    });
+                } else if (getItem(position).getCompleted() == 100)
+                    return new LayerDrawable(new Drawable[]{
+                            createOvalDrawable(context.getColor(R.color.chapter_evaluation_progress_completed), 0),
+                            new TextDrawable(getItem(position).getEvaluationId(), context.getColor(R.color.white))
+                    });
+                else
+                    return new LayerDrawable(new Drawable[]{
+                            createOvalDrawable(context.getColor(R.color.chapter_evaluation_disabled), 0),
+                            new TextDrawable(getItem(position).getEvaluationId(), context.getColor(R.color.white))
+                    });
+            }
+
+
+            /*
+            if (Integer.parseInt(getItem(position).getChapterNo()) <= continueNext.getChapterno() && Integer.parseInt(getItem(position).getChapterNo()) <= Integer.parseInt(continueNext.getUnlockedChapters())) {
                 if (getItem(position).getCompletedLessons() == 100)
                     return new LayerDrawable(new Drawable[]{
                             createOvalDrawable(context.getColor(R.color.chapter_progress_completed), 0),
@@ -344,7 +407,8 @@ public class ChapterFragmentNew extends Fragment {
                         createOvalDrawable(context.getColor(R.color.chapter_disabled), 0),
                         new TextDrawable(getItem(position).getChapterNo(), context.getColor(R.color.white))
                 });
-
+*/
+            return null;
         }
 
         @Override

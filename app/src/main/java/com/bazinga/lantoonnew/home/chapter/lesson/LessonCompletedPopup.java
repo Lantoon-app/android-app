@@ -71,7 +71,7 @@ public class LessonCompletedPopup {
         if (QuestionsActivity.isRandomQuestion || quesNo != QuestionsActivity.totalQues)
             btnContinuePopupLessonCompleted.setVisibility(View.GONE);
         if (postLessonResponse != null) {
-            if (postLessonResponse.getContinuenext().getChapterno() > Integer.valueOf(postLessonResponse.getContinuenext().getunlockedChapters())) {
+            if (postLessonResponse.getContinuenext().getChapterno() > Integer.valueOf(postLessonResponse.getContinuenext().getUnlockedChapters())) {
                 btnContinuePopupLessonCompleted.setEnabled(false);
                 //Toast.makeText(context,"Please contact Lantoon Support to continue more chapters...",Toast.LENGTH_LONG).show();
             }

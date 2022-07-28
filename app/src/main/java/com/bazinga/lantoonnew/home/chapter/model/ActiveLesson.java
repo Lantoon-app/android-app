@@ -3,7 +3,7 @@ package com.bazinga.lantoonnew.home.chapter.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ActiveLesson {
+public class  ActiveLesson {
     @SerializedName("lessonno")
     @Expose
     private Integer lessonno;

@@ -175,7 +175,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onBind(int position) {
             super.onBind(position);
 
-            if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(mChapterList.get(position).getChapterNo()) <= Integer.valueOf(continueNext.getunlockedChapters())) {
+            if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(mChapterList.get(position).getChapterNo()) <= Integer.valueOf(continueNext.getUnlockedChapters())) {
 
 
                 switch (mChapterList.get(position).getCompletedLessons()) {
@@ -214,7 +214,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(mChapterList.get(position).getChapterNo()) <= Integer.valueOf(continueNext.getunlockedChapters())) {
+                    if (Integer.valueOf(mChapterList.get(position).getChapterNo()) <= continueNext.getChapterno() && Integer.valueOf(mChapterList.get(position).getChapterNo()) <= Integer.valueOf(continueNext.getUnlockedChapters())) {
                         //Toast.makeText(activity,"Test",Toast.LENGTH_SHORT).show();
                         if (NetworkUtil.getConnectivityStatus(activity) != 0) {
                             Intent intent = new Intent(activity, QuestionsActivity.class);
@@ -224,7 +224,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                                 intent.putExtra(Tags.TAG_LANGUAGE_ID, continueNext.getLangid());
                                 intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
                                 intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
-                                intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpentTime());
+                                intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpenttime());
                                 intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
                                 intent.putExtra(Tags.TAG_CHAPTER_TYPE,mChapterList.get(position).getChapterType());
                             } else if (mChapterList.get(position).getActiveLesson() != null && mChapterList.get(position).getActiveLesson().getLessonno() > 0) {
