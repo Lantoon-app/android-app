@@ -1,5 +1,7 @@
 package com.bazinga.lantoonnew.home.chapter.lesson.ui.qp3;
 
+import static com.bazinga.lantoonnew.home.chapter.lesson.QuestionsActivity.isEvaluation;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.media.MediaPlayer;
@@ -231,9 +233,9 @@ public class QP3Fragment extends Fragment implements View.OnClickListener {
 
                 System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,btnAudio1);
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,btnAudio1,isEvaluation);
                 else
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,btnAudio1);
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,btnAudio1,isEvaluation);
 
                 break;
         }

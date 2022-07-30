@@ -4,6 +4,16 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PostLessonData {
+
+    @SerializedName("continue_status")
+    @Expose
+    private Integer continueStatus;
+    @SerializedName("failed_chapters")
+    @Expose
+    private String failedChapters;
+    @SerializedName("input_data")
+    @Expose
+    private EvaluationScore inputData;
     @SerializedName("gem")
     @Expose
     private Integer gem;
@@ -17,6 +27,29 @@ public class PostLessonData {
     @Expose
     private Double responsetime;
 
+    public Integer getContinueStatus() {
+        return continueStatus;
+    }
+
+    public void setContinueStatus(Integer continueStatus) {
+        this.continueStatus = continueStatus;
+    }
+
+    public String getFailedChapters() {
+        return failedChapters;
+    }
+
+    public void setFailedChapters(String failedChapters) {
+        this.failedChapters = failedChapters;
+    }
+
+    public EvaluationScore getEvaluationScore() {
+        return inputData;
+    }
+
+    public void setEvaluationScore(EvaluationScore inputData) {
+        this.inputData = inputData;
+    }
     public Integer getGem() {
         return gem;
     }

@@ -1,5 +1,7 @@
 package com.bazinga.lantoonnew.home.chapter.lesson.ui.p3;
 
+import static com.bazinga.lantoonnew.home.chapter.lesson.QuestionsActivity.isEvaluation;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.media.MediaPlayer;
@@ -168,9 +170,9 @@ public class P3Fragment extends Fragment implements View.OnClickListener {
 
                 System.out.println("withoutSplChar "+ansWrd);
                 if (quesNo == totalQues)
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,null);
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, true, getView(), getActivity(), quesNo, question,audio,null,isEvaluation);
                 else
-                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,null);
+                    cf.speechToText(getContext(), tvRecText,circlesLoadingView, ansWrd, false, getView(), getActivity(), quesNo, question,audio,null,isEvaluation);
 
                 break;
         }

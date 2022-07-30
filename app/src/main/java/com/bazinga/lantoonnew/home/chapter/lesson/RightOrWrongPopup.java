@@ -92,7 +92,7 @@ public class RightOrWrongPopup {
                                         //LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                                         //lessonCompletedPopup.showPopupWindow(view, activity);
                                         QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                        cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
+                                        //cf.postLesson(isEvaluation, view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                     } else {
 
@@ -147,7 +147,7 @@ public class RightOrWrongPopup {
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
                                         QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                        cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
+                                        //cf.postLesson(isEvaluation, view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                     } else {
                                         lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo, QuestionsActivity.tvTimer.getText().toString());

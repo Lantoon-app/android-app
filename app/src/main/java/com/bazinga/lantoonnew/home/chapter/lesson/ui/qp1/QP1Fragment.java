@@ -1,5 +1,7 @@
 package com.bazinga.lantoonnew.home.chapter.lesson.ui.qp1;
 
+import static com.bazinga.lantoonnew.home.chapter.lesson.QuestionsActivity.isEvaluation;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.media.MediaPlayer;
@@ -222,17 +224,17 @@ public class QP1Fragment extends Fragment implements View.OnClickListener {
                 tvQuestionAnswer.setText(question.getAnsWord());
                 break;
             case R.id.imgBtnAnsImage1:
-                cf.checkQuestion(imgBtnAnsImage1,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
+                cf.checkQuestion(imgBtnAnsImage1,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null,isEvaluation);
 
                 break;
             case R.id.imgBtnAnsImage2:
-                cf.checkQuestion(imgBtnAnsImage2,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
+                cf.checkQuestion(imgBtnAnsImage2,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null,isEvaluation);
                 break;
             case R.id.imgBtnAnsImage3:
-                cf.checkQuestion(imgBtnAnsImage3,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
+                cf.checkQuestion(imgBtnAnsImage3,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null,isEvaluation);
                 break;
             case R.id.imgBtnAnsImage4:
-                cf.checkQuestion(imgBtnAnsImage4,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null);
+                cf.checkQuestion(imgBtnAnsImage4,quesNo,totalQues,getView(),getActivity(),imageViewIds,imagePaths,question,audio,null,isEvaluation);
                 break;
         }
     }

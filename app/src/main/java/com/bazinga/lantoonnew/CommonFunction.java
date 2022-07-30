@@ -35,8 +35,10 @@ import com.bazinga.lantoonnew.home.chapter.lesson.ChapterCompletedPopup;
 import com.bazinga.lantoonnew.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoonnew.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoonnew.home.chapter.lesson.QuestionsActivity;
+import com.bazinga.lantoonnew.home.chapter.lesson.model.EvaluationScore;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.Question;
+import com.bazinga.lantoonnew.home.chapter.lesson.model.ScoreDetails;
 import com.bazinga.lantoonnew.home.payment.model.PurchaseResponse;
 import com.bazinga.lantoonnew.login.SessionManager;
 import com.bazinga.lantoonnew.login.ui.login.LoggedInUserView;
@@ -47,7 +49,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.snackbar.Snackbar;
-
 import com.google.gson.GsonBuilder;
 
 import java.nio.charset.StandardCharsets;
@@ -115,7 +116,7 @@ public class CommonFunction {
     }
 
     public void setImageBorder(View imageView, int padding, Drawable drawable) {
-       // if (drawable != null)
+        // if (drawable != null)
         imageView.setBackground(drawable);
         imageView.setPadding(padding, padding, padding, padding);
     }
@@ -141,7 +142,7 @@ public class CommonFunction {
 
     }
 
-    public void checkQuestion(ImageView ansImageView, int quesNo, int totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, Question question, Audio audio, PlayPauseView btnAudio) {
+    public void checkQuestion(ImageView ansImageView, int quesNo, int totalQues, View view, Activity activity, int[] imageViewIds, String[] imagePaths, Question question, Audio audio, PlayPauseView btnAudio, boolean isEvaluation) {
         if (isCheckImageQuestion) {
             String tag = ansImageView.getTag().toString();
             isCheckImageQuestion = false;
@@ -150,14 +151,14 @@ public class CommonFunction {
             if (CheckAnswerImage(tag)) {
                 if (quesNo == totalQues) {
 
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, isEvaluation);
 
                 } else {
-                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths);
+                    qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, isEvaluation);
                 }
 
             } else {
-                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths);
+                qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, isEvaluation);
                 //setShuffleImages(activity, imageViewIds, imagePaths, view);
 
             }
@@ -172,7 +173,7 @@ public class CommonFunction {
         else return false;
     }
 
-    public void speechToText(Context context, TextView textView, CirclesLoadingView circlesLoadingView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo, Question question, Audio audio, PlayPauseView btnAudio) {
+    public void speechToText(Context context, TextView textView, CirclesLoadingView circlesLoadingView, String answerWord, boolean isLastQuestion, View view, Activity activity, int quesNo, Question question, Audio audio, PlayPauseView btnAudio, boolean isEvaluation) {
 
         SpeechRecognizer speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context);
         Intent speechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -238,10 +239,10 @@ public class CommonFunction {
 
                 if (asciiAnswerDataString.equals(asciiDataString)) {
 
-                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null);
+                    qrwp.showPopup(activity, view, true, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null, isEvaluation);
 
                 } else {
-                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null);
+                    qrwp.showPopup(activity, view, false, isLastQuestion, quesNo, attemptCount, true, question, audio, btnAudio, null, null, null, isEvaluation);
                 }
 
                 /*if (answerWord.equals(data.get(0))) {
@@ -334,13 +335,27 @@ public class CommonFunction {
         });
     }
 
-    public void postLesson(View view, Activity activity, int quesNo, String strTimeSpent) {
-
+    public void postLesson(boolean isEvaluation, View view, Activity activity, int quesNo, String strTimeSpent, List<ScoreDetails> scoreDetailsList) {
+        Log.d("postLesson", "started");
         if (NetworkUtil.getConnectivityStatus(activity) != 0) {
             CommonProgressPopup commonProgressPopup = new CommonProgressPopup();
             commonProgressPopup.showPopupWindow(view, activity);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<PostLessonResponse> call = apiInterface.scoreUpdate(QuestionsActivity.score);
+            Call<PostLessonResponse> call = null;
+            if (isEvaluation) {
+                Log.d("evaluationScore", "started");
+                EvaluationScore evaluationScore = new EvaluationScore();
+                //evaluationScore.setEvaluation_id(String.valueOf(QuestionsActivity.chapter_evaluation_number));
+                evaluationScore.setEvaluation_id(String.valueOf(1));
+                evaluationScore.setLanguage_id(String.valueOf(QuestionsActivity.language_id));
+                evaluationScore.setScore_details(scoreDetailsList);
+                evaluationScore.setUser_id(QuestionsActivity.strUserId);
+                evaluationScore.setSpentTime("00:02:52");
+                Log.d("evaluationScore", new GsonBuilder().setPrettyPrinting().create().toJson(evaluationScore));
+                call = apiInterface.scoreUpdate(evaluationScore);
+            } else {
+                call = apiInterface.scoreUpdate(QuestionsActivity.score);
+            }
             call.enqueue(new Callback<PostLessonResponse>() {
                 @Override
                 public void onResponse(Call<PostLessonResponse> call, Response<PostLessonResponse> response) {
@@ -348,17 +363,20 @@ public class CommonFunction {
                     if (response.body() != null) {
                         Log.d("response postLesson", new GsonBuilder().setPrettyPrinting().create().toJson(response.body()));
 
-                        if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 1012) {
+                        if (response.body().getStatus().getCode() == 1011 || response.body().getStatus().getCode() == 2101 || response.body().getStatus().getCode() == 1012) {
                             QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
-
                             QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
-                            if (response.body().getContinuenext().getLessonno() == 1) {
+
+                                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                                lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+
+                            /*if (response.body().getContinuenext().getLessonno() == 1) {
                                 ChapterCompletedPopup chapterCompletedPopup = new ChapterCompletedPopup();
                                 chapterCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
                             } else {
-                                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                                lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
-                            }
+                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                            lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+                            }*/
                         }
                     }
                 }
@@ -368,7 +386,6 @@ public class CommonFunction {
                     Log.e("response postLesson", t.getMessage());
                 }
             });
-
         } else {
             netWorkErrorAlert(activity);
             activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);

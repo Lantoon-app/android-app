@@ -47,6 +47,8 @@ import com.google.gson.GsonBuilder;
 import com.lukedeighton.wheelview.WheelView;
 import com.lukedeighton.wheelview.adapter.WheelArrayAdapter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -128,28 +130,45 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
         Chapter chapter = cAdapter.getItem(position);
         ContinueNext continueNext = cAdapter.continueNext;
         Log.d("Chapter ", new GsonBuilder().setPrettyPrinting().create().toJson(cAdapter.getItem(position)));
-/*
-                continueNext.setTargetType("evaluation");
-                chapter.setEvaluationId("1");
-                chapter.setPosition(1);*/
+
 
         if (NetworkUtil.getConnectivityStatus(getActivity()) != 0) {
             if (chapter.getPosition() == 1) {
                 Intent intent = new Intent(getActivity(), QuestionsActivity.class);
                 if (continueNext.getTargetType().equals("chapter")) {
                     intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, false);
-                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, chapter.getChapterType());
-                    intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
+                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, Integer.parseInt(chapter.getChapterType()));
+                    if(chapter.getRetakeStatus()!=null) {
+                        if (chapter.getRetakeStatus().getStatus() == 1) {
+                            intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.parseInt(chapter.getRetakeStatus().getChapterNo()));
+                            intent.putExtra(Tags.TAG_LESSON_NO, chapter.getRetakeStatus().getLessonNo());
+                            intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.parseInt(chapter.getRetakeStatus().getLanguageId()));
+                        }else {
+                            intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
+                            intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
+                            intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.parseInt(continueNext.getLangid()));
+                        }
+                    }
                 } else if (continueNext.getTargetType().equals("evaluation")) {
+                    if(chapter.getRetakeStatus()!=null) {
+                        if (chapter.getRetakeStatus().getStatus() == 1) {
+                            intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.parseInt(chapter.getRetakeStatus().getLanguageId()));
+                            intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.parseInt(chapter.getRetakeStatus().getEvaluationId()));
+                        }else {
+                            intent.putExtra(Tags.TAG_LANGUAGE_ID,  Integer.parseInt(continueNext.getLangid()));
+                            intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.parseInt(chapter.getEvaluationId()));
+                        }
+                    }
                     intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, true);
                     intent.putExtra(Tags.TAG_CHAPTER_TYPE, 2);
-                    intent.putExtra(Tags.TAG_CHAPTER_NO, chapter.getEvaluationId());
+
+                    Bundle arg = new Bundle();
+                    arg.putSerializable(Tags.TAG_CHAPTER_LIST,(Serializable) chapter.getChapterList());
+                    intent.putExtra(getString(R.string.BUNDLE),arg);
                 }
                 intent.putExtra(Tags.TAG_TARGET_TYPE, continueNext.getTargetType());
                 intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, true);
                 intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
-                intent.putExtra(Tags.TAG_LANGUAGE_ID, continueNext.getLangid());
-                intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
                 intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpenttime());
                 intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
                 getActivity().startActivity(intent);
@@ -164,7 +183,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                         if (Integer.valueOf(chapter.getChapterNo()) == continueNext.getChapterno()) {
                             intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, true);
                             intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
-                            intent.putExtra(Tags.TAG_LANGUAGE_ID, continueNext.getLangid());
+                            intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.parseInt(continueNext.getLangid()));
                             intent.putExtra(Tags.TAG_CHAPTER_NO, continueNext.getChapterno());
                             intent.putExtra(Tags.TAG_LESSON_NO, continueNext.getLessonno());
                             intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpenttime());
@@ -213,7 +232,6 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
             v.vibrate(2000);
         }
         if (chapter.getChapterID() != null) {
-
 
             switch (chapter.getCompletedLessons()) {
                 case 0:
@@ -290,7 +308,16 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                                 chapterResponse.getData().get(2).setCompletedLessons(50);
                                 chapterResponse.getData().get(3).setCompletedLessons(75);
                                 chapterResponse.getData().get(4).setCompletedLessons(100);*/
-
+                                /*chapterResponse.getData().get(0).setPosition(0);
+                                chapterResponse.getData().get(2).setPosition(1);
+*/
+                              /*  List<String> chap_list = new ArrayList<>();
+                                chap_list.add("1");
+                                chap_list.add("2");
+                                chap_list.add("3");
+                                chapterResponse.getContinuenext().setTargetType("evaluation");
+                                chapterResponse.getData().get(0).setChapterList(chap_list);
+*/
                                 cAdapter = new CAdapter(chapterResponse.getData(), chapterResponse.getContinuenext(), getContext());
                                 wheelView.setAdapter(cAdapter);
                                 for (int i = 0; i < chapterResponse.getData().size(); i++) {
@@ -388,7 +415,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_chapter:
 
                 onClickChapter(Integer.parseInt(iv_chapter.getTag().toString()));

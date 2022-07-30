@@ -34,6 +34,7 @@ import com.bazinga.lantoonnew.R;
 import com.bazinga.lantoonnew.Tags;
 import com.bazinga.lantoonnew.home.HomeActivity;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.Score;
+import com.bazinga.lantoonnew.home.chapter.lesson.model.ScoreDetails;
 import com.bazinga.lantoonnew.login.SessionManager;
 import com.bazinga.lantoonnew.retrofit.ApiClient;
 import com.bumptech.glide.Glide;
@@ -42,9 +43,12 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class QuestionsActivity extends AppCompatActivity {
@@ -52,6 +56,7 @@ public class QuestionsActivity extends AppCompatActivity {
     public static Context context;
     CommonFunction cf;
     public static boolean isEvaluation, isNewChapter, isRandomQuestion;
+    public static int chapter_evaluation_number,language_id;
     public static QuestionsViewModel questionViewModel;
     public static SessionManager sessionManager;
     public static ViewPager2 mPager;
@@ -64,6 +69,7 @@ public class QuestionsActivity extends AppCompatActivity {
     public static int chapterType;
     public static String strFilePath = "";
     public static Score score;
+    public static List<ScoreDetails> scoreDetailsList = null;
     public static int Pmark = 0, Nmark = 0, OutOfTotal = 0;
     public static Map<String, String> countMap = new HashMap<>();
     public static String strUserId, strTotalQues, strSpeakCode, strCompletedQues;
@@ -219,20 +225,38 @@ public class QuestionsActivity extends AppCompatActivity {
         Log.d("isRandomQuestionsss", String.valueOf(isRandomQuestion));
         Log.d("chapterType = ", String.valueOf(chapterType));
         Log.d("isEvaluation = ", String.valueOf(isEvaluation));
+        this.chapter_evaluation_number = chaperno;
+        this.language_id = langid;
         this.isEvaluation = isEvaluation;
         this.isNewChapter = isNewChapter;
         this.isRandomQuestion = isRandomQuestion;
         this.startLessonTime = Long.decode(strSpentTime);
         this.chapterType = chapterType;
 
+        if (isEvaluation) {
+            Intent intent = getIntent();
+            Bundle args = intent.getBundleExtra("BUNDLE");
+            List<String> chapter_list = (List<String>) args.getSerializable(Tags.TAG_CHAPTER_LIST);
+            Log.d("chapter_list", new GsonBuilder().setPrettyPrinting().create().toJson(chapter_list));
+            scoreDetailsList = new ArrayList<>();
+            for (int i = 0; i < chapter_list.size(); i++) {
+                ScoreDetails scoreDetails = new ScoreDetails();
+                scoreDetails.setChapterNo(Integer.parseInt(chapter_list.get(i)));
+                scoreDetails.setCorrect(0);
+                scoreDetails.setIncorrect(0);
+                scoreDetails.setTotalQues(10);
+                scoreDetailsList.add(scoreDetails);
+            }
+            Log.d("scoreDetailsList", new GsonBuilder().setPrettyPrinting().create().toJson(scoreDetailsList));
+        }
+
         if (chapterType == 1)
             strFilePath = getCacheDir().getPath() + File.separator;
         else strFilePath = "";
 
 
-
         questionViewModel = new ViewModelProvider(this,
-                new QuestionsViewModelFactory(isEvaluation,langid, chaperno, lessonno, sessionManager.getKnownLangId(), chapterType)).get(QuestionsViewModel.class);
+                new QuestionsViewModelFactory(isEvaluation, langid, chaperno, lessonno, sessionManager.getKnownLangId(), chapterType)).get(QuestionsViewModel.class);
         questionViewModel.getProgressTask().observe(this, task -> {
 
             Log.d("TAG", "onChanged: status " + task.getStatus() + " value: " + task.getValue());
@@ -263,7 +287,7 @@ public class QuestionsActivity extends AppCompatActivity {
                         else
                             mPager.setUserInputEnabled(false);
                         mPager.setCurrentItem(getIntent().getIntExtra(Tags.TAG_START_QUESTION_NO, 1) - 1);
-                        //mPager.setCurrentItem(5);
+                        //mPager.setCurrentItem(30);
                         mPager.clearFocus();
 
                         totalQues = mPageAdapter.getItemCount();
@@ -303,12 +327,14 @@ public class QuestionsActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
 
             if (requestCode == MY_PERMISSION_REQUEST_CODE)
-                init(getIntent().getBooleanExtra(Tags.TAG_IS_EVALUATION_QUESTIONS,false),getIntent().getIntExtra(Tags.TAG_LANGUAGE_ID, 0),
+                init(getIntent().getBooleanExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, false),
+                        getIntent().getIntExtra(Tags.TAG_LANGUAGE_ID, 0),
                         getIntent().getIntExtra(Tags.TAG_CHAPTER_NO, 0),
                         getIntent().getIntExtra(Tags.TAG_LESSON_NO, 0),
                         getIntent().getStringExtra(Tags.TAG_SPENT_TIME),
                         getIntent().getBooleanExtra(Tags.TAG_IS_NEW_CHAPTER, false),
-                        getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false), getIntent().getIntExtra(Tags.TAG_CHAPTER_TYPE, 1));
+                        getIntent().getBooleanExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false),
+                        getIntent().getIntExtra(Tags.TAG_CHAPTER_TYPE, 1));
             //Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
         } else {
             //Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
@@ -374,6 +400,16 @@ public class QuestionsActivity extends AppCompatActivity {
         strTotalQues = "";
         strCompletedQues = "";
 
+    }
+
+    public static void addEvaluationScore(int chapterNo, int correct, int incorrect) {
+        for (int i = 0; i < scoreDetailsList.size(); i++) {
+            if(scoreDetailsList.get(i).getChapterNo() == chapterNo) {
+                scoreDetailsList.get(i).setCorrect(scoreDetailsList.get(i).getCorrect() + correct);
+                scoreDetailsList.get(i).setIncorrect(scoreDetailsList.get(i).getIncorrect() + incorrect);
+            }
+        }
+        Log.d("updatedscoreDetailsList",new GsonBuilder().setPrettyPrinting().create().toJson(scoreDetailsList));
     }
 
     @Override

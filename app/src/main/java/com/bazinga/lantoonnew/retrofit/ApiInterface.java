@@ -1,6 +1,7 @@
 package com.bazinga.lantoonnew.retrofit;
 
 import com.bazinga.lantoonnew.home.changepassword.model.ChangePasswordResponse;
+import com.bazinga.lantoonnew.home.chapter.lesson.model.EvaluationScore;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoonnew.home.chapter.lesson.model.Score;
 import com.bazinga.lantoonnew.home.chapter.model.ChapterResponse;
@@ -136,10 +137,15 @@ public interface ApiInterface {
     @POST("Lantoon/public/UserHandler.php/registeruser")
     Call<LoggedInUserResponse> createUser(@Body User user);
 
-    //Score Update
+    //Score Update Chapter
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/ScoreHandler.php/scoreupdate")
     Call<PostLessonResponse> scoreUpdate(@Body Score score);
+
+    //Score Update Evaluation
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/EvaluationHandler.php/updateevaluationscore")
+    Call<PostLessonResponse> scoreUpdate(@Body EvaluationScore evaluationScore);
 
     //Login
     @Headers("Content-Type: application/json")
@@ -166,14 +172,13 @@ public interface ApiInterface {
     @GET("Lantoon/public/ScoreHandler.php/leaderboard/{slideno}/{uid}/{langid}")
     Call<LeaderResponse> getLeaders(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
 
-   //Leaderboard global
+    //Leaderboard global
     @GET("Lantoon/public/ScoreHandler.php/leaderboardglobal/{slideno}/{uid}/{langid}")
     Call<LeaderResponse> getLeadersGlobal(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
 
-   //Leaderboard institutional
+    //Leaderboard institutional
     @GET("Lantoon/public/ScoreHandler.php/leaderboardinstitutional/{slideno}/{uid}/{langid}")
     Call<LeaderResponse> getLeadersInstitutional(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
-
 
 
     //Targets
@@ -197,14 +202,14 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/PackageHandler.php/purchasesuccess")
     Call<PurchaseResponse> postPaymentPurchaseDetails(@Query("transaction_id") String transaction_id,
-                                              @Query("package_id") String package_id ,
-                                              @Query("user_id") String user_id,
-                                              @Query("language") String language,
-                                              @Query("total_amount") String total_amount,
-                                              @Query("paid_amount") String paid_amount,
-                                              @Query("payment_type") String payment_type,
-                                              @Query("chapters_unlocked") String chapters_unlocked,
-                                              @Query("duration_in_days") String duration_in_days);
+                                                      @Query("package_id") String package_id,
+                                                      @Query("user_id") String user_id,
+                                                      @Query("language") String language,
+                                                      @Query("total_amount") String total_amount,
+                                                      @Query("paid_amount") String paid_amount,
+                                                      @Query("payment_type") String payment_type,
+                                                      @Query("chapters_unlocked") String chapters_unlocked,
+                                                      @Query("duration_in_days") String duration_in_days);
 
 
 }

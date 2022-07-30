@@ -63,7 +63,7 @@ public class QuestionsViewModel extends ViewModel {
 
     public QuestionsViewModel(boolean isEvaluation, int langid, int chaperno, int lessonno, int knownLang, int chapterType) {
         Log.d("numbers", String.valueOf(langid + chaperno + lessonno + knownLang));
-        if(ApiClient.isTest){
+        /*if(ApiClient.isTest){
             this.isEvaluation = isEvaluation;
             if(isEvaluation)
             this.langid = 1;
@@ -72,14 +72,14 @@ public class QuestionsViewModel extends ViewModel {
             this.lessonno = 1;
             this.knownLang = 1;
             this.chapterType = chapterType;
-        }else {
+        }else {*/
             this.isEvaluation = isEvaluation;
             this.langid = langid;
             this.chaperno = chaperno;
             this.lessonno = lessonno;
             this.knownLang = knownLang;
             this.chapterType = chapterType;
-        }
+        //}
     }
 
     private void startTask() {

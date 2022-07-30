@@ -13,6 +13,10 @@ public class ContinueNext {
     @SerializedName("chapterno")
     @Expose
     private Integer chapterno;
+    @SerializedName("evaluation_id")
+    @Expose
+    private Integer evaluation_id;
+
     @SerializedName("lessonno")
     @Expose
     private Integer lessonno;
@@ -53,6 +57,14 @@ public class ContinueNext {
         this.chapterno = chapterno;
     }
 
+    public Integer getEvaluation_id() {
+        return evaluation_id;
+    }
+
+    public void setEvaluation_id(Integer evaluation_id) {
+        this.evaluation_id = evaluation_id;
+    }
+
     public Integer getLessonno() {
         return lessonno;
     }
@@ -84,6 +96,7 @@ public class ContinueNext {
     public void setUnlockedChapters(String unlockedChapters) {
         this.unlockedChapters = unlockedChapters;
     }
+
     public Integer getChapterType() {
         return chapter_type;
     }
