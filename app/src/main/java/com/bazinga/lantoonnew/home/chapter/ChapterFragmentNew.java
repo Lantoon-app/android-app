@@ -69,7 +69,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
     int itemCount = 0;
     boolean fragmentDestroyed = false;
     ProgressBar progressBar;
-    RatingBar ratingBar;
+    ImageView iv_RatingStar;
     ImageView iv_chapter, ivMaintenance;
     Vibrator v;
 
@@ -84,7 +84,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
         System.out.println("deviceid " + deviceId);
         View root = inflater.inflate(R.layout.fragment_chapter_new, container, false);
         wheelView = root.findViewById(R.id.wheelview);
-        ratingBar = root.findViewById(R.id.ratingBar);
+        iv_RatingStar = root.findViewById(R.id.iv_RatingStar);
         iv_chapter = root.findViewById(R.id.iv_chapter);
         ivMaintenance = root.findViewById(R.id.ivMaintenance);
 
@@ -106,7 +106,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
         wheelView.setOnWheelItemClickListener(new WheelView.OnWheelItemClickListener() {
             @Override
             public void onWheelItemClick(WheelView parent, int position, boolean isSelected) {
-                onClickChapter(position);
+                //onClickChapter(position);
             }
         });
         wheelView.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectListener() {
@@ -137,7 +137,8 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                 Intent intent = new Intent(getActivity(), QuestionsActivity.class);
                 if (continueNext.getTargetType().equals("chapter")) {
                     intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, false);
-                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, Integer.parseInt(chapter.getChapterType()));
+                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, 1);
+                    intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpenttime());
                     if(chapter.getRetakeStatus()!=null) {
                         if (chapter.getRetakeStatus().getStatus() == 1) {
                             intent.putExtra(Tags.TAG_CHAPTER_NO, Integer.parseInt(chapter.getRetakeStatus().getChapterNo()));
@@ -161,6 +162,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                     }
                     intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, true);
                     intent.putExtra(Tags.TAG_CHAPTER_TYPE, 2);
+                    intent.putExtra(Tags.TAG_SPENT_TIME, "0");
 
                     Bundle arg = new Bundle();
                     arg.putSerializable(Tags.TAG_CHAPTER_LIST,(Serializable) chapter.getChapterList());
@@ -169,7 +171,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                 intent.putExtra(Tags.TAG_TARGET_TYPE, continueNext.getTargetType());
                 intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, true);
                 intent.putExtra(Tags.TAG_IS_RANDOM_QUESTIONS, false);
-                intent.putExtra(Tags.TAG_SPENT_TIME, continueNext.getSpenttime());
+
                 intent.putExtra(Tags.TAG_START_QUESTION_NO, continueNext.getStartingquesno());
                 getActivity().startActivity(intent);
             }
@@ -268,7 +270,28 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                     break;
 
             }
-            ratingBar.setRating(chapter.getGemcount());
+            switch (chapter.getGemcount()) {
+                case 0:
+                    iv_RatingStar.setImageDrawable(getActivity().getDrawable(R.drawable.star_0));
+                    break;
+                case 1:
+                    iv_RatingStar.setImageDrawable(getActivity().getDrawable(R.drawable.star_1));
+                    break;
+                case 2:
+                    iv_RatingStar.setImageDrawable(getActivity().getDrawable(R.drawable.star_2));
+                    break;
+                case 3:
+                    iv_RatingStar.setImageDrawable(getActivity().getDrawable(R.drawable.star_3));
+                    break;
+                case 4:
+                    iv_RatingStar.setImageDrawable(getActivity().getDrawable(R.drawable.star_4));
+                    break;
+                case 5:
+                    iv_RatingStar.setImageDrawable(getActivity().getDrawable(R.drawable.star_5));
+                    break;
+
+            }
+
         }
         if (chapter.getEvaluationId() != null) {
             switch (chapter.getCompleted()) {
@@ -311,13 +334,15 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                                 /*chapterResponse.getData().get(0).setPosition(0);
                                 chapterResponse.getData().get(2).setPosition(1);
 */
-                              /*  List<String> chap_list = new ArrayList<>();
+                               /* List<String> chap_list = new ArrayList<>();
                                 chap_list.add("1");
                                 chap_list.add("2");
                                 chap_list.add("3");
                                 chapterResponse.getContinuenext().setTargetType("evaluation");
+                                chapterResponse.getData().get(0).setEvaluationId("1");
                                 chapterResponse.getData().get(0).setChapterList(chap_list);
-*/
+                                chapterResponse.getData().get(0).setCompleted(0);
+                                chapterResponse.getData().get(0).getRetakeStatus().setStatus(0);*/
                                 cAdapter = new CAdapter(chapterResponse.getData(), chapterResponse.getContinuenext(), getContext());
                                 wheelView.setAdapter(cAdapter);
                                 for (int i = 0; i < chapterResponse.getData().size(); i++) {
@@ -457,7 +482,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                 if (getItem(position).getPosition() == 1) {
                     return new LayerDrawable(new Drawable[]{
                             createOvalDrawable(context.getColor(R.color.chapter_in_progress_inner), context.getColor(R.color.chapter_in_progress_outer)),
-                            new TextDrawable(getItem(position).getChapterNo(), context.getColor(R.color.black))
+                            new TextDrawable(getItem(position).getEvaluationId(), context.getColor(R.color.black))
                     });
                 } else if (getItem(position).getCompleted() == 100)
                     return new LayerDrawable(new Drawable[]{

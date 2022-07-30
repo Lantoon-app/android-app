@@ -30,8 +30,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.bazinga.lantoonnew.home.HomeActivity;
-import com.bazinga.lantoonnew.home.chapter.lesson.ChapterCompletedPopup;
 import com.bazinga.lantoonnew.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoonnew.home.chapter.lesson.QuestionRightWrongPopup;
 import com.bazinga.lantoonnew.home.chapter.lesson.QuestionsActivity;
@@ -146,10 +147,15 @@ public class CommonFunction {
         if (isCheckImageQuestion) {
             String tag = ansImageView.getTag().toString();
             isCheckImageQuestion = false;
+            boolean isLast = false;
             attemptCount++;
             QuestionRightWrongPopup qrwp = new QuestionRightWrongPopup();
-            if (CheckAnswerImage(tag)) {
-                if (quesNo == totalQues) {
+            if (quesNo == totalQues)
+                isLast = true;
+            Log.d("checkQuestion", String.valueOf(quesNo) + " " + String.valueOf(totalQues));
+            qrwp.showPopup(activity, view, CheckAnswerImage(tag), isLast, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, isEvaluation);
+            /*if (CheckAnswerImage(tag)) {
+                if (isLast) {
 
                     qrwp.showPopup(activity, view, CheckAnswerImage(tag), true, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, isEvaluation);
 
@@ -161,7 +167,7 @@ public class CommonFunction {
                 qrwp.showPopup(activity, view, CheckAnswerImage(tag), false, quesNo, attemptCount, false, question, audio, btnAudio, ansImageView, imageViewIds, imagePaths, isEvaluation);
                 //setShuffleImages(activity, imageViewIds, imagePaths, view);
 
-            }
+            }*/
             System.out.println("attemptCount " + attemptCount);
         }
 
@@ -367,8 +373,8 @@ public class CommonFunction {
                             QuestionsActivity.timerHandler.removeCallbacks(QuestionsActivity.timerRunnable);
                             QuestionsActivity.tvTimer.setVisibility(View.INVISIBLE);
 
-                                LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
-                                lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
+                            LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
+                            lessonCompletedPopup.showPopupWindow(view, activity, response.body(), quesNo, strTimeSpent);
 
                             /*if (response.body().getContinuenext().getLessonno() == 1) {
                                 ChapterCompletedPopup chapterCompletedPopup = new ChapterCompletedPopup();
@@ -511,4 +517,18 @@ public class CommonFunction {
 
         sessionManager.setSpeakCode(model.getloginData().getSpeakCode());
     }
+
+    /*public void changeToEvalutaionUI(Context activity, ImageButton imgBtnHome, ImageButton imgBtnHelp, ImageButton imgBtnNext, Button btnAudio, Button btnAudioSlow) {
+        if (imgBtnHome != null)
+            imgBtnHome.setBackground(activity.getDrawable(R.drawable.btn_question_home_pink));
+        if (imgBtnHelp != null)
+            imgBtnHelp.setBackground(activity.getDrawable(R.drawable.btn_question_help_pink));
+        if (imgBtnNext != null)
+            imgBtnNext.setBackground(activity.getDrawable(R.drawable.btn_question_next_pink));
+        if (btnAudio != null)
+            btnAudio.setBackground(activity.getDrawable(R.drawable.btn_question_speaker_pink));
+        if (btnAudioSlow != null)
+            btnAudioSlow.setBackground(activity.getDrawable(R.drawable.btn_question_slow_speaker_pink));
+
+    }*/
 }

@@ -143,12 +143,14 @@ public class QuestionRightWrongPopup {
     }
 
     private void answerRight(CommonFunction cf, Activity activity,View view, ImageView ansImageView, int attemptCount, Question question, boolean isLast,int quesNo, LessonCompletedPopup lessonCompletedPopup, PopupWindow popupWindow, boolean isEvaluation) {
-        ansImageView.setPadding(0, 0, 0, 0);
+        if (ansImageView != null) {
+            ansImageView.setPadding(0, 0, 0, 0);
+        }
         QuestionsActivity.CalculateMarks(question.getPlusMark(), 0, question.getPlusMark());
         if(isEvaluation){
             QuestionsActivity.addEvaluationScore(question.getChapterNo(),1,0);
         }
-        Log.d("test answerRight", String.valueOf(isLast));
+        Log.d("test answerRight isLast", String.valueOf(isLast));
         if (isLast) {
             if (!QuestionsActivity.isRandomQuestion) {
                 QuestionsActivity.countMap.put(String.valueOf(quesNo), String.valueOf(attemptCount));
@@ -183,11 +185,10 @@ public class QuestionRightWrongPopup {
             ansImageView.setPadding(0, 0, 0, 0);
             Log.d("test", "1");
         }
-        Log.d("test", String.valueOf(isLast));
+        Log.d("test answerWrong isLast", String.valueOf(isLast));
         if(isEvaluation){
             QuestionsActivity.addEvaluationScore(question.getChapterNo(),0,1);
             if(isLast){
-
                 QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
                 cf.postLesson(isEvaluation,view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString(),QuestionsActivity.scoreDetailsList);
             }else {

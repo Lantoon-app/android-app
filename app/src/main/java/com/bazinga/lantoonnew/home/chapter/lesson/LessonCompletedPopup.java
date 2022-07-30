@@ -92,9 +92,11 @@ public class LessonCompletedPopup {
                 intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.parseInt(postLessonResponse.getContinuenext().getLangid()));
                 intent.putExtra(Tags.TAG_LESSON_NO, postLessonResponse.getContinuenext().getLessonno());
                 if (postLessonResponse.getContinuenext().getTargetType().equals("chapter")) {
+                    intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, false);
                     intent.putExtra(Tags.TAG_CHAPTER_NO, postLessonResponse.getContinuenext().getChapterno());
                     intent.putExtra(Tags.TAG_CHAPTER_TYPE, postLessonResponse.getContinuenext().getChapterType());
                 } else if (postLessonResponse.getContinuenext().getTargetType().equals("evaluation")) {
+                    intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, true);
                     intent.putExtra(Tags.TAG_CHAPTER_NO, postLessonResponse.getContinuenext().getEvaluation_id());
                     intent.putExtra(Tags.TAG_CHAPTER_TYPE, 2);
                 }

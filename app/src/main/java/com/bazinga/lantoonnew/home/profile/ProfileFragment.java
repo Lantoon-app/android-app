@@ -234,7 +234,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
 
         //Make Inactive Items Outside Of PopupWindow
-        boolean focusable = false;
+        boolean focusable = true;
 
         //Create a window with our parameters
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);

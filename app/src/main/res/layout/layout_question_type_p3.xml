@@ -32,7 +32,7 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
             android:layout_gravity="center"
-            android:background="@drawable/btn_question_mic"
+            android:background="@drawable/btn_question_mic_blue"
             android:gravity="center"
             app:backgroundTint="@null" />
 
@@ -141,7 +141,6 @@
             android:background="@drawable/bg_tv_ref_inner"
             android:fontFamily="@font/open_sans_bold"
             android:gravity="center"
-            android:text="@string/sample_txt_boy_is_drinking"
             android:textColor="@color/p3_text_view"
             android:textSize="@dimen/_18ssp" />
     </FrameLayout>

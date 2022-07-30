@@ -31,8 +31,11 @@
         android:id="@+id/tvTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/bg_timer"
         android:fontFamily="@font/open_sans_bold"
         android:textSize="@dimen/_20ssp"
+        android:textColor="@color/white"
         app:layout_anchor="@+id/view_pager"
-        app:layout_anchorGravity="bottom|center"/>
+        app:layout_anchorGravity="bottom|start"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

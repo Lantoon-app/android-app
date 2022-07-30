@@ -31,7 +31,7 @@ public class Tags {
 
     public static String TAG_IS_NEW_CHAPTER="nechap";
     public static String TAG_IS_RANDOM_QUESTIONS = "randomques";
-    public static String TAG_IS_EVALUATION_QUESTIONS = "evaluation";
+    public static String TAG_IS_EVALUATION_QUESTIONS = "isevaluation";
     public static String TAG_TARGET_TYPE="targettype";
     public static String TAG_LANGUAGE_ID="langid";
     public static String TAG_CHAPTER_NO="chaperno";

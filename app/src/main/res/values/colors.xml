@@ -70,5 +70,6 @@
 
     <color name="chapter_evaluation_disabled">#F4ABDF</color>
     <color name="chapter_evaluation_progress_completed">#E857BF</color>
+    <color name="popup_all_full_bg">#CDFFFFFF</color>
 
 </resources>
