@@ -11,6 +11,7 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/bg_chapter_page.xml" value="0.2255" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/bg_timer.xml" value="0.158" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/bg_tv_total_ques.xml" value="0.158" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/border_bg_chapter_completed.xml" value="0.3595" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/border_bg_reference.xml" value="0.208" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/btn_question_help_blue.xml" value="0.158" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/drawable/btn_question_help_pink.xml" value="0.3335" />
@@ -63,14 +64,21 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout-sw720dp/fragment_chapter_new.xml" value="0.210625" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/activity_getstart.xml" value="0.31733333333333336" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/activity_home.xml" value="0.2711711711711712" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/activity_login.xml" value="0.31794871794871793" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/activity_payment_wall.xml" value="0.31794871794871793" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/activity_payu.xml" value="0.31794871794871793" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/activity_questions.xml" value="0.12" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/app_bar_home.xml" value="0.2509009009009009" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/content_home.xml" value="0.2711711711711712" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/control_calendar.xml" value="0.31733333333333336" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/control_calendar_day.xml" value="0.31733333333333336" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_change_password.xml" value="0.31794871794871793" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_change_refer_language.xml" value="0.31794871794871793" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_chapter.xml" value="0.22072368421052632" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_chapter_new.xml" value="0.22" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_leaderboard.xml" value="0.22105263157894736" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_my_language.xml" value="0.31794871794871793" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/fragment_profile.xml" value="0.31794871794871793" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/item_leader.xml" value="0.22072368421052632" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/item_leader_footer.xml" value="0.22105263157894736" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/layout_question_header.xml" value="0.1" />
@@ -86,6 +94,7 @@
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/popup_app_exit.xml" value="0.1723127035830619" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/popup_app_update.xml" value="0.1723127035830619" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/popup_chapter_completed.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/popup_common_progress.xml" value="0.31794871794871793" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/popup_home_exit.xml" value="0.1723127035830619" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/popup_lesson_completed.xml" value="0.22" />
         <entry key="..\:/Users/BM_GD/Desktop/Nizam/Lantoon/Android-App-New/app/src/main/res/layout/popup_question_answer_anim.xml" value="0.20277777777777778" />
