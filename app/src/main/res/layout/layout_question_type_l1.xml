@@ -60,6 +60,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/_10sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,8 +114,8 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/btn_question_next"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/btn_question_next_blue"
         android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

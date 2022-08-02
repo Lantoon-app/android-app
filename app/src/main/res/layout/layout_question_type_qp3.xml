@@ -76,7 +76,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.bazinga.lantoonnew.PlayPauseView
+                    <com.bazinga.lantoon.PlayPauseView
                         android:id="@+id/btnAudio1"
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"
@@ -150,7 +150,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.bazinga.lantoonnew.PlayPauseView
+                    <com.bazinga.lantoon.PlayPauseView
                         android:id="@+id/btnAudio2"
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"

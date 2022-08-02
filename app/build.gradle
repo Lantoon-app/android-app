@@ -7,14 +7,13 @@ plugins {
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.bazinga.lantoonnew"
+        applicationId "com.bazinga.lantoon"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 22
-        versionName "2.0.1"
+        versionCode 23
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true;
@@ -69,6 +68,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0-beta01'
     implementation 'com.github.ibrahimsn98:CirclesLoadingView:1.0'
 
+
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:29.2.1')
 
@@ -90,7 +90,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'in.payu:payu-checkout-pro:1.8.1'
     implementation 'in.payu:olamoney:1.1.0'
-    implementation 'in.payu:phonepe-intent:1.6.1'
+    //implementation 'in.payu:phonepe-intent:1.6.1'
     implementation 'in.payu:payu-gpay:1.4.0'
     implementation 'in.payu:native-otp-assist:1.2.0'
     //extra for payment kotlin responsejh

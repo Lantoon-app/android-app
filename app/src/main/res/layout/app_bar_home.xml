@@ -89,7 +89,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:paddingEnd="-40dp"
-                android:src="@drawable/ic_menu_profile"
+                android:src="@drawable/svg_menu_profile_blue"
                 app:tint="#5464b6" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

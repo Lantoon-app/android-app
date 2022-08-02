@@ -145,7 +145,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_gravity="end"
                     android:gravity="end"
-                    android:src="@drawable/ic_menu_profile" />
+                    android:src="@drawable/svg_menu_profile_white" />
 
                 <TextView
                     android:layout_width="match_parent"

@@ -160,7 +160,7 @@
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/_5sdp"
         android:layout_marginBottom="@dimen/_5sdp"
-        android:background="@drawable/btn_question_next"
+        android:background="@drawable/btn_question_next_blue"
         android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
