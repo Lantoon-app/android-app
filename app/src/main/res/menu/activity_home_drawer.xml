@@ -14,7 +14,6 @@
             android:title="@string/menu_change_password" />
         <item
             android:id="@+id/nav_new_language"
-            android:icon="@drawable/ic_my_language"
             android:title="@string/menu_new_language"/>
         <item
             android:id="@+id/nav_payment"
