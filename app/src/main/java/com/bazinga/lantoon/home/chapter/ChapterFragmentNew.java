@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -59,6 +60,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
     SessionManager sessionManager;
     //RecyclerView mRecyclerView;
     WheelView wheelView;
+    ConstraintLayout cl_bg_curve_view;
     CAdapter cAdapter;
     public static final int PAGE_START = 1;
     private int currentPage = PAGE_START;
@@ -89,7 +91,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
         iv_chapter = root.findViewById(R.id.iv_chapter);
         ivMaintenance = root.findViewById(R.id.ivMaintenance);
         tv_evauation_number = root.findViewById(R.id.tv_evauation_number);
-
+        cl_bg_curve_view = root.findViewById(R.id.cl_bg_curve_view);
 
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
@@ -335,6 +337,7 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                 @Override
                 public void onChanged(ChapterResponse chapterResponse) {
                     progressBar.setVisibility(View.GONE);
+                    cl_bg_curve_view.setVisibility(View.VISIBLE);
                     if (!fragmentDestroyed) {
                         if (chapterResponse == null) {
 
@@ -379,10 +382,11 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
                                 sessionManager.logoutUser();
                             } else if (chapterResponse.getStatus().getCode() == 20008) {
                                 ivMaintenance.setVisibility(View.VISIBLE);
-                                iv_chapter.setVisibility(View.GONE);
+                                cl_bg_curve_view.setVisibility(View.GONE);
+                               /* iv_chapter.setVisibility(View.GONE);
                                 iv_RatingStar.setVisibility(View.GONE);
                                 iv_evaluation_calendar.setVisibility(View.GONE);
-                                tv_evauation_number.setVisibility(View.GONE);
+                                tv_evauation_number.setVisibility(View.GONE);*/
                                 //appUpdateAlert(chapterResponse.getStatus().getMessage());
                             }
 

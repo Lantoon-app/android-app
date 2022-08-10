@@ -169,7 +169,7 @@ public class QuestionsActivity extends AppCompatActivity {
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
         //Set the location of the window on the screen
-        popupWindow.showAtLocation(this.getCurrentFocus().getRootView(), Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(mPager, Gravity.CENTER, 0, 0);
 
         //Initialize the elements of our window, install the handler
 

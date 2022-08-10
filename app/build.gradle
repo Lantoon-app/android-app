@@ -12,8 +12,8 @@ android {
         applicationId "com.bazinga.lantoon"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 25
-        versionName "3.0.2"
+        versionCode 26
+        versionName "3.0.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true;
@@ -68,6 +68,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0-beta01'
     implementation 'com.github.ibrahimsn98:CirclesLoadingView:1.0'
 
+    // This dependency is downloaded from the Google’s Maven repository.
+    // So, make sure you also include that repository in your project's build.gradle file.
+    implementation 'com.google.android.play:app-update:2.0.0'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:29.2.1')

@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         deviceModel = Build.MODEL;
         mAuth = FirebaseAuth.getInstance();
         faceBookLogin();
-        googleLogin();
+        //googleLogin();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             mAuth.signOut();
@@ -301,7 +301,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public void googleLogin() {
+   /* public void googleLogin() {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -320,13 +320,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
             }
         });
-        /*googleSignIn.setOnClickListener(new View.OnClickListener() {
+        *//*googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });*/
-    }
+        });*//*
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
