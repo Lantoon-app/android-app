@@ -66,6 +66,7 @@
         app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_bg_curve_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/_100sdp"
