@@ -468,8 +468,8 @@ public class ChapterFragmentNew extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_chapter:
-
-                onClickChapter(Integer.parseInt(iv_chapter.getTag().toString()));
+                if (cAdapter != null)
+                    onClickChapter(Integer.parseInt(iv_chapter.getTag().toString()));
                 break;
         }
     }
