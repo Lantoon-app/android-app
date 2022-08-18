@@ -14,20 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.ChapterCompletedPopup;
 import com.bazinga.lantoon.login.SessionManager;
+import com.bazinga.lantoon.retrofit.ApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
-import com.google.android.play.core.install.InstallState;
-import com.google.android.play.core.install.InstallStateUpdatedListener;
 import com.google.android.play.core.install.model.AppUpdateType;
-import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -52,11 +48,13 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //chapterCompletedPopup.showPopupWindow(v,SplashActivity.this,null,0,"0");
+                //checkLogin();
             }
         });
 
         checkAppUpdate();
-        //checkLogin();
+        if (ApiClient.isTest)
+            checkLogin();
 
     }
 
@@ -75,12 +73,13 @@ public class SplashActivity extends AppCompatActivity {
                     } catch (IntentSender.SendIntentException e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     checkLogin();
                 }
             }
         });
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,6 +96,7 @@ public class SplashActivity extends AppCompatActivity {
             checkLogin();
         }
     }
+
     private void checkLogin() {
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {

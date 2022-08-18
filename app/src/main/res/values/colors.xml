@@ -72,4 +72,7 @@
     <color name="chapter_evaluation_progress_completed">#E857BF</color>
     <color name="popup_all_full_bg">#CDFFFFFF</color>
 
+    <color name="evaluation_answer_correct">#18CA1F</color>
+    <color name="evaluation_answer_wrong">#CDFD0000</color>
+
 </resources>
