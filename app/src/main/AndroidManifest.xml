@@ -41,7 +41,8 @@
         <activity
             android:name="com.bazinga.lantoon.SplashActivity"
             android:screenOrientation="portrait"
-            tools:ignore="Instantiatable">
+            tools:ignore="Instantiatable"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -107,7 +108,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.bazinga.lantoon.MyFirebaseMessagingService">
+        <service android:name="com.bazinga.lantoon.MyFirebaseMessagingService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
