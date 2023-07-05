@@ -350,7 +350,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_10sdp"
-                android:background="@drawable/button_bg"
+                android:background="@drawable/bg_button"
                 android:onClick="startPayment"
                 android:text="@string/pay_now"
                 android:textSize="@dimen/_18ssp"

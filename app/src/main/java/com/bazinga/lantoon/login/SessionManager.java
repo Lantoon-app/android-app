@@ -8,7 +8,6 @@ import com.bazinga.lantoon.GetStartActivity;
 import com.bazinga.lantoon.SplashActivity;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.login.ui.login.LoginActivity;
 
 public class SessionManager {
     // Shared Preferences

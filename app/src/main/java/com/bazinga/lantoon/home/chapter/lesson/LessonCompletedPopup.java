@@ -4,21 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
-
-import static com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity.context;
-import static com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity.startTime;
 
 public class LessonCompletedPopup {
     public LessonCompletedPopup() {
@@ -30,10 +25,10 @@ public class LessonCompletedPopup {
         //Create a View object yourself through inflater
         LayoutInflater inflater = (LayoutInflater) view.getContext().getSystemService(view.getContext().LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.popup_lesson_completed, null);
-
+        View decorView = activity.getWindow().getDecorView();
         //Specify the length and width through constants
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
 
         //Make Inactive Items Outside Of PopupWindow
         boolean focusable = false;
@@ -45,42 +40,45 @@ public class LessonCompletedPopup {
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
         TextView tvTitleMsg = popupView.findViewById(R.id.tvTitleMsg);
-        if (postLessonResponse != null) {
-            if (postLessonResponse.getContinuenext().getLessonno() == 1)
-                tvTitleMsg.setText(activity.getResources().getString(R.string.successfully_completed_the_chapter));
-            else
-                tvTitleMsg.setText(activity.getResources().getString(R.string.successfully_completed_the_lesson));
-        }
         TextView tvTotalTimeSpendPopupLessonCompleted = popupView.findViewById(R.id.tvTotalTimeSpendPopupLessonCompleted);
 
-
-        tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + strTimeSpent + ")");
-
-
         Button btnExitPopupLessonCompleted = popupView.findViewById(R.id.btnExitPopupLessonCompleted);
+        Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);
+        if (postLessonResponse != null) {
+            if (postLessonResponse.getContinuenext().getTargetType().equals("evaluation")) {
+                if (postLessonResponse.getPostLessonData().getContinueStatus() == 0) {
+                    tvTitleMsg.setText(postLessonResponse.getPostLessonData().getFailedChapters());
+                    btnContinuePopupLessonCompleted.setText("RETAKE");
+                }
+                tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + strTimeSpent + ")");
+            } else {
+                tvTitleMsg.setText("You have successfully completed!!");
+                tvTotalTimeSpendPopupLessonCompleted.setText("Time Spend (" + strTimeSpent + ")");
+            }
+
+           /* if (postLessonResponse.getContinuenext().getLessonno() == 1)
+                tvTitleMsg.setText(activity.getResources().getString(R.string.successfully_completed_the_chapter));
+            else
+                tvTitleMsg.setText(activity.getResources().getString(R.string.successfully_completed_the_lesson));*/
+        }
+
+        if (QuestionsActivity.isRandomQuestion || quesNo != QuestionsActivity.totalQues)
+            btnContinuePopupLessonCompleted.setVisibility(View.GONE);
+        if (postLessonResponse != null) {
+            if (postLessonResponse.getContinuenext().getChapterno() > Integer.valueOf(postLessonResponse.getContinuenext().getUnlockedChapters())) {
+                btnContinuePopupLessonCompleted.setEnabled(false);
+            }
+        }
         btnExitPopupLessonCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
 
-                /*Intent intent = new Intent(activity, QuestionsActivity.class);
-                intent.putExtra(Utils.TAG_LANGUAGE_ID, body.getContinuenext().getLangid());
-                intent.putExtra(Utils.TAG_CHAPTER_NO, body.getContinuenext().getChapterno());
-                intent.putExtra(Utils.TAG_LESSON_NO, body.getContinuenext().getLessonno());
-                activity.startActivity(intent);*/
                 activity.startActivityForResult(new Intent(activity, HomeActivity.class), 2);
             }
         });
-        Button btnContinuePopupLessonCompleted = popupView.findViewById(R.id.btnContinuePopupLessonCompleted);
 
-        if (QuestionsActivity.isRandomQuestion || quesNo != QuestionsActivity.totalQues)
-            btnContinuePopupLessonCompleted.setVisibility(View.GONE);
-        if (postLessonResponse != null) {
-            if (postLessonResponse.getContinuenext().getChapterno() > Integer.valueOf(postLessonResponse.getContinuenext().getunlockedChapters())) {
-                btnContinuePopupLessonCompleted.setEnabled(false);
-                //Toast.makeText(context,"Please contact Lantoon Support to continue more chapters...",Toast.LENGTH_LONG).show();
-            }
-        }
+
         btnContinuePopupLessonCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,12 +87,20 @@ public class LessonCompletedPopup {
                 activity.finish();
                 Intent intent = new Intent(activity, QuestionsActivity.class);
                 intent.putExtra(Tags.TAG_IS_NEW_CHAPTER, true);
-                intent.putExtra(Tags.TAG_LANGUAGE_ID, postLessonResponse.getContinuenext().getLangid());
-                intent.putExtra(Tags.TAG_CHAPTER_NO, postLessonResponse.getContinuenext().getChapterno());
-                intent.putExtra(Tags.TAG_LESSON_NO, postLessonResponse.getContinuenext().getLessonno());
                 intent.putExtra(Tags.TAG_SPENT_TIME, "0");
                 intent.putExtra(Tags.TAG_START_QUESTION_NO, 1);
-                intent.putExtra(Tags.TAG_CHAPTER_TYPE, postLessonResponse.getContinuenext().getChapterType());
+                intent.putExtra(Tags.TAG_LANGUAGE_ID, Integer.parseInt(postLessonResponse.getContinuenext().getLangid()));
+                intent.putExtra(Tags.TAG_LESSON_NO, postLessonResponse.getContinuenext().getLessonno());
+                if (postLessonResponse.getContinuenext().getTargetType().equals("chapter")) {
+                    intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, false);
+                    intent.putExtra(Tags.TAG_CHAPTER_NO, postLessonResponse.getContinuenext().getChapterno());
+                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, postLessonResponse.getContinuenext().getChapterType());
+                } else if (postLessonResponse.getContinuenext().getTargetType().equals("evaluation")) {
+                    intent.putExtra(Tags.TAG_IS_EVALUATION_QUESTIONS, true);
+                    intent.putExtra(Tags.TAG_CHAPTER_NO, postLessonResponse.getContinuenext().getEvaluation_id());
+                    intent.putExtra(Tags.TAG_CHAPTER_TYPE, 2);
+                }
+
                 activity.startActivity(intent);
                 //overridePendingTransition(0, 0);
             }

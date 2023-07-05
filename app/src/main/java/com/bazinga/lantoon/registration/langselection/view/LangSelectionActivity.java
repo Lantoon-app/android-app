@@ -21,8 +21,6 @@ import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.registration.langselection.viewmodel.LanguageViewModel;
 import com.bazinga.lantoon.registration.SignupActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class LangSelectionActivity extends AppCompatActivity {

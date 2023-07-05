@@ -2,22 +2,15 @@ package com.bazinga.lantoon.login.forget;
 
 import android.util.Log;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.bazinga.lantoon.home.HomeActivity;
-import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
-import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

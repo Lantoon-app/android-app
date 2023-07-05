@@ -14,14 +14,15 @@ import androidx.lifecycle.ViewModel;
 
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.chapter.lesson.model.Question;
-import com.bazinga.lantoon.home.chapter.lesson.ui.l1.L1Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p1.P1Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p2.P2Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.p3.P3Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.q.QFragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.qp1.QP1Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.qp2.QP2Fragment;
-import com.bazinga.lantoon.home.chapter.lesson.ui.qp3.QP3Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.D2Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.L1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.P1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.P2Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.P3Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.QFragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.QP1Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.QP2Fragment;
+import com.bazinga.lantoon.home.chapter.lesson.ui.QP3Fragment;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bazinga.lantoon.retrofit.Status;
@@ -57,15 +58,28 @@ public class QuestionsViewModel extends ViewModel {
     private TaskModel mTask;
     private QuestionsAsyncTask taskAsync;
     DownloadZipFileTask downloadZipFileTask;
+    boolean isEvaluation;
     int langid, chaperno, lessonno, knownLang, chapterType;
 
-    public QuestionsViewModel(int langid, int chaperno, int lessonno, int knownLang, int chapterType) {
+    public QuestionsViewModel(boolean isEvaluation, int langid, int chaperno, int lessonno, int knownLang, int chapterType) {
         Log.d("numbers", String.valueOf(langid + chaperno + lessonno + knownLang));
-        this.langid = langid;
-        this.chaperno = chaperno;
-        this.lessonno = lessonno;
-        this.knownLang = knownLang;
-        this.chapterType = chapterType;
+        /*if(ApiClient.isTest){
+            this.isEvaluation = isEvaluation;
+            if(isEvaluation)
+            this.langid = 1;
+            else this.langid = 100;
+            this.chaperno = 1;
+            this.lessonno = 1;
+            this.knownLang = 1;
+            this.chapterType = chapterType;
+        }else {*/
+            this.isEvaluation = isEvaluation;
+            this.langid = langid;
+            this.chaperno = chaperno;
+            this.lessonno = lessonno;
+            this.knownLang = knownLang;
+            this.chapterType = chapterType;
+        //}
     }
 
     private void startTask() {
@@ -109,7 +123,7 @@ public class QuestionsViewModel extends ViewModel {
             if (chapterType == 1)
                 downloadZipFile(langid, chaperno, lessonno);
             else
-                questionsFragmentData(langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
+                questionsFragmentData(isEvaluation,langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
 
             return true;
         }
@@ -303,13 +317,15 @@ public class QuestionsViewModel extends ViewModel {
         }
     }
 
-    private void questionsFragmentData(int langid, int chaperno, int lessonno, int reflanguageid, String uid) {
+    private void questionsFragmentData(boolean isEvaluation, int langid, int chaperno, int lessonno, int reflanguageid, String uid) {
         System.out.println("langid" + langid + "chaperno" + chaperno + "lessonno" + lessonno + "uid" + uid);
         questionsLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<JsonObject> call;
         if (chapterType == 1)
             call = apiInterface.getQuestions(langid, chaperno, lessonno, reflanguageid, uid);
+        else if(chapterType == 2 && isEvaluation)
+            call = apiInterface.getEvaluationQuestions(langid, chaperno);
         else
             call = apiInterface.getQuestionsType2(langid, chaperno, lessonno, reflanguageid, uid);
 
@@ -402,6 +418,10 @@ public class QuestionsViewModel extends ViewModel {
 
                 fragments.add(f, QP3Fragment.newInstance(i, totalQuestions, j.toString()));
             }
+            if (qtype.contains("\"d2\"")) {
+
+                fragments.add(f, D2Fragment.newInstance(i, totalQuestions, j.toString()));
+            }
             f++;
         }
 
@@ -425,7 +445,7 @@ public class QuestionsViewModel extends ViewModel {
 
                 unzipEntry(zipfile, entry, unzipAtLocation);
             }
-            questionsFragmentData(langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
+            questionsFragmentData(isEvaluation, langid, chaperno, lessonno, knownLang, QuestionsActivity.strUserId);
             Log.d("unzip", "done");
         } catch (Exception e) {
 

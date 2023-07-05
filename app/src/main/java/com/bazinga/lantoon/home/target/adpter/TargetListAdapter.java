@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -13,17 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.SlantView;
-import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
 import com.bazinga.lantoon.home.target.TargetFilter;
 import com.bazinga.lantoon.home.target.model.Target;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.github.florent37.diagonallayout.DiagonalLayout;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,7 +60,7 @@ public class TargetListAdapter extends BaseAdapter implements Filterable {
             convertView = inflater.inflate(R.layout.item_target, null);
         }
 
-        DiagonalLayout diagonalLayout = convertView.findViewById(R.id.slantView);
+        //DiagonalLayout diagonalLayout = convertView.findViewById(R.id.slantView);
         ImageView imgView = convertView.findViewById(R.id.ivSlant);
         TextView tvLesson = convertView.findViewById(R.id.tvLesson);
         TextView tvDates = convertView.findViewById(R.id.tvDates);

@@ -1,6 +1,7 @@
 package com.bazinga.lantoon.retrofit;
 
 import com.bazinga.lantoon.home.changepassword.model.ChangePasswordResponse;
+import com.bazinga.lantoon.home.chapter.lesson.model.EvaluationScore;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bazinga.lantoon.home.chapter.lesson.model.Score;
 import com.bazinga.lantoon.home.chapter.model.ChapterResponse;
@@ -41,6 +42,11 @@ public interface ApiInterface {
     //Language List
     @GET("Lantoon/public/LanguageHandler.php/languageList")
     Call<List<Language>> getLanguages();
+
+    //http://lantoon.net/Lantoon/public/ChapterHandler.php/chapterlistandroidv2/slide/%7Blanguageid%7D/%7Bslidenumber%7D/%7Buid%7D/%7Bversioncode%7D/%7Bdeviceid%7D
+    //Chapter List with evaluation
+    @GET("Lantoon/public/ChapterHandler.php/chapterlistandroidv2/slide/{languageid}/{slidenumber}/{uid}/{versioncode}/{deviceid}")
+    Call<ChapterResponse> getChapterV2(@Path("languageid") int langid, @Path("slidenumber") int pageno, @Path("uid") String uid, @Path("versioncode") int versioncode, @Path("deviceid") String deviceid);
 
     //Chapter List with logout concept
     @GET("Lantoon/public/ChapterHandler.php/chapterlistandroid/slide/{languageid}/{slidenumber}/{uid}/{versioncode}/{deviceid}")
@@ -117,6 +123,11 @@ public interface ApiInterface {
     Call<JsonObject> getQuestionsType2(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("lessonno") int lessonno, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
     //https://lantoon.net/Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}
 
+    //Lesson Questions Evaluation chapter type 2
+    @GET("Lantoon/public/EvaluationHandler.php/evaluationquestions/{language_id}/{evaluation_id}")
+    Call<JsonObject> getEvaluationQuestions(@Path("language_id") int language_id, @Path("evaluation_id") int evaluation_id);
+
+
     //Completed Lesson Questions (Not Used)
     @GET("Lantoon/public/QuestionHandler.php/completedchapterlessonquestions/{languageid}/{chapterno}/{reflanguageid}/{uid}")
     Call<JsonObject> getCompletedQuestions(@Path("languageid") int languageid, @Path("chapterno") int chapterNo, @Path("reflanguageid") int reflanguageid, @Path("uid") String uid);
@@ -126,10 +137,15 @@ public interface ApiInterface {
     @POST("Lantoon/public/UserHandler.php/registeruser")
     Call<LoggedInUserResponse> createUser(@Body User user);
 
-    //Score Update
+    //Score Update Chapter
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/ScoreHandler.php/scoreupdate")
     Call<PostLessonResponse> scoreUpdate(@Body Score score);
+
+    //Score Update Evaluation
+    @Headers("Content-Type: application/json")
+    @POST("Lantoon/public/EvaluationHandler.php/updateevaluationscore")
+    Call<PostLessonResponse> scoreUpdate(@Body EvaluationScore evaluationScore);
 
     //Login
     @Headers("Content-Type: application/json")
@@ -152,9 +168,18 @@ public interface ApiInterface {
     @GET("Lantoon/public/QuestionHandler.php/zipfilenew/{languageid}/{chapterno}/{lessonno}")
     Call<ResponseBody> downloadFileByUrlNew(@Path("languageid") int langid, @Path("chapterno") int chapterno, @Path("lessonno") int lessonno);
 
-    //Leaderboard
+    //Leaderboard old
     @GET("Lantoon/public/ScoreHandler.php/leaderboard/{slideno}/{uid}/{langid}")
     Call<LeaderResponse> getLeaders(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
+
+    //Leaderboard global
+    @GET("Lantoon/public/ScoreHandler.php/leaderboardglobal/{slideno}/{uid}/{langid}")
+    Call<LeaderResponse> getLeadersGlobal(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
+
+    //Leaderboard institutional
+    @GET("Lantoon/public/ScoreHandler.php/leaderboardinstitutional/{slideno}/{uid}/{langid}")
+    Call<LeaderResponse> getLeadersInstitutional(@Path("slideno") int slideno, @Path("uid") String uid, @Path("langid") int langid);
+
 
     //Targets
     @GET("Lantoon/public/TargetHandler.php/mytargets/{uid}")
@@ -177,14 +202,14 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST("Lantoon/public/PackageHandler.php/purchasesuccess")
     Call<PurchaseResponse> postPaymentPurchaseDetails(@Query("transaction_id") String transaction_id,
-                                              @Query("package_id") String package_id ,
-                                              @Query("user_id") String user_id,
-                                              @Query("language") String language,
-                                              @Query("total_amount") String total_amount,
-                                              @Query("paid_amount") String paid_amount,
-                                              @Query("payment_type") String payment_type,
-                                              @Query("chapters_unlocked") String chapters_unlocked,
-                                              @Query("duration_in_days") String duration_in_days);
+                                                      @Query("package_id") String package_id,
+                                                      @Query("user_id") String user_id,
+                                                      @Query("language") String language,
+                                                      @Query("total_amount") String total_amount,
+                                                      @Query("paid_amount") String paid_amount,
+                                                      @Query("payment_type") String payment_type,
+                                                      @Query("chapters_unlocked") String chapters_unlocked,
+                                                      @Query("duration_in_days") String duration_in_days);
 
 
 }

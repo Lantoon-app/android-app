@@ -1,6 +1,5 @@
 package com.bazinga.lantoon.home.payment.payu
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
@@ -20,11 +19,7 @@ import com.bazinga.lantoon.Tags
 import com.bazinga.lantoon.databinding.ActivityPayuBinding
 import com.bazinga.lantoon.home.HomeActivity
 import com.bazinga.lantoon.retrofit.ApiClient
-import com.beust.klaxon.Klaxon
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
 import com.payu.base.models.BaseApiLayerConstants
 import com.payu.base.models.ErrorResponse
 import com.payu.base.models.PayUPaymentParams

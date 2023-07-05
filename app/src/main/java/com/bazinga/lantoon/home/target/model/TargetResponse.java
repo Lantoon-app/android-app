@@ -1,6 +1,5 @@
 package com.bazinga.lantoon.home.target.model;
 
-import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
 import com.bazinga.lantoon.retrofit.Status;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

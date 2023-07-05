@@ -21,15 +21,15 @@ public class LeaderViewModel extends ViewModel {
     public static final int PAGE_START = 1;
     private int currentPageNo = PAGE_START;
 
-    public LeaderViewModel(String userid,int langId) {
-        getData(PAGE_START, userid,langId);
-    }
 
-    public void getData(int slideNo, String userid, int langId) {
-
+    public void getLeaderData(int type, int slideNo, String userid, int langId) {
+        Call<LeaderResponse> call = null;
         leaderResponseMutableLiveData = new MutableLiveData<>();
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<LeaderResponse> call = apiInterface.getLeaders(slideNo,userid,langId);
+        if (type == 0)
+            call = apiInterface.getLeadersGlobal(slideNo, userid, langId);
+        else if (type == 1)
+            call = apiInterface.getLeadersInstitutional(slideNo, userid, langId);
         call.enqueue(new Callback<LeaderResponse>() {
             @Override
             public void onResponse(Call<LeaderResponse> call, Response<LeaderResponse> response) {
@@ -49,7 +49,6 @@ public class LeaderViewModel extends ViewModel {
             }
         });
     }
-
 
 
     public LiveData<LeaderResponse> getLeaders() {

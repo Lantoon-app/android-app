@@ -2,7 +2,6 @@ package com.bazinga.lantoon.home.payment.hash;
 
 import android.util.Log;
 
-import com.bazinga.lantoon.home.payment.hash.HashCodeResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.GsonBuilder;

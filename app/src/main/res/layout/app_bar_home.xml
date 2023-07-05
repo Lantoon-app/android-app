@@ -2,9 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/content_view"
     tools:context=".home.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,27 +15,83 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/top_bg"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/atvHomeLearnLang"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:visibility="visible"
-                android:gravity="center"
-                android:layout_gravity="end"
-                android:padding="@dimen/_5sdp"
-                android:background="@drawable/learnlang_bg"
-                android:text="ENGLISH"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
+            android:layout_height="@dimen/_80sdp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_toolbar"
+            android:gravity="center"
+            android:visibility="gone"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextAppearance="@style/Toolbar.TitleText">
+
         </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_toolbar_side"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:background="@drawable/bg_toolbar"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:paddingBottom="@dimen/_10sdp"
+            android:visibility="visible">
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:src="@drawable/ic_back" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+      android:gravity="center"
+                android:text="@string/title_profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20ssp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_nav_menu_open"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:paddingStart="-40dp"
+                android:src="@drawable/ic_menu"
+                app:tint="#5464b6" />
+
+            <ImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="bottom|center"
+                android:layout_weight="1"
+                android:src="@drawable/logo_toolbar" />
+
+            <ImageView
+                android:id="@+id/iv_nav_menu_profile_open"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:paddingEnd="-40dp"
+                android:src="@drawable/svg_menu_profile_blue"
+                app:tint="#5464b6" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     </com.google.android.material.appbar.AppBarLayout>

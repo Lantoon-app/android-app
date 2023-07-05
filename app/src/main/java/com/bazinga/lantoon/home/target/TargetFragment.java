@@ -47,7 +47,7 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
         btnUpcoming.setOnClickListener(this::onClick);
         btnCompleted.setTextColor(Color.WHITE);
         //initial completed
-        btnCompleted.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+        btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_button));
         btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
         btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.button_bg_target_unselected));
         btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
@@ -85,7 +85,7 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
                 if(targetListAdapter!=null) {
                     targetListAdapter.getFilter().filter("1");
                     btnCompleted.setTextColor(Color.WHITE);
-                    btnCompleted.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                    btnCompleted.setBackground(getActivity().getDrawable(R.drawable.bg_button));
                     btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
                     btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.button_bg_target_unselected));
                     btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
@@ -96,7 +96,7 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
                 if(targetListAdapter!=null) {
                     targetListAdapter.getFilter().filter("2");
                     btnOnGoing.setTextColor(Color.WHITE);
-                    btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                    btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.bg_button));
                     btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
                     btnCompleted.setBackground(getActivity().getDrawable(R.drawable.button_bg_target_unselected));
                     btnUpcoming.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
@@ -107,7 +107,7 @@ public class TargetFragment extends Fragment implements View.OnClickListener {
                 if(targetListAdapter!=null) {
                     targetListAdapter.getFilter().filter("3");
                     btnUpcoming.setTextColor(Color.WHITE);
-                    btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.button_bg));
+                    btnUpcoming.setBackground(getActivity().getDrawable(R.drawable.bg_button));
                     btnOnGoing.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));
                     btnOnGoing.setBackground(getActivity().getDrawable(R.drawable.button_bg_target_unselected));
                     btnCompleted.setTextColor(getActivity().getColor(R.color.target_button_text_disabled));

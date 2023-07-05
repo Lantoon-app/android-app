@@ -20,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
 import com.bazinga.lantoon.home.chapter.lesson.model.PostLessonResponse;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;

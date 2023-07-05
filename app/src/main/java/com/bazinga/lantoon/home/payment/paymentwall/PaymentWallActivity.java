@@ -18,10 +18,8 @@ import com.bazinga.lantoon.Tags;
 import com.google.gson.GsonBuilder;
 import com.paymentwall.pwunifiedsdk.core.PaymentSelectionActivity;
 import com.paymentwall.pwunifiedsdk.core.UnifiedRequest;
-import com.paymentwall.pwunifiedsdk.object.ExternalPs;
 import com.paymentwall.pwunifiedsdk.util.Key;
 import com.paymentwall.pwunifiedsdk.util.ResponseCode;
-import com.paymentwall.sdk.pwlocal.utils.Const;
 
 
 public class PaymentWallActivity extends Activity {

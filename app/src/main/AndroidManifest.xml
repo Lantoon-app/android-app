@@ -7,7 +7,7 @@
         <package android:name="com.google.android.googlequicksearchbox" />
     </queries>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 
     <!--<permission
@@ -38,9 +39,10 @@
         android:theme="@style/AppTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.bazinga.lantoon.SplashActivity"
             android:screenOrientation="portrait"
-            tools:ignore="Instantiatable">
+            tools:ignore="Instantiatable"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,41 +50,41 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.forget.ForgetPasswordActivity"
+            android:name="com.bazinga.lantoon.login.forget.ForgetPasswordActivity"
             android:screenOrientation="portrait"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".home.chapter.lesson.QuestionsActivity"
+            android:name="com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".login.ui.login.LoginActivity"
+            android:name="com.bazinga.lantoon.login.ui.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".registration.SignupActivity"
+            android:name="com.bazinga.lantoon.registration.SignupActivity"
             android:screenOrientation="portrait"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".registration.langselection.view.LangSelectionActivity"
+            android:name="com.bazinga.lantoon.registration.langselection.view.LangSelectionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".registration.LevelSlectionActivity"
+            android:name="com.bazinga.lantoon.registration.LevelSlectionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".registration.DurationSelectionActivity"
+            android:name="com.bazinga.lantoon.registration.DurationSelectionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.HomeActivity"
+            android:name="com.bazinga.lantoon.home.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GetStartActivity"
+            android:name="com.bazinga.lantoon.GetStartActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.payment.payu.PayUActivity"
+            android:name="com.bazinga.lantoon.home.payment.payu.PayUActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".home.payment.paymentwall.PaymentWallActivity"
+            android:name="com.bazinga.lantoon.home.payment.paymentwall.PaymentWallActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -106,7 +108,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name="MyFirebaseMessagingService">
+        <service android:name="com.bazinga.lantoon.MyFirebaseMessagingService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

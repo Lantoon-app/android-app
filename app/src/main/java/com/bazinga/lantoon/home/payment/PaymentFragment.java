@@ -1,8 +1,5 @@
 package com.bazinga.lantoon.home.payment;
 
-import static com.bazinga.lantoon.Key.paymentWallProjectKey;
-import static com.bazinga.lantoon.Key.paymentWallSecretKey;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;

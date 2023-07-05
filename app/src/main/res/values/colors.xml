@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#286bb5</color>
-    <color name="colorPrimaryVariant">#47A891</color>
+    <color name="colorPrimary">#E857BF</color>
+    <color name="colorPrimaryVariant">#5464B6</color>
     <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorSecondary">#286bb5</color>
-    <color name="colorSecondaryVariant">#47A891</color>
+    <color name="colorSecondary">#E857BF</color>
+    <color name="colorSecondaryVariant">#5464B6</color>
     <color name="colorOnSecondary">#FFFFFF</color>
-    <color name="status_bar_color">#286bb5</color>
-    <color name="navigation_bar_color">#286bb5</color>
+    <color name="status_bar_color">#E857BF</color>
+    <color name="navigation_bar_color">#5464B6</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -37,8 +37,13 @@
     <color name="target_button_text_disabled">#3b3b3b</color>
 
     <color name="app_gradient_center_colour">#47A891</color>
-    <color name="app_gradient_start_colour">#19ac9c</color>
-    <color name="app_gradient_end_colour">#286bb5</color>
+    <color name="app_gradient_start_colour">#E857BF</color>
+    <color name="app_gradient_end_colour">#5464B6</color>
+
+    <color name="edittext_gradient_start_colour">#34E857BF</color>
+    <color name="edittext_gradient_end_colour">#335464B6</color>
+
+
 
     <color name="today">#4b82ff</color>
     <color name="greyed_out">#c7c7c7</color>
@@ -52,5 +57,22 @@
     <color name="target_ongoing">#286bb5</color>
     <color name="target_upcoming">#FF9800</color>
     <color name="nav_drawer_selected_color">#115095</color>
+    <color name="p3_text_view">#8633A5</color>
 
-   </resources>
+    <color name="chapter_in_progress_inner">#F9C449</color>
+    <color name="chapter_in_progress_outer">#FFF0CC</color>
+
+    <color name="chapter_disabled">#AAB1DB</color>
+    <color name="chapter_progress_completed">#673AB7</color>
+
+    <color name="chapter_evaluation_in_progress_inner">#F9C449</color>
+    <color name="chapter_evaluation_in_progress_outer">#FFF0CC</color>
+
+    <color name="chapter_evaluation_disabled">#F4ABDF</color>
+    <color name="chapter_evaluation_progress_completed">#E857BF</color>
+    <color name="popup_all_full_bg">#CDFFFFFF</color>
+
+    <color name="evaluation_answer_correct">#18CA1F</color>
+    <color name="evaluation_answer_wrong">#CDFD0000</color>
+
+</resources>

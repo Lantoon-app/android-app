@@ -1,17 +1,12 @@
 package com.bazinga.lantoon;
 
 import android.app.Activity;
-import android.graphics.drawable.VectorDrawable;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 
 import static android.content.Context.AUDIO_SERVICE;
@@ -56,14 +51,14 @@ public class Audio {
             mediaPlayer.setDataSource(path);
             mediaPlayer.prepare();
             mediaPlayer.start();
-            playPauseView.setState(PlayPauseView.STATE_PLAY);
-            pV = playPauseView;
+            //playPauseView.setState(PlayPauseView.STATE_PLAY);
+            //pV = playPauseView;
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     mp.release();
-                    playPauseView.setState(PlayPauseView.STATE_PAUSE);
-                    pV.setImageDrawable(activity.getDrawable(R.drawable.anim_vector_play));
+                    //playPauseView.setState(PlayPauseView.STATE_PAUSE);
+                    //pV.setImageDrawable(activity.getDrawable(R.drawable.anim_vector_play));
                 }
             });
         } catch (IOException e) {

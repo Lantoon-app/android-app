@@ -19,6 +19,9 @@ public class Leader {
     @SerializedName("picture")
     @Expose
     private String picture;
+    @SerializedName("region_code")
+    @Expose
+    public String region_code;
 
     public String getUid() {
         return uid;
@@ -59,4 +62,12 @@ public class Leader {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+    public String getRegionCode() {
+        return region_code;
+    }
+
+    public void setRegionCode(String region_code) {
+        this.region_code = region_code;
+    }
+
 }

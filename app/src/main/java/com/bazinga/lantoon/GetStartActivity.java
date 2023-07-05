@@ -22,11 +22,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.login.ui.login.LoginActivity;
 import com.bazinga.lantoon.registration.langselection.view.LangSelectionActivity;
-import com.bazinga.lantoon.retrofit.ApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -116,7 +114,7 @@ public class GetStartActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == locationPermissionCode) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //getCurrentLocation();
+                getCurrentLocation();
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();

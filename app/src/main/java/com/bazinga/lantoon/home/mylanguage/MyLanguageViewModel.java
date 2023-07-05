@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageData;
 import com.bazinga.lantoon.home.mylanguage.model.MyLanguageResponse;
-import com.bazinga.lantoon.login.SessionManager;
-import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.Gson;

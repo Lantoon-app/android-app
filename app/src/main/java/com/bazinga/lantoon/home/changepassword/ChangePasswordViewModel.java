@@ -10,9 +10,6 @@ import com.bazinga.lantoon.home.changepassword.model.ChangePasswordResponse;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bazinga.lantoon.retrofit.Status;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;

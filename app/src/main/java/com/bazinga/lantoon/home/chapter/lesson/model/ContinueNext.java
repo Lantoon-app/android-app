@@ -4,12 +4,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ContinueNext {
+    @SerializedName("target_type")
+    @Expose
+    private String targetType;
     @SerializedName("langid")
     @Expose
-    private Integer langid;
+    private String langid;
     @SerializedName("chapterno")
     @Expose
     private Integer chapterno;
+    @SerializedName("evaluation_id")
+    @Expose
+    private Integer evaluation_id;
+
     @SerializedName("lessonno")
     @Expose
     private Integer lessonno;
@@ -18,7 +25,7 @@ public class ContinueNext {
     private Integer startingquesno;
     @SerializedName("spenttime")
     @Expose
-    private String spentTime;
+    private String spenttime;
     @SerializedName("unlocked_chapters")
     @Expose
     private String unlockedChapters;
@@ -26,11 +33,19 @@ public class ContinueNext {
     @Expose
     private Integer chapter_type;
 
-    public Integer getLangid() {
+    public String getTargetType() {
+        return targetType;
+    }
+
+    public void setTargetType(String targetType) {
+        this.targetType = targetType;
+    }
+
+    public String getLangid() {
         return langid;
     }
 
-    public void setLangid(Integer langid) {
+    public void setLangid(String langid) {
         this.langid = langid;
     }
 
@@ -40,6 +55,14 @@ public class ContinueNext {
 
     public void setChapterno(Integer chapterno) {
         this.chapterno = chapterno;
+    }
+
+    public Integer getEvaluation_id() {
+        return evaluation_id;
+    }
+
+    public void setEvaluation_id(Integer evaluation_id) {
+        this.evaluation_id = evaluation_id;
     }
 
     public Integer getLessonno() {
@@ -58,20 +81,22 @@ public class ContinueNext {
         this.startingquesno = startingquesno;
     }
 
-    public String getSpentTime() {
-        return spentTime;
+    public String getSpenttime() {
+        return spenttime;
     }
 
-    public void setSpentTime(String spentTime) {
-        this.spentTime = spentTime;
+    public void setSpenttime(String spenttime) {
+        this.spenttime = spenttime;
     }
-    public String getunlockedChapters() {
+
+    public String getUnlockedChapters() {
         return unlockedChapters;
     }
 
-    public void setunlockedChapters(String unlockedChapters) {
+    public void setUnlockedChapters(String unlockedChapters) {
         this.unlockedChapters = unlockedChapters;
     }
+
     public Integer getChapterType() {
         return chapter_type;
     }

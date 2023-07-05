@@ -40,7 +40,6 @@ import com.bazinga.lantoon.ValidationFunction;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.login.SessionManager;
 import com.bazinga.lantoon.login.forget.ForgetPasswordActivity;
-import com.bazinga.lantoon.registration.SignupActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -60,7 +59,6 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.gson.GsonBuilder;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -87,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         deviceModel = Build.MODEL;
         mAuth = FirebaseAuth.getInstance();
         faceBookLogin();
-        googleLogin();
+        //googleLogin();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             mAuth.signOut();
@@ -303,7 +301,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public void googleLogin() {
+   /* public void googleLogin() {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -322,13 +320,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
             }
         });
-        /*googleSignIn.setOnClickListener(new View.OnClickListener() {
+        *//*googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });*/
-    }
+        });*//*
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

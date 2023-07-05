@@ -1,13 +1,18 @@
 package com.bazinga.lantoon.home.changereferlanguage;
 
+import static com.bazinga.lantoon.home.HomeActivity.setToolbar;
+
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -38,19 +43,22 @@ public class ChangeReferenceLanguageFragment extends Fragment {
 
 
     ChangeReferenceLanguageViewModel changeReferenceLanguageViewModel;
-    ListView listView;
+    GridView listView;
     List<Language> LanguageDataList;
     boolean fragmentDestroyed = false;
     ChangeReferenceLanguageAdapter changeReferenceLanguageAdapter;
     ProgressBar progressBar;
+    EditText et_search;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_change_refer_language, container, false);
+        setToolbar(false, getString(R.string.support_language));
         listView = root.findViewById(R.id.llView);
+        et_search = root.findViewById(R.id.et_search);
         progressBar = root.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        listView.setDivider(null);
+        //listView.setDivider(null);
         changeReferenceLanguageViewModel = new ViewModelProvider(this).get(ChangeReferenceLanguageViewModel.class);
 
         if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
@@ -72,12 +80,29 @@ public class ChangeReferenceLanguageFragment extends Fragment {
         } else {
             CommonFunction.netWorkErrorAlert(getActivity());
         }
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("charSequence",charSequence.toString());
+                changeReferenceLanguageAdapter.getFilter().filter(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Language language = (Language) parent.getItemAtPosition(position);
                 if (NetworkUtil.getConnectivityStatus(getContext()) != 0) {
-                    updateReferenceLanguage(HomeActivity.sessionManager.getUid(), HomeActivity.sessionManager.getLearnLangId(), LanguageDataList.get(position).getLanguageID());
+                    updateReferenceLanguage(HomeActivity.sessionManager.getUid(), HomeActivity.sessionManager.getLearnLangId(), language.getLanguageID());
                 } else {
                     CommonFunction.netWorkErrorAlert(getActivity());
                 }
@@ -115,6 +140,7 @@ public class ChangeReferenceLanguageFragment extends Fragment {
                         HomeActivity.sessionManager.setKnownLangNativeName(response.body().getLoginData().getKnownlangObj().getNativeName());
                         Toast.makeText(getActivity(), "Reference Language updated successfully", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(getView()).navigate(R.id.bottom_lesson);
+                        HomeActivity.setToolbar(true,null);
                     }
                 }
             }

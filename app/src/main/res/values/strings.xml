@@ -3,23 +3,23 @@
     <string name="btn_create_account">CREATE ACCOUNT</string>
     <string name="btn_signin">SIGN IN</string>
     <string name="btn_signup">SIGN UP</string>
-    <string name="btn_login">LOGIN</string>
+    <string name="btn_login">SIGN IN</string>
     <string name="btn_next">NEXT</string>
     <string name="btn_login_with_facebook">Login with Facebook</string>
     <string name="btn_login_with_google">Login with Google+</string>
     <string name="btn_login_with_apple">Login with Apple</string>
-    <string name="btn_forgot_password">Forgot Password ?</string>
-    <string name="hint_username">Username</string>
-    <string name="hint_password">Password</string>
+    <string name="btn_forgot_password"><u>Forgot Password?</u></string>
+    <string name="hint_username">Enter Username</string>
+    <string name="hint_password">Enter Password</string>
     <string name="hint_fullname">Full Name</string>
     <string name="hint_email">E-Mail</string>
     <string name="hint_cnf_password">Confirm Password</string>
     <string name="hint_mobile_number">Mobile Number</string>
     <string name="login">Login</string>
     <string name="title_create_account">CREATE ACCOUNT</string>
-    <string name="title_profile">PROFILE</string>
+    <string name="title_profile">Profile</string>
     <string name="welcome_user">WELCOME USER</string>
-    <string name="title_forget_password">FORGET PASSWORD</string>
+    <string name="title_forget_password">Foget Password?</string>
     <string name="user_login">USER LOGIN</string>
     <string name="new_learner">NEW LEARNER</string>
     <string name="level_test">LEVEL TEST</string>
@@ -45,12 +45,12 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="menu_profile">PROFILE</string>
+    <string name="menu_profile">Profile\nInformation</string>
     <string name="menu_change_password">CHANGE PASSWORD</string>
-    <string name="menu_new_language">MY LANGUAGES</string>
+    <string name="menu_new_language">My\nLanguages</string>
     <string name="menu_packages">PACKAGES</string>
     <string name="menu_share">SHARE</string>
-    <string name="menu_signout">SIGN OUT</string>
+    <string name="menu_signout">Sign out</string>
 
     <!-- Bottom Navigation -->
     <string name="title_lesson">HOME</string>
@@ -91,6 +91,8 @@
 
     <string name="change_language">CHANGE LANGUAGE</string>
     <string name="change_password">CHANGE PASSWORD</string>
+    <string name="tv_txt_forgot_password"><u>Forgot Password?</u></string>
+    <string name="tv_txt_change_password"><u>Change Password?</u></string>
     <string name="btn_change">CHANGE</string>
     <string name="validate">VALIDATE</string>
     <string name="submit">SUBMIT</string>
@@ -108,7 +110,7 @@
     <string name="btm_nav_title_home">Home</string>
     <string name="btm_nav_title_target">Targets</string>
     <string name="btm_nav_title_leaderboard">Leaderboard</string>
-    <string name="btm_nav_title_reference_language">Language</string>
+    <string name="btm_nav_title_reference_language">Support Language</string>
 
     <string-array name="duration_array">
         <item>CASUAL (5 MIN /DAY)</item>
@@ -126,4 +128,8 @@
     <string name="transaction_cancelled_by_user">Transaction cancelled by user</string>
     <string name="package_details">PACKAGE DETAILS</string>
     <string name="pay_now">PAY NOW</string>
+    <string name="my_languages">My Languages</string>
+    <string name="support_language">Support Language</string>
+    <string name="sample_txt_boy_is_drinking">Boy is drinking</string>
+    <string name="BUNDLE">BUNDLE</string>
 </resources>

@@ -5,15 +5,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
-import com.bazinga.lantoon.registration.DurationSelectionActivity;
 import com.bazinga.lantoon.registration.model.User;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;

@@ -4,20 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_landscape">
-
-    <com.bazinga.lantoon.SlantView
-        android:id="@+id/slantView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:rotation="180"
-        android:rotationX="0"
-        android:rotationY="0"
-        android:scaleX="-10"
-        android:scaleY="100"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:background="@drawable/bg_questions">
 
     <include
         android:id="@+id/header"
@@ -25,236 +12,110 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestionName"
+        app:layout_constraintVertical_bias="0.146">
 
+
+        <ImageView
+            android:id="@+id/imgBtnAnsImage1"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            android:layout_margin="@dimen/_5sdp"/>
+
+        <ImageView
+            android:id="@+id/imgBtnAnsImage2"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            android:layout_margin="@dimen/_5sdp" />
+
+
+        <ImageView
+            android:id="@+id/imgBtnAnsImage3"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            android:layout_margin="@dimen/_5sdp" />
+
+        <ImageView
+            android:id="@+id/imgBtnAnsImage4"
+            android:layout_width="@dimen/_135sdp"
+            android:layout_height="@dimen/_135sdp"
+            android:layout_margin="@dimen/_5sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout11">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAudio"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/btn_question_speaker_blue"
+            app:backgroundTint="@null" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAudioSlow"
+            style="@style/QuestionButtonStyle"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/btn_question_slow_speaker_blue"
+            app:backgroundTint="@null" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvQuestionName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_15ssp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.499"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/slantView"
-        app:layout_constraintVertical_bias="0.64" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_70sdp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:id="@+id/llQustionsImgAud1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.bazinga.lantoon.PlayPauseView
-                    android:id="@+id/btnAudio1"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
-                    android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAudioSlow1"
-                    style="@style/QuestionButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imbBtnQuestionImg1"
-                android:layout_width="@dimen/_78sdp"
-                android:layout_height="@dimen/_78sdp"
-                android:layout_margin="@dimen/_5sdp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llQustionsImgAud2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.bazinga.lantoon.PlayPauseView
-                    android:id="@+id/btnAudio2"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
-                    android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAudioSlow2"
-                    style="@style/QuestionButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imbBtnQuestionImg2"
-                android:layout_width="@dimen/_78sdp"
-                android:layout_height="@dimen/_78sdp"
-                android:layout_margin="@dimen/_5sdp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llQustionsImgAud13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.bazinga.lantoon.PlayPauseView
-                    android:id="@+id/btnAudio3"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
-                    android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAudioSlow3"
-                    style="@style/QuestionButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imbBtnQuestionImg3"
-                android:layout_width="@dimen/_78sdp"
-                android:layout_height="@dimen/_78sdp"
-                android:layout_margin="@dimen/_5sdp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llQustionsImgAud4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <com.bazinga.lantoon.PlayPauseView
-                    android:id="@+id/btnAudio4"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:background="@drawable/button_bg"
-                    android:padding="0dp"
-                    app:tint="@color/white"
-                    app:srcCompat="@drawable/anim_vector_play" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAudioSlow4"
-                    style="@style/QuestionButtonStyle"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    app:backgroundTint="@null"
-                    app:icon="@drawable/ic_question_speaker_slow"
-                    app:iconGravity="textStart"
-                    app:iconPadding="0dp"
-                    app:iconSize="@dimen/_20sdp" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imbBtnQuestionImg4"
-                android:layout_width="@dimen/_78sdp"
-                android:layout_height="@dimen/_78sdp"
-                android:layout_margin="@dimen/_5sdp" />
-        </LinearLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <ImageView
         android:id="@+id/expanded_image"
         android:layout_width="@dimen/_150sdp"
         android:layout_height="@dimen/_150sdp"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvQuestionName" />
     <ImageButton
         android:id="@+id/imgBtnNext"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_gravity="center"
         android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@drawable/question_next"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/btn_question_next_blue"
         android:gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

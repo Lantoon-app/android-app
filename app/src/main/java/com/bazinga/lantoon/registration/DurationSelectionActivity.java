@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -22,19 +21,11 @@ import com.bazinga.lantoon.R;
 import com.bazinga.lantoon.Tags;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.login.SessionManager;
-import com.bazinga.lantoon.login.data.model.LoggedInUserResponse;
 import com.bazinga.lantoon.login.ui.login.LoggedInUserView;
 import com.bazinga.lantoon.login.ui.login.LoginResult;
 import com.bazinga.lantoon.login.ui.login.LoginViewModel;
-import com.bazinga.lantoon.retrofit.ApiClient;
-import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.bazinga.lantoon.registration.model.User;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DurationSelectionActivity extends AppCompatActivity implements View.OnClickListener {
     CommonFunction cf;

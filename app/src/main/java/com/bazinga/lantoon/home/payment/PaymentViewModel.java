@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.bazinga.lantoon.home.payment.model.PaymentPackage;
 import com.bazinga.lantoon.home.payment.model.PaymentPackageResponse;
-import com.bazinga.lantoon.registration.langselection.model.Language;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
 import com.google.gson.GsonBuilder;

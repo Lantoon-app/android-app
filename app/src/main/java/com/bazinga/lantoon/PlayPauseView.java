@@ -1,9 +1,6 @@
 package com.bazinga.lantoon;
 
 import android.content.Context;
-import android.graphics.drawable.Animatable2;
-import android.graphics.drawable.Animatable2.AnimationCallback;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -12,7 +9,6 @@ import androidx.annotation.AttrRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 public class PlayPauseView extends AppCompatImageView {

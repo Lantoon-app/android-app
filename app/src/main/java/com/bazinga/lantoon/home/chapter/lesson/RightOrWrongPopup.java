@@ -1,7 +1,6 @@
 package com.bazinga.lantoon.home.chapter.lesson;
 
 import android.app.Activity;
-import android.graphics.drawable.Animatable2;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
@@ -22,8 +21,6 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bazinga.lantoon.CommonFunction;
 import com.bazinga.lantoon.R;
-import com.bazinga.lantoon.home.chapter.lesson.LessonCompletedPopup;
-import com.bazinga.lantoon.home.chapter.lesson.QuestionsActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -95,7 +92,7 @@ public class RightOrWrongPopup {
                                         //LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                                         //lessonCompletedPopup.showPopupWindow(view, activity);
                                         QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                        cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
+                                        //cf.postLesson(isEvaluation, view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                     } else {
 
@@ -150,7 +147,7 @@ public class RightOrWrongPopup {
                             /*LessonCompletedPopup lessonCompletedPopup = new LessonCompletedPopup();
                             lessonCompletedPopup.showPopupWindow(view, activity);*/
                                         QuestionsActivity.score.setSpentTime(QuestionsActivity.tvTimer.getText().toString());
-                                        cf.postLesson(view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
+                                        //cf.postLesson(isEvaluation, view, activity, quesNo, QuestionsActivity.tvTimer.getText().toString());
                                         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(QuestionsActivity.score));
                                     } else {
                                         lessonCompletedPopup.showPopupWindow(view, activity, null, quesNo, QuestionsActivity.tvTimer.getText().toString());

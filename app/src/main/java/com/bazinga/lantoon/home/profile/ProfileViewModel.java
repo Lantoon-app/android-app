@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 import com.bazinga.lantoon.home.HomeActivity;
 import com.bazinga.lantoon.retrofit.ApiClient;
 import com.bazinga.lantoon.retrofit.ApiInterface;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
